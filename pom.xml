@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
   <name>DS/2 OSS Core</name>
   <version>0.0.1-SNAPSHOT</version>
-  <description></description>
+  <description>The OSS components of DS/2 Core.</description>
   <properties>
     <siteProjectName>ds2OssCore</siteProjectName>
     <issueTrackerId>OSSCORE</issueTrackerId>
@@ -40,4 +40,13 @@
   </ciManagement>
   <inceptionYear>2012</inceptionYear>
   <url>http://www.ds2/p/ossCore/</url>
+  <scm>
+    <developerConnection>scm:git:ssh://git@bitbucket.org/ds2-oss-core.git</developerConnection>
+    <connection>scm:git:ssh://git@bitbucket.org/ds2-oss-core.git</connection>
+    <url>https://bitbucket.org/ds2-oss-core/</url>
+  </scm>
+  <issueManagement>
+    <system>taskerville</system>
+    <url>https://kaeto23.de/tv/p/OSSCORE</url>
+  </issueManagement>
 </project>
