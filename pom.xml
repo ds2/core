@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>jee-base</artifactId>
+    <groupId>ds2.base.oss</groupId>
+    <version>0.67</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ds2.oss.core</groupId>
+  <artifactId>core</artifactId>
+  <packaging>pom</packaging>
+  <name>DS/2 OSS Core</name>
+  <version>0.0.1-SNAPSHOT</version>
+  <description></description>
+  <properties>
+    <siteProjectName>ds2OssCore</siteProjectName>
+    <issueTrackerId>OSSCORE</issueTrackerId>
+    <license.header.author>Dirk Strauss</license.header.author>
+    <license.header.email>dstrauss@ds-2.de</license.header.email>
+    <license.header.year>2012</license.header.year>
+    <license.id>asl_v2</license.id>
+    <license.header.projectName>DS/2 OSS Core</license.header.projectName>
+    <license.header.description>The OSS core libraries from DS/2</license.header.description>
+  </properties>
+  <distributionManagement>
+    <site>
+      <id>${siteDeployId}</id>
+      <name>${siteDeployName}</name>
+      <url>${siteDeployUrl}</url>
+    </site>
+  </distributionManagement>
+  <organization>
+    <name>DS/2</name>
+    <url>http://ds-2.de/</url>
+  </organization>
+  <ciManagement>
+    <system>hudson</system>
+    <url>https://ci.kaeto23.de/ci/OSS_Ds2OssCore_master/</url>
+  </ciManagement>
+  <inceptionYear>2012</inceptionYear>
+  <url>http://www.ds2/p/ossCore/</url>
+</project>
