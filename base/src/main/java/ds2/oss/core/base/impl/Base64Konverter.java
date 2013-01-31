@@ -253,7 +253,7 @@ public final class Base64Konverter implements Base64Codec {
      *            der Base64-Char
      * @return seine Position im Alphabet. -1 bei einem Fehler.
      */
-    protected byte holeAlphabetPosFuerChar(final char c) {
+    public byte holeAlphabetPosFuerChar(final char c) {
         byte index = 0;
         for (char aktChar : alphabet) {
             if (aktChar == c) {
@@ -271,7 +271,7 @@ public final class Base64Konverter implements Base64Codec {
      *            die Anzahl der Bytes, die base64 gemacht werden sollen.
      * @return die Anzahl der Padding-Zeichen nach dem Encoding
      */
-    private byte holeAnzPadding(final int srclaenge) {
+    private static byte holeAnzPadding(final int srclaenge) {
         final byte modulo = (byte) (srclaenge % 3);
         if (modulo == 0) {
             // Perfekt :P
