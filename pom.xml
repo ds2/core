@@ -43,10 +43,14 @@
   <scm>
     <developerConnection>scm:git:ssh://git@bitbucket.org/ds2-oss-core.git</developerConnection>
     <connection>scm:git:ssh://git@bitbucket.org/ds2-oss-core.git</connection>
-    <url>https://bitbucket.org/ds2-oss-core/</url>
+    <url>https://bitbucket.org/lexxy23/ds2-oss-core/</url>
   </scm>
   <issueManagement>
     <system>taskerville</system>
-    <url>https://kaeto23.de/tv/p/OSSCORE</url>
+    <url>https://dev.kaeto23.de/tv/p/OSSCORE</url>
   </issueManagement>
+  <modules>
+    <module>api</module>
+    <module>base</module>
+  </modules>
 </project>
