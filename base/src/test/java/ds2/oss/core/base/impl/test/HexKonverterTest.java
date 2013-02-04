@@ -21,7 +21,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.base.impl.HexKonverter;
+import ds2.oss.core.api.HexCodec;
+import ds2.oss.core.base.impl.WeldWrapper;
 
 /**
  * Testcase for the hex converter.
@@ -29,11 +30,11 @@ import ds2.oss.core.base.impl.HexKonverter;
  * @author dstrauss
  * @version 0.3
  */
-public class HexKonverterTest {
+public class HexKonverterTest extends WeldWrapper {
     /**
      * The contract to use.
      */
-    private HexKonverter to;
+    private HexCodec to;
     
     /**
      * Decoder test.
@@ -86,6 +87,6 @@ public class HexKonverterTest {
     
     @BeforeClass
     public void onInit() {
-        to = new HexKonverter();
+        to = getInstance(HexCodec.class);
     }
 }
