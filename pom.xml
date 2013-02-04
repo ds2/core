@@ -18,7 +18,7 @@
     <issueTrackerId>OSSCORE</issueTrackerId>
     <license.header.author>Dirk Strauss</license.header.author>
     <license.header.email>dstrauss@ds-2.de</license.header.email>
-    <license.header.year>2012</license.header.year>
+    <license.header.year>2012-2013</license.header.year>
     <license.id>asl_v2</license.id>
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
@@ -36,7 +36,7 @@
   </organization>
   <ciManagement>
     <system>hudson</system>
-    <url>https://ci.kaeto23.de/ci/OSS_Ds2OssCore_master/</url>
+    <url>https://ci.kaeto23.de/ci/view/OSS/job/OSS_Ds2Core_master/</url>
   </ciManagement>
   <inceptionYear>2012</inceptionYear>
   <url>http://www.ds2/p/ossCore/</url>

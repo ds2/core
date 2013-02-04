@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Dirk Strauss
+ * Copyright 2012-2013 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import ds2.oss.core.api.Base64Codec;
  * @version 0.4
  */
 @ApplicationScoped
-public final class Base64Konverter implements Base64Codec {
+public class Base64Konverter implements Base64Codec {
     /**
      * The max line length in base64 before a \n is used.
      */
