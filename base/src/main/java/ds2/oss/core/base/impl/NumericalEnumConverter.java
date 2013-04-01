@@ -66,14 +66,17 @@ public class NumericalEnumConverter<E extends Enum<?>> {
      * @return the numerical value to use
      */
     public final int getValue(final E e) {
+        int rc = -1;
         if (e == null) {
-            return -1;
+            return rc;
         }
         if (e instanceof NumericEnumValue) {
             final NumericEnumValue nev = (NumericEnumValue) e;
-            return nev.getNumericalValue();
+            rc = nev.getNumericalValue();
+        } else {
+            rc = e.ordinal();
         }
-        return e.ordinal();
+        return rc;
     }
     
     /**
@@ -86,7 +89,7 @@ public class NumericalEnumConverter<E extends Enum<?>> {
      *            the lookup
      * @return the enum value, or null if not found
      */
-    public E getEnumByReflection(final int i, final String methodName) {
+    public final E getEnumByReflection(final int i, final String methodName) {
         E rc = null;
         try {
             rc = getByLookup(methodName, int.class, i);
