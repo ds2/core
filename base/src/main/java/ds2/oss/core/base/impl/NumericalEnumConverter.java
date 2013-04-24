@@ -92,9 +92,9 @@ public class NumericalEnumConverter<E extends Enum<?>> {
     public final E getEnumByReflection(final int i, final String methodName) {
         E rc = null;
         try {
-            rc = getByLookup(methodName, int.class, i);
+            rc = getByLookup(methodName, int.class, Integer.valueOf(i));
             if (rc == null) {
-                rc = getByLookup(methodName, long.class, (long) i);
+                rc = getByLookup(methodName, long.class, Long.valueOf(i));
             }
         } catch (final SecurityException | IllegalArgumentException e) {
             LOG.error("Error when looking up an enum value via reflection!", e);

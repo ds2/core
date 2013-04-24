@@ -149,7 +149,7 @@ public class HmacGeneratorImpl implements HmacGenerator {
             gen = KeyGenerator.getInstance(generateHmacId(g));
             gen.init(bitsize);
             rc = gen.generateKey();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             LOG.error("No provider found for given hash.", e);
         }
         return rc;

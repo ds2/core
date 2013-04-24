@@ -53,7 +53,7 @@ public class HexKonverter implements HexCodec {
         if (b == null) {
             return null;
         }
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         for (byte b2 : b) {
             int upper = b2 & 0xf0;
             upper >>= 4;
