@@ -1,11 +1,17 @@
 /*
- * Project group: ds2.core, core-api
- * Project:       DS/2 Core
+ * Copyright 2012-2013 Dirk Strauss
  *
- * Copyright (C) 2012 DS/2 Software Development (http://www.ds-2.de/)
- * All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * See the LICENSE for more information.
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 /**
  * 
