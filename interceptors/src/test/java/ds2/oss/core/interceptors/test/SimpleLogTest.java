@@ -31,9 +31,7 @@ public class SimpleLogTest {
     public void onMethod() throws NamingException {
         ejbC = EJBContainer.createEJBContainer();
         Context ic = ejbC.getContext();
-        sb =
-            (SimpleBean) ic
-                .lookup("java:global/ejbembeddedtest-0.0.1-SNAPSHOT/ItemService");
+        sb = (SimpleBean) ic.lookup("java:global/interceptors/SimpleBean");
     }
     
     @AfterClass

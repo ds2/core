@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 @Interceptor
+@LogCallings
 public class InfoLogInterceptor {
     /**
      * A logger.
@@ -47,9 +48,9 @@ public class InfoLogInterceptor {
      *             the exception that is possibly thrown by the invocation
      *             context.
      */
+    @SuppressWarnings("static-method")
     @AroundInvoke
-    public final static Object intercept(final InvocationContext ic)
-        throws Exception {
+    public Object intercept(final InvocationContext ic) throws Exception {
         final Logger log = getLoggerForTarget(ic);
         if (log.isInfoEnabled()) {
             log.info(LoggerUtils.createMethodHeader(ic));
