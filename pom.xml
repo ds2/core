@@ -23,6 +23,22 @@
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
   </properties>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <useReleaseProfile>true</useReleaseProfile>
+            <releaseProfiles>announceProfile</releaseProfiles>
+            <username>git</username>
+            <preparationGoals>clean changes:announcement-generate license:format install</preparationGoals>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <distributionManagement>
     <site>
       <id>${siteDeployId}</id>
