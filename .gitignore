@@ -5,3 +5,4 @@ bin
 .checkstyle
 .classpath
 test-output
+*.versionsBackup

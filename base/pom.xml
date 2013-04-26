@@ -4,7 +4,7 @@
   <parent>
     <groupId>ds2.oss.core</groupId>
     <artifactId>core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
   </parent>
   <artifactId>ds2-oss-core-base</artifactId>
   <name>DS/2 OSS Core Base</name>
@@ -13,7 +13,7 @@
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.weld.se</groupId>
