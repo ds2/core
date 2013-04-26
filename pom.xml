@@ -28,20 +28,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.scm</groupId>
-              <artifactId>maven-scm-api</artifactId>
-              <version>1.8.1</version>
-            </dependency>
-          </dependencies>
-          <configuration>
-            <autoVersionSubmodules>true</autoVersionSubmodules>
-            <useReleaseProfile>true</useReleaseProfile>
-            <releaseProfiles>announceProfile</releaseProfiles>
-            <username>git</username>
-            <preparationGoals>clean changes:announcement-generate license:format install</preparationGoals>
-          </configuration>
+          <version>2.3.2</version>
         </plugin>
       </plugins>
     </pluginManagement>
