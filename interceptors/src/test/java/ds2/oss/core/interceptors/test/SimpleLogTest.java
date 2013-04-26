@@ -28,35 +28,56 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 /**
- * @author dstrauss
+ * The test case to test the interceptors.
  * 
+ * @author dstrauss
+ * @version 0.1
  */
 public class SimpleLogTest {
+    /**
+     * The bean to test.
+     */
     private SimpleBean sb;
+    /**
+     * The embedded ejb container.
+     */
     private EJBContainer ejbC;
     
     /**
-     * 
+     * Inits the test.
      */
     public SimpleLogTest() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
+    /**
+     * Any actions to perform at class start.
+     * 
+     * @throws NamingException
+     *             if a JNDI error occurred
+     */
     @BeforeClass
-    public void onMethod() throws NamingException {
+    public final void onClass() throws NamingException {
         ejbC = EJBContainer.createEJBContainer();
-        Context ic = ejbC.getContext();
+        final Context ic = ejbC.getContext();
         sb = (SimpleBean) ic.lookup("java:global/interceptors/SimpleBean");
     }
     
+    /**
+     * Any actions to perform after class.
+     */
     @AfterClass
-    public void afterClass() {
+    public final void afterClass() {
         ejbC.close();
     }
     
+    /**
+     * Simple execution of the bean. The test must be done by checking the log
+     * output.
+     */
     @Test
-    public void execute1() {
-        String rc = sb.getSomething(1, 2);
+    public final void execute1() {
+        final String rc = sb.getSomething(1, 2);
         Assert.assertNotNull(rc);
     }
 }

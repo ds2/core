@@ -19,9 +19,26 @@
 package ds2.oss.core.interceptors;
 
 /**
- * @author dstrauss
+ * The known supported log levels for now.
  * 
+ * @author dstrauss
+ * @version 0.1
  */
 public enum LogLevel {
-    INFO, WARN, SEVERE, DEBUG;
+    /**
+     * The INFO log level.
+     */
+    INFO,
+    /**
+     * The WARN log level.
+     */
+    WARN,
+    /**
+     * The ERROR log level.
+     */
+    SEVERE,
+    /**
+     * The DEBUG log level.
+     */
+    DEBUG;
 }

@@ -21,19 +21,30 @@ package ds2.oss.core.interceptors.test;
 import javax.ejb.Stateless;
 
 /**
- * @author dstrauss
+ * A simple test bean.
  * 
+ * @author dstrauss
+ * @version 0.1
  */
 @Stateless
 public class SimpleBean {
     
     /**
-     * 
+     * Inits the bean.
      */
     public SimpleBean() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
+    /**
+     * Performs a simple string concat.
+     * 
+     * @param a
+     *            the first number
+     * @param b
+     *            the second number
+     * @return the string concat.
+     */
     public String getSomething(final int a, final int b) {
         return "Hi, " + a + "+" + b;
     }

@@ -28,15 +28,19 @@ import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
 
 /**
- * @author dstrauss
+ * The interceptor binding annotation to log any calls to this method or bean.
  * 
+ * @author dstrauss
+ * @version 0.1
  */
 @Inherited
 @InterceptorBinding
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LogCallings {
-    // no special method needed
+    /**
+     * The log level. Currently ignored.
+     */
     @Nonbinding
     LogLevel value() default LogLevel.INFO;
 }
