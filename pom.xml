@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jee-base</artifactId>
     <groupId>ds2.base.oss</groupId>
-    <version>0.71</version>
+    <version>0.72.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ds2.oss.core</groupId>
@@ -21,17 +21,9 @@
     <license.id>asl_v2</license.id>
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
+    <release.localCheckout>true</release.localCheckout>
+    <mvn.releaseplugin.version>2.3.2</mvn.releaseplugin.version>
   </properties>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.3.2</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
   <distributionManagement>
     <site>
       <id>${siteDeployId}</id>
