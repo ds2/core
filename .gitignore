@@ -6,3 +6,4 @@ bin
 .classpath
 test-output
 *.versionsBackup
+nbproject
