@@ -55,4 +55,36 @@ public class MyNewsCodec implements NewsCodec {
         return MyNews.class.getAnnotation(TypeMapping.class).useIndex();
     }
     
+    @Override
+    public String getMapping() {
+        XContentBuilder xbMapping = null;
+        try {
+            xbMapping =
+                XContentFactory
+                    .jsonBuilder()
+                    .startObject()
+                    .startObject(
+                        MyNews.class.getAnnotation(TypeMapping.class).value())
+                    .startObject("properties");
+            xbMapping.startObject("source").field("type", "string").endObject();
+            xbMapping.startObject("title").field("type", "string")
+                .field("analyzer", "french").endObject();
+            xbMapping.startObject("description").field("type", "string")
+                .field("analyzer", "french").endObject();
+            xbMapping.startObject("author").field("type", "string").endObject();
+            xbMapping.startObject("link").field("type", "string").endObject();
+            xbMapping.endObject().endObject().endObject();
+            return xbMapping.string();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
+    public String getIndexType() {
+        return MyNews.class.getAnnotation(TypeMapping.class).value();
+    }
+    
 }

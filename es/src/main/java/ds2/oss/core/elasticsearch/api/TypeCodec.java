@@ -19,4 +19,8 @@ public interface TypeCodec<T> {
     T toDto(Class<T> c, Map<String, Object> o);
     
     String getIndex();
+    
+    String getIndexType();
+    
+    String getMapping();
 }

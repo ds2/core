@@ -4,14 +4,18 @@
 package ds2.oss.core.elasticsearch.impl;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.elasticsearch.action.admin.indices.mapping.delete.DeleteMappingRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,8 +62,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         while (tcI.hasNext()) {
             TypeCodec<?> tc = tcI.next();
             String index = tc.getIndex();
-            esNode.get().admin().indices()
-                .create(new CreateIndexRequest(index)).actionGet();
+            String typeName = tc.getIndexType();
+            LOG.info("Index is now {}", index);
+            IndicesExistsResponse existsResponse =
+                esNode.get().admin().indices().prepareExists(index).execute()
+                    .actionGet();
+            if (existsResponse.isExists()) {
+                LOG.info("index already exists.");
+                continue;
+            }
+            checkMapping(index, typeName, tc.getMapping());
             /*
              * esNode.get().admin().indices().preparePutMapping(index)
              * .setType("page").setSource(xbMapping).execute().actionGet();
@@ -69,6 +81,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     
     @Override
     public <T> T put(final T t, final TypeCodec<T> codec) {
+        if (t == null) {
+            return null;
+        }
+        if (codec == null) {
+            return null;
+        }
         final IndexResponse response =
             esNode
                 .get()
@@ -78,5 +96,33 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 .setSource(codec.toJsonMap(t)).execute().actionGet();
         LOG.debug("Response is {}", response);
         return t;
+    }
+    
+    private void checkMapping(final String index, final String type,
+        final String jsonTypeMap) {
+        boolean indexExists =
+            esNode.get().admin().indices().prepareExists(index).execute()
+                .actionGet().isExists();
+        if (!indexExists) {
+            LOG.info("Creating index {}", index);
+            esNode.get().admin().indices().prepareCreate(index).execute()
+                .actionGet();
+        }
+        final ClusterStateResponse resp =
+            esNode.get().admin().cluster().prepareState().execute().actionGet();
+        final Map<String, MappingMetaData> mappings =
+            resp.getState().metaData().index(index).mappings();
+        if (mappings.containsKey(type)) {/* type exists */
+            LOG.info("Deleting mapping of {}", type);
+            final DeleteMappingRequest delMap = new DeleteMappingRequest(index);
+            delMap.type(type);
+            esNode.get().admin().indices().deleteMapping(delMap).actionGet();
+        }
+        LOG.debug("Adding new mapping via {}", jsonTypeMap);
+        esNode.get().admin().indices().preparePutMapping(index)
+            .setSource(jsonTypeMap).execute().actionGet();
+        LOG.debug("Wait for ES to come up");
+        esNode.get().admin().cluster().prepareHealth().setWaitForYellowStatus()
+            .execute().actionGet();
     }
 }

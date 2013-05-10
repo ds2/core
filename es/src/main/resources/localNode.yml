@@ -1,1 +1,10 @@
-cluster.name=localNode
+cluster:
+  name: localNode
+node:
+  name: myNode 
+path:
+  logs: target/es/logs
+  data: target/es/data
+index :
+  store:
+    type: memory
