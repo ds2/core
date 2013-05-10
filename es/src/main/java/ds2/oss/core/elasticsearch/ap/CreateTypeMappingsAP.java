@@ -15,12 +15,13 @@
  */
 package ds2.oss.core.elasticsearch.ap;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
+import ds2.oss.core.elasticsearch.api.TypeMapping;
+
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 import java.util.Set;
 
 /**
@@ -30,8 +31,21 @@ import java.util.Set;
 @SupportedAnnotationTypes(value = "ds2.oss.core.elasticsearch.api.TypeMapping")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class CreateTypeMappingsAP extends AbstractProcessor{
+	/**
+	 * Inits the processor.
+	 */
+    public CreateTypeMappingsAP(){
+        super();
+    }
     @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
+        Messager LOG=processingEnv.getMessager();
+        LOG.printMessage(Diagnostic.Kind.NOTE, "Starting ...");
+        for (Element elem : roundEnv.getElementsAnnotatedWith(TypeMapping.class)) {
+            TypeMapping tm = elem.getAnnotation(TypeMapping.class);
+            LOG.printMessage(Diagnostic.Kind.NOTE, "Element "+elem.getSimpleName()+" has type mappings: "+tm);
+        }
+        LOG.printMessage(Diagnostic.Kind.WARNING, "Done :D");
         return true;
     }
 }

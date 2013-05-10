@@ -25,4 +25,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.SOURCE)
 @Documented
 public @interface TypeMapping {
+    /**
+     * The index type name.
+     */
+    String value() default "";
 }

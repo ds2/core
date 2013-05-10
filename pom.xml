@@ -51,24 +51,12 @@
     <system>taskerville</system>
     <url>https://dev.kaeto23.de/tv/p/OSSCORE</url>
   </issueManagement>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <modules>
     <module>api</module>
     <module>base</module>
     <module>interceptors</module>
     <module>es</module>
+    <module>es-test</module>
   </modules>
   <profiles>
     <profile>

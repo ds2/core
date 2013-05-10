@@ -24,11 +24,12 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.SOURCE)
 @Documented
-public @interface FieldMapping {
+public @interface PropertyMapping {
     /**
      * The field name.
      */
   String value() default "";
   FieldTypes type() default FieldTypes.STRING;
   IndexTypes index() default IndexTypes.NOT_ANALYZED;
+  String indexName() default "";
 }
