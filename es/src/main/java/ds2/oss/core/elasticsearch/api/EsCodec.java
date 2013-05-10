@@ -9,6 +9,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * Marks a codec.
  * 
@@ -18,6 +20,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
+@ApplicationScoped
 public @interface EsCodec {
     Class<?> value();
 }

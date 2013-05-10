@@ -41,6 +41,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     /**
      * Any known codecs.
      */
+    @Inject
     private Instance<TypeCodec<?>> anyCodecs;
     
     /**

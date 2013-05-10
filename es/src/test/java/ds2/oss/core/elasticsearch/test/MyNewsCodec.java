@@ -6,13 +6,10 @@ package ds2.oss.core.elasticsearch.test;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
 import ds2.oss.core.elasticsearch.api.EsCodec;
-import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.api.TypeMapping;
 
 /**
@@ -22,8 +19,7 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * @version 0.2
  */
 @EsCodec(MyNews.class)
-@ApplicationScoped
-public class MyNewsCodec implements TypeCodec<MyNews> {
+public class MyNewsCodec implements NewsCodec {
     
     /**
      * Inits the codec.
