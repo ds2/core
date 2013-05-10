@@ -15,10 +15,14 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
+import java.lang.annotation.*;
+
 /**
- * The index types.
+ * The mappings for types.
  * @author dstrauss
  */
-public enum IndexTypes {
-  NO,NOT_ANALYZED
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.SOURCE)
+@Documented
+public @interface TypeMapping {
 }
