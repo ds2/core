@@ -68,6 +68,7 @@
     <module>api</module>
     <module>base</module>
     <module>interceptors</module>
+    <module>es</module>
   </modules>
   <profiles>
     <profile>
