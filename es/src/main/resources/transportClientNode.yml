@@ -1,0 +1,3 @@
+cluster.name=elasticsearch
+client=true
+client.transport.sniff=true

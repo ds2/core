@@ -15,18 +15,29 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * The mappings for types.
+ * 
  * @author dstrauss
+ * @version 0.2
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TypeMapping {
     /**
      * The index type name.
      */
-    String value() default "";
+    String value();
+    
+    /**
+     * The name of the index to use.
+     */
+    String useIndex();
 }

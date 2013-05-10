@@ -17,8 +17,21 @@ package ds2.oss.core.elasticsearch.api;
 
 /**
  * The index types.
+ * 
  * @author dstrauss
+ * @version 0.2
  */
 public enum IndexTypes {
-  NO,NOT_ANALYZED
+    /**
+     * Do not analyze this field. The field will not be searchable.
+     */
+    NO,
+    /**
+     * Use full match index for the field values.
+     */
+    NOT_ANALYZED,
+    /**
+     * Perform a full analyze on any field value.
+     */
+    ANALYZED
 }

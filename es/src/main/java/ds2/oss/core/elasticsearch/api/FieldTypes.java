@@ -17,8 +17,45 @@ package ds2.oss.core.elasticsearch.api;
 
 /**
  * The known data types for fields.
+ * 
  * @author dstrauss
+ * @version 0.2
  */
 public enum FieldTypes {
-  STRING,BOOLEAN,LONG;
+    /**
+     * A string.
+     */
+    STRING,
+    /**
+     * A boolean value.
+     */
+    BOOLEAN,
+    /**
+     * A long number.
+     */
+    LONG,
+    /**
+     * An integer number.
+     */
+    INTEGER,
+    /**
+     * A float value.
+     */
+    FLOAT,
+    /**
+     * A double value.
+     */
+    DOUBLE,
+    /**
+     * A date. In UTC.
+     */
+    DATE,
+    /**
+     * A base64 encoded string.
+     */
+    BINARY,
+    /**
+     * No idea.
+     */
+    NULL;
 }
