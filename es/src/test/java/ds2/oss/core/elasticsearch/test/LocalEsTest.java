@@ -21,6 +21,7 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchService;
  * @author dstrauss
  * @version 0.2
  */
+@Test(singleThreaded = true)
 public class LocalEsTest {
     /**
      * The classpath scanner.
