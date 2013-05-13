@@ -25,13 +25,26 @@ public enum IndexTypes {
     /**
      * Do not analyze this field. The field will not be searchable.
      */
-    NO,
+    NO("no"),
     /**
      * Use full match index for the field values.
      */
-    NOT_ANALYZED,
+    NOT_ANALYZED("not_analyzed"),
     /**
      * Perform a full analyze on any field value.
      */
-    ANALYZED
+    ANALYZED("analyzed");
+    
+    /**
+     * The type name.
+     */
+    private String typeName;
+    
+    private IndexTypes(final String s) {
+        typeName = s;
+    }
+    
+    public String getTypeName() {
+        return typeName;
+    }
 }

@@ -25,37 +25,49 @@ public enum FieldTypes {
     /**
      * A string.
      */
-    STRING,
+    STRING("string"),
     /**
      * A boolean value.
      */
-    BOOLEAN,
+    BOOLEAN("boolean"),
     /**
      * A long number.
      */
-    LONG,
+    LONG("long"),
     /**
      * An integer number.
      */
-    INTEGER,
+    INTEGER("integer"),
     /**
      * A float value.
      */
-    FLOAT,
+    FLOAT("float"),
     /**
      * A double value.
      */
-    DOUBLE,
+    DOUBLE("double"),
     /**
      * A date. In UTC.
      */
-    DATE,
+    DATE("date"),
     /**
      * A base64 encoded string.
      */
-    BINARY,
+    BINARY("binary"),
     /**
      * No idea.
      */
-    NULL;
+    NULL("null");
+    /**
+     * The type name.
+     */
+    private String typeName;
+    
+    private FieldTypes(final String s) {
+        typeName = s;
+    }
+    
+    public String getTypeName() {
+        return typeName;
+    }
 }
