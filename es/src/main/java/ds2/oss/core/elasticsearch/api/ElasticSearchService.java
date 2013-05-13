@@ -13,6 +13,9 @@ public interface ElasticSearchService {
     /**
      * Puts an object into the index.
      * 
+     * @param index
+     *            The index name to put the object into
+     * 
      * @param t
      *            the object to put
      * @param codec
@@ -21,5 +24,5 @@ public interface ElasticSearchService {
      *            the type to put
      * @return the object
      */
-    <T> T put(T t, TypeCodec<T> codec);
+    <T> T put(String index, T t, TypeCodec<T> codec);
 }

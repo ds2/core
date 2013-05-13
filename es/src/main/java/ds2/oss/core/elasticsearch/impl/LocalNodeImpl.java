@@ -42,15 +42,18 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
      */
     @PostConstruct
     public void onInit() {
-        LOG.info("Starting configuration");
+        LOG.debug("Starting configuration");
         final NodeBuilder nb = NodeBuilder.nodeBuilder();
         final Settings setts =
             ImmutableSettings.settingsBuilder()
                 .loadFromClasspath("localNode.yml").build();
-        Node n = nb.settings(setts).build();
+        final Node n = nb.settings(setts).build();
+        LOG.debug("Starting local node.");
+        n.start();
         client = n.client();
         client.admin().cluster().prepareHealth().setWaitForYellowStatus()
             .execute().actionGet();
+        LOG.debug("Local index node is up");
     }
     
 }

@@ -1,10 +1,14 @@
 cluster:
-  name: localNode
+  name: localCluster
 node:
-  name: myNode 
+  name: myNode
+  master: true
+  data: true
 path:
   logs: target/es/logs
   data: target/es/data
-index :
-  store:
-    type: memory
+index:
+  number_of_shards: 1
+  number_of_replicas: 0
+network:
+  host: 127.0.0.1

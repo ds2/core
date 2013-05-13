@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.elasticsearch.api.EsCodec;
 import ds2.oss.core.elasticsearch.api.TypeMapping;
@@ -20,6 +22,11 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  */
 @EsCodec(MyNews.class)
 public class MyNewsCodec implements NewsCodec {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory
+        .getLogger(MyNewsCodec.class);
     
     /**
      * Inits the codec.
@@ -29,7 +36,7 @@ public class MyNewsCodec implements NewsCodec {
     }
     
     @Override
-    public String toJsonMap(final MyNews t) {
+    public String toJson(final MyNews t) {
         try {
             XContentBuilder builder =
                 XContentFactory.jsonBuilder().startObject()
@@ -39,8 +46,7 @@ public class MyNewsCodec implements NewsCodec {
                     .field("author", t.getAuthor()).endObject();
             return builder.string();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.warn("Error when generating the JSON", e);
         }
         return null;
     }
@@ -48,11 +54,6 @@ public class MyNewsCodec implements NewsCodec {
     @Override
     public MyNews toDto(final Class<MyNews> c, final Map<String, Object> o) {
         return null;
-    }
-    
-    @Override
-    public String getIndex() {
-        return MyNews.class.getAnnotation(TypeMapping.class).useIndex();
     }
     
     @Override

@@ -56,6 +56,7 @@ public abstract class AbstractNodeImpl<T extends Client>
      */
     @PreDestroy
     public void onShutdown() {
+        LOG.debug("Shutting down node...");
         client.close();
     }
     

@@ -14,11 +14,9 @@ import java.util.Map;
  * @version 0.2
  */
 public interface TypeCodec<T> {
-    String toJsonMap(T t);
+    String toJson(T t);
     
     T toDto(Class<T> c, Map<String, Object> o);
-    
-    String getIndex();
     
     String getIndexType();
     

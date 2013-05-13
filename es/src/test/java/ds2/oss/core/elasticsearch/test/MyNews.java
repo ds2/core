@@ -26,6 +26,7 @@ public class MyNews {
     /**
      * The message.
      */
+    @PropertyMapping
     private String msg;
     /**
      * The post date.
