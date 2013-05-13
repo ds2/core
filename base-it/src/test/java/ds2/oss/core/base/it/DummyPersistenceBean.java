@@ -13,7 +13,6 @@ import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 
 import ds2.oss.core.api.PersistenceSupport;
-import ds2.oss.core.base.impl.test.DummyEntity;
 
 /**
  * The persistence bean.

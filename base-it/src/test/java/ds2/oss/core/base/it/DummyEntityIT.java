@@ -17,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.base.impl.DummyPersistenceBean;
-
 /**
  * A dummy persistence test.
  * 
@@ -49,7 +47,7 @@ public class DummyEntityIT extends Arquillian {
         final JavaArchive jar =
             ShrinkWrap
                 .create(JavaArchive.class, "example.jar")
-                .addPackages(true, "ds2.oss.core.base.impl")
+                .addPackages(true, "ds2.oss.core.base.it")
                 .addAsManifestResource("test-persistence.xml",
                     "persistence.xml")
                 // Enable CDI
