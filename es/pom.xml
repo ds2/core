@@ -62,4 +62,13 @@
       </plugin>
     </plugins>
   </build>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>4.2.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
