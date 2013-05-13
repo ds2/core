@@ -55,5 +55,6 @@
     <module>api</module>
     <module>base</module>
     <module>interceptors</module>
+    <module>base-it</module>
   </modules>
 </project>

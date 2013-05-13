@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ds2.oss.core.base.impl;
+package ds2.oss.core.base.it;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;

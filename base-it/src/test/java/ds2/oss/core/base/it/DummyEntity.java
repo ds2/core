@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ds2.oss.core.base.impl.test;
+package ds2.oss.core.base.it;
 
 import java.util.Date;
 
