@@ -79,7 +79,7 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
         try {
             final FileObject res =
                 filer.createResource(StandardLocation.SOURCE_OUTPUT, pkg,
-                    elem.getSimpleName() + ".json", elem);
+                    elem.getSimpleName() + "-elasticsearch.mapping.json", elem);
             res.delete();
             final Writer writer = res.openWriter();
             writer.write("hello");

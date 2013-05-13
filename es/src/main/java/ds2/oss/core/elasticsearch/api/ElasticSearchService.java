@@ -15,6 +15,8 @@ public interface ElasticSearchService {
      * 
      * @param t
      *            the object to put
+     * @param codec
+     *            the codec to use
      * @param <T>
      *            the type to put
      * @return the object
