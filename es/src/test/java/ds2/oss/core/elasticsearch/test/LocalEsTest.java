@@ -146,12 +146,14 @@ public class LocalEsTest {
         }
         LOG.info("Checking mappings");
         final ClusterStateResponse resp =
-            esNode.get().admin().cluster().prepareState().execute().actionGet();
+            esNode.get().admin().cluster().prepareState()
+                .setFilterIndices(indexName).execute().actionGet();
         final Map<String, MappingMetaData> mappings =
-            resp.getState().metaData().index(indexName).mappings();
+            resp.getState().getMetaData().index(indexName).mappings();
         if (!mappings.containsKey(indexType)) {
             esNode.get().admin().indices().preparePutMapping(indexName)
-                .setSource(NEWS_MAPPING).execute().actionGet();
+                .setType(indexType).setSource(NEWS_MAPPING).execute()
+                .actionGet();
         }
         LOG.info("Wait for index to come up");
         waitForYellow();
