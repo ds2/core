@@ -73,8 +73,8 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
     private void scanType(final Element elem, final Filer filer) {
         final TypeMapping tm = elem.getAnnotation(TypeMapping.class);
         final Gson gson = new Gson();
-        TypeElement te = (TypeElement) elem;
-        PackageElement pe = (PackageElement) te.getEnclosingElement();
+        final TypeElement te = (TypeElement) elem;
+        final PackageElement pe = (PackageElement) te.getEnclosingElement();
         final String pkg = pe.getQualifiedName().toString();
         try {
             final FileObject res =
@@ -82,7 +82,15 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
                     elem.getSimpleName() + "-elasticsearch.mapping.json", elem);
             res.delete();
             final Writer writer = res.openWriter();
-            writer.write("hello");
+            final StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            // the type name structure
+            sb.append("\"").append(tm.value()).append("\" {");
+            // end type name
+            sb.append("}");
+            // end JSON
+            sb.append("}");
+            writer.write(sb.toString());
             writer.flush();
             writer.close();
         } catch (final IOException e) {

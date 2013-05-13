@@ -1,3 +1,18 @@
+/*
+ * Copyright 2012-2013 Dirk Strauss
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 /**
  * 
  */
@@ -52,11 +67,6 @@ public class MyNewsCodec implements NewsCodec {
     }
     
     @Override
-    public MyNews toDto(final Class<MyNews> c, final Map<String, Object> o) {
-        return null;
-    }
-    
-    @Override
     public String getMapping() {
         XContentBuilder xbMapping = null;
         try {
@@ -84,8 +94,20 @@ public class MyNewsCodec implements NewsCodec {
     }
     
     @Override
-    public String getIndexType() {
+    public String getIndexTypeName() {
         return MyNews.class.getAnnotation(TypeMapping.class).value();
+    }
+    
+    @Override
+    public MyNews toDto(final Map<String, Object> o) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public String getIndexName() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }
