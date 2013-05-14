@@ -15,11 +15,17 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * The field mapping annotation.
+ * 
  * @author dstrauss
+ * @version 0.2
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.SOURCE)
@@ -28,8 +34,42 @@ public @interface PropertyMapping {
     /**
      * The field name.
      */
-  String value() default "";
-  FieldTypes type() default FieldTypes.STRING;
-  IndexTypes index() default IndexTypes.NOT_ANALYZED;
-  String indexName() default "";
+    String name() default "";
+    
+    /**
+     * The data type.
+     */
+    FieldTypes type() default FieldTypes.STRING;
+    
+    /**
+     * The analyzer type.
+     */
+    IndexTypes index() default IndexTypes.ANALYZED;
+    
+    /**
+     * The name of the field to store in the index.
+     */
+    String indexName() default "";
+    
+    /**
+     * Flag to indicate to store the field value's JSON directly.
+     */
+    boolean store() default false;
+    
+    /**
+     * What to store if this field is null.
+     */
+    String onNull() default NULL;
+    
+    /**
+     * The date format. See <a href=
+     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/"
+     * >here</a>.
+     */
+    String dateFormat() default NULL;
+    
+    /**
+     * Dummy text to set null.
+     */
+    String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
 }

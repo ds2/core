@@ -13,38 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * 
+ */
 package ds2.oss.core.elasticsearch.api;
 
 /**
- * The index types.
+ * The codec provider.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public enum IndexTypes {
+public interface CodecProvider {
     /**
-     * Do not analyze this field. The field will not be searchable.
+     * Finds a codec for the given class type.
+     * 
+     * @param c
+     *            the class type
+     * @param <T>
+     *            the type
+     * @return the codec, or null if not found
      */
-    NO("no"),
-    /**
-     * Use full match index for the field values.
-     */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on any field value.
-     */
-    ANALYZED("analyzed");
-    
-    /**
-     * The type name.
-     */
-    private String typeName;
-    
-    private IndexTypes(final String s) {
-        typeName = s;
-    }
-    
-    public String getTypeName() {
-        return typeName;
-    }
+    <T> TypeCodec<T> findFor(Class<T> c);
 }

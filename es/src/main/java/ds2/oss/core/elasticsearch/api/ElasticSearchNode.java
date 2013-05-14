@@ -13,38 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * 
+ */
 package ds2.oss.core.elasticsearch.api;
 
+import java.net.InetSocketAddress;
+
+import org.elasticsearch.client.Client;
+
 /**
- * The index types.
+ * A contract for an ES node.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public enum IndexTypes {
+public interface ElasticSearchNode {
     /**
-     * Do not analyze this field. The field will not be searchable.
+     * Returns a configured client.
+     * 
+     * @return a client
      */
-    NO("no"),
-    /**
-     * Use full match index for the field values.
-     */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on any field value.
-     */
-    ANALYZED("analyzed");
+    Client get();
     
     /**
-     * The type name.
+     * Adds a list of new transport endpoints.
+     * 
+     * @param isa
+     *            the new endpoints to add
      */
-    private String typeName;
+    void addTransport(InetSocketAddress... isa);
     
-    private IndexTypes(final String s) {
-        typeName = s;
-    }
-    
-    public String getTypeName() {
-        return typeName;
-    }
+    /**
+     * Removes a list of transports.
+     * 
+     * @param isa
+     *            the transports to remove.
+     */
+    void removeTransport(InetSocketAddress... isa);
 }

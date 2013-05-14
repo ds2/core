@@ -13,38 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * 
+ */
 package ds2.oss.core.elasticsearch.api;
 
 /**
- * The index types.
+ * Contract to access an elastic search node.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public enum IndexTypes {
+public interface ElasticSearchService {
     /**
-     * Do not analyze this field. The field will not be searchable.
+     * Puts an object into the index.
+     * 
+     * @param index
+     *            The index name to put the object into
+     * 
+     * @param t
+     *            the object to put
+     * @param codec
+     *            the codec to use
+     * @param <T>
+     *            the type to put
+     * @return the object
      */
-    NO("no"),
-    /**
-     * Use full match index for the field values.
-     */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on any field value.
-     */
-    ANALYZED("analyzed");
-    
-    /**
-     * The type name.
-     */
-    private String typeName;
-    
-    private IndexTypes(final String s) {
-        typeName = s;
-    }
-    
-    public String getTypeName() {
-        return typeName;
-    }
+    <T> T put(String index, T t, TypeCodec<T> codec);
 }

@@ -13,38 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.elasticsearch.api;
+/**
+ * 
+ */
+package ds2.oss.core.elasticsearch.test;
+
+import ds2.oss.core.elasticsearch.api.TypeCodec;
 
 /**
- * The index types.
+ * The news codec.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public enum IndexTypes {
-    /**
-     * Do not analyze this field. The field will not be searchable.
-     */
-    NO("no"),
-    /**
-     * Use full match index for the field values.
-     */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on any field value.
-     */
-    ANALYZED("analyzed");
+public interface NewsCodec extends TypeCodec<MyNews> {
     
-    /**
-     * The type name.
-     */
-    private String typeName;
-    
-    private IndexTypes(final String s) {
-        typeName = s;
-    }
-    
-    public String getTypeName() {
-        return typeName;
-    }
 }

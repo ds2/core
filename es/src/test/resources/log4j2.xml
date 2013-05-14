@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright 2012-2013 Dirk Strauss
@@ -16,9 +16,18 @@
     limitations under the License.
 
 -->
-<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" version="1.1"
-  bean-discovery-mode="annotated">
-  <alternatives>
-    <class>ds2.oss.core.elasticsearch.impl.LocalNodeImpl</class></alternatives>
-</beans>
+<configuration status="WARN">
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+  </appenders>
+  <loggers>
+    <logger name="ds2.oss.core.elasticsearch" level="debug">
+      <appender-ref ref="Console" />
+    </logger>
+    <root level="info">
+      <appender-ref ref="Console" />
+    </root>
+  </loggers>
+</configuration>

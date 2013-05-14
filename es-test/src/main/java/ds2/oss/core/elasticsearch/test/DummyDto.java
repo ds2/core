@@ -15,62 +15,63 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
+import java.util.Set;
+
 import ds2.oss.core.elasticsearch.api.IndexTypes;
 import ds2.oss.core.elasticsearch.api.PropertyMapping;
 import ds2.oss.core.elasticsearch.api.TypeMapping;
 
-import java.util.Set;
-
 /**
  * A dummy dto.
+ * 
  * @author dstrauss
  */
-@TypeMapping("dummy")
+@TypeMapping(useIndex = "index1", value = "dummy")
 public class DummyDto {
     @PropertyMapping(index = IndexTypes.NOT_ANALYZED)
     private String name;
-    @PropertyMapping(index = IndexTypes.NOT_ANALYZED,indexName = "role")
+    @PropertyMapping(index = IndexTypes.NOT_ANALYZED, indexName = "role")
     private Set<String> roles;
-
+    
     public String getName() {
         return name;
     }
- 
+    
     public void setName(final String name) {
         this.name = name;
     }
-
+    
     public Set<String> getRoles() {
         return roles;
     }
-
+    
     public void setRoles(final Set<String> roles) {
         this.roles = roles;
     }
-
+    
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
-			return true;
-		}
+            return true;
+        }
         if (!(o instanceof DummyDto)) {
-			return false;
-		}
-
+            return false;
+        }
+        
         DummyDto dummyDto = (DummyDto) o;
-
+        
         if (name != null ? !name.equals(dummyDto.name) : dummyDto.name != null) {
-			return false;
-		}
-
+            return false;
+        }
+        
         return true;
     }
-
+    
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
     }
-
+    
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("DummyDto{");

@@ -13,38 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * 
+ */
 package ds2.oss.core.elasticsearch.api;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * The index types.
+ * Marks a field to be the identifier of a dto object.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public enum IndexTypes {
-    /**
-     * Do not analyze this field. The field will not be searchable.
-     */
-    NO("no"),
-    /**
-     * Use full match index for the field values.
-     */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on any field value.
-     */
-    ANALYZED("analyzed");
-    
-    /**
-     * The type name.
-     */
-    private String typeName;
-    
-    private IndexTypes(final String s) {
-        typeName = s;
-    }
-    
-    public String getTypeName() {
-        return typeName;
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@Documented
+public @interface Identifier {
+    // nothing special to do
 }

@@ -13,38 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * 
+ */
 package ds2.oss.core.elasticsearch.api;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import javax.enterprise.context.ApplicationScoped;
+
 /**
- * The index types.
+ * Marks a codec.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public enum IndexTypes {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Documented
+@ApplicationScoped
+public @interface EsCodec {
     /**
-     * Do not analyze this field. The field will not be searchable.
+     * The dto type to address.
      */
-    NO("no"),
-    /**
-     * Use full match index for the field values.
-     */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on any field value.
-     */
-    ANALYZED("analyzed");
-    
-    /**
-     * The type name.
-     */
-    private String typeName;
-    
-    private IndexTypes(final String s) {
-        typeName = s;
-    }
-    
-    public String getTypeName() {
-        return typeName;
-    }
+    Class<?> value();
 }
