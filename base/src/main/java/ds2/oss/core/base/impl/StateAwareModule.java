@@ -61,7 +61,7 @@ public class StateAwareModule implements StateAware {
      */
     @Override
     public EntryStates getEntryState() {
-        return c.getEnumByReflection(stateId, "getById");
+        return c.getEnumByReflection(stateId, "getById", EntryStates.class);
     }
     
     /**
