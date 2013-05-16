@@ -37,7 +37,28 @@ public @interface TypeMapping {
     String value();
     
     /**
-     * The name of the index to use.
+     * The name of the index to use. Usually, this can be set to a specific index, default is to let the ES service handle it for you.
      */
-    String useIndex();
+    String useIndex() default "";
+
+    /**
+     * The compress threshold. Documents bigger than the given size are compressed. Otherwise not. Some values are
+     * 10kb, 100b etc. If this field is set, compress is enabled.
+     */
+    String compressThreshold() default "";
+
+    /**
+     * The _source.enabled flag.
+     */
+    boolean storeSource() default false;
+
+    /**
+     * The time to live value. Default is empty string to store the document forever. Valid values may be 1d etc.
+     */
+    String ttl() default "";
+
+    /**
+     * The _parent declaration.
+     */
+    String parentType() default "";
 }
