@@ -61,4 +61,9 @@ public @interface TypeMapping {
      * The _parent declaration.
      */
     String parentType() default "";
+
+    /**
+     * Flag to indicate if the index should be refreshed on creating a document of this type.
+     */
+    boolean refreshIndexOnCreate() default false;
 }
