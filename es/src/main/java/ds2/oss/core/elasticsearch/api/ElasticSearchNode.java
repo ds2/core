@@ -51,4 +51,7 @@ public interface ElasticSearchNode {
      *            the transports to remove.
      */
     void removeTransport(InetSocketAddress... isa);
+
+    void waitForClusterYellowState();
+    void waitForClusterGreenState();
 }

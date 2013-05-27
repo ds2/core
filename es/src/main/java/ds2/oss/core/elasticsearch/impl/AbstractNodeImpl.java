@@ -97,4 +97,18 @@ public abstract class AbstractNodeImpl<T extends Client>
     public void removeTransport(final InetSocketAddress... isa) {
         LOG.info("Ignoring");
     }
+
+    /**
+     * Waits for the yellow status.
+     */
+    public void waitForClusterYellowState(){
+        get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+    }
+
+    /**
+     * Waits for green status of the cluster.
+     */
+    public void waitForClusterGreenState(){
+        get().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+    }
 }

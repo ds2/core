@@ -43,20 +43,13 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchService;
  * @version 0.2
  */
 @Test(singleThreaded = true)
-public class LocalEsTest {
+public class LocalEsTest extends AbstractInjectionEnvironment {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory
         .getLogger(LocalEsTest.class);
-    /**
-     * The classpath scanner.
-     */
-    private static Weld weld = new Weld();
-    /**
-     * The container.
-     */
-    private static WeldContainer wc;
+
     /**
      * The test object.
      */
@@ -94,30 +87,10 @@ public class LocalEsTest {
      * Inits the test.
      */
     public LocalEsTest() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
-    @BeforeSuite
-    public void onSuite() {
-        wc = weld.initialize();
-    }
-    
-    @AfterSuite
-    public void onSuiteEnd() {
-        weld.shutdown();
-    }
-    
-    /**
-     * Returns an instance of the given class.
-     * 
-     * @param c
-     *            the class
-     * @return an instance
-     */
-    public static <T> T getInstance(final Class<T> c) {
-        return wc.instance().select(c).get();
-    }
-    
+
     @BeforeClass
     public void onMethod() {
         to = getInstance(ElasticSearchService.class);
@@ -157,7 +130,7 @@ public class LocalEsTest {
         if (!indexExists) {
             esNode.get().admin().indices().prepareCreate(indexName).execute()
                 .actionGet();
-            waitForYellow();
+            esNode.waitForClusterYellowState();
         }
         LOG.info("Checking mappings");
         final ClusterStateResponse resp =
@@ -171,12 +144,8 @@ public class LocalEsTest {
                 .actionGet();
         }
         LOG.info("Wait for index to come up");
-        waitForYellow();
+        esNode.waitForClusterYellowState();
         LOG.info("Index is online. Continue with test.");
     }
     
-    private void waitForYellow() {
-        esNode.get().admin().cluster().prepareHealth().setWaitForYellowStatus()
-            .execute().actionGet();
-    }
 }
