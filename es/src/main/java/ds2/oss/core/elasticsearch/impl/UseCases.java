@@ -3,7 +3,9 @@ package ds2.oss.core.elasticsearch.impl;
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
+import org.elasticsearch.action.deletebyquery.DeleteByQueryResponse;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,14 @@ import javax.inject.Inject;
  */
 @ApplicationScoped
 public class UseCases {
-
+	/**
+	 * A logger.
+	 */
     private static final Logger LOG = LoggerFactory.getLogger(UseCases.class);
 
+    /**
+     * The ES node.
+     */
     @Inject
     private ElasticSearchNode esNode;
 
@@ -32,7 +39,9 @@ public class UseCases {
      * @param  type   the type name
      */
     public void deleteEntriesOfType(final String index, final String type) {
-        esNode.get().prepareDelete().setIndex(index).setType(type).execute().actionGet();
+        DeleteByQueryResponse response = esNode.get().prepareDeleteByQuery(index).setQuery(QueryBuilders.termQuery(
+                    "_type", type)).execute().actionGet();
+        LOG.info("Result: {}", response);
         esNode.waitForClusterYellowState();
     }
 

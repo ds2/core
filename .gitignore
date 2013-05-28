@@ -9,3 +9,4 @@ test-output
 nbproject
 .idea
 *.iml
+out
