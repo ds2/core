@@ -26,7 +26,7 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * 
  * @author dstrauss
  */
-@TypeMapping(useIndex = "index1", value = "dummy")
+@TypeMapping(value = "dummy")
 public class DummyDto {
     @PropertyMapping(index = IndexTypes.NOT_ANALYZED)
     private String name;

@@ -88,7 +88,6 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
             final StringBuilder sb = new StringBuilder();
             final JsonObject mainJs = new JsonObject();
             final JsonObject typeJs = new JsonObject();
-            sb.append("{");
             // the type name structure
             mainJs.add(tm.value(), typeJs);
             final JsonObject properties =
@@ -97,7 +96,6 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
                 typeJs.add("properties", properties);
             }
             sb.append(mainJs.toString());
-            sb.append("\n");
             writer.write(sb.toString());
             writer.flush();
             writer.close();
