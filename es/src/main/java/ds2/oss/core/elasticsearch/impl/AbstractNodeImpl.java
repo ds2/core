@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.elasticsearch.impl;
 
@@ -29,86 +29,103 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 /**
  * An abstract node implementation.
- * 
+ *
  * @author dstrauss
  * @version 0.2
- * @param <T>
- *            The type of the node
+ * @param <T> The type of the node
  */
 public abstract class AbstractNodeImpl<T extends Client>
-    implements
-    ElasticSearchNode {
-    /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(AbstractNodeImpl.class);
-    /**
-     * A lock.
-     */
-    protected final Lock lock = new ReentrantLock();
-    /**
-     * Flag to indicate that a lock is required on the client.
-     */
-    protected boolean needsLock;
-    /**
-     * The node instance.
-     */
-    protected T client;
-    
-    /**
-     * Sets up the node impl.
-     */
-    public AbstractNodeImpl() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    /**
-     * Actions to perform on shutdown.
-     */
-    @PreDestroy
-    public void onShutdown() {
-        LOG.debug("Shutting down node...");
-        client.close();
-    }
-    
-    @Override
-    public Client get() {
-        if (!needsLock) {
-            return client;
-        }
-        lock.lock();
-        try {
-            return client;
-        } finally {
-            lock.unlock();
-        }
-    }
-    
-    @Override
-    public void addTransport(final InetSocketAddress... isa) {
-        LOG.info("Ignoring");
-    }
-    
-    @Override
-    public void removeTransport(final InetSocketAddress... isa) {
-        LOG.info("Ignoring");
-    }
+        implements
+        ElasticSearchNode {
 
-    /**
-     * Waits for the yellow status.
-     */
-    public void waitForClusterYellowState(){
-        get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-    }
+  /**
+   * A logger.
+   */
+  private static final Logger LOG = LoggerFactory
+          .getLogger(AbstractNodeImpl.class);
+  /**
+   * A lock.
+   */
+  protected final Lock lock = new ReentrantLock();
+  /**
+   * Flag to indicate that a lock is required on the client.
+   */
+  protected boolean needsLock;
+  /**
+   * The node instance.
+   */
+  protected T client;
 
-    /**
-     * Waits for green status of the cluster.
-     */
-    public void waitForClusterGreenState(){
-        get().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+  /**
+   * Sets up the node impl.
+   */
+  public AbstractNodeImpl() {
+    // TODO Auto-generated constructor stub
+  }
+
+  /**
+   * Actions to perform on shutdown.
+   */
+  @PreDestroy
+  public void onShutdown() {
+    LOG.debug("Shutting down node...");
+    client.close();
+  }
+
+  @Override
+  public Client get() {
+    if (!needsLock) {
+      return client;
     }
+    lock.lock();
+    try {
+      return client;
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  @Override
+  public void addTransport(final InetSocketAddress... isa) {
+    needsLock = true;
+    try {
+      lock.tryLock(5, TimeUnit.SECONDS);
+    } catch (InterruptedException ex) {
+      LOG.error("Could not get lock for this node!", ex);
+      return;
+    }
+    try {
+      LOG.info("performing fake addTransport.");
+      Thread.sleep(250);
+    } catch (InterruptedException ex) {
+      LOG.warn("Error when sleeping!", ex);
+    } finally {
+      lock.unlock();
+      needsLock = false;
+    }
+  }
+
+  @Override
+  public void removeTransport(final InetSocketAddress... isa) {
+    LOG.info("Ignoring");
+  }
+
+  /**
+   * Waits for the yellow status.
+   */
+  public void waitForClusterYellowState() {
+    get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+  }
+
+  /**
+   * Waits for green status of the cluster.
+   */
+  public void waitForClusterGreenState() {
+    get().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+  }
 }
