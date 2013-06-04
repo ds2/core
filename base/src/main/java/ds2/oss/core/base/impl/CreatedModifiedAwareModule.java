@@ -53,7 +53,7 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
      * Inits the module.
      */
     public CreatedModifiedAwareModule() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     /**

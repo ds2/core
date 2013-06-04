@@ -59,7 +59,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * Inits the bean.
      */
     public ElasticSearchServiceImpl() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     /**

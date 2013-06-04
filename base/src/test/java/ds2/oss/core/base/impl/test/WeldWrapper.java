@@ -43,7 +43,7 @@ public class WeldWrapper {
      * Inits the wrapper.
      */
     public WeldWrapper() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     @BeforeSuite

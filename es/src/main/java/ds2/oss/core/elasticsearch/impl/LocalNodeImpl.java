@@ -49,7 +49,7 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
      * Nothing to do.
      */
     public LocalNodeImpl() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     /**

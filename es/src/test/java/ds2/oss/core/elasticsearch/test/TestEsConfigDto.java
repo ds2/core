@@ -31,7 +31,7 @@ public class TestEsConfigDto implements EsConfig {
     /**
      */
     public TestEsConfigDto() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
 
     @Override

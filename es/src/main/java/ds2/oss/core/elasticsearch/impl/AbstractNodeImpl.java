@@ -65,7 +65,7 @@ public abstract class AbstractNodeImpl<T extends Client>
    * Sets up the node impl.
    */
   public AbstractNodeImpl() {
-    // TODO Auto-generated constructor stub
+    // nothing special to do
   }
 
   /**

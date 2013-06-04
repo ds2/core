@@ -31,18 +31,16 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     /**
      */
     public CountryCodec() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
 
     @Override
     public String toJson(final CountryDto t) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public CountryDto toDto(final Map<String, Object> o) {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -41,7 +41,7 @@ public class EnumConverterTest {
      * Inits the test.
      */
     public EnumConverterTest() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     @Test

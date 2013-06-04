@@ -47,7 +47,7 @@ public class MyNewsCodec implements NewsCodec {
      * Inits the codec.
      */
     public MyNewsCodec() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     @Override
@@ -87,8 +87,7 @@ public class MyNewsCodec implements NewsCodec {
             xbMapping.endObject().endObject().endObject();
             return xbMapping.string();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOG.error("Error when setting up the mapping!",e);
         }
         return null;
     }
@@ -100,13 +99,11 @@ public class MyNewsCodec implements NewsCodec {
     
     @Override
     public MyNews toDto(final Map<String, Object> o) {
-        // TODO Auto-generated method stub
         return null;
     }
     
     @Override
     public String getIndexName() {
-        // TODO Auto-generated method stub
         return null;
     }
     

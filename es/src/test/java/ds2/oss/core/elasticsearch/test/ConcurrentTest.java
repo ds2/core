@@ -45,7 +45,7 @@ public class ConcurrentTest extends AbstractInjectionEnvironment {
   /**
    */
   public ConcurrentTest() {
-    // TODO Auto-generated constructor stub
+    // nothing special to do
   }
 
   @BeforeClass

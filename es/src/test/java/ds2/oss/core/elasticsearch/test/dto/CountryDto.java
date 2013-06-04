@@ -35,7 +35,7 @@ public class CountryDto {
     /**
      */
     public CountryDto() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
 
     /**

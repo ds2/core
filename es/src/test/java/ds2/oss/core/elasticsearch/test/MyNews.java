@@ -58,7 +58,7 @@ public class MyNews {
      * INits the dto.
      */
     public MyNews() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     /**
