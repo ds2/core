@@ -14,54 +14,70 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.base.impl.test;
 
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
+
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 /**
  * A weld wrapper.
- * 
- * @author dstrauss
- * @version 0.1
+ *
+ * @author   dstrauss
+ * @version  0.1
  */
 public class WeldWrapper {
+
     /**
      * The weld system.
      */
     private static Weld weld = new Weld();
+
     /**
      * The weld container.
      */
     private static WeldContainer wc;
-    
+
     /**
      * Inits the wrapper.
      */
     public WeldWrapper() {
         // nothing special to do
     }
-    
+
+    /**
+     * Actions to perform on suite start.
+     */
     @BeforeSuite
-    public void onSuiteStart() {
-        if (wc != null) {
-            return;
-        }
-        synchronized (weld) {
+    public static void onSuiteStart() {
+        synchronized (WeldWrapper.class) {
+            if (wc != null) {
+                return;
+            }
             wc = weld.initialize();
         }
     }
-    
+
+    /**
+     * Actions to perform on suite end.
+     */
     @AfterSuite
-    public void afterSuite() {
+    public static void afterSuite() {
         weld.shutdown();
         wc = null;
     }
-    
+
+    /**
+     * Returns an instance of the given class.
+     *
+     * @param   c  the class
+     *
+     * @return  the instance, if found. Otherwise null.
+     */
     public static <T> T getInstance(final Class<T> c) {
         return wc.instance().select(c).get();
     }
