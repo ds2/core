@@ -19,7 +19,7 @@
 package ds2.oss.core.api;
 
 /**
- * The known hash algorithms.
+ * The known hash algorithms for the MessageDigest.
  * 
  * @author dstrauss
  * @version 0.4
