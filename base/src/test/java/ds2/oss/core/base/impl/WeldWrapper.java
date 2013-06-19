@@ -20,8 +20,14 @@ package ds2.oss.core.base.impl;
 
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A weld wrapper.
@@ -29,7 +35,10 @@ import org.testng.annotations.BeforeSuite;
  * @author dstrauss
  * @version 0.1
  */
-public class WeldWrapper {
+@Test(groups = "sym")
+public abstract class WeldWrapper {
+    private static final Logger LOG= LoggerFactory.getLogger(WeldWrapper.class);
+    private static final Lock lock=new ReentrantLock();
     /**
      * The weld system.
      */
@@ -48,18 +57,30 @@ public class WeldWrapper {
     
     @BeforeSuite
     public void onSuiteStart() {
+        LOG.info("Entering Weld Init");
+        lock.lock();
+        try {
         if (wc != null) {
+                LOG.info("Nothing to do, ignoring");
             return;
         }
-        synchronized (weld) {
+            LOG.info("Starting init");
             wc = weld.initialize();
+        } finally {
+            lock.unlock();
         }
+        LOG.info("Done with init");
     }
     
     @AfterSuite
     public void afterSuite() {
-        weld.shutdown();
-        wc = null;
+        lock.lock();
+        try{
+            weld.shutdown();
+            wc = null;
+        } finally {
+            lock.unlock();
+        }
     }
     
     public static <T> T getInstance(final Class<T> c) {

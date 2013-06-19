@@ -12,5 +12,5 @@ public interface SymmetricKeyService {
      * @param n the algorithm to use
      * @return the result hash, or null if an error occurred
      */
-    byte[] performHashing(byte[] origin, SymmetricKeyNames n);
+    byte[] performHashing(char[] origin, SymmetricKeyNames n);
 }
