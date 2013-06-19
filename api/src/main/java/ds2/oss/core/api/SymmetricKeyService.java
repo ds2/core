@@ -13,4 +13,5 @@ public interface SymmetricKeyService {
      * @return the result hash, or null if an error occurred
      */
     byte[] performHashing(char[] origin, SymmetricKeyNames n);
+    byte[] performHashing(char[] origin, byte[] salt, int iterationCount, SymmetricKeyNames n);
 }

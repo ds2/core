@@ -29,6 +29,12 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService{
     private SecurityBaseData baseData;
     @Override
     public byte[] performHashing(char[] origin, SymmetricKeyNames n) {
+        byte[] rc=performHashing(origin, baseData.getSalt(), baseData.getMinIteration(),n);
+        return rc;
+    }
+
+    @Override
+    public byte[] performHashing(char[] origin, byte[] salt, int iterationCount, SymmetricKeyNames n) {
         if(origin==null){
             LOG.warn("No origin data given to hash!");
             return null;
@@ -40,7 +46,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService{
         byte[] rc=null;
         try {
             SecretKeyFactory skf=SecretKeyFactory.getInstance(n.getName());
-            KeySpec ks=new PBEKeySpec(origin, baseData.getSalt(), baseData.getMinIteration(), n.getSuggestedKeyLength());
+            KeySpec ks=new PBEKeySpec(origin, salt, iterationCount, n.getSuggestedKeyLength());
             SecretKey erg=skf.generateSecret(ks);
             rc=erg.getEncoded();
         } catch (NoSuchAlgorithmException e) {
