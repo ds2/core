@@ -35,7 +35,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author dstrauss
  * @version 0.1
  */
-@Test(groups = "sym")
 public abstract class WeldWrapper {
     private static final Logger LOG= LoggerFactory.getLogger(WeldWrapper.class);
     private static final Lock lock=new ReentrantLock();
@@ -55,7 +54,7 @@ public abstract class WeldWrapper {
         // TODO Auto-generated constructor stub
     }
     
-    @BeforeSuite
+    @BeforeSuite(groups = {"sym","hex","bit","base64"})
     public void onSuiteStart() {
         LOG.info("Entering Weld Init");
         lock.lock();
@@ -72,10 +71,11 @@ public abstract class WeldWrapper {
         LOG.info("Done with init");
     }
     
-    @AfterSuite
+    @AfterSuite(groups = {"sym","hex","bit","base64"})
     public void afterSuite() {
         lock.lock();
         try{
+            LOG.info("Shutting down Weld");
             weld.shutdown();
             wc = null;
         } finally {
@@ -84,6 +84,11 @@ public abstract class WeldWrapper {
     }
     
     public static <T> T getInstance(final Class<T> c) {
-        return wc.instance().select(c).get();
+        lock.lock();
+        try {
+            return wc.instance().select(c).get();
+        } finally {
+            lock.unlock();
+        }
     }
 }

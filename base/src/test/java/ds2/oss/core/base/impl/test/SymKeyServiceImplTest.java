@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 /**
  * Tests.
  */
-@Test(timeOut = 20000,groups = "sym")
+@Test(groups = "sym")
 public class SymKeyServiceImplTest extends WeldWrapper{
     private SymmetricKeyService to;
 
@@ -16,7 +16,7 @@ public class SymKeyServiceImplTest extends WeldWrapper{
     public void onClass(){
         to=getInstance(SymmetricKeyService.class);
     }
-    @Test(groups = {"inject","sym"})
+    @Test
     public void testInject(){
         Assert.assertNotNull(to);
     }
