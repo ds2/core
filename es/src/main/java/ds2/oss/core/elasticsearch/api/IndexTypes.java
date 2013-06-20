@@ -27,11 +27,11 @@ public enum IndexTypes {
      */
     NO("no"),
     /**
-     * Use full match index for the field values.
+     * Use full match index for the field values. Field is searchable but not tokenized.
      */
     NOT_ANALYZED("not_analyzed"),
     /**
-     * Perform a full analyze on any field value.
+     * Perform a full analyze on field value.
      */
     ANALYZED("analyzed");
     
