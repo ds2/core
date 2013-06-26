@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>ds2.oss.core</groupId>
@@ -8,6 +8,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   </parent>
   <artifactId>ds2-oss-core-base-it</artifactId>
   <name>DS/2 OSS Core Base Integration tests</name>
+  <properties>
+    <arquillian.version>1.0.4.Final</arquillian.version>
+    <arquillian.testng.version>1.0.4.Final</arquillian.testng.version>
+    <version.arquillian_core>1.0.4.Final</version.arquillian_core>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>ds2.oss.core</groupId>
@@ -30,7 +35,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <dependency>
       <groupId>org.jboss.arquillian.testng</groupId>
       <artifactId>arquillian-testng-container</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.arquillian.container</groupId>
@@ -45,11 +49,30 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <groupId>org.glassfish.main.extras</groupId>
       <artifactId>glassfish-embedded-all</artifactId>
     </dependency>
-    <!-- 
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-    </dependency>
-    -->
+    <!-- <dependency> <groupId>com.google.inject</groupId> <artifactId>guice</artifactId> </dependency> -->
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian.container</groupId>
+        <artifactId>arquillian-container-test-spi</artifactId>
+        <version>1.0.4.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.container</groupId>
+        <artifactId>arquillian-container-spi</artifactId>
+        <version>1.0.4.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.test</groupId>
+        <artifactId>arquillian-test-impl-base</artifactId>
+        <version>1.0.4.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.container</groupId>
+        <artifactId>arquillian-container-test-impl-base</artifactId>
+        <version>1.0.4.Final</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
