@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.base.it;
 
 import javax.ejb.EJB;
@@ -31,6 +28,9 @@ import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
+
+import ds2.oss.core.base.itest.DummyEntity;
+import ds2.oss.core.base.itest.DummyPersistence;
 
 /**
  * A dummy persistence test.
@@ -62,7 +62,7 @@ public class DummyEntityIT extends Arquillian {
         final JavaArchive jar =
             ShrinkWrap
                 .create(JavaArchive.class, "example.jar")
-                .addPackages(true, "ds2.oss.core.base.it")
+                .addPackages(true, "ds2.oss.core.base.itest")
                 .addAsManifestResource("test-persistence.xml",
                     "persistence.xml")
                 // Enable CDI
@@ -73,6 +73,9 @@ public class DummyEntityIT extends Arquillian {
         return jar;
     }
     
+    /**
+     * Simple persistence test.
+     */
     @Test
     public void testStore1() {
         final DummyEntity e1 = new DummyEntity();

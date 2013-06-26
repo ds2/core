@@ -16,7 +16,7 @@
 /**
  * 
  */
-package ds2.oss.core.base.it;
+package ds2.oss.core.base.itest;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
