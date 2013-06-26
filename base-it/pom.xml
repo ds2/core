@@ -9,9 +9,6 @@
   <artifactId>ds2-oss-core-base-it</artifactId>
   <name>DS/2 OSS Core Base Integration tests</name>
   <properties>
-    <arquillian.version>1.0.4.Final</arquillian.version>
-    <arquillian.testng.version>1.0.4.Final</arquillian.testng.version>
-    <version.arquillian_core>1.0.4.Final</version.arquillian_core>
   </properties>
   <dependencies>
     <dependency>
@@ -51,28 +48,4 @@
     </dependency>
     <!-- <dependency> <groupId>com.google.inject</groupId> <artifactId>guice</artifactId> </dependency> -->
   </dependencies>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.jboss.arquillian.container</groupId>
-        <artifactId>arquillian-container-test-spi</artifactId>
-        <version>1.0.4.Final</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian.container</groupId>
-        <artifactId>arquillian-container-spi</artifactId>
-        <version>1.0.4.Final</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian.test</groupId>
-        <artifactId>arquillian-test-impl-base</artifactId>
-        <version>1.0.4.Final</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.arquillian.container</groupId>
-        <artifactId>arquillian-container-test-impl-base</artifactId>
-        <version>1.0.4.Final</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 </project>
