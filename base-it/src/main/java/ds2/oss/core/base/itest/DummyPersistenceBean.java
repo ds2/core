@@ -51,12 +51,12 @@ public class DummyPersistenceBean implements DummyPersistence {
     }
     
     @Override
-    public void persist(@NotNull final DummyEntity t) {
+    public void persist(final DummyEntity t) {
         em.persist(t);
     }
     
     @Override
-    public DummyEntity getById(@NotNull final Long e) {
+    public DummyEntity getById(final Long e) {
         return em.find(DummyEntity.class, e);
     }
     
