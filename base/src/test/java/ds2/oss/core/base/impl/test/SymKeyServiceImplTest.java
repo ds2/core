@@ -3,7 +3,6 @@ package ds2.oss.core.base.impl.test;
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.SymmetricKeyNames;
 import ds2.oss.core.api.SymmetricKeyService;
-import ds2.oss.core.base.impl.WeldWrapper;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
