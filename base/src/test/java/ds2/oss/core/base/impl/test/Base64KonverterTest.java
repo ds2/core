@@ -22,7 +22,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.Base64Codec;
-import ds2.oss.core.base.impl.WeldWrapper;
 
 /**
  * The base64 test.

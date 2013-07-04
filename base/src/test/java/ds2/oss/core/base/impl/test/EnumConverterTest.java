@@ -41,7 +41,7 @@ public class EnumConverterTest {
      * Inits the test.
      */
     public EnumConverterTest() {
-        // TODO Auto-generated constructor stub
+        // nothing special to do
     }
     
     @Test
@@ -58,13 +58,13 @@ public class EnumConverterTest {
     
     @Test
     public void getEnum() {
-        final EntryStates s = to.getEnumByReflection(1, "getById");
+        final EntryStates s = to.getEnumByReflection(1, "getById",EntryStates.class);
         Assert.assertEquals(s, EntryStates.ACTIVE);
     }
     
     @Test
     public void getEnum2() {
-        final EntryStates s = to.getEnumByReflection(3, "getById");
+        final EntryStates s = to.getEnumByReflection(3, "getById",EntryStates.class);
         Assert.assertEquals(s, EntryStates.DELETED);
     }
 }
