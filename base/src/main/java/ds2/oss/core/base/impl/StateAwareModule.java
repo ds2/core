@@ -20,6 +20,7 @@ package ds2.oss.core.base.impl;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.StateAware;
@@ -45,6 +46,7 @@ public class StateAwareModule implements StateAware {
     /**
      * The converter.
      */
+    @Transient
     private final NumericalEnumConverter<EntryStates> c;
     
     /**
