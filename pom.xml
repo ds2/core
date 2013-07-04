@@ -56,6 +56,8 @@
     <module>base</module>
     <module>interceptors</module>
     <module>base-it</module>
+    <module>es</module>
+    <module>es-test</module>
   </modules>
   <profiles>
     <profile>
