@@ -57,6 +57,7 @@ public class EsNodeGetter implements Callable<Void> {
     }
     
     @Override
+    @SuppressWarnings("SleepWhileInLoop")
     public Void call() throws Exception {
         while (!Thread.currentThread().isInterrupted()) {
             final Client cl = esNode.get();
