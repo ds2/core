@@ -1,4 +1,4 @@
-package ds2.oss.core.infinispan.api;
+package ds2.oss.core.api;
 
 /**
  * The infinispan service.
