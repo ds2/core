@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.elasticsearch.test;
-
-import ds2.oss.core.elasticsearch.api.EsConfig;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import ds2.oss.core.elasticsearch.api.EsConfig;
+
 /**
- * @author  dstrauss
+ * The test ES config.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
 @ApplicationScoped
 public class TestEsConfigDto implements EsConfig {
-
-    /**
-     */
-    public TestEsConfigDto() {
-        // nothing special to do
-    }
-
+    
     @Override
     public String getClusterName() {
         return "localCluster";

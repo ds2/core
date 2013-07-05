@@ -15,84 +15,98 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
-import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import java.util.Map;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.action.deletebyquery.DeleteByQueryResponse;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.index.query.QueryBuilders;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-
-import javax.enterprise.context.ApplicationScoped;
-
-import javax.inject.Inject;
+import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 
 /**
  * Some common usecases.
+ * 
+ * @version 0.2
+ * @author dstrauss
  */
 @ApplicationScoped
 public class UseCases {
-	/**
-	 * A logger.
-	 */
+    /**
+     * A logger.
+     */
     private static final Logger LOG = LoggerFactory.getLogger(UseCases.class);
-
+    
     /**
      * The ES node.
      */
     @Inject
     private ElasticSearchNode esNode;
-
+    
     /**
      * Deletes a type from the index.
-     *
-     * @param  index  the index name
-     * @param  type   the type name
+     * 
+     * @param index
+     *            the index name
+     * @param type
+     *            the type name
      */
     public void deleteEntriesOfType(final String index, final String type) {
-        DeleteByQueryResponse response = esNode.get().prepareDeleteByQuery(index).setQuery(QueryBuilders.termQuery(
-                    "_type", type)).execute().actionGet();
+        final DeleteByQueryResponse response =
+            esNode.get().prepareDeleteByQuery(index)
+                .setQuery(QueryBuilders.termQuery("_type", type)).execute()
+                .actionGet();
         LOG.info("Result: {}", response);
         esNode.waitForClusterYellowState();
     }
-
+    
     /**
      * Creates an index.
-     *
-     * @param   indexName  the index name
-     *
-     * @return  TRUE if index has been created, otherwise FALSE
+     * 
+     * @param indexName
+     *            the index name
+     * 
+     * @return TRUE if index has been created, otherwise FALSE
      */
     public boolean createIndex(final String indexName) {
-        final boolean indexExists = esNode.get().admin().indices().prepareExists(indexName).execute().actionGet()
-            .isExists();
+        final boolean indexExists =
+            esNode.get().admin().indices().prepareExists(indexName).execute()
+                .actionGet().isExists();
         if (!indexExists) {
-            esNode.get().admin().indices().prepareCreate(indexName).execute().actionGet();
+            esNode.get().admin().indices().prepareCreate(indexName).execute()
+                .actionGet();
             esNode.waitForClusterYellowState();
             return true;
         }
         return false;
     }
-
+    
     /**
      * Adds a mapping for a given type.
-     *
-     * @param  indexName  the index name
-     * @param  typeName   the type name
-     * @param  json       the json containing the mapping data
+     * 
+     * @param indexName
+     *            the index name
+     * @param typeName
+     *            the type name
+     * @param json
+     *            the json containing the mapping data
      */
-    public void addMapping(final String indexName, final String typeName, final String json) {
+    public void addMapping(final String indexName, final String typeName,
+        final String json) {
         LOG.info("Checking mappings");
-        final ClusterStateResponse resp = esNode.get().admin().cluster().prepareState().setFilterIndices(indexName)
-            .execute().actionGet();
-        final Map<String, MappingMetaData> mappings = resp.getState().getMetaData().index(indexName).mappings();
+        final ClusterStateResponse resp =
+            esNode.get().admin().cluster().prepareState()
+                .setFilterIndices(indexName).execute().actionGet();
+        final Map<String, MappingMetaData> mappings =
+            resp.getState().getMetaData().index(indexName).mappings();
         if (!mappings.containsKey(typeName)) {
-            esNode.get().admin().indices().preparePutMapping(indexName).setType(typeName).setSource(json).execute()
-                .actionGet();
+            esNode.get().admin().indices().preparePutMapping(indexName)
+                .setType(typeName).setSource(json).execute().actionGet();
         }
         esNode.waitForClusterYellowState();
     }
