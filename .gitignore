@@ -1,8 +1,9 @@
-.project
-.settings
+.*
 target
 bin
-.checkstyle
-.classpath
 test-output
 *.versionsBackup
+nbproject
+.idea
+*.iml
+out

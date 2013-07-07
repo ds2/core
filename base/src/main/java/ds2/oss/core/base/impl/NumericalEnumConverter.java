@@ -87,14 +87,21 @@ public class NumericalEnumConverter<E extends Enum<?>> {
      * @param methodName
      *            the name of the static method of the enum class which performs
      *            the lookup
+     * @param targetClass
+     *            the enum class
      * @return the enum value, or null if not found
      */
-    public final E getEnumByReflection(final int i, final String methodName) {
+    public final E getEnumByReflection(final int i, final String methodName,
+        final Class<E> targetClass) {
         E rc = null;
         try {
-            rc = getByLookup(methodName, int.class, Integer.valueOf(i));
+            rc =
+                getByLookup(methodName, int.class, Integer.valueOf(i),
+                    targetClass);
             if (rc == null) {
-                rc = getByLookup(methodName, long.class, Long.valueOf(i));
+                rc =
+                    getByLookup(methodName, long.class, Long.valueOf(i),
+                        targetClass);
             }
         } catch (final SecurityException | IllegalArgumentException e) {
             LOG.error("Error when looking up an enum value via reflection!", e);
@@ -111,16 +118,18 @@ public class NumericalEnumConverter<E extends Enum<?>> {
      *            the class of the parameter
      * @param val
      *            the value to use for lookup
+     * @param targetClass
+     *            the enum class
      * @return the found enum value, or null if not found
      * @param <T>
      *            the type of the index value
      */
     private <T> E getByLookup(final String methodName, final Class<T> cT,
-        final T val) {
+        final T val, final Class<E> targetClass) {
         final Method m = getMethodWithSpecificParam(methodName, cT);
         if (m != null) {
             try {
-                return (E) m.invoke(null, val);
+                return targetClass.cast(m.invoke(null, val));
             } catch (final IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
                 LOG.debug("Error when invoking!", e);

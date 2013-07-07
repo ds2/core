@@ -22,7 +22,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.HexCodec;
-import ds2.oss.core.base.impl.WeldWrapper;
 
 /**
  * Testcase for the hex converter.

@@ -1,0 +1,10 @@
+{"news": {
+    "_source": {"enabled": false},
+    "properties": {
+      "title": {"type": "string", "index": "analyzed"},
+      "message": {"type": "string", "index": "analyzed"},
+      "postDate": {"type": "date", "index": "analyzed"},
+      "author": {"type": "string", "index": "analyzed"}
+    }
+  }
+}

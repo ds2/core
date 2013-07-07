@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jee-base</artifactId>
     <groupId>ds2.base.oss</groupId>
-    <version>0.72.1</version>
+    <version>0.77</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ds2.oss.core</groupId>
@@ -55,5 +55,43 @@
     <module>api</module>
     <module>base</module>
     <module>interceptors</module>
+    <module>base-it</module>
+    <module>es</module>
+    <module>es-test</module>
   </modules>
+  <profiles>
+    <profile>
+      <id>no-repo-man</id>
+      <repositories>
+        <repository>
+          <id>commondatastorage.google.ds2</id>
+          <releases>
+            <checksumPolicy>fail</checksumPolicy>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <url>https://commondatastorage.googleapis.com/ds2/mvn/oss/releases</url>
+        </repository>
+        <repository>
+          <id>java EE 7</id>
+          <url>https://maven.java.net/content/groups/promoted</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>commondatastorage.google.ds2</id>
+          <releases>
+            <checksumPolicy>fail</checksumPolicy>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <url>https://commondatastorage.googleapis.com/ds2/mvn/oss/releases</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
 </project>
