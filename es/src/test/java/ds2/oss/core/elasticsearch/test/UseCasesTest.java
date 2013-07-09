@@ -35,7 +35,7 @@ public class UseCasesTest extends AbstractInjectionEnvironment {
     /**
      * The index name.
      */
-    private final String indexName = "myindex2";
+    private final String indexName = "usecasesmyindex2";
     
     @BeforeClass
     public void onMethod() {
