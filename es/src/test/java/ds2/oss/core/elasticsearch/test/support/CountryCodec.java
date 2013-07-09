@@ -13,47 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.elasticsearch.test.support;
+
+import java.util.Map;
 
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 
-import java.util.Map;
-
 /**
- * @author  dstrauss
+ * The country codec.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
 public class CountryCodec implements TypeCodec<CountryDto> {
-
-    /**
-     */
-    public CountryCodec() {
-        // nothing special to do
-    }
-
+    
     @Override
     public String toJson(final CountryDto t) {
         return null;
     }
-
+    
     @Override
     public CountryDto toDto(final Map<String, Object> o) {
         return null;
     }
-
+    
     @Override
     public String getIndexTypeName() {
         return "country";
     }
-
+    
     @Override
     public String getIndexName() {
         return null;
     }
-
+    
     @Override
     public String getMapping() {
         return null;

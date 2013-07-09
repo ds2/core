@@ -18,45 +18,50 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
-
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A weld wrapper.
- *
- * @author   dstrauss
- * @version  0.1
+ * 
+ * @author dstrauss
+ * @version 0.1
  */
 public abstract class WeldWrapper {
-    private static final Logger LOG= LoggerFactory.getLogger(WeldWrapper.class);
-    private static final Lock lock=new ReentrantLock();
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory
+        .getLogger(WeldWrapper.class);
+    /**
+     * The lock.
+     */
+    private static final Lock lock = new ReentrantLock();
     /**
      * The weld system.
      */
     private static Weld weld = new Weld();
-
+    
     /**
      * The weld container.
      */
     private static WeldContainer wc;
-
+    
     /**
      * Inits the wrapper.
      */
     public WeldWrapper() {
         // nothing special to do
     }
-
-    @BeforeSuite(groups = {"sym","hex","bit","base64"})
-
+    
+    @BeforeSuite(groups = { "sym", "hex", "bit", "base64" })
     public static void onSuiteStart() {
         LOG.info("Entering Weld Init");
         lock.lock();
@@ -72,12 +77,11 @@ public abstract class WeldWrapper {
         }
         LOG.info("Done with init");
     }
-
-    @AfterSuite(groups = {"sym","hex","bit","base64"})
-
+    
+    @AfterSuite(groups = { "sym", "hex", "bit", "base64" })
     public static void afterSuite() {
         lock.lock();
-        try{
+        try {
             LOG.info("Shutting down Weld");
             weld.shutdown();
             wc = null;
@@ -85,13 +89,14 @@ public abstract class WeldWrapper {
             lock.unlock();
         }
     }
-
+    
     /**
      * Returns an instance of the given class.
-     *
-     * @param   c  the class
-     *
-     * @return  the instance, if found. Otherwise null.
+     * 
+     * @param c
+     *            the class
+     * 
+     * @return the instance, if found. Otherwise null.
      */
     public static <T> T getInstance(final Class<T> c) {
         lock.lock();

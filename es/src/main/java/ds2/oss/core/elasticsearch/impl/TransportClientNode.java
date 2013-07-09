@@ -25,12 +25,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-import ds2.oss.core.elasticsearch.api.EsConfig;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+
+import ds2.oss.core.elasticsearch.api.EsConfig;
 
 /**
  * A transport client impl.
@@ -41,6 +41,9 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 @ApplicationScoped
 @Alternative
 public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
+    /**
+     * The ES config.
+     */
     @Inject
     private EsConfig config;
     
@@ -56,11 +59,12 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
      */
     @PostConstruct
     public void onInit() {
-        ImmutableSettings.Builder sb=ImmutableSettings.settingsBuilder()
-                .loadFromClasspath("/transportClientNode.yml");
+        final ImmutableSettings.Builder sb =
+            ImmutableSettings.settingsBuilder().loadFromClasspath(
+                "/transportClientNode.yml");
         sb.put("cluster.name", config.getClusterName());
-        sb.put("client",true);
-        final Settings setts =sb.build();
+        sb.put("client", true);
+        final Settings setts = sb.build();
         client =
             new TransportClient(setts)
                 .addTransportAddress(new InetSocketTransportAddress(

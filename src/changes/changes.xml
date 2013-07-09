@@ -19,8 +19,10 @@
 <document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
   <body>
-    <release version="0.1" description="Initial Release">
-      <action issue="OSSCORE-1" dev="dstrauss" type="add">Create interceptors</action>
+    <release version="0.2" description="Feature Release">
+      <action issue="OSSCORE-2" dev="dstrauss" type="fix">NumericalEnumConverter is not transient</action>
+      <action issue="OSSCORE-3" dev="dstrauss" type="add">Add ElasticSearch support helpers</action>
+      <action issue="OSSCORE-5" dev="dstrauss" type="add">Create service to hash passwords according to PBKDF2WithHmacSHA1 algorithm</action>
     </release>
   </body>
   <properties>
