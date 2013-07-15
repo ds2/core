@@ -48,7 +48,7 @@
   </scm>
   <issueManagement>
     <system>JIRA</system>
-    <url>https://ds2dev.atlassian.net/browse</url>
+    <url>https://ds2dev.atlassian.net/browse/</url>
   </issueManagement>
   <modules>
     <module>api</module>
