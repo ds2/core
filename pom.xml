@@ -22,6 +22,7 @@
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
     <mvn.releaseplugin.version>2.3.2</mvn.releaseplugin.version>
+    <changesVia>jira</changesVia>
   </properties>
   <distributionManagement>
     <site>
