@@ -23,6 +23,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.elasticsearch.action.WriteConsistencyLevel;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +82,23 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (codec == null) {
             return null;
         }
-        final IndexResponse response =
+        final IndexRequestBuilder resp =
             esNode.get().prepareIndex(index, codec.getIndexTypeName())
-                .setSource(codec.toJson(t)).execute().actionGet();
+                .setSource(codec.toJson(t))
+                    //.setConsistencyLevel(WriteConsistencyLevel.ALL)
+                    ;
+        if (codec.refreshOnIndexing()){
+            resp.setRefresh(true);
+        }
+        IndexResponse response=resp.execute().actionGet();
         LOG.debug("Response is {}", response);
         return t;
     }
-    
+
+    @Override
+    public void refreshIndexes(String... indexes) {
+        RefreshRequestBuilder cmd= esNode.get().admin().indices().prepareRefresh(indexes);
+        cmd.execute().actionGet();
+    }
+
 }

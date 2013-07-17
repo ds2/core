@@ -67,4 +67,6 @@ public interface TypeCodec<T> {
      * @return the JSON mapping, or null if not set
      */
     String getMapping();
+
+    boolean refreshOnIndexing();
 }

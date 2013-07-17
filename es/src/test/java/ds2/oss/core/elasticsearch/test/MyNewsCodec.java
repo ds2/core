@@ -78,12 +78,10 @@ public class MyNewsCodec implements NewsCodec {
                         MyNews.class.getAnnotation(TypeMapping.class).value())
                     .startObject("properties");
             xbMapping.startObject("source").field("type", "string").endObject();
-            xbMapping.startObject("title").field("type", "string")
-                .field("analyzer", "french").endObject();
-            xbMapping.startObject("description").field("type", "string")
-                .field("analyzer", "french").endObject();
+            xbMapping.startObject("title").field("type", "string").endObject();
+            xbMapping.startObject("description").field("type", "string").endObject();
             xbMapping.startObject("author").field("type", "string").endObject();
-            xbMapping.startObject("link").field("type", "string").endObject();
+            xbMapping.startObject("link").field("type", "string").field("index", "not_analyzed").endObject();
             xbMapping.endObject().endObject().endObject();
             return xbMapping.string();
         } catch (IOException e) {
@@ -91,7 +89,12 @@ public class MyNewsCodec implements NewsCodec {
         }
         return null;
     }
-    
+
+    @Override
+    public boolean refreshOnIndexing() {
+        return true;
+    }
+
     @Override
     public String getIndexTypeName() {
         return MyNews.class.getAnnotation(TypeMapping.class).value();

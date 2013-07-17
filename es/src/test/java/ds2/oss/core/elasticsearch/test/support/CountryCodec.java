@@ -15,10 +15,15 @@
  */
 package ds2.oss.core.elasticsearch.test.support;
 
+import java.io.IOException;
 import java.util.Map;
 
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The country codec.
@@ -27,9 +32,19 @@ import ds2.oss.core.elasticsearch.test.dto.CountryDto;
  * @version 0.2
  */
 public class CountryCodec implements TypeCodec<CountryDto> {
+    private  static final Logger LOG= LoggerFactory.getLogger(CountryCodec.class);
     
     @Override
     public String toJson(final CountryDto t) {
+        try {
+            XContentBuilder builder =
+                    XContentFactory.jsonBuilder().startObject()
+                            .field("name", t.getName())
+                            .field("isoCode", t.getIsoCode()).endObject();
+            return builder.string();
+        } catch (IOException e) {
+            LOG.warn("Error when generating the JSON", e);
+        }
         return null;
     }
     
@@ -50,6 +65,11 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     
     @Override
     public String getMapping() {
-        return null;
+        return "{\"country\":{\"properties\":{\"name\":{\"type\":\"string\",\"index\":\"analyzed\"},\"isoCode\":{\"type\":\"string\",\"index\":\"analyzed\"}}}}\n";
+    }
+
+    @Override
+    public boolean refreshOnIndexing() {
+        return false;
     }
 }
