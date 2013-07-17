@@ -90,6 +90,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (codec.refreshOnIndexing()){
             resp.setRefresh(true);
         }
+        if(codec.replicateOnIndexing()){
+            resp.setConsistencyLevel(WriteConsistencyLevel.ALL);
+        }
         IndexResponse response=resp.execute().actionGet();
         LOG.debug("Response is {}", response);
         return t;

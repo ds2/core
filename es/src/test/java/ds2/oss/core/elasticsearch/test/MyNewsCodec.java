@@ -96,6 +96,11 @@ public class MyNewsCodec implements NewsCodec {
     }
 
     @Override
+    public boolean replicateOnIndexing() {
+        return false;
+    }
+
+    @Override
     public String getIndexTypeName() {
         return MyNews.class.getAnnotation(TypeMapping.class).value();
     }

@@ -72,4 +72,9 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     public boolean refreshOnIndexing() {
         return false;
     }
+
+    @Override
+    public boolean replicateOnIndexing() {
+        return false;
+    }
 }

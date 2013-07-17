@@ -68,5 +68,15 @@ public interface TypeCodec<T> {
      */
     String getMapping();
 
+    /**
+     * Should a refresh operation be done on inserting?
+     * @return TRUE or FALSE, default is FALSE
+     */
     boolean refreshOnIndexing();
+
+    /**
+     * Flag to indicate to wait for all nodes to tell to wait for all nodes to confirm a write operation.
+     * @return TRUE or FALSE, default is FALSE
+     */
+    boolean replicateOnIndexing();
 }
