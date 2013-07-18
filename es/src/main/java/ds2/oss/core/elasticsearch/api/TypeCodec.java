@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.elasticsearch.api;
 
@@ -22,61 +22,64 @@ import java.util.Map;
 
 /**
  * A contract for a codec.
- * 
+ *
+ * @param <T> The type to encode or decode
+ *
  * @author dstrauss
- * @param <T>
- *            The type to encode or decode
  * @version 0.2
  */
 public interface TypeCodec<T> {
-    /**
-     * Converts a given dto into a JSON variant.
-     * 
-     * @param t
-     *            the dto to convert
-     * @return the JSON string to use for indexing
-     */
-    String toJson(T t);
-    
-    /**
-     * Converts a indexed document into a dto.
-     * 
-     * @param o
-     *            the map of fields
-     * @return the dto to use
-     */
-    T toDto(Map<String, Object> o);
-    
-    /**
-     * Returns the type name to use for this type of DTO.
-     * 
-     * @return the index type name, or null if not set.
-     */
-    String getIndexTypeName();
-    
-    /**
-     * Returns the index name to primarily use.
-     * 
-     * @return the default index name.
-     */
-    String getIndexName();
-    
-    /**
-     * Returns the JSON mapping for this DTO.
-     * 
-     * @return the JSON mapping, or null if not set
-     */
-    String getMapping();
+  /**
+   * Converts a given dto into a JSON variant.
+   *
+   * @param t the dto to convert
+   *
+   * @return the JSON string to use for indexing
+   */
+  String toJson(T t);
 
-    /**
-     * Should a refresh operation be done on inserting?
-     * @return TRUE or FALSE, default is FALSE
-     */
-    boolean refreshOnIndexing();
+  /**
+   * Converts a indexed document into a dto.
+   *
+   * @param o the map of fields
+   *
+   * @return the dto to use
+   */
+  T toDto(Map<String, Object> o);
 
-    /**
-     * Flag to indicate to wait for all nodes to tell to wait for all nodes to confirm a write operation.
-     * @return TRUE or FALSE, default is FALSE
-     */
-    boolean replicateOnIndexing();
+  /**
+   * Returns the type name to use for this type of DTO.
+   *
+   * @return the index type name, or null if not set.
+   */
+  String getIndexTypeName();
+
+  /**
+   * Returns the index name to primarily use.
+   *
+   * @return the default index name.
+   */
+  String getIndexName();
+
+  /**
+   * Returns the JSON mapping for this DTO.
+   *
+   * @return the JSON mapping, or null if not set
+   */
+  String getMapping();
+
+  /**
+   * Should a refresh operation be done on inserting?
+   *
+   * @return TRUE or FALSE, default is FALSE
+   */
+  boolean refreshOnIndexing();
+
+  /**
+   * Flag to indicate write a new document to all nodes within the cluster.
+   *
+   * @return TRUE or FALSE, default is FALSE meaning that the document is written to at least two nodes, replication
+   * is done in the background for the other nodes.
+   */
+  boolean replicateOnIndexing();
 }
