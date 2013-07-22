@@ -6,7 +6,9 @@ import ds2.oss.core.elasticsearch.api.TypeCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
@@ -20,9 +22,15 @@ import java.lang.annotation.Annotation;
 public class CodecProviderImpl implements CodecProvider {
   private final static Logger LOG = LoggerFactory.getLogger(CodecProviderImpl.class);
   @Inject
+  @Any
   private Instance<TypeCodec> foundCodecs;
-  @Inject
-  private Provider<TypeCodec> otherCodes;
+
+  @PostConstruct
+  public void onClass() {
+    if (foundCodecs.isUnsatisfied()) {
+      LOG.warn("found codecs are unsatisfied!");
+    }
+  }
 
   @Override
   public <T> TypeCodec<T> findFor(final Class<T> c) {
@@ -30,31 +38,25 @@ public class CodecProviderImpl implements CodecProvider {
       return null;
     }
     TypeCodec<T> rc = null;
-    Annotation a = new EsCodecTyped<>(c);
+    Annotation a = new EsCodecAnnotationLiteral(c);
     LOG.debug("Annotation of codec should be {}", a);
     try {
       rc = foundCodecs.select(a).get();
     } catch (RuntimeException e) {
       LOG.warn("Error when looking up an instance of a codec!", e);
     }
+    if (rc == null) {
+      for (TypeCodec codec : foundCodecs) {
+        LOG.debug("Having codec {}", codec);
+      }
+    }
+    LOG.debug("rc will be {}", rc);
     return rc;
   }
 
-  /**
-   * The annotation literal for the ESCodecs having a specific value.
-   *
-   * @param <T> the type of the value
-   */
-  private class EsCodecTyped<T> extends AnnotationLiteral<EsCodec> implements EsCodec {
-    private Class<T> c;
-
-    public EsCodecTyped(Class<T> c) {
-      super();
-      this.c = c;
-    }
-
-    public Class<T> value() {
-      return c;
-    }
+  @Override
+  public int getInstanceCount() {
+    return 1;
   }
+
 }

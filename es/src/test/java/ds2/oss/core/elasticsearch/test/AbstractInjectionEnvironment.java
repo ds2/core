@@ -20,40 +20,46 @@ import org.jboss.weld.environment.se.WeldContainer;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import java.lang.annotation.Annotation;
+
 /**
  * The injection env. Basically the same as the WeldWrapper.
- * 
- * @version 0.2
+ *
  * @author dstrauss
+ * @version 0.2
  */
 public abstract class AbstractInjectionEnvironment {
-    /**
-     * The classpath scanner.
-     */
-    private static Weld weld = new Weld();
-    /**
-     * The container.
-     */
-    private static WeldContainer wc;
-    
-    @BeforeSuite
-    public void onSuite() {
-        wc = weld.initialize();
-    }
-    
-    @AfterSuite
-    public void onSuiteEnd() {
-        weld.shutdown();
-    }
-    
-    /**
-     * Returns an instance of the given class.
-     * 
-     * @param c
-     *            the class
-     * @return an instance
-     */
-    public static <T> T getInstance(final Class<T> c) {
-        return wc.instance().select(c).get();
-    }
+  /**
+   * The classpath scanner.
+   */
+  private static Weld weld = new Weld();
+  /**
+   * The container.
+   */
+  private static WeldContainer wc;
+
+  @BeforeSuite
+  public void onSuite() {
+    wc = weld.initialize();
+  }
+
+  @AfterSuite
+  public void onSuiteEnd() {
+    weld.shutdown();
+  }
+
+  /**
+   * Returns an instance of the given class.
+   *
+   * @param c the class
+   *
+   * @return an instance
+   */
+  public static <T> T getInstance(final Class<T> c) {
+    return wc.instance().select(c).get();
+  }
+
+  public static <T> T getInstance(final Class<T> c, Annotation... annotations) {
+    return wc.instance().select(c, annotations).get();
+  }
 }

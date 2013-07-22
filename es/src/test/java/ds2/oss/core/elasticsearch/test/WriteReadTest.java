@@ -2,6 +2,9 @@ package ds2.oss.core.elasticsearch.test;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
+import ds2.oss.core.elasticsearch.api.EsCodec;
+import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.impl.EsCodecAnnotationLiteral;
 import ds2.oss.core.elasticsearch.impl.UseCases;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import ds2.oss.core.elasticsearch.test.support.CountryCodec;
@@ -15,6 +18,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import javax.enterprise.util.AnnotationLiteral;
 import java.util.Date;
 
 /**
@@ -27,15 +31,15 @@ public class WriteReadTest extends AbstractInjectionEnvironment{
     private ElasticSearchService esSvc;
     private UseCases uc;
     private ElasticSearchNode esNode;
-    private NewsCodec newsCodec;
-    private CountryCodec countryCodec;
+    private TypeCodec<MyNews> newsCodec;
+    private TypeCodec<CountryDto> countryCodec;
 
     @BeforeClass
     public void onClass(){
         esSvc = getInstance(ElasticSearchService.class);
         uc = getInstance(UseCases.class);
         uc.createIndex(INDEXNAME);
-        newsCodec= getInstance(NewsCodec.class);
+        newsCodec= getInstance(TypeCodec.class, new EsCodecAnnotationLiteral(MyNews.class));
         countryCodec= getInstance(CountryCodec.class);
         esNode= getInstance(ElasticSearchNode.class);
         uc.addMapping(INDEXNAME,newsCodec.getIndexTypeName(),newsCodec.getMapping());

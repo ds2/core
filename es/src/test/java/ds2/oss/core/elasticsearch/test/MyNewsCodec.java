@@ -21,6 +21,7 @@ package ds2.oss.core.elasticsearch.test;
 import java.io.IOException;
 import java.util.Map;
 
+import ds2.oss.core.elasticsearch.api.TypeCodec;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import ds2.oss.core.elasticsearch.api.EsCodec;
 import ds2.oss.core.elasticsearch.api.TypeMapping;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * A codec.
  * 
@@ -36,19 +39,13 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * @version 0.2
  */
 @EsCodec(MyNews.class)
-public class MyNewsCodec implements NewsCodec {
+@ApplicationScoped
+public class MyNewsCodec implements TypeCodec<MyNews> {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory
         .getLogger(MyNewsCodec.class);
-    
-    /**
-     * Inits the codec.
-     */
-    public MyNewsCodec() {
-        // nothing special to do
-    }
     
     @Override
     public String toJson(final MyNews t) {

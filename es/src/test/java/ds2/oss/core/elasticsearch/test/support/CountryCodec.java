@@ -26,6 +26,8 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * The country codec.
  * 
@@ -33,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * @version 0.2
  */
 @EsCodec(CountryDto.class)
+@ApplicationScoped
 public class CountryCodec implements TypeCodec<CountryDto> {
     private  static final Logger LOG= LoggerFactory.getLogger(CountryCodec.class);
     
