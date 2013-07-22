@@ -1,62 +1,74 @@
 package ds2.oss.core.elasticsearch.impl;
 
-import ds2.oss.core.elasticsearch.api.CodecProvider;
-import ds2.oss.core.elasticsearch.api.EsCodec;
-import ds2.oss.core.elasticsearch.api.TypeCodec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.lang.annotation.Annotation;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
-import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
-import javax.inject.Provider;
-import java.lang.annotation.Annotation;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.elasticsearch.api.CodecProvider;
+import ds2.oss.core.elasticsearch.api.TypeCodec;
 
 /**
  * A provider for any found ES codec.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
 @ApplicationScoped
 public class CodecProviderImpl implements CodecProvider {
-  private final static Logger LOG = LoggerFactory.getLogger(CodecProviderImpl.class);
-  @Inject
-  @Any
-  private Instance<TypeCodec> foundCodecs;
-
-  @PostConstruct
-  public void onClass() {
-    if (foundCodecs.isUnsatisfied()) {
-      LOG.warn("found codecs are unsatisfied!");
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(CodecProviderImpl.class);
+    /**
+     * The found codecs.
+     */
+    @Inject
+    @Any
+    private Instance<TypeCodec<?>> foundCodecs;
+    
+    /**
+     * Actions to perform after class init.
+     */
+    @PostConstruct
+    public void onClass() {
+        if (foundCodecs.isUnsatisfied()) {
+            LOG.warn("found codecs are unsatisfied!");
+        }
     }
-  }
-
-  @Override
-  public <T> TypeCodec<T> findFor(final Class<T> c) {
-    if (c == null) {
-      return null;
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeCodec<T> findFor(final Class<T> c) {
+        if (c == null) {
+            return null;
+        }
+        TypeCodec<?> rc = null;
+        final Annotation a = new EsCodecAnnotationLiteral(c);
+        LOG.debug("Annotation of codec should be {}", a);
+        try {
+            rc = foundCodecs.select(a).get();
+        } catch (final RuntimeException e) {
+            LOG.warn("Error when looking up an instance of a codec!", e);
+        }
+        if (rc == null) {
+            for (TypeCodec<?> codec : foundCodecs) {
+                LOG.debug("Having codec {}", codec);
+            }
+        }
+        LOG.debug("rc will be {}", rc);
+        return (TypeCodec<T>) rc;
     }
-    TypeCodec<T> rc = null;
-    Annotation a = new EsCodecAnnotationLiteral(c);
-    LOG.debug("Annotation of codec should be {}", a);
-    try {
-      rc = foundCodecs.select(a).get();
-    } catch (RuntimeException e) {
-      LOG.warn("Error when looking up an instance of a codec!", e);
+    
+    @Override
+    public int getInstanceCount() {
+        return 1;
     }
-    if (rc == null) {
-      for (TypeCodec codec : foundCodecs) {
-        LOG.debug("Having codec {}", codec);
-      }
-    }
-    LOG.debug("rc will be {}", rc);
-    return rc;
-  }
-
-  @Override
-  public int getInstanceCount() {
-    return 1;
-  }
-
+    
 }
