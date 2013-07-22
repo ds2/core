@@ -21,6 +21,7 @@ package ds2.oss.core.elasticsearch.test;
 import java.io.IOException;
 import java.util.Map;
 
+import ds2.oss.core.elasticsearch.api.TypeCodec;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ import org.slf4j.LoggerFactory;
 import ds2.oss.core.elasticsearch.api.EsCodec;
 import ds2.oss.core.elasticsearch.api.TypeMapping;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * A codec.
  * 
@@ -36,19 +39,13 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * @version 0.2
  */
 @EsCodec(MyNews.class)
-public class MyNewsCodec implements NewsCodec {
+@ApplicationScoped
+public class MyNewsCodec implements TypeCodec<MyNews> {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory
         .getLogger(MyNewsCodec.class);
-    
-    /**
-     * Inits the codec.
-     */
-    public MyNewsCodec() {
-        // nothing special to do
-    }
     
     @Override
     public String toJson(final MyNews t) {
@@ -78,12 +75,10 @@ public class MyNewsCodec implements NewsCodec {
                         MyNews.class.getAnnotation(TypeMapping.class).value())
                     .startObject("properties");
             xbMapping.startObject("source").field("type", "string").endObject();
-            xbMapping.startObject("title").field("type", "string")
-                .field("analyzer", "french").endObject();
-            xbMapping.startObject("description").field("type", "string")
-                .field("analyzer", "french").endObject();
+            xbMapping.startObject("title").field("type", "string").endObject();
+            xbMapping.startObject("description").field("type", "string").endObject();
             xbMapping.startObject("author").field("type", "string").endObject();
-            xbMapping.startObject("link").field("type", "string").endObject();
+            xbMapping.startObject("link").field("type", "string").field("index", "not_analyzed").endObject();
             xbMapping.endObject().endObject().endObject();
             return xbMapping.string();
         } catch (IOException e) {
@@ -91,8 +86,23 @@ public class MyNewsCodec implements NewsCodec {
         }
         return null;
     }
-    
+
     @Override
+    public boolean refreshOnIndexing() {
+        return true;
+    }
+
+    @Override
+    public boolean replicateOnIndexing() {
+        return false;
+    }
+
+  @Override
+  public <T> boolean matches(Class<T> c) {
+    return (c.isAssignableFrom(MyNews.class));
+  }
+
+  @Override
     public String getIndexTypeName() {
         return MyNews.class.getAnnotation(TypeMapping.class).value();
     }

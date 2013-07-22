@@ -35,4 +35,6 @@ public interface CodecProvider {
      * @return the codec, or null if not found
      */
     <T> TypeCodec<T> findFor(Class<T> c);
+
+  int getInstanceCount();
 }

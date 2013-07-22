@@ -21,6 +21,8 @@ package ds2.oss.core.elasticsearch.test;
 import java.util.Date;
 import java.util.Map;
 
+import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.impl.EsCodecAnnotationLiteral;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.jboss.weld.environment.se.Weld;
@@ -81,7 +83,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
     /**
      * The codec.
      */
-    private NewsCodec newsCodec;
+    private TypeCodec<MyNews> newsCodec;
     
     /**
      * Inits the test.
@@ -94,7 +96,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
     @BeforeClass
     public void onMethod() {
         to = getInstance(ElasticSearchService.class);
-        newsCodec = getInstance(NewsCodec.class);
+        newsCodec = getInstance(TypeCodec.class,new EsCodecAnnotationLiteral(MyNews.class));
         esNode = getInstance(ElasticSearchNode.class);
     }
     

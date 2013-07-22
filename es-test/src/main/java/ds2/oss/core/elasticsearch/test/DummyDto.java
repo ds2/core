@@ -25,11 +25,18 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * A dummy dto.
  * 
  * @author dstrauss
+ * @version 0.21
  */
 @TypeMapping(value = "dummy")
 public class DummyDto {
+    /**
+     * The name.
+     */
     @PropertyMapping(index = IndexTypes.NOT_ANALYZED)
     private String name;
+    /**
+     * The roles.
+     */
     @PropertyMapping(index = IndexTypes.NOT_ANALYZED, indexName = "role")
     private Set<String> roles;
     

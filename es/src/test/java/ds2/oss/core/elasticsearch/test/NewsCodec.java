@@ -25,7 +25,9 @@ import ds2.oss.core.elasticsearch.api.TypeCodec;
  * 
  * @author dstrauss
  * @version 0.2
+ * @deprecated Use the EsCodec qualifier.
  */
+@Deprecated
 public interface NewsCodec extends TypeCodec<MyNews> {
     
 }

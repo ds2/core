@@ -13,49 +13,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.elasticsearch.test.support;
 
-import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.test.dto.CountryDto;
-
+import java.io.IOException;
 import java.util.Map;
 
+import ds2.oss.core.elasticsearch.api.EsCodec;
+import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.ApplicationScoped;
+
 /**
- * @author  dstrauss
+ * The country codec.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
+@EsCodec(CountryDto.class)
+@ApplicationScoped
 public class CountryCodec implements TypeCodec<CountryDto> {
-
-    /**
-     */
-    public CountryCodec() {
-        // nothing special to do
-    }
-
+    private  static final Logger LOG= LoggerFactory.getLogger(CountryCodec.class);
+    
     @Override
     public String toJson(final CountryDto t) {
+        try {
+            XContentBuilder builder =
+                    XContentFactory.jsonBuilder().startObject()
+                            .field("name", t.getName())
+                            .field("isoCode", t.getIsoCode()).endObject();
+            return builder.string();
+        } catch (IOException e) {
+            LOG.warn("Error when generating the JSON", e);
+        }
         return null;
     }
-
+    
     @Override
     public CountryDto toDto(final Map<String, Object> o) {
         return null;
     }
-
+    
     @Override
     public String getIndexTypeName() {
         return "country";
     }
-
+    
     @Override
     public String getIndexName() {
         return null;
     }
-
+    
     @Override
     public String getMapping() {
-        return null;
+        return "{\"country\":{\"properties\":{\"name\":{\"type\":\"string\",\"index\":\"analyzed\"},\"isoCode\":{\"type\":\"string\",\"index\":\"analyzed\"}}}}\n";
     }
+
+    @Override
+    public boolean refreshOnIndexing() {
+        return false;
+    }
+
+    @Override
+    public boolean replicateOnIndexing() {
+        return false;
+    }
+
+  @Override
+  public <T> boolean matches(Class<T> c) {
+    return c.isAssignableFrom(CountryCodec.class);
+  }
 }

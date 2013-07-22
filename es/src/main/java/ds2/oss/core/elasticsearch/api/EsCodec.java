@@ -25,6 +25,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Qualifier;
 
 /**
  * Marks a codec.
@@ -36,6 +37,7 @@ import javax.enterprise.context.ApplicationScoped;
 @Target(ElementType.TYPE)
 @Documented
 @ApplicationScoped
+@Qualifier
 public @interface EsCodec {
     /**
      * The dto type to address.

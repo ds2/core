@@ -31,7 +31,7 @@ public enum IndexTypes {
      */
     NOT_ANALYZED("not_analyzed"),
     /**
-     * Perform a full analyze on field value.
+     * Perform a full analyze on field value. Given field is broken into tokens and analyzed.
      */
     ANALYZED("analyzed");
     

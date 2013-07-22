@@ -18,67 +18,92 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 /**
  * A weld wrapper.
- *
- * @author   dstrauss
- * @version  0.1
+ * 
+ * @author dstrauss
+ * @version 0.1
  */
-public class WeldWrapper {
-
+public abstract class WeldWrapper {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory
+        .getLogger(WeldWrapper.class);
+    /**
+     * The lock.
+     */
+    private static final Lock lock = new ReentrantLock();
     /**
      * The weld system.
      */
     private static Weld weld = new Weld();
-
+    
     /**
      * The weld container.
      */
     private static WeldContainer wc;
-
+    
     /**
      * Inits the wrapper.
      */
     public WeldWrapper() {
         // nothing special to do
     }
-
-    /**
-     * Actions to perform on suite start.
-     */
-    @BeforeSuite
+    
+    @BeforeSuite(groups = { "sym", "hex", "bit", "base64" })
     public static void onSuiteStart() {
-        synchronized (WeldWrapper.class) {
+        LOG.info("Entering Weld Init");
+        lock.lock();
+        try {
             if (wc != null) {
+                LOG.info("Nothing to do, ignoring");
                 return;
             }
+            LOG.info("Starting init");
             wc = weld.initialize();
+        } finally {
+            lock.unlock();
+        }
+        LOG.info("Done with init");
+    }
+    
+    @AfterSuite(groups = { "sym", "hex", "bit", "base64" })
+    public static void afterSuite() {
+        lock.lock();
+        try {
+            LOG.info("Shutting down Weld");
+            weld.shutdown();
+            wc = null;
+        } finally {
+            lock.unlock();
         }
     }
-
-    /**
-     * Actions to perform on suite end.
-     */
-    @AfterSuite
-    public static void afterSuite() {
-        weld.shutdown();
-        wc = null;
-    }
-
+    
     /**
      * Returns an instance of the given class.
-     *
-     * @param   c  the class
-     *
-     * @return  the instance, if found. Otherwise null.
+     * 
+     * @param c
+     *            the class
+     * 
+     * @return the instance, if found. Otherwise null.
      */
     public static <T> T getInstance(final Class<T> c) {
-        return wc.instance().select(c).get();
+        lock.lock();
+        try {
+            return wc.instance().select(c).get();
+        } finally {
+            lock.unlock();
+        }
     }
 }

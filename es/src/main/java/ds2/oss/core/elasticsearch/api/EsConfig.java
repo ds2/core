@@ -17,7 +17,15 @@ package ds2.oss.core.elasticsearch.api;
 
 /**
  * Alternate way to provide a config to the ES node.
+ * 
+ * @version 0.2
+ * @author dstrauss
  */
 public interface EsConfig {
+    /**
+     * Returns the cluster name.
+     * 
+     * @return the cluster name
+     */
     String getClusterName();
 }

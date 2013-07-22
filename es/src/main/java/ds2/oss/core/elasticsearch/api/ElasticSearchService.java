@@ -40,4 +40,6 @@ public interface ElasticSearchService {
      * @return the object
      */
     <T> T put(String index, T t, TypeCodec<T> codec);
+
+    void refreshIndexes(String... indexes);
 }

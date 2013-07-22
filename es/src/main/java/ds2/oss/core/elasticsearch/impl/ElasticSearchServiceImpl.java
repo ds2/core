@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.elasticsearch.impl;
 
@@ -23,6 +23,11 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.elasticsearch.action.WriteConsistencyLevel;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
+import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,56 +38,74 @@ import ds2.oss.core.elasticsearch.api.TypeCodec;
 
 /**
  * The implementation for the ES service.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @ApplicationScoped
 public class ElasticSearchServiceImpl implements ElasticSearchService {
-    /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(ElasticSearchServiceImpl.class);
-    /**
-     * The ES client to use.
-     */
-    @Inject
-    private ElasticSearchNode esNode;
-    /**
-     * Any known codecs.
-     */
-    @Inject
-    private Instance<TypeCodec<?>> anyCodecs;
-    
-    /**
-     * Inits the bean.
-     */
-    public ElasticSearchServiceImpl() {
-        // nothing special to do
+  /**
+   * A logger.
+   */
+  private static final Logger LOG = LoggerFactory
+      .getLogger(ElasticSearchServiceImpl.class);
+  /**
+   * The ES client to use.
+   */
+  @Inject
+  private ElasticSearchNode esNode;
+  /**
+   * Any known codecs.
+   */
+  @Inject
+  private Instance<TypeCodec<?>> anyCodecs;
+
+  /**
+   * Inits the bean.
+   */
+  public ElasticSearchServiceImpl() {
+    // nothing special to do
+  }
+
+  /**
+   * Actions to perform at startup.
+   */
+  @PostConstruct
+  public void onStartup() {
+    LOG.info("Check indices and mappings...");
+  }
+
+  @Override
+  public <T> T put(final String index, final T t, final TypeCodec<T> codec) {
+    if (t == null) {
+      return null;
     }
-    
-    /**
-     * Actions to perform at startup.
-     */
-    @PostConstruct
-    public void onStartup() {
-        LOG.info("Check indices and mappings...");
+    if (codec == null) {
+      return null;
     }
-    
-    @Override
-    public <T> T put(final String index, final T t, final TypeCodec<T> codec) {
-        if (t == null) {
-            return null;
-        }
-        if (codec == null) {
-            return null;
-        }
-        final IndexResponse response =
-            esNode.get().prepareIndex(index, codec.getIndexTypeName())
-                .setSource(codec.toJson(t)).execute().actionGet();
-        LOG.debug("Response is {}", response);
-        return t;
+    final IndexRequestBuilder resp =
+        esNode.get().prepareIndex(index, codec.getIndexTypeName())
+            .setSource(codec.toJson(t))
+        //.setConsistencyLevel(WriteConsistencyLevel.ALL)
+        ;
+    if (codec.refreshOnIndexing()) {
+      resp.setRefresh(true);
     }
-    
+    if (codec.replicateOnIndexing()) {
+      resp.setConsistencyLevel(WriteConsistencyLevel.ALL);
+    }
+    IndexResponse response = resp.execute().actionGet();
+    LOG.debug("Response is {}", response);
+    return t;
+  }
+
+  @Override
+  public void refreshIndexes(String... indexes) {
+    RefreshRequestBuilder cmd = esNode.get().admin().indices().prepareRefresh(indexes);
+    RefreshResponse result = cmd.execute().actionGet();
+    if (result.getSuccessfulShards() <= 0) {
+      LOG.warn("Shards could not be refreshed successfully! result is {}", result);
+    }
+  }
+
 }
