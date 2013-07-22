@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jee-base</artifactId>
     <groupId>ds2.base.oss</groupId>
-    <version>0.78-SNAPSHOT</version>
+    <version>0.78</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ds2.oss.core</groupId>
