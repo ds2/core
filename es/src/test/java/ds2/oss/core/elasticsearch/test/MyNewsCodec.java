@@ -100,7 +100,12 @@ public class MyNewsCodec implements NewsCodec {
         return false;
     }
 
-    @Override
+  @Override
+  public <T> boolean matches(Class<T> c) {
+    return (c.isAssignableFrom(MyNews.class));
+  }
+
+  @Override
     public String getIndexTypeName() {
         return MyNews.class.getAnnotation(TypeMapping.class).value();
     }

@@ -18,6 +18,7 @@ package ds2.oss.core.elasticsearch.test.support;
 import java.io.IOException;
 import java.util.Map;
 
+import ds2.oss.core.elasticsearch.api.EsCodec;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author dstrauss
  * @version 0.2
  */
+@EsCodec(CountryDto.class)
 public class CountryCodec implements TypeCodec<CountryDto> {
     private  static final Logger LOG= LoggerFactory.getLogger(CountryCodec.class);
     
@@ -77,4 +79,9 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     public boolean replicateOnIndexing() {
         return false;
     }
+
+  @Override
+  public <T> boolean matches(Class<T> c) {
+    return c.isAssignableFrom(CountryCodec.class);
+  }
 }

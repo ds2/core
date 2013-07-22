@@ -82,4 +82,12 @@ public interface TypeCodec<T> {
    * is done in the background for the other nodes.
    */
   boolean replicateOnIndexing();
+
+  /**
+   * A simple check if instances of the given class can be used with this codec.
+   * @param c the class
+   * @param <T> the type of the class
+   * @return TRUE if this codec can deal with instances of this class, otherwise and by default: FALSE.
+   */
+  <T> boolean matches(Class<T> c);
 }
