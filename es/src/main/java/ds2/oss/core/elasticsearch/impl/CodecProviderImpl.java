@@ -49,6 +49,7 @@ public class CodecProviderImpl implements CodecProvider {
         if (c == null) {
             return null;
         }
+        
         TypeCodec<?> rc = null;
         final Annotation a = new EsCodecAnnotationLiteral(c);
         LOG.debug("Annotation of codec should be {}", a);
