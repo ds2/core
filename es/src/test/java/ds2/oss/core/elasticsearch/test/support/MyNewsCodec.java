@@ -16,7 +16,7 @@
 /**
  * 
  */
-package ds2.oss.core.elasticsearch.test;
+package ds2.oss.core.elasticsearch.test.support;
 
 import java.io.IOException;
 import java.util.Map;
@@ -24,6 +24,8 @@ import java.util.Map;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
+import ds2.oss.core.elasticsearch.test.NewsCodec;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
@@ -39,7 +41,7 @@ import javax.enterprise.context.ApplicationScoped;
  * @version 0.2
  */
 @EsCodec(MyNews.class)
-public class MyNewsCodec implements TypeCodec<MyNews> {
+public class MyNewsCodec implements NewsCodec {
     /**
      * A logger.
      */

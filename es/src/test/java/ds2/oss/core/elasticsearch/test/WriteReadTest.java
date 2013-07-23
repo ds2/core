@@ -2,6 +2,7 @@ package ds2.oss.core.elasticsearch.test;
 
 import java.util.Date;
 
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -45,7 +46,7 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
     /**
      * The news codec.
      */
-    private TypeCodec<MyNews> newsCodec;
+    private NewsCodec newsCodec;
     /**
      * The country codec.
      */
@@ -56,7 +57,7 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         esSvc = getInstance(ElasticSearchService.class);
         uc = getInstance(UseCases.class);
         uc.createIndex(INDEXNAME);
-        newsCodec = getInstance(TypeCodec.class, new EsCodecAnnotationLiteral(MyNews.class));
+        newsCodec = getInstance(NewsCodec.class);
         countryCodec = getInstance(CountryCodec.class);
         esNode = getInstance(ElasticSearchNode.class);
         uc.addMapping(INDEXNAME, newsCodec.getIndexTypeName(), newsCodec.getMapping());

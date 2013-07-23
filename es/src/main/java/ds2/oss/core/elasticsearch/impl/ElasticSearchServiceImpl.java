@@ -80,10 +80,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
   @Override
   public <T> T put(final String index, final T t, final TypeCodec<T> codec) {
     if (t == null) {
-      return null;
+      throw new IllegalArgumentException("You must give a dto to put into the index!");
     }
     if (codec == null) {
-      return null;
+      throw new IllegalArgumentException("A codec is required yet!");
     }
     final IndexRequestBuilder resp =
         esNode.get().prepareIndex(index, codec.getIndexTypeName())

@@ -16,7 +16,7 @@
 /**
  * 
  */
-package ds2.oss.core.elasticsearch.test;
+package ds2.oss.core.elasticsearch.test.dto;
 
 import java.util.Date;
 
