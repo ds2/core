@@ -23,6 +23,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import ds2.oss.core.elasticsearch.api.CodecProvider;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
@@ -60,7 +61,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
    * Any known codecs.
    */
   @Inject
-  private Instance<TypeCodec<?>> anyCodecs;
+  private CodecProvider codecProvider;
 
   /**
    * Inits the bean.
@@ -82,18 +83,23 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     if (t == null) {
       throw new IllegalArgumentException("You must give a dto to put into the index!");
     }
+    TypeCodec<T> typeCodec=codec;
     if (codec == null) {
-      throw new IllegalArgumentException("A codec is required yet!");
+      Class<T> c= (Class<T>) t.getClass();
+      typeCodec = codecProvider.findFor(c);
+      if(typeCodec==null){
+        throw new IllegalArgumentException("A codec is required yet!");
+      }
     }
     final IndexRequestBuilder resp =
-        esNode.get().prepareIndex(index, codec.getIndexTypeName())
-            .setSource(codec.toJson(t))
+        esNode.get().prepareIndex(index, typeCodec.getIndexTypeName())
+            .setSource(typeCodec.toJson(t))
         //.setConsistencyLevel(WriteConsistencyLevel.ALL)
         ;
-    if (codec.refreshOnIndexing()) {
+    if (typeCodec.refreshOnIndexing()) {
       resp.setRefresh(true);
     }
-    if (codec.replicateOnIndexing()) {
+    if (typeCodec.replicateOnIndexing()) {
       resp.setConsistencyLevel(WriteConsistencyLevel.ALL);
     }
     IndexResponse response = resp.execute().actionGet();

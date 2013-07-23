@@ -110,6 +110,15 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
     public void testPutNull() {
         to.put(indexName, null, null);
     }
+  @Test
+  public void testPutWithoutCodec() {
+    MyNews mn = new MyNews();
+    mn.setAuthor("dstrauss");
+    mn.setMsg("This is a simple test message.");
+    mn.setPostDate(new Date());
+    mn.setTitle("Hello, world 2");
+    to.put(indexName, mn, null);
+  }
     
     @Test
     public void testPut1() {
