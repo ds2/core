@@ -16,7 +16,7 @@
 /**
  * 
  */
-package ds2.oss.core.elasticsearch.api;
+package ds2.oss.core.elasticsearch.api.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -34,9 +34,9 @@ import javax.inject.Qualifier;
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Documented
+@Target({ElementType.TYPE,ElementType.FIELD})
 @ApplicationScoped
+@Documented
 @Qualifier
 public @interface EsCodec {
     /**

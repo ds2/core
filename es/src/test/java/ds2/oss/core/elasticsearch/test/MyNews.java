@@ -22,8 +22,8 @@ import java.util.Date;
 
 import ds2.oss.core.elasticsearch.api.FieldTypes;
 import ds2.oss.core.elasticsearch.api.IndexTypes;
-import ds2.oss.core.elasticsearch.api.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.TypeMapping;
+import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 
 /**
  * The Dto to persist.

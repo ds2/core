@@ -16,7 +16,7 @@
 /**
  * 
  */
-package ds2.oss.core.elasticsearch.api;
+package ds2.oss.core.elasticsearch.api.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

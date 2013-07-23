@@ -20,12 +20,12 @@ import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.elasticsearch.api.EsCodec;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 
@@ -36,7 +36,6 @@ import ds2.oss.core.elasticsearch.test.dto.CountryDto;
  * @version 0.2
  */
 @EsCodec(CountryDto.class)
-@ApplicationScoped
 public class CountryCodec implements TypeCodec<CountryDto> {
     /**
      * A logger.

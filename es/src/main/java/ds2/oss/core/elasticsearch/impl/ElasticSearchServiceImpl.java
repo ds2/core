@@ -24,6 +24,8 @@ import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
 import org.elasticsearch.action.WriteConsistencyLevel;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
 import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
@@ -105,6 +107,17 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     RefreshResponse result = cmd.execute().actionGet();
     if (result.getSuccessfulShards() <= 0) {
       LOG.warn("Shards could not be refreshed successfully! result is {}", result);
+    }
+  }
+
+  @Override
+  public void deleteIndexes(String... indexes) {
+    DeleteIndexRequestBuilder deleteIndexRequestBuilder=esNode.get().admin().indices().prepareDelete(indexes);
+    DeleteIndexResponse resp=deleteIndexRequestBuilder.execute().actionGet();
+    if(!resp.isAcknowledged()) {
+      LOG.warn("Delete is not acknowledged!");
+    } else {
+      LOG.debug("Deleting indexes {} done.",indexes);
     }
   }
 

@@ -42,4 +42,10 @@ public interface ElasticSearchService {
     <T> T put(String index, T t, TypeCodec<T> codec);
 
     void refreshIndexes(String... indexes);
+
+  /**
+   * Deletes all given indexes.
+   * @param indexes the indexes to delete
+   */
+  void deleteIndexes(String...indexes);
 }

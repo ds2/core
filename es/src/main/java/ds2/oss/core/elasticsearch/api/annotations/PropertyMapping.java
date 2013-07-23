@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.elasticsearch.api;
+package ds2.oss.core.elasticsearch.api.annotations;
+
+import ds2.oss.core.elasticsearch.api.FieldTypes;
+import ds2.oss.core.elasticsearch.api.IndexTypes;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

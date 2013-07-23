@@ -15,17 +15,11 @@
  */
 package ds2.oss.core.elasticsearch.ap;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.List;
-import java.util.Set;
+import com.google.gson.JsonObject;
+import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -34,11 +28,10 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
-
-import com.google.gson.JsonObject;
-
-import ds2.oss.core.elasticsearch.api.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.TypeMapping;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The type mapping annotation processor.
@@ -46,7 +39,7 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * @author dstrauss
  * @version 0.2
  */
-@SupportedAnnotationTypes(value = "ds2.oss.core.elasticsearch.api.TypeMapping")
+@SupportedAnnotationTypes(value = "ds2.oss.core.elasticsearch.api.annotations.TypeMapping")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class CreateTypeMappingsAP extends AbstractProcessor {
     /**

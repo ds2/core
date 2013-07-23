@@ -1,8 +1,9 @@
 package ds2.oss.core.elasticsearch.impl;
 
+import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
+
 import javax.enterprise.util.AnnotationLiteral;
 
-import ds2.oss.core.elasticsearch.api.EsCodec;
 
 /**
  * The ES Codec literal.
