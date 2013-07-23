@@ -28,7 +28,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Qualifier;
 
 /**
- * Marks a codec.
+ * Marks a codec. Any implementation having this annotation will be {@link ApplicationScoped}, and
+ * must make use of the {@link ds2.oss.core.elasticsearch.api.TypeCodec TypeCodec} interface.
  * 
  * @author dstrauss
  * @version 0.2
