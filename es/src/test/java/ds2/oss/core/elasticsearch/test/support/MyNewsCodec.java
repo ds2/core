@@ -21,7 +21,6 @@ package ds2.oss.core.elasticsearch.test.support;
 import java.io.IOException;
 import java.util.Map;
 
-import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 import ds2.oss.core.elasticsearch.test.NewsCodec;
@@ -32,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import javax.enterprise.context.ApplicationScoped;
 
 /**
  * A codec.
@@ -117,5 +115,10 @@ public class MyNewsCodec implements NewsCodec {
     public String getIndexName() {
         return null;
     }
+
+  @Override
+  public MyNews toDto(String jsonContent) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
     
 }

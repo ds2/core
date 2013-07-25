@@ -20,9 +20,12 @@ import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,4 +92,11 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     public <T> boolean matches(final Class<T> c) {
         return c.isAssignableFrom(CountryCodec.class);
     }
+
+  @Override
+  public CountryDto toDto(String jsonContent) {
+    Gson g=new Gson();
+    CountryDto rc=g.fromJson(jsonContent, CountryDto.class);
+    return rc;
+  }
 }

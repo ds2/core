@@ -20,5 +20,7 @@
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" version="1.1"
   bean-discovery-mode="annotated">
   <alternatives>
-    <class>ds2.oss.core.elasticsearch.impl.LocalNodeImpl</class></alternatives>
+    <class>ds2.oss.core.elasticsearch.impl.LocalNodeImpl</class>
+    <class>ds2.oss.core.base.impl.SecurityBaseDataImpl</class>
+  </alternatives>
 </beans>
