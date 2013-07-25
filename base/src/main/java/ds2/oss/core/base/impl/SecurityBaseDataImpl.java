@@ -17,6 +17,9 @@ public class SecurityBaseDataImpl implements SecurityBaseData {
    * A randomizer.
    */
   private SecureRandom random;
+  /**
+   * A randomly generated salt value. On every restart of the component, a new salt value will be generated!
+   */
   private byte[] salt;
 
   public SecurityBaseDataImpl() {
@@ -25,8 +28,7 @@ public class SecurityBaseDataImpl implements SecurityBaseData {
 
   @PostConstruct
   public void onClass() {
-    salt = new byte[512];
-    random.nextBytes(salt);
+    salt = random.generateSeed(512);
   }
 
   @Override
