@@ -14,38 +14,67 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.elasticsearch.api;
 
+import java.util.List;
+
 /**
  * Contract to access an elastic search node.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public interface ElasticSearchService {
-    /**
-     * Puts an object into the index.
-     * 
-     * @param index
-     *            The index name to put the object into
-     * 
-     * @param t
-     *            the object to put
-     * @param codec
-     *            the codec to use
-     * @param <T>
-     *            the type to put
-     * @return the object
-     */
-    <T> T put(String index, T t, TypeCodec<T> codec);
+  /**
+   * Puts an object into the index.
+   *
+   * @param index The index name to put the object into
+   * @param t     the object to put
+   * @param codec the codec to use
+   * @param <T>   the type to put
+   *
+   * @return the object
+   */
+  <T> T put(String index, T t, TypeCodec<T> codec);
 
-    void refreshIndexes(String... indexes);
+  /**
+   * Loads a dto by the given id. It is assumed that there is a known codec for this type.
+   *
+   * @param index the index name
+   * @param c     the class type
+   * @param id    the id of the document
+   * @param <T>   the type of the dto
+   *
+   * @return the dto, or null if not found
+   */
+  <T> T load(String index, Class<T> c, String id);
+
+  void refreshIndexes(String... indexes);
 
   /**
    * Deletes all given indexes.
+   *
    * @param indexes the indexes to delete
    */
-  void deleteIndexes(String...indexes);
+  void deleteIndexes(String... indexes);
+
+  /**
+   * This will load any JSON files from the given class type and return a list of it. This
+   * relies on JSON files being in the package folder, having the syntax <i>CLASSNAME-elasticsearch.insert.KEY.json</i>.
+   *
+   * @param c the class (which has a package and a name)
+   *
+   * @return the data
+   */
+  <T> List<T> getDefaultData(Class<T> c);
+
+  /**
+   * This will load any known JSON files for the given class type into the index. It is expected that
+   * there is a codec for it. Basically, it will load all found JSON files and perform a bulk insert.
+   *
+   * @param c the class type
+   */
+  <T> void insertDefaultData(String index, Class<T> c);
 }

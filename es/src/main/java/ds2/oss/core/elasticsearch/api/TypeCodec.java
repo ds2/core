@@ -90,4 +90,11 @@ public interface TypeCodec<T> {
    * @return TRUE if this codec can deal with instances of this class, otherwise and by default: FALSE.
    */
   <T> boolean matches(Class<T> c);
+
+  /**
+   * Converts a given json content into a dto.
+   * @param jsonContent the json content
+   * @return the dto
+   */
+  T toDto(String jsonContent);
 }
