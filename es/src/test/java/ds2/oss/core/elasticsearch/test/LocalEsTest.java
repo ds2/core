@@ -56,7 +56,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
     /**
      * The index name to use.
      */
-    private static final String indexName = "testindex1";
+    private static final String indexName = "localesindex";
     /**
      * The index type name.
      */
@@ -140,7 +140,10 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         LOG.info("Index is online. Continue with test.");
     }
     
-    @Test
+    /**
+     * Test to check if some resources for a given dto class can be found.
+     */
+    @Test(groups = "scan")
     public void testScanResources() {
         final List<MyNews> rc = to.getDefaultData(MyNews.class);
         Assert.assertNotNull(rc);
@@ -149,7 +152,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
     /**
      * Test to see if the prep data loading works as expected.
      */
-    @Test(groups = "loadsingle")
+    @Test(groups = "load")
     public void testLoadPreparationData() {
         Assert.assertTrue(to.insertDefaultData(indexName, MyNews.class));
         Assert.assertTrue(to.refreshIndexes(indexName));

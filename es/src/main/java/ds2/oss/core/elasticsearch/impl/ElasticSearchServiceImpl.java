@@ -147,6 +147,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         final GetResponse result = getRequestBuilder.execute().actionGet();
         T rc = null;
         if (result.isExists()) {
+            LOG.debug("Result from ES is {}", result);
+            result.getSource();
             rc = codec.toDto(result.getSourceAsString());
         } else {
             LOG.debug("Could not find document with id {} in {}", new Object[] { id, index });

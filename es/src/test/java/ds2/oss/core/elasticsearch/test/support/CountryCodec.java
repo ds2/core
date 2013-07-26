@@ -18,18 +18,15 @@ package ds2.oss.core.elasticsearch.test.support;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.enterprise.context.ApplicationScoped;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 
 /**
@@ -89,14 +86,14 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     }
     
     @Override
-    public <T> boolean matches(final Class<T> c) {
-        return c.isAssignableFrom(CountryCodec.class);
+    public boolean matches(final Class<?> c) {
+        return c.isAssignableFrom(CountryDto.class);
     }
-
-  @Override
-  public CountryDto toDto(String jsonContent) {
-    Gson g=new Gson();
-    CountryDto rc=g.fromJson(jsonContent, CountryDto.class);
-    return rc;
-  }
+    
+    @Override
+    public CountryDto toDto(final String jsonContent) {
+        Gson g = new Gson();
+        CountryDto rc = g.fromJson(jsonContent, CountryDto.class);
+        return rc;
+    }
 }

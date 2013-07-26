@@ -48,16 +48,16 @@ public class MyNewsCodec implements NewsCodec {
     
     @Override
     public String toJson(final MyNews t) {
-        Gson g = new Gson();
-        String gsonString = g.toJson(t);
+        final Gson g = new Gson();
+        final String gsonString = g.toJson(t);
         LOG.debug("Gson says: {}", gsonString);
         try {
-            XContentBuilder builder =
+            final XContentBuilder builder =
                 XContentFactory.jsonBuilder().startObject().field("title", t.getTitle())
                     .field("postDate", t.getPostDate()).field("message", t.getMsg()).field("author", t.getAuthor())
                     .endObject();
             return builder.string();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOG.warn("Error when generating the JSON", e);
         }
         return null;
@@ -77,7 +77,7 @@ public class MyNewsCodec implements NewsCodec {
             xbMapping.startObject("link").field("type", "string").field("index", "not_analyzed").endObject();
             xbMapping.endObject().endObject().endObject();
             return xbMapping.string();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOG.error("Error when setting up the mapping!", e);
         }
         return null;
@@ -94,8 +94,8 @@ public class MyNewsCodec implements NewsCodec {
     }
     
     @Override
-    public <T> boolean matches(final Class<T> c) {
-        return (c.isAssignableFrom(MyNews.class));
+    public boolean matches(final Class<?> c) {
+        return c.isAssignableFrom(MyNews.class);
     }
     
     @Override
@@ -115,8 +115,13 @@ public class MyNewsCodec implements NewsCodec {
     
     @Override
     public MyNews toDto(final String jsonContent) {
-        Gson g = new Gson();
-        MyNews rc = g.fromJson(jsonContent, MyNews.class);
+        if ((jsonContent == null) || (jsonContent.trim().length() <= 0)) {
+            throw new IllegalArgumentException("No content given to transform into a dto!");
+        }
+        LOG.debug("Json to convert is {}", jsonContent);
+        final Gson g = new Gson();
+        final MyNews rc = g.fromJson(jsonContent, MyNews.class);
+        LOG.debug("Gson made {}", rc);
         return rc;
     }
     

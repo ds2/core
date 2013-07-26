@@ -22,79 +22,88 @@ import java.util.Map;
 
 /**
  * A contract for a codec.
- *
- * @param <T> The type to encode or decode
- *
+ * 
+ * @param <T>
+ *            The type to encode or decode
+ * 
  * @author dstrauss
  * @version 0.2
  */
 public interface TypeCodec<T> {
-  /**
-   * Converts a given dto into a JSON variant.
-   *
-   * @param t the dto to convert
-   *
-   * @return the JSON string to use for indexing
-   */
-  String toJson(T t);
-
-  /**
-   * Converts a indexed document into a dto.
-   *
-   * @param o the map of fields
-   *
-   * @return the dto to use
-   */
-  T toDto(Map<String, Object> o);
-
-  /**
-   * Returns the type name to use for this type of DTO.
-   *
-   * @return the index type name, or null if not set.
-   */
-  String getIndexTypeName();
-
-  /**
-   * Returns the index name to primarily use.
-   *
-   * @return the default index name.
-   */
-  String getIndexName();
-
-  /**
-   * Returns the JSON mapping for this DTO.
-   *
-   * @return the JSON mapping, or null if not set
-   */
-  String getMapping();
-
-  /**
-   * Should a refresh operation be done on inserting?
-   *
-   * @return TRUE or FALSE, default is FALSE
-   */
-  boolean refreshOnIndexing();
-
-  /**
-   * Flag to indicate write a new document to all nodes within the cluster.
-   *
-   * @return TRUE or FALSE, default is FALSE meaning that the document is written to at least two nodes, replication
-   * is done in the background for the other nodes.
-   */
-  boolean replicateOnIndexing();
-
-  /**
-   * A simple check if instances of the given class can be used with this codec.
-   * @param c the class
-   * @param <T> the type of the class
-   * @return TRUE if this codec can deal with instances of this class, otherwise and by default: FALSE.
-   */
-  <T> boolean matches(Class<T> c);
-
-  /**
-   * Converts a given json content into a dto.
-   * @param jsonContent the json content
-   * @return the dto
-   */
-  T toDto(String jsonContent);
+    /**
+     * Converts a given dto into a JSON variant.
+     * 
+     * @param t
+     *            the dto to convert
+     * 
+     * @return the JSON string to use for indexing
+     */
+    String toJson(T t);
+    
+    /**
+     * Converts a indexed document into a dto.
+     * 
+     * @param o
+     *            the map of fields
+     * 
+     * @return the dto to use
+     * @deprecated Better use {@link #toDto(String)}
+     */
+    @Deprecated
+    T toDto(Map<String, Object> o);
+    
+    /**
+     * Returns the type name to use for this type of DTO.
+     * 
+     * @return the index type name, or null if not set.
+     */
+    String getIndexTypeName();
+    
+    /**
+     * Returns the index name to primarily use.
+     * 
+     * @return the default index name.
+     */
+    String getIndexName();
+    
+    /**
+     * Returns the JSON mapping for this DTO.
+     * 
+     * @return the JSON mapping, or null if not set
+     */
+    String getMapping();
+    
+    /**
+     * Should a refresh operation be done on inserting?
+     * 
+     * @return TRUE or FALSE, default is FALSE
+     */
+    boolean refreshOnIndexing();
+    
+    /**
+     * Flag to indicate write a new document to all nodes within the cluster.
+     * 
+     * @return TRUE or FALSE, default is FALSE meaning that the document is written to at least two
+     *         nodes, replication is done in the background for the other nodes.
+     */
+    boolean replicateOnIndexing();
+    
+    /**
+     * A simple check if instances of the given class can be used with this codec.
+     * 
+     * @param c
+     *            the class. Usually a dto that this codec can deal with.
+     * @return TRUE if this codec can deal with instances of this class, otherwise and by default:
+     *         FALSE.
+     */
+    boolean matches(Class<?> c);
+    
+    /**
+     * Converts a given json content into a dto.
+     * 
+     * @param jsonContent
+     *            the json content
+     * @return the dto
+     */
+    T toDto(String jsonContent);
 }
