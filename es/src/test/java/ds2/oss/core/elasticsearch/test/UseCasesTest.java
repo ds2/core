@@ -15,12 +15,12 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.impl.UseCases;
 
 /**
@@ -34,7 +34,10 @@ public class UseCasesTest extends AbstractInjectionEnvironment {
      * The test object.
      */
     private UseCases to;
-  private ElasticSearchService esSvc;
+    /**
+     * The ES service.
+     */
+    private ElasticSearchService esSvc;
     /**
      * The index name.
      */
@@ -43,12 +46,13 @@ public class UseCasesTest extends AbstractInjectionEnvironment {
     @BeforeClass
     public void onMethod() {
         to = getInstance(UseCases.class);
-      esSvc=getInstance(ElasticSearchService.class);
+        esSvc = getInstance(ElasticSearchService.class);
     }
-  @AfterClass
-  public void afterClass(){
-    esSvc.deleteIndexes(indexName);
-  }
+    
+    @AfterClass
+    public void afterClass() {
+        esSvc.deleteIndexes(indexName);
+    }
     
     @Test
     public void testCreateIndex() {
