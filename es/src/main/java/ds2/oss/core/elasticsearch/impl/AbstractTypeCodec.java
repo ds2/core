@@ -64,6 +64,7 @@ public abstract class AbstractTypeCodec<T> implements TypeCodec<T> {
         final StringBuilder sb = new StringBuilder();
         sb.append("/");
         sb.append(c.getPackage().getName().replaceAll("\\.", "/"));
+        sb.append("/");
         sb.append(c.getSimpleName()).append("-elasticsearch.mapping.json");
         final String rc = ioSvc.loadResource(sb.toString());
         return rc;
@@ -71,10 +72,14 @@ public abstract class AbstractTypeCodec<T> implements TypeCodec<T> {
     
     @Override
     public String getMapping() {
+        String rc = null;
         if (baseClass != null) {
-            return loadMappingFromJson(baseClass);
+            rc = this.loadMappingFromJson(baseClass);
         }
-        return null;
+        if (rc == null) {
+            throw new UnsupportedOperationException("No mapping data have been defined!");
+        }
+        return rc;
     }
     
     @Override

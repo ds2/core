@@ -69,6 +69,9 @@ public class GsonCodecImpl implements GsonCodec {
     
     @Override
     public <T> String encode(final T t) {
+        if (t == null) {
+            throw new IllegalArgumentException("No type given to encode!");
+        }
         final String rc = gson.toJson(t);
         return rc;
     }

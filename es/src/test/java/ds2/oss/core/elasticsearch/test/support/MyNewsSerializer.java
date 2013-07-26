@@ -51,7 +51,7 @@ public class MyNewsSerializer implements JsonSerializer<MyNews> {
             rc.addProperty("message", src.getMsg());
         }
         if (src.getPostDate() != null) {
-            final DateTime dt = new DateTime(src.getPostDate().getTime());
+            final DateTime dt = new DateTime(src.getPostDate());
             final String str = dtf.print(dt);
             rc.addProperty("postDate", str);
         }
