@@ -96,7 +96,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
     
     @Override
-    public <T> T put(final String index, final T t, final TypeCodec<T> codec) {
+    public <T> String put(final String index, final T t, final TypeCodec<T> codec) {
         if (t == null) {
             throw new IllegalArgumentException("You must give a dto to put into the index!");
         }
@@ -111,8 +111,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         final IndexRequestBuilder resp = prepareIndexing(index, typeCodec);
         resp.setSource(typeCodec.toJson(t));
         final IndexResponse response = resp.execute().actionGet();
+        final String id = response.getId();
         LOG.debug("Response is {}", response);
-        return t;
+        return id;
     }
     
     /**
@@ -125,7 +126,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * @return the index request builder
      */
     private IndexRequestBuilder prepareIndexing(final String index, final TypeCodec<?> typeCodec) {
-        IndexRequestBuilder rc = esNode.get().prepareIndex(index, typeCodec.getIndexTypeName());
+        final IndexRequestBuilder rc = esNode.get().prepareIndex(index, typeCodec.getIndexTypeName());
         if (typeCodec.refreshOnIndexing()) {
             rc.setRefresh(true);
         }

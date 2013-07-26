@@ -61,6 +61,8 @@ public class IoServiceImpl implements IoService {
             } catch (final IOException e) {
                 LOG.debug("Error occurred on reading!", e);
             }
+        } else {
+            LOG.warn("Could not find resource {}!", resName2);
         }
         return rc;
     }

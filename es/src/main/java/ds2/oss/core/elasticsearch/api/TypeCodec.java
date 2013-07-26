@@ -18,7 +18,6 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
-import java.util.Map;
 
 /**
  * A contract for a codec.
@@ -41,30 +40,11 @@ public interface TypeCodec<T> {
     String toJson(T t);
     
     /**
-     * Converts a indexed document into a dto.
-     * 
-     * @param o
-     *            the map of fields
-     * 
-     * @return the dto to use
-     * @deprecated Better use {@link #toDto(String)}
-     */
-    @Deprecated
-    T toDto(Map<String, Object> o);
-    
-    /**
      * Returns the type name to use for this type of DTO.
      * 
      * @return the index type name, or null if not set.
      */
     String getIndexTypeName();
-    
-    /**
-     * Returns the index name to primarily use.
-     * 
-     * @return the default index name.
-     */
-    String getIndexName();
     
     /**
      * Returns the JSON mapping for this DTO.

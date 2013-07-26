@@ -16,17 +16,15 @@
 package ds2.oss.core.elasticsearch.test.support;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
+import ds2.oss.core.elasticsearch.impl.AbstractTypeCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 
 /**
@@ -36,7 +34,7 @@ import ds2.oss.core.elasticsearch.test.dto.CountryDto;
  * @version 0.2
  */
 @EsCodec(CountryDto.class)
-public class CountryCodec implements TypeCodec<CountryDto> {
+public class CountryCodec extends AbstractTypeCodec<CountryDto> implements TypeCodec<CountryDto> {
     /**
      * A logger.
      */
@@ -56,18 +54,8 @@ public class CountryCodec implements TypeCodec<CountryDto> {
     }
     
     @Override
-    public CountryDto toDto(final Map<String, Object> o) {
-        return null;
-    }
-    
-    @Override
     public String getIndexTypeName() {
         return "country";
-    }
-    
-    @Override
-    public String getIndexName() {
-        return null;
     }
     
     @Override
@@ -75,25 +63,4 @@ public class CountryCodec implements TypeCodec<CountryDto> {
         return "{\"country\":{\"properties\":{\"name\":{\"type\":\"string\",\"index\":\"analyzed\"},\"isoCode\":{\"type\":\"string\",\"index\":\"analyzed\"}}}}\n";
     }
     
-    @Override
-    public boolean refreshOnIndexing() {
-        return false;
-    }
-    
-    @Override
-    public boolean replicateOnIndexing() {
-        return false;
-    }
-    
-    @Override
-    public boolean matches(final Class<?> c) {
-        return c.isAssignableFrom(CountryDto.class);
-    }
-    
-    @Override
-    public CountryDto toDto(final String jsonContent) {
-        Gson g = new Gson();
-        CountryDto rc = g.fromJson(jsonContent, CountryDto.class);
-        return rc;
-    }
 }

@@ -39,9 +39,9 @@ public interface ElasticSearchService {
      * @param <T>
      *            the type to put
      * 
-     * @return the object
+     * @return the id of the document
      */
-    <T> T put(String index, T t, TypeCodec<T> codec);
+    <T> String put(String index, T t, TypeCodec<T> codec);
     
     /**
      * Loads a dto by the given id. It is assumed that there is a known codec for this type.

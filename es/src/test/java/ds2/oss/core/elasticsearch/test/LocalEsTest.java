@@ -160,4 +160,21 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(n, "No news found!");
     }
     
+    /**
+     * Test for the get method.
+     */
+    @Test(groups = "load")
+    public void testGet() {
+        final MyNews mn = new MyNews();
+        mn.setAuthor("testuser");
+        mn.setMsg("Hello, world, again");
+        mn.setPostDate(new Date());
+        mn.setTitle("Hello, again");
+        final String id = to.put(indexName, mn, null);
+        Assert.assertNotNull(id);
+        Assert.assertTrue(to.refreshIndexes(indexName));
+        final MyNews m2 = to.get(indexName, MyNews.class, id);
+        Assert.assertNotNull(m2, "News could not be found!");
+    }
+    
 }
