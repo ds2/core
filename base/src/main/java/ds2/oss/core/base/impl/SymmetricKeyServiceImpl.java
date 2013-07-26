@@ -43,8 +43,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(SymmetricKeyServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SymmetricKeyServiceImpl.class);
     /**
      * The security base data.
      */
@@ -52,31 +51,19 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
     private SecurityBaseData baseData;
     
     @Override
-    public byte[] performHashing(final char[] origin, final SymmetricKeyNames n) {
-        final byte[] rc =
-            performHashing(origin, baseData.getSalt(),
-                baseData.getMinIteration(), n);
-        return rc;
-    }
-    
-    @Override
-    public byte[] performHashing(final char[] origin, final byte[] salt,
-        final int iterationCount, final SymmetricKeyNames n) {
+    public byte[] performHashing(final char[] origin, final byte[] salt, final int iterationCount,
+        final SymmetricKeyNames n) {
         if (origin == null) {
             LOG.warn("No origin data given to hash!");
             return null;
         }
         if (n == null) {
-            LOG.warn("No hash algorithm given to use!");
-            return null;
+            throw new IllegalArgumentException("No hash algorithm given to use.");
         }
         byte[] rc = null;
         try {
-            final SecretKeyFactory skf =
-                SecretKeyFactory.getInstance(n.getName());
-            final KeySpec ks =
-                new PBEKeySpec(origin, salt, iterationCount,
-                    n.getSuggestedKeyLength());
+            final SecretKeyFactory skf = SecretKeyFactory.getInstance(n.getName());
+            final KeySpec ks = new PBEKeySpec(origin, salt, iterationCount, n.getSuggestedKeyLength());
             final SecretKey erg = skf.generateSecret(ks);
             rc = erg.getEncoded();
         } catch (final NoSuchAlgorithmException e) {
@@ -84,6 +71,12 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
         } catch (final InvalidKeySpecException e) {
             LOG.warn("Invalid key specification used!", e);
         }
+        return rc;
+    }
+    
+    @Override
+    public byte[] performHashing(final char[] origin, final SymmetricKeyNames n) {
+        final byte[] rc = performHashing(origin, baseData.getSalt(), baseData.getMinIteration(), n);
         return rc;
     }
 }

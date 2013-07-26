@@ -42,62 +42,13 @@ public class HmacGeneratorImpl implements HmacGenerator {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(HmacGeneratorImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HmacGeneratorImpl.class);
     
     /**
      * Inits the implementation.
      */
     public HmacGeneratorImpl() {
         // nothing special to do
-    }
-    
-    @Override
-    public final byte[] generate(final byte[] b, final HashAlgorithm g) {
-        byte[] rc = null;
-        if (g == null) {
-            LOG.warn("No hash algorithm given to use!");
-        } else if (b == null) {
-            LOG.warn("No bytes given to hash.");
-        } else {
-            KeyGenerator gen = null;
-            final String hmacId = generateHmacId(g);
-            try {
-                gen = KeyGenerator.getInstance(hmacId);
-                final SecretKey sk = gen.generateKey();
-                rc = generateMac(sk, hmacId, b);
-            } catch (final NoSuchAlgorithmException e) {
-                LOG.error("No provider found for macId {}!", hmacId);
-            }
-        }
-        return rc;
-    }
-    
-    /**
-     * Generates the mac hash.
-     * 
-     * @param sk
-     *            the secret key to use
-     * @param hmacId
-     *            the hmac id
-     * @param b
-     *            the bytes to hash
-     * @return the hash value
-     */
-    private static byte[] generateMac(final SecretKey sk, final String hmacId,
-        final byte[] b) {
-        Mac mc;
-        try {
-            mc = Mac.getInstance(hmacId);
-            mc.init(sk);
-            mc.update(b);
-            return mc.doFinal();
-        } catch (final NoSuchAlgorithmException e) {
-            LOG.error("No provider found for macId {}!", hmacId);
-        } catch (final InvalidKeyException e) {
-            LOG.error("Invalid key given to use!", e);
-        }
-        return null;
     }
     
     /**
@@ -123,9 +74,34 @@ public class HmacGeneratorImpl implements HmacGenerator {
         return hmacId;
     }
     
+    /**
+     * Generates the mac hash.
+     * 
+     * @param sk
+     *            the secret key to use
+     * @param hmacId
+     *            the hmac id
+     * @param b
+     *            the bytes to hash
+     * @return the hash value
+     */
+    private static byte[] generateMac(final SecretKey sk, final String hmacId, final byte[] b) {
+        Mac mc;
+        try {
+            mc = Mac.getInstance(hmacId);
+            mc.init(sk);
+            mc.update(b);
+            return mc.doFinal();
+        } catch (final NoSuchAlgorithmException e) {
+            LOG.error("No provider found for macId {}!", hmacId);
+        } catch (final InvalidKeyException e) {
+            LOG.error("Invalid key given to use!", e);
+        }
+        return null;
+    }
+    
     @Override
-    public final byte[] generate(final byte[] key, final byte[] b,
-        final HashAlgorithm g) {
+    public final byte[] generate(final byte[] key, final byte[] b, final HashAlgorithm g) {
         byte[] rc = null;
         if (g == null) {
             LOG.warn("No hash algorithm given to use!");
@@ -137,6 +113,27 @@ public class HmacGeneratorImpl implements HmacGenerator {
             final String hmacId = generateHmacId(g);
             final SecretKey sk = new SecretKeySpec(key, hmacId);
             rc = generateMac(sk, hmacId, b);
+        }
+        return rc;
+    }
+    
+    @Override
+    public final byte[] generate(final byte[] b, final HashAlgorithm g) {
+        byte[] rc = null;
+        if (g == null) {
+            LOG.warn("No hash algorithm given to use!");
+        } else if (b == null) {
+            LOG.warn("No bytes given to hash.");
+        } else {
+            KeyGenerator gen = null;
+            final String hmacId = generateHmacId(g);
+            try {
+                gen = KeyGenerator.getInstance(hmacId);
+                final SecretKey sk = gen.generateKey();
+                rc = generateMac(sk, hmacId, b);
+            } catch (final NoSuchAlgorithmException e) {
+                LOG.error("No provider found for macId {}!", hmacId);
+            }
         }
         return rc;
     }

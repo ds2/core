@@ -21,16 +21,17 @@ package ds2.oss.core.elasticsearch.test.support;
 import java.io.IOException;
 import java.util.Map;
 
-import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
-import ds2.oss.core.elasticsearch.test.NewsCodec;
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
 
+import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
+import ds2.oss.core.elasticsearch.test.NewsCodec;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
 
 /**
  * A codec.
@@ -43,18 +44,18 @@ public class MyNewsCodec implements NewsCodec {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(MyNewsCodec.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MyNewsCodec.class);
     
     @Override
     public String toJson(final MyNews t) {
+        Gson g = new Gson();
+        String gsonString = g.toJson(t);
+        LOG.debug("Gson says: {}", gsonString);
         try {
             XContentBuilder builder =
-                XContentFactory.jsonBuilder().startObject()
-                    .field("title", t.getTitle())
-                    .field("postDate", t.getPostDate())
-                    .field("message", t.getMsg())
-                    .field("author", t.getAuthor()).endObject();
+                XContentFactory.jsonBuilder().startObject().field("title", t.getTitle())
+                    .field("postDate", t.getPostDate()).field("message", t.getMsg()).field("author", t.getAuthor())
+                    .endObject();
             return builder.string();
         } catch (IOException e) {
             LOG.warn("Error when generating the JSON", e);
@@ -67,12 +68,8 @@ public class MyNewsCodec implements NewsCodec {
         XContentBuilder xbMapping = null;
         try {
             xbMapping =
-                XContentFactory
-                    .jsonBuilder()
-                    .startObject()
-                    .startObject(
-                        MyNews.class.getAnnotation(TypeMapping.class).value())
-                    .startObject("properties");
+                XContentFactory.jsonBuilder().startObject()
+                    .startObject(MyNews.class.getAnnotation(TypeMapping.class).value()).startObject("properties");
             xbMapping.startObject("source").field("type", "string").endObject();
             xbMapping.startObject("title").field("type", "string").endObject();
             xbMapping.startObject("description").field("type", "string").endObject();
@@ -81,27 +78,27 @@ public class MyNewsCodec implements NewsCodec {
             xbMapping.endObject().endObject().endObject();
             return xbMapping.string();
         } catch (IOException e) {
-            LOG.error("Error when setting up the mapping!",e);
+            LOG.error("Error when setting up the mapping!", e);
         }
         return null;
     }
-
+    
     @Override
     public boolean refreshOnIndexing() {
         return true;
     }
-
+    
     @Override
     public boolean replicateOnIndexing() {
         return false;
     }
-
-  @Override
-  public <T> boolean matches(Class<T> c) {
-    return (c.isAssignableFrom(MyNews.class));
-  }
-
-  @Override
+    
+    @Override
+    public <T> boolean matches(final Class<T> c) {
+        return (c.isAssignableFrom(MyNews.class));
+    }
+    
+    @Override
     public String getIndexTypeName() {
         return MyNews.class.getAnnotation(TypeMapping.class).value();
     }
@@ -115,10 +112,12 @@ public class MyNewsCodec implements NewsCodec {
     public String getIndexName() {
         return null;
     }
-
-  @Override
-  public MyNews toDto(String jsonContent) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
+    
+    @Override
+    public MyNews toDto(final String jsonContent) {
+        Gson g = new Gson();
+        MyNews rc = g.fromJson(jsonContent, MyNews.class);
+        return rc;
+    }
     
 }

@@ -48,25 +48,21 @@ public class TrustManagerWrapper implements X509TrustManager {
     
     /*
      * (non-Javadoc)
-     * @see
-     * javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert.
-     * X509Certificate[], java.lang.String)
+     * @see javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert. X509Certificate[],
+     * java.lang.String)
      */
     @Override
-    public void checkClientTrusted(final X509Certificate[] chain,
-        final String authType) throws CertificateException {
+    public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
         origTm.checkClientTrusted(chain, authType);
     }
     
     /*
      * (non-Javadoc)
-     * @see
-     * javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert.
-     * X509Certificate[], java.lang.String)
+     * @see javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert. X509Certificate[],
+     * java.lang.String)
      */
     @Override
-    public void checkServerTrusted(final X509Certificate[] chain,
-        final String authType) throws CertificateException {
+    public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
         serverCerts = chain;
         origTm.checkServerTrusted(chain, authType);
     }
