@@ -4,10 +4,7 @@
 package ds2.oss.core.elasticsearch.test.support;
 
 import java.lang.reflect.Type;
-
-import org.elasticsearch.common.joda.time.DateTime;
-import org.elasticsearch.common.joda.time.format.DateTimeFormatter;
-import org.elasticsearch.common.joda.time.format.ISODateTimeFormat;
+import java.text.SimpleDateFormat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,13 +26,13 @@ public class MyNewsSerializer implements JsonSerializer<MyNews> {
     /**
      * The date time formatter.
      */
-    private DateTimeFormatter dtf;
+    private SimpleDateFormat sdf;
     
     /**
      * Inits the serializer.
      */
     public MyNewsSerializer() {
-        dtf = ISODateTimeFormat.dateOptionalTimeParser();
+        sdf = new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss.SSSZZ");
     }
     
     @Override
@@ -51,8 +48,7 @@ public class MyNewsSerializer implements JsonSerializer<MyNews> {
             rc.addProperty("message", src.getMsg());
         }
         if (src.getPostDate() != null) {
-            final DateTime dt = new DateTime(src.getPostDate());
-            final String str = dtf.print(dt);
+            final String str = sdf.format(src.getPostDate());
             rc.addProperty("postDate", str);
         }
         return rc;
