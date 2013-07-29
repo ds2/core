@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.elasticsearch.api;
 
 /**
@@ -35,6 +32,11 @@ public interface CodecProvider {
      * @return the codec, or null if not found
      */
     <T> TypeCodec<T> findFor(Class<T> c);
-
-  int getInstanceCount();
+    
+    /**
+     * Dummy method to get the count of found instances.
+     * 
+     * @return 0
+     */
+    int getInstanceCount();
 }

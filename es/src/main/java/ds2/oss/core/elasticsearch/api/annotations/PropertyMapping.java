@@ -15,14 +15,14 @@
  */
 package ds2.oss.core.elasticsearch.api.annotations;
 
-import ds2.oss.core.elasticsearch.api.FieldTypes;
-import ds2.oss.core.elasticsearch.api.IndexTypes;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import ds2.oss.core.elasticsearch.api.FieldTypes;
+import ds2.oss.core.elasticsearch.api.IndexTypes;
 
 /**
  * The field mapping annotation.
@@ -66,8 +66,7 @@ public @interface PropertyMapping {
     
     /**
      * The date format. See <a href=
-     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/"
-     * >here</a>.
+     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/" >here</a>.
      */
     String dateFormat() default NULL;
     

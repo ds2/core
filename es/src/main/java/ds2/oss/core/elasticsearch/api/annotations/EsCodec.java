@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.elasticsearch.api.annotations;
 
 import java.lang.annotation.Documented;
@@ -35,7 +32,7 @@ import javax.inject.Qualifier;
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE,ElementType.FIELD})
+@Target({ ElementType.TYPE, ElementType.FIELD })
 @ApplicationScoped
 @Documented
 @Qualifier

@@ -15,13 +15,6 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
-import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
-
-import org.elasticsearch.client.Client;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -29,43 +22,50 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PreDestroy;
 
+import org.elasticsearch.client.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+
 /**
  * An abstract node implementation.
- *
- * @param    <T>  The type of the node
- *
- * @author   dstrauss
- * @version  0.2
+ * 
+ * @param <T>
+ *            The type of the node
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
 public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearchNode {
-
+    
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(AbstractNodeImpl.class);
-
+    
     /**
      * A lock.
      */
     protected final Lock lock = new ReentrantLock();
-
+    
     /**
      * Flag to indicate that a lock is required on the client.
      */
     protected boolean needsLock;
-
+    
     /**
      * The node instance.
      */
     protected T client;
-
+    
     /**
      * Sets up the node impl.
      */
     public AbstractNodeImpl() {
         // nothing special to do
     }
-
+    
     /**
      * Actions to perform on shutdown.
      */
@@ -74,7 +74,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
         LOG.debug("Shutting down node...");
         client.close();
     }
-
+    
     @Override
     public Client get() {
         if (!needsLock) {
@@ -87,7 +87,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
             lock.unlock();
         }
     }
-
+    
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -110,12 +110,12 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
             needsLock = false;
         }
     }
-
+    
     @Override
     public void removeTransport(final InetSocketAddress... isa) {
         LOG.info("Ignoring");
     }
-
+    
     /**
      * Waits for the yellow status.
      */
@@ -123,7 +123,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
     public void waitForClusterYellowState() {
         get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
     }
-
+    
     /**
      * Waits for green status of the cluster.
      */
