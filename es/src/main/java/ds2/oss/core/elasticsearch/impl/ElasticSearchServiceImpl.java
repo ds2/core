@@ -392,7 +392,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             final String indexType = codec.getIndexTypeName();
             if (mappings.containsKey(indexType)) {
                 LOG.debug("Deleting mapping for type {}", indexType);
-                DeleteMappingRequestBuilder prepDelMapping =
+                final DeleteMappingRequestBuilder prepDelMapping =
                     esNode.get().admin().indices().prepareDeleteMapping(indexName);
                 prepDelMapping.setType(indexType);
                 prepDelMapping.execute().actionGet();
@@ -406,7 +406,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             } else {
                 LOG.debug("Installing mapping for type {} seems to be ok", indexType);
             }
-            // }
         }
         LOG.info("Wait for index to come up");
         esNode.waitForClusterYellowState();

@@ -31,7 +31,7 @@ import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
  * @author dstrauss
  * @version 0.2
  */
-@TypeMapping("news")
+@TypeMapping(value = "news", compressThreshold = "100b")
 public class MyNews {
     /**
      * The title.

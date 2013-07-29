@@ -1,5 +1,5 @@
 {"news": {
-    "_source": {"enabled": false},
+    "_source": {"enabled": true},
     "properties": {
       "title": {"type": "string", "index": "analyzed"},
       "message": {"type": "string", "index": "analyzed"},
