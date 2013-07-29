@@ -140,15 +140,18 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
      */
     @Test(groups = "load")
     public void testGet() {
+        Date postDate = new Date();
         final MyNews mn = new MyNews();
         mn.setAuthor("testuser");
         mn.setMsg("Hello, world, again");
-        mn.setPostDate(new Date());
+        mn.setPostDate(postDate);
         mn.setTitle("Hello, again");
         final String id = to.put(indexName, mn, null);
         Assert.assertNotNull(id);
         final MyNews m2 = to.get(indexName, MyNews.class, id);
         Assert.assertNotNull(m2, "News could not be found!");
+        Assert.assertNotNull(m2.getPostDate());
+        Assert.assertEquals(m2.getPostDate(), postDate);
     }
     
     /**

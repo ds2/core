@@ -31,7 +31,7 @@ import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
  *            the type of the dto
  * 
  */
-public abstract class AbstractTypeCodec<T> implements TypeCodec<T> {
+public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements TypeCodec<T> {
     /**
      * The IO service.
      */

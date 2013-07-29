@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -97,14 +96,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         // nothing special to do
     }
     
-    /**
-     * Actions to perform at startup.
-     */
-    @PostConstruct
-    public void onStartup() {
-        LOG.info("Check indices and mappings...");
-    }
-    
     @Override
     public <T> String put(final String index, final T t, final TypeCodec<T> codec) {
         if (t == null) {
@@ -161,8 +152,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         T rc = null;
         if (result.isExists()) {
             LOG.debug("Result from ES is {}", result);
-            result.getSource();
-            rc = codec.toDto(result.getSourceAsString());
+            rc = codec.toDto(result.getSource());
+            // rc = codec.toDto(result.getSourceAsString());
         } else {
             LOG.debug("Could not find document with id {} in {}", new Object[] { id, index });
         }
@@ -353,7 +344,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 if (hit.isSourceEmpty()) {
                     LOG.warn("Source is empty!");
                 }
-                Map<String, Object> map = hit.getSource();
                 final T t = codec.toDto(hit.getSourceAsString());
                 if (t == null) {
                     continue;

@@ -19,7 +19,6 @@
 package ds2.oss.core.elasticsearch.test.support;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -79,7 +78,7 @@ public class MyNewsCodec extends AbstractTypeCodec<MyNews> implements NewsCodec 
         rc.setAuthor((String) fields.get("author"));
         rc.setMsg((String) fields.get("message"));
         rc.setTitle((String) fields.get("title"));
-        rc.setPostDate((Date) fields.get("postDate"));
+        rc.setPostDate(toDate((String) fields.get("postDate")));
         return rc;
     }
     

@@ -19,7 +19,6 @@
 package ds2.oss.core.elasticsearch.test.support;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,6 +26,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import ds2.oss.core.elasticsearch.api.annotations.GsonSerializer;
+import ds2.oss.core.elasticsearch.impl.AbstractCodecBase;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
 
 /**
@@ -37,18 +37,7 @@ import ds2.oss.core.elasticsearch.test.dto.MyNews;
  * @version 0.2
  */
 @GsonSerializer(MyNews.class)
-public class MyNewsSerializer implements JsonSerializer<MyNews> {
-    /**
-     * The date time formatter.
-     */
-    private SimpleDateFormat sdf;
-    
-    /**
-     * Inits the serializer.
-     */
-    public MyNewsSerializer() {
-        sdf = new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss.SSSZZ");
-    }
+public class MyNewsSerializer extends AbstractCodecBase implements JsonSerializer<MyNews> {
     
     @Override
     public JsonElement serialize(final MyNews src, final Type typeOfSrc, final JsonSerializationContext context) {
@@ -63,8 +52,7 @@ public class MyNewsSerializer implements JsonSerializer<MyNews> {
             rc.addProperty("message", src.getMsg());
         }
         if (src.getPostDate() != null) {
-            final String str = sdf.format(src.getPostDate());
-            rc.addProperty("postDate", str);
+            rc.addProperty("postDate", fromDate(src.getPostDate()));
         }
         return rc;
     }
