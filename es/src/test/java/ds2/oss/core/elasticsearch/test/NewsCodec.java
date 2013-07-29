@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.elasticsearch.test;
 
 import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
 
 /**
  * The news codec.

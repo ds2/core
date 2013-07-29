@@ -83,6 +83,7 @@ public class UseCases {
             esNode.waitForClusterYellowState();
             return true;
         }
+        LOG.warn("index {} already exists, cannot be created again!", indexName);
         return false;
     }
     

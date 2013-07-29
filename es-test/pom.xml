@@ -24,4 +24,5 @@
       <artifactId>weld-se-core</artifactId>
     </dependency>
   </dependencies>
+  <description>The Elasticsearch integration tests.</description>
 </project>

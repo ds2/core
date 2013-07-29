@@ -35,26 +35,43 @@ import ds2.oss.core.api.Base64Codec;
 @ApplicationScoped
 public class Base64Konverter implements Base64Codec {
     /**
-     * The max line length in base64 before a \n is used.
-     */
-    private static final int MAXLINELENGTH = 76;
-    /**
      * The alphabet count.
      */
     private static final int ALPHABETCOUNT = 64;
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(Base64Konverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Base64Konverter.class);
+    /**
+     * The max line length in base64 before a \n is used.
+     */
+    private static final int MAXLINELENGTH = 76;
     /**
      * The padding character to fill empty spaces with.
      */
     private static final char PADDING = '=';
+    
+    /**
+     * Berechnet, wieviel Padding benutzt werden muss.
+     * 
+     * @param srclaenge
+     *            die Anzahl der Bytes, die base64 gemacht werden sollen.
+     * @return die Anzahl der Padding-Zeichen nach dem Encoding
+     */
+    private static byte holeAnzPadding(final int srclaenge) {
+        final byte modulo = (byte) (srclaenge % 3);
+        if (modulo == 0) {
+            // Perfekt :P
+            return 0;
+        }
+        return (byte) (3 - modulo);
+    }
+    
     /**
      * the alphabet to use.
      */
     private final char[] alphabet;
+    
     /**
      * A debugging flag.
      */
@@ -188,8 +205,7 @@ public class Base64Konverter implements Base64Codec {
                     letztesByte = -1;
                     break;
                 default:
-                    LOG.error("Upps, ein Algo-Fehler: aktByte=" + i + " ("
-                        + aktChar + ")");
+                    LOG.error("Upps, ein Algo-Fehler: aktByte=" + i + " (" + aktChar + ")");
                     break;
             }
         }
@@ -262,21 +278,5 @@ public class Base64Konverter implements Base64Codec {
             index++;
         }
         return -1;
-    }
-    
-    /**
-     * Berechnet, wieviel Padding benutzt werden muss.
-     * 
-     * @param srclaenge
-     *            die Anzahl der Bytes, die base64 gemacht werden sollen.
-     * @return die Anzahl der Padding-Zeichen nach dem Encoding
-     */
-    private static byte holeAnzPadding(final int srclaenge) {
-        final byte modulo = (byte) (srclaenge % 3);
-        if (modulo == 0) {
-            // Perfekt :P
-            return 0;
-        }
-        return (byte) (3 - modulo);
     }
 }

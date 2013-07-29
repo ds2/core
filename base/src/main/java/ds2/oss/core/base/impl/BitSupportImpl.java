@@ -25,13 +25,13 @@ import ds2.oss.core.api.BitSupport;
  */
 public class BitSupportImpl implements BitSupport {
     /**
-     * Constant for 0xff byte sequence.
-     */
-    private static final int XFF = 0xff;
-    /**
      * Constant for the number 8.
      */
     private static final int N8 = 8;
+    /**
+     * Constant for 0xff byte sequence.
+     */
+    private static final int XFF = 0xff;
     
     /**
      * Inits the bean.
@@ -67,8 +67,7 @@ public class BitSupportImpl implements BitSupport {
     }
     
     @Override
-    public final byte[] getBytesFrom(final long l, final int offset,
-        final int length) {
+    public final byte[] getBytesFrom(final long l, final int offset, final int length) {
         // TBD
         return null;
     }

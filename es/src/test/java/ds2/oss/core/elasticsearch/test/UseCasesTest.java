@@ -16,9 +16,11 @@
 package ds2.oss.core.elasticsearch.test;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.impl.UseCases;
 
 /**
@@ -33,13 +35,23 @@ public class UseCasesTest extends AbstractInjectionEnvironment {
      */
     private UseCases to;
     /**
+     * The ES service.
+     */
+    private ElasticSearchService esSvc;
+    /**
      * The index name.
      */
-    private final String indexName = "myindex2";
+    private final String indexName = "usecasesmyindex2";
     
     @BeforeClass
     public void onMethod() {
         to = getInstance(UseCases.class);
+        esSvc = getInstance(ElasticSearchService.class);
+    }
+    
+    @AfterClass
+    public void afterClass() {
+        esSvc.deleteIndexes(indexName);
     }
     
     @Test
@@ -50,7 +62,6 @@ public class UseCasesTest extends AbstractInjectionEnvironment {
     @Test(dependsOnMethods = "testCreateIndex")
     public void testDeleteAnythingOfType() {
         // add data
-        
         to.deleteEntriesOfType(indexName, "country");
     }
 }

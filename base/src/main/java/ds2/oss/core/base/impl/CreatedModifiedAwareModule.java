@@ -61,6 +61,16 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
         modified = new Date();
     }
     
+    @Override
+    public Date getCreated() {
+        return created;
+    }
+    
+    @Override
+    public Date getModified() {
+        return modified;
+    }
+    
     /**
      * Sets the creation date.
      * 
@@ -79,16 +89,6 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
      */
     public void setModified(final Date m) {
         modified = m;
-    }
-    
-    @Override
-    public Date getCreated() {
-        return created;
-    }
-    
-    @Override
-    public Date getModified() {
-        return modified;
     }
     
 }

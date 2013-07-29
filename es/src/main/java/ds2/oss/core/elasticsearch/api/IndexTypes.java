@@ -40,10 +40,21 @@ public enum IndexTypes {
      */
     private String typeName;
     
+    /**
+     * Inits the enum value.
+     * 
+     * @param s
+     *            the ES string for this index type
+     */
     private IndexTypes(final String s) {
         typeName = s;
     }
     
+    /**
+     * Returns the ES index type name.
+     * 
+     * @return the index type name from ES
+     */
     public String getTypeName() {
         return typeName;
     }

@@ -15,8 +15,9 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-import ds2.oss.core.elasticsearch.api.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.TypeMapping;
+
+import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 
 /**
  * The country dto.

@@ -34,58 +34,8 @@ public class HexKonverter implements HexCodec {
     /**
      * The list of hex chars.
      */
-    private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6',
-        '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', };
-    
-    /**
-     * Inits the codec.
-     */
-    public HexKonverter() {
-        // nothing special to do
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.core.api.svc.HexCodec#encode(byte[])
-     */
-    @Override
-    public final String encode(final byte[] b) {
-        if (b == null) {
-            return null;
-        }
-        final StringBuilder sb = new StringBuilder();
-        for (byte b2 : b) {
-            int upper = b2 & 0xf0;
-            upper >>= 4;
-            int lower = b2 & 0x0f;
-            sb.append(LISTE[upper]).append(LISTE[lower]);
-        }
-        return sb.toString();
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.core.api.svc.HexCodec#decode(char[])
-     */
-    @Override
-    public final byte[] decode(final char[] s) {
-        if (s == null) {
-            return null;
-        }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        List<String> pairs = getPairs(s);
-        for (String pair : pairs) {
-            char upperChar = pair.charAt(0);
-            char lowerChar = pair.charAt(1);
-            int upperQuad = getPos(upperChar);
-            int lowerQuad = getPos(lowerChar);
-            byte b = (byte) upperQuad;
-            b <<= 4;
-            b |= lowerQuad & 0x0f;
-            baos.write(b);
-        }
-        return baos.toByteArray();
-    }
+    private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+        'f', };
     
     /**
      * Returns the pairs of the given char sequence.
@@ -127,6 +77,49 @@ public class HexKonverter implements HexCodec {
             rc++;
         }
         return -1;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see ds2.core.api.svc.HexCodec#decode(char[])
+     */
+    @Override
+    public final byte[] decode(final char[] s) {
+        if (s == null) {
+            return null;
+        }
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final List<String> pairs = getPairs(s);
+        for (String pair : pairs) {
+            final char upperChar = pair.charAt(0);
+            final char lowerChar = pair.charAt(1);
+            final int upperQuad = getPos(upperChar);
+            final int lowerQuad = getPos(lowerChar);
+            byte b = (byte) upperQuad;
+            b <<= 4;
+            b |= lowerQuad & 0x0f;
+            baos.write(b);
+        }
+        return baos.toByteArray();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see ds2.core.api.svc.HexCodec#encode(byte[])
+     */
+    @Override
+    public final String encode(final byte[] b) {
+        if (b == null) {
+            return null;
+        }
+        final StringBuilder sb = new StringBuilder();
+        for (byte b2 : b) {
+            int upper = b2 & 0xf0;
+            upper >>= 4;
+            final int lower = b2 & 0x0f;
+            sb.append(LISTE[upper]).append(LISTE[lower]);
+        }
+        return sb.toString();
     }
     
 }

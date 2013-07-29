@@ -29,7 +29,18 @@ public interface IoService {
      * 
      * @param resLocation
      *            the resource location
+     * 
      * @return the loaded properties, or an empty properties object
      */
     Properties loadProperties(String resLocation);
+    
+    /**
+     * Loads a resource.
+     * 
+     * @param resName
+     *            the resource name
+     * 
+     * @return the resource content, or null if not found or an error occurred
+     */
+    String loadResource(String resName);
 }

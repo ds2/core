@@ -18,8 +18,8 @@ package ds2.oss.core.elasticsearch.test;
 import java.util.Set;
 
 import ds2.oss.core.elasticsearch.api.IndexTypes;
-import ds2.oss.core.elasticsearch.api.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.TypeMapping;
+import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 
 /**
  * A dummy dto.

@@ -13,26 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
-package ds2.oss.core.elasticsearch.api;
+package ds2.oss.core.api;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.security.cert.X509Certificate;
 
 /**
- * Marks a field to be the identifier of a dto object.
+ * A service to check the certificates of a given server.
  * 
  * @author dstrauss
  * @version 0.2
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-@Documented
-public @interface Identifier {
-    // nothing special to do
+public interface SslServerSnooper {
+    /**
+     * Gets all known certificates sent by the given SSL server.
+     * 
+     * @param hostname
+     *            the hostname
+     * @param port
+     *            the port
+     * @return the found certificates
+     */
+    X509Certificate[] getServerCertificates(String hostname, int port);
 }

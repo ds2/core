@@ -63,10 +63,21 @@ public enum FieldTypes {
      */
     private String typeName;
     
+    /**
+     * INits the enum value.
+     * 
+     * @param s
+     *            the ES data type name
+     */
     private FieldTypes(final String s) {
         typeName = s;
     }
     
+    /**
+     * Returns the ES data type name.
+     * 
+     * @return the data type name
+     */
     public String getTypeName() {
         return typeName;
     }

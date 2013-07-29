@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jee-base</artifactId>
     <groupId>ds2.base.oss</groupId>
-    <version>0.77</version>
+    <version>0.78</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ds2.oss.core</groupId>
@@ -21,8 +21,8 @@
     <license.id>asl_v2</license.id>
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
-    <release.localCheckout>true</release.localCheckout>
     <mvn.releaseplugin.version>2.3.2</mvn.releaseplugin.version>
+    <changesVia>jira</changesVia>
   </properties>
   <distributionManagement>
     <site>
@@ -42,14 +42,14 @@
   <inceptionYear>2012</inceptionYear>
   <url>http://www.ds2/p/ossCore/</url>
   <scm>
-    <developerConnection>scm:git:ssh://git@bitbucket.org/lexxy23/ds2-oss-core.git</developerConnection>
-    <connection>scm:git:ssh://git@bitbucket.org/lexxy23/ds2-oss-core.git</connection>
+    <developerConnection>scm:git:ssh://git@sources.ds2/srv/git/ds2-oss-core</developerConnection>
+    <connection>scm:git:ssh://git@sources.ds2/srv/git/ds2-oss-core</connection>
     <url>https://bitbucket.org/lexxy23/ds2-oss-core/</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
-    <system>taskerville</system>
-    <url>https://dev.kaeto23.de/tv/p/OSSCORE</url>
+    <system>JIRA</system>
+    <url>https://ds2dev.atlassian.net/browse/OSSCORE</url>
   </issueManagement>
   <modules>
     <module>api</module>

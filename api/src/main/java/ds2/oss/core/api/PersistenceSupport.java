@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 /**
@@ -29,7 +26,20 @@ package ds2.oss.core.api;
  * @version 0.2
  */
 public interface PersistenceSupport<T extends Persistable<E>, E> {
+    /**
+     * Persists the given dto.
+     * 
+     * @param t
+     *            the dto to persist.
+     */
     void persist(T t);
     
+    /**
+     * Returns the object with the given id.
+     * 
+     * @param e
+     *            the id
+     * @return the found object, or null
+     */
     T getById(E e);
 }
