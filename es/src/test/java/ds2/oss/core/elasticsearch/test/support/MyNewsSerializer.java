@@ -42,18 +42,10 @@ public class MyNewsSerializer extends AbstractCodecBase implements JsonSerialize
     @Override
     public JsonElement serialize(final MyNews src, final Type typeOfSrc, final JsonSerializationContext context) {
         final JsonObject rc = new JsonObject();
-        if (src.getTitle() != null) {
-            rc.addProperty("title", src.getTitle());
-        }
-        if (src.getAuthor() != null) {
-            rc.addProperty("author", src.getAuthor());
-        }
-        if (src.getMsg() != null) {
-            rc.addProperty("message", src.getMsg());
-        }
-        if (src.getPostDate() != null) {
-            rc.addProperty("postDate", fromDate(src.getPostDate()));
-        }
+        addIfNotNull(rc, "title", src.getTitle());
+        addIfNotNull(rc, "author", src.getAuthor());
+        addIfNotNull(rc, "message", src.getMsg());
+        addIfNotNull(rc, "postDate", fromDate(src.getPostDate()));
         return rc;
     }
 }

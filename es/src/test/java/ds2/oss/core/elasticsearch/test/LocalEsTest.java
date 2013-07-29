@@ -133,6 +133,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         Assert.assertTrue(to.refreshIndexes(indexName));
         final MyNews n = to.get(indexName, MyNews.class, "N1");
         Assert.assertNotNull(n, "No news found!");
+        // Assert.assertNotNull(n.getPostDate());
     }
     
     /**

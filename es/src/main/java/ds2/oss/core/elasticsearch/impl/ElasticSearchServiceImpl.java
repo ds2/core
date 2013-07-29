@@ -38,7 +38,6 @@ import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest.OpType;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -111,7 +110,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         final IndexRequestBuilder req = prepareIndexing(index, typeCodec);
         req.setSource(typeCodec.toJson(t));
-        req.setOpType(OpType.CREATE);
         final IndexResponse response = req.execute().actionGet();
         final String id = response.getId();
         LOG.debug("Response is {}, id will be {}", new Object[] { response, id });

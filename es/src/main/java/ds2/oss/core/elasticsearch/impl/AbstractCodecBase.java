@@ -88,11 +88,18 @@ public abstract class AbstractCodecBase {
         return rc;
     }
     
-    protected String getAsString(final JsonObject obj, final String fieldName) {
+    protected static String getAsString(final JsonObject obj, final String fieldName) {
         JsonElement s = obj.get(fieldName);
         if ((s == null) || s.isJsonNull()) {
             return null;
         }
         return s.getAsString();
+    }
+    
+    protected static void addIfNotNull(final JsonObject obj, final String prop, final String val) {
+        if (val == null) {
+            return;
+        }
+        obj.addProperty(prop, val);
     }
 }

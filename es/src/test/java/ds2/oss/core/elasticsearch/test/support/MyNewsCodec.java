@@ -18,13 +18,7 @@
  */
 package ds2.oss.core.elasticsearch.test.support;
 
-import java.io.IOException;
 import java.util.Map;
-
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import ds2.oss.core.elasticsearch.impl.AbstractTypeCodec;
@@ -40,31 +34,10 @@ import ds2.oss.core.elasticsearch.test.dto.MyNews;
 @EsCodec(MyNews.class)
 public class MyNewsCodec extends AbstractTypeCodec<MyNews> implements NewsCodec {
     /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(MyNewsCodec.class);
-    
-    /**
      * Inits the codec.
      */
     public MyNewsCodec() {
         super(MyNews.class);
-    }
-    
-    @Override
-    public String toJson(final MyNews t) {
-        String rc = null;
-        try {
-            final XContentBuilder builder =
-                XContentFactory.jsonBuilder().startObject().field("author", t.getAuthor())
-                    .field("postDate", t.getPostDate()).field("message", t.getMsg()).field("title", t.getTitle())
-                    .endObject();
-            rc = builder.string();
-        } catch (final IOException e) {
-            LOG.warn("Error when generating the JSON!", e);
-        }
-        LOG.debug("rc is {}", rc);
-        return rc;
     }
     
     @Override
