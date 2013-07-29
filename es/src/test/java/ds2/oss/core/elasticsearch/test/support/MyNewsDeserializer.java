@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import ds2.oss.core.elasticsearch.api.annotations.GsonDeserializer;
@@ -42,10 +43,11 @@ public class MyNewsDeserializer extends AbstractCodecBase implements JsonDeseria
     public MyNews deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
         throws JsonParseException {
         final MyNews rc = new MyNews();
-        rc.setAuthor(json.getAsJsonObject().get("author").getAsString());
-        rc.setMsg(json.getAsJsonObject().get("message").getAsString());
-        rc.setTitle(json.getAsJsonObject().get("title").getAsString());
-        rc.setPostDate(toDate(json.getAsJsonObject().get("postDate").getAsString()));
+        final JsonObject obj = json.getAsJsonObject();
+        rc.setAuthor(getAsString(obj, "author"));
+        rc.setMsg(getAsString(obj, "message"));
+        rc.setTitle(getAsString(obj, "title"));
+        rc.setPostDate(toDate(getAsString(obj, "postDate")));
         return rc;
     }
     

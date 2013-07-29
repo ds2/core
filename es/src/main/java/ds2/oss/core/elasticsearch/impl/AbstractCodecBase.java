@@ -24,6 +24,9 @@ import java.util.TimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /**
  * A small code base to support date formatting.
  * 
@@ -83,5 +86,13 @@ public abstract class AbstractCodecBase {
         String rc = null;
         rc = sdf.format(d);
         return rc;
+    }
+    
+    protected String getAsString(final JsonObject obj, final String fieldName) {
+        JsonElement s = obj.get(fieldName);
+        if ((s == null) || s.isJsonNull()) {
+            return null;
+        }
+        return s.getAsString();
     }
 }
