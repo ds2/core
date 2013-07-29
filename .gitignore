@@ -4,6 +4,5 @@ bin
 test-output
 *.versionsBackup
 nbproject
-.idea
 *.iml
 out
