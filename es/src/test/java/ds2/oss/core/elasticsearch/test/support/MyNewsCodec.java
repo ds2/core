@@ -18,6 +18,15 @@
  */
 package ds2.oss.core.elasticsearch.test.support;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import ds2.oss.core.elasticsearch.impl.AbstractTypeCodec;
 import ds2.oss.core.elasticsearch.test.NewsCodec;
@@ -32,6 +41,11 @@ import ds2.oss.core.elasticsearch.test.dto.MyNews;
 @EsCodec(MyNews.class)
 public class MyNewsCodec extends AbstractTypeCodec<MyNews> implements NewsCodec {
     /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MyNewsCodec.class);
+    
+    /**
      * Inits the codec.
      */
     public MyNewsCodec() {
@@ -39,8 +53,34 @@ public class MyNewsCodec extends AbstractTypeCodec<MyNews> implements NewsCodec 
     }
     
     @Override
+    public String toJson(final MyNews t) {
+        String rc = null;
+        try {
+            final XContentBuilder builder =
+                XContentFactory.jsonBuilder().startObject().field("author", t.getAuthor())
+                    .field("postDate", t.getPostDate()).field("message", t.getMsg()).field("title", t.getTitle())
+                    .endObject();
+            rc = builder.string();
+        } catch (final IOException e) {
+            LOG.warn("Error when generating the JSON!", e);
+        }
+        LOG.debug("rc is {}", rc);
+        return rc;
+    }
+    
+    @Override
     public boolean refreshOnIndexing() {
         return true;
+    }
+    
+    @Override
+    public MyNews toDto(final Map<String, Object> fields) {
+        final MyNews rc = new MyNews();
+        rc.setAuthor((String) fields.get("author"));
+        rc.setMsg((String) fields.get("message"));
+        rc.setTitle((String) fields.get("title"));
+        rc.setPostDate((Date) fields.get("postDate"));
+        return rc;
     }
     
 }

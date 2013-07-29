@@ -16,6 +16,7 @@
 package ds2.oss.core.elasticsearch.test.support;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -61,6 +62,12 @@ public class CountryCodec extends AbstractTypeCodec<CountryDto> implements TypeC
     @Override
     public String getMapping() {
         return "{\"country\":{\"properties\":{\"name\":{\"type\":\"string\",\"index\":\"analyzed\"},\"isoCode\":{\"type\":\"string\",\"index\":\"analyzed\"}}}}\n";
+    }
+    
+    @Override
+    public CountryDto toDto(final Map<String, Object> fields) {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }

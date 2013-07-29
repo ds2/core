@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
+import java.util.Map;
+
 /**
  * A contract for a codec.
  * 
@@ -82,4 +84,13 @@ public interface TypeCodec<T> {
      * @return the dto
      */
     T toDto(String jsonContent);
+    
+    /**
+     * An alternate way to create a dto based on some fields.
+     * 
+     * @param fields
+     *            the fields
+     * @return the dto
+     */
+    T toDto(Map<String, Object> fields);
 }
