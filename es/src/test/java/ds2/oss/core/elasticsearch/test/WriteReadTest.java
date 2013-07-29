@@ -17,22 +17,22 @@ package ds2.oss.core.elasticsearch.test;
 
 import java.util.Date;
 
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.impl.EsCodecAnnotationLiteral;
 import ds2.oss.core.elasticsearch.impl.UseCases;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import ds2.oss.core.elasticsearch.test.support.CountryCodec;
 
 /**
@@ -113,5 +113,10 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         resp = searchQuery.execute().actionGet();
         count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
+    }
+    
+    @AfterClass
+    public void onEndClass() {
+        esSvc.deleteIndexes(INDEXNAME);
     }
 }
