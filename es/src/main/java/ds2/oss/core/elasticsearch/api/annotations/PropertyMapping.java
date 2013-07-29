@@ -71,7 +71,16 @@ public @interface PropertyMapping {
     String dateFormat() default NULL;
     
     /**
+     * The boost value.
+     */
+    float boost() default DEF_BOOST;
+    
+    /**
      * Dummy text to set null.
      */
     String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
+    /**
+     * The default boost value.
+     */
+    float DEF_BOOST = 1.0f;
 }
