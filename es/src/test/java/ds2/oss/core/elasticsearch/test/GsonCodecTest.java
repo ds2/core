@@ -73,7 +73,7 @@ public class GsonCodecTest extends AbstractInjectionEnvironment {
         Assert
             .assertEquals(
                 s,
-                "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T21:26:00.000+0200\"}");
+                "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T19:26:00.000Z\"}");
     }
     
     /**
