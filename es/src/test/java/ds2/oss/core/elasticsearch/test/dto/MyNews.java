@@ -16,14 +16,14 @@
 /**
  * 
  */
-package ds2.oss.core.elasticsearch.test;
+package ds2.oss.core.elasticsearch.test.dto;
 
 import java.util.Date;
 
 import ds2.oss.core.elasticsearch.api.FieldTypes;
 import ds2.oss.core.elasticsearch.api.IndexTypes;
-import ds2.oss.core.elasticsearch.api.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.TypeMapping;
+import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 
 /**
  * The Dto to persist.
@@ -31,7 +31,7 @@ import ds2.oss.core.elasticsearch.api.TypeMapping;
  * @author dstrauss
  * @version 0.2
  */
-@TypeMapping(useIndex = "index1", value = "news")
+@TypeMapping(value = "news", compressThreshold = "100b")
 public class MyNews {
     /**
      * The title.
@@ -135,6 +135,79 @@ public class MyNews {
      */
     public void setAuthor(final String author) {
         this.author = author;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = (prime * result) + ((author == null) ? 0 : author.hashCode());
+        result = (prime * result) + ((postDate == null) ? 0 : postDate.hashCode());
+        result = (prime * result) + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof MyNews)) {
+            return false;
+        }
+        final MyNews other = (MyNews) obj;
+        if (author == null) {
+            if (other.author != null) {
+                return false;
+            }
+        } else if (!author.equals(other.author)) {
+            return false;
+        }
+        if (postDate == null) {
+            if (other.postDate != null) {
+                return false;
+            }
+        } else if (!postDate.equals(other.postDate)) {
+            return false;
+        }
+        if (title == null) {
+            if (other.title != null) {
+                return false;
+            }
+        } else if (!title.equals(other.title)) {
+            return false;
+        }
+        return true;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("MyNews (title=");
+        builder.append(title);
+        builder.append(", msg=");
+        builder.append(msg);
+        builder.append(", postDate=");
+        builder.append(postDate);
+        builder.append(", author=");
+        builder.append(author);
+        builder.append(")");
+        return builder.toString();
     }
     
 }

@@ -16,27 +16,33 @@
 package ds2.oss.core.elasticsearch.api;
 
 /**
- * The codec provider.
+ * A codec contract to deal with JSON strings via Gson.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public interface CodecProvider {
+public interface GsonCodec {
     /**
-     * Finds a codec for the given class type.
+     * Encodes a given type into a json.
      * 
-     * @param c
-     *            the class type
-     * @param <T>
+     * @param t
      *            the type
-     * @return the codec, or null if not found
+     * @param <T>
+     *            the dto type
+     * @return the json to use, or null if an error occurred.
      */
-    <T> TypeCodec<T> findFor(Class<T> c);
+    <T> String encode(T t);
     
     /**
-     * Dummy method to get the count of found instances.
+     * Decodes a json string into a type.
      * 
-     * @return 0
+     * @param c
+     *            the class of the type
+     * @param json
+     *            the json string
+     * @param <T>
+     *            the dto type
+     * @return the created type, or null if an error occurred
      */
-    int getInstanceCount();
+    <T> T decode(Class<T> c, String json);
 }

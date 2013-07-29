@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.elasticsearch.api;
+package ds2.oss.core.elasticsearch.api.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import ds2.oss.core.elasticsearch.api.FieldTypes;
+import ds2.oss.core.elasticsearch.api.IndexTypes;
 
 /**
  * The field mapping annotation.
@@ -63,13 +66,21 @@ public @interface PropertyMapping {
     
     /**
      * The date format. See <a href=
-     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/"
-     * >here</a>.
+     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/" >here</a>.
      */
     String dateFormat() default NULL;
+    
+    /**
+     * The boost value.
+     */
+    float boost() default DEF_BOOST;
     
     /**
      * Dummy text to set null.
      */
     String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
+    /**
+     * The default boost value.
+     */
+    float DEF_BOOST = 1.0f;
 }

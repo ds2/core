@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
-package ds2.oss.core.elasticsearch.test;
+package ds2.oss.core.elasticsearch.test.support;
 
-import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import javax.enterprise.context.ApplicationScoped;
+
+import ds2.oss.core.elasticsearch.api.EsConfig;
 
 /**
- * The news codec.
+ * The test ES config.
  * 
  * @author dstrauss
  * @version 0.2
  */
-public interface NewsCodec extends TypeCodec<MyNews> {
+@ApplicationScoped
+public class TestEsConfigDto implements EsConfig {
     
+    @Override
+    public String getClusterName() {
+        return "localCluster";
+    }
 }

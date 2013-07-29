@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.elasticsearch.impl;
 
 import javax.annotation.PostConstruct;
@@ -42,8 +39,7 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(LocalNodeImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LocalNodeImpl.class);
     
     /**
      * Nothing to do.
@@ -59,15 +55,12 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
     public void onInit() {
         LOG.debug("Starting configuration");
         final NodeBuilder nb = NodeBuilder.nodeBuilder();
-        final Settings setts =
-            ImmutableSettings.settingsBuilder()
-                .loadFromClasspath("localNode.yml").build();
+        final Settings setts = ImmutableSettings.settingsBuilder().loadFromClasspath("localNode.yml").build();
         final Node n = nb.settings(setts).build();
         LOG.debug("Starting local node.");
         n.start();
         client = n.client();
-        client.admin().cluster().prepareHealth().setWaitForYellowStatus()
-            .execute().actionGet();
+        client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
         LOG.debug("Local index node is up");
     }
     

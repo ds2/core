@@ -14,19 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ * The annotations used for the annotation processor and CDI.
  */
-package ds2.oss.core.elasticsearch.test;
+package ds2.oss.core.elasticsearch.api.annotations;
 
-import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
-
-/**
- * The news codec.
- * 
- * @author dstrauss
- * @version 0.2
- */
-public interface NewsCodec extends TypeCodec<MyNews> {
-    
-}

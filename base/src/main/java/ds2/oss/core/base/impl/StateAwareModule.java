@@ -39,15 +39,15 @@ public class StateAwareModule implements StateAware {
      */
     private static final long serialVersionUID = 8358311170080845039L;
     /**
-     * The state id.
-     */
-    @Column(name = "state_id", nullable = false, updatable = true)
-    private int stateId;
-    /**
      * The converter.
      */
     @Transient
     private final NumericalEnumConverter<EntryStates> c;
+    /**
+     * The state id.
+     */
+    @Column(name = "state_id", nullable = false, updatable = true)
+    private int stateId;
     
     /**
      * Inits the module.
