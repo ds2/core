@@ -105,4 +105,29 @@ public interface ElasticSearchService {
      * @return TRUE of the operation was successful, otherwise FALSE
      */
     <T> boolean insertDefaultData(String index, Class<T> c);
+    
+    /**
+     * Finds any dto within the given index.
+     * 
+     * @param indexname
+     *            the index name
+     * @param dtoClass
+     *            the dto class type
+     * @param <T>
+     *            the dto type
+     * @return the found items
+     */
+    <T> List<T> searchAny(String indexname, Class<T> dtoClass);
+    
+    /**
+     * Installs or updates the mappings on a given index for some given class types. This method
+     * will not install any prepared data. See {@link #insertDefaultData(String, Class)} for this.
+     * 
+     * @param indexname
+     *            the index name to create. If the index exists, it will not be deleted
+     * @param dtoClasses
+     *            the classes to get the codecs for, and install mappings.
+     * @return TRUE if successful, otherwise FALSE
+     */
+    boolean installOrUpdateIndex(String indexname, Class<?>... dtoClasses);
 }

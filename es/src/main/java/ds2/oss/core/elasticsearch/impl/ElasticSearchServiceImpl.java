@@ -20,7 +20,9 @@ package ds2.oss.core.elasticsearch.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,16 +31,27 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.elasticsearch.action.WriteConsistencyLevel;
+import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.admin.indices.mapping.delete.DeleteMappingRequestBuilder;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequestBuilder;
 import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequest.OpType;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.cluster.metadata.MappingMetaData;
+import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,11 +121,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 throw new IllegalArgumentException("A codec is required yet!");
             }
         }
-        final IndexRequestBuilder resp = prepareIndexing(index, typeCodec);
-        resp.setSource(typeCodec.toJson(t));
-        final IndexResponse response = resp.execute().actionGet();
+        final IndexRequestBuilder req = prepareIndexing(index, typeCodec);
+        req.setSource(typeCodec.toJson(t));
+        req.setOpType(OpType.CREATE);
+        final IndexResponse response = req.execute().actionGet();
         final String id = response.getId();
-        LOG.debug("Response is {}", response);
+        LOG.debug("Response is {}, id will be {}", new Object[] { response, id });
         return id;
     }
     
@@ -138,6 +152,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     
     @Override
     public <T> T get(final String index, final Class<T> c, final String id) {
+        LOG.debug("Entering get request for index {}, type {} and id {}", new Object[] { index, c, id });
         final TypeCodec<T> codec = codecProvider.findFor(c);
         if (codec == null) {
             LOG.warn("No codec found for type {}! Cannot convert back into a dto therefore.", c);
@@ -317,6 +332,84 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
             
         }
+        return rc;
+    }
+    
+    @Override
+    public <T> List<T> searchAny(final String indexname, final Class<T> dtoClass) {
+        final TypeCodec<T> codec = codecProvider.findFor(dtoClass);
+        if (codec == null) {
+            throw new IllegalArgumentException("Cannot deal with the given type! Please install codec.");
+        }
+        final SearchRequestBuilder searchQuery = esNode.get().prepareSearch(indexname);
+        searchQuery.setQuery(QueryBuilders.matchAllQuery());
+        searchQuery.setFilter(FilterBuilders.typeFilter(codec.getIndexTypeName()));
+        searchQuery.setSize(100);
+        searchQuery.setTypes(codec.getIndexTypeName());
+        final SearchResponse result = searchQuery.execute().actionGet();
+        List<T> rc = Collections.emptyList();
+        if (!result.isTimedOut() && (result.getSuccessfulShards() > 0)) {
+            rc = new ArrayList<>((int) result.getHits().getTotalHits());
+            final SearchHits hits = result.getHits();
+            LOG.debug("hits = {}", hits.getTotalHits());
+            for (SearchHit hit : hits.getHits()) {
+                if (hit.isSourceEmpty()) {
+                    LOG.warn("Source is empty!");
+                }
+                Map<String, Object> map = hit.getSource();
+                final T t = codec.toDto(hit.getSourceAsString());
+                if (t == null) {
+                    continue;
+                }
+                LOG.debug("Adding object to result: {}", t);
+                rc.add(t);
+            }
+        }
+        return rc;
+    }
+    
+    @Override
+    public boolean installOrUpdateIndex(final String indexName, final Class<?>... dtoClasses) {
+        final boolean rc = true;
+        final boolean indexExists =
+            esNode.get().admin().indices().prepareExists(indexName).execute().actionGet().isExists();
+        if (!indexExists) {
+            esNode.get().admin().indices().prepareCreate(indexName).execute().actionGet();
+            esNode.waitForClusterYellowState();
+        } else {
+            LOG.info("Index {} already exists, continuing.", indexName);
+        }
+        LOG.info("Checking mappings");
+        final ClusterStateResponse resp =
+            esNode.get().admin().cluster().prepareState().setFilterIndices(indexName).execute().actionGet();
+        final Map<String, MappingMetaData> mappings = resp.getState().getMetaData().index(indexName).mappings();
+        for (Class<?> dtoClass : dtoClasses) {
+            final TypeCodec<?> codec = codecProvider.findFor(dtoClass);
+            if (codec == null) {
+                LOG.warn("No codec found for type {}, continuing without update.", dtoClass);
+                continue;
+            }
+            final String indexType = codec.getIndexTypeName();
+            if (mappings.containsKey(indexType)) {
+                LOG.debug("Deleting mapping for type {}", indexType);
+                DeleteMappingRequestBuilder prepDelMapping =
+                    esNode.get().admin().indices().prepareDeleteMapping(indexName);
+                prepDelMapping.setType(indexType);
+                prepDelMapping.execute().actionGet();
+            }
+            final PutMappingResponse result =
+                esNode.get().admin().indices().preparePutMapping(indexName).setType(indexType)
+                    .setSource(codec.getMapping()).execute().actionGet();
+            if (!result.isAcknowledged()) {
+                LOG.warn("Mapping for type {} on index {} has not been acknowlegded. Expect problems!", new Object[] {
+                    indexType, indexName, });
+            } else {
+                LOG.debug("Installing mapping for type {} seems to be ok", indexType);
+            }
+            // }
+        }
+        LOG.info("Wait for index to come up");
+        esNode.waitForClusterYellowState();
         return rc;
     }
 }
