@@ -71,4 +71,5 @@
       </plugin>
     </plugins>
   </build>
+  <description>The ElasticSearch implementations to deal with ES and core.</description>
 </project>
