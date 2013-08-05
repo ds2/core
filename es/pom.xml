@@ -72,4 +72,13 @@
     </plugins>
   </build>
   <description>The ElasticSearch implementations to deal with ES and core.</description>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>${lucene.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
