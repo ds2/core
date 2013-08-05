@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -62,7 +63,7 @@ public class IoServiceImpl implements IoService {
         final InputStream is = getClass().getResourceAsStream(resName2);
         String rc = null;
         if (is != null) {
-            final Reader isr = new InputStreamReader(is);
+            final Reader isr = new InputStreamReader(is, Charset.forName("utf-8"));
             try (BufferedReader br = new BufferedReader(isr)) {
                 final StringBuilder sb = new StringBuilder();
                 while (true) {
