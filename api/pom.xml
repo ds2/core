@@ -8,4 +8,10 @@
   <artifactId>ds2-oss-core-api</artifactId>
   <name>DS/2 OSS Core API</name>
   <description>The api contracts to access some core services.</description>
+    <dependencies>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>

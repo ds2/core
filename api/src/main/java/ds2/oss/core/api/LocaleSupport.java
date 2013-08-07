@@ -12,5 +12,6 @@ import java.util.Locale;
  * @version 0.3
  */
 public interface LocaleSupport {
-    String resolve(String resourceBaseName, String key, Locale loc, String... params);
+    String resolve(String key, Locale loc, Object... params);
+  String formatCurrency(Locale locale, double val);
 }
