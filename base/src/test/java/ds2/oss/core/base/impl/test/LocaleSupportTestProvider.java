@@ -13,17 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
+package ds2.oss.core.base.impl.test;
 
+import ds2.oss.core.api.LocaleSupport;
+import ds2.oss.core.api.annotations.LocaleData;
+
+import javax.inject.Inject;
 import java.util.Locale;
 
 /**
- * THe locale support.
- * 
- * @author dstrauss
- * @version 0.3
+ * Created by dstrauss on 08.08.13.
  */
-public interface LocaleSupport {
-    String resolve(String key, Locale loc, Object... params);
-  String formatCurrency(Locale locale, double val);
+public class LocaleSupportTestProvider {
+  @Inject
+  @LocaleData(baseName = "ds2/oss/core/base/impl/test/LocTest")
+  private LocaleSupport localeSupport;
+
+  public String getHello(Locale locale){
+    return localeSupport.resolve("hello",locale);
+  }
+  public String getHelloParam(Locale locale, String name){
+    return localeSupport.resolve("helloParam", locale, name);
+  }
 }

@@ -13,17 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
+package ds2.oss.core.base.impl.test;
 
-import java.util.Locale;
+import ds2.oss.core.api.LocaleSupport;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 /**
- * THe locale support.
- * 
- * @author dstrauss
- * @version 0.3
+ * Created by dstrauss on 08.08.13.
  */
-public interface LocaleSupport {
-    String resolve(String key, Locale loc, Object... params);
-  String formatCurrency(Locale locale, double val);
+@Test(groups = "localeSupport")
+public class LocaleSupportImplTest extends WeldWrapper{
+  private LocaleSupportTestProvider to;
+
+  @BeforeClass
+  public void onClass(){
+    to=getInstance(LocaleSupportTestProvider.class);
+  }
+  @Test
+  public void testHelloNull(){
+    Assert.assertEquals(to.getHello(null), "Hello");
+  }
 }

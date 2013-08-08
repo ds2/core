@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.base.impl.test;
 
 import java.util.concurrent.locks.Lock;
@@ -61,7 +58,7 @@ public abstract class WeldWrapper {
         // nothing special to do
     }
     
-    @BeforeSuite(groups = { "sym", "hex", "bit", "base64" })
+    @BeforeSuite(alwaysRun = true)
     public static void onSuiteStart() {
         LOG.info("Entering Weld Init");
         lock.lock();
@@ -78,7 +75,7 @@ public abstract class WeldWrapper {
         LOG.info("Done with init");
     }
     
-    @AfterSuite(groups = { "sym", "hex", "bit", "base64" })
+    @AfterSuite(alwaysRun = true)
     public static void afterSuite() {
         lock.lock();
         try {
