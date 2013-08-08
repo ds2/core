@@ -3,7 +3,7 @@
   <parent>
     <groupId>ds2.oss.core</groupId>
     <artifactId>core</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
   </parent>
   <artifactId>ds2-oss-core-api</artifactId>
   <name>DS/2 OSS Core API</name>
