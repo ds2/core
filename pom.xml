@@ -10,7 +10,7 @@
   <artifactId>core</artifactId>
   <packaging>pom</packaging>
   <name>DS/2 OSS Core</name>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <description>The OSS components of DS/2 Core.</description>
   <properties>
     <siteProjectName>ds2OssCore</siteProjectName>
@@ -45,7 +45,7 @@
     <developerConnection>scm:git:ssh://git@sources.ds2/srv/git/ds2-oss-core</developerConnection>
     <connection>scm:git:ssh://git@sources.ds2/srv/git/ds2-oss-core</connection>
     <url>https://bitbucket.org/lexxy23/ds2-oss-core/</url>
-    <tag>HEAD</tag>
+    <tag>v0.2</tag>
   </scm>
   <issueManagement>
     <system>JIRA</system>
