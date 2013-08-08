@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.elasticsearch.impl;
 
 import java.net.InetSocketAddress;
@@ -25,12 +22,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-import ds2.oss.core.elasticsearch.api.EsConfig;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+
+import ds2.oss.core.elasticsearch.api.EsConfig;
 
 /**
  * A transport client impl.
@@ -41,30 +38,23 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 @ApplicationScoped
 @Alternative
 public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
+    /**
+     * The ES config.
+     */
     @Inject
     private EsConfig config;
-    
-    /**
-     * Inits the node.
-     */
-    public TransportClientNode() {
-        // nothing special to do
-    }
     
     /**
      * Actions to perform on init.
      */
     @PostConstruct
     public void onInit() {
-        ImmutableSettings.Builder sb=ImmutableSettings.settingsBuilder()
-                .loadFromClasspath("/transportClientNode.yml");
+        final ImmutableSettings.Builder sb =
+            ImmutableSettings.settingsBuilder().loadFromClasspath("/transportClientNode.yml");
         sb.put("cluster.name", config.getClusterName());
-        sb.put("client",true);
-        final Settings setts =sb.build();
-        client =
-            new TransportClient(setts)
-                .addTransportAddress(new InetSocketTransportAddress(
-                    "localhost", 9300));
+        sb.put("client", true);
+        final Settings setts = sb.build();
+        client = new TransportClient(setts).addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
     }
     
     @Override
@@ -75,8 +65,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             for (InetSocketAddress is : isa) {
                 client.addTransportAddress(new InetSocketTransportAddress(is));
             }
-            client.admin().cluster().prepareHealth().setWaitForYellowStatus()
-                .execute().actionGet();
+            client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
         } finally {
             lock.unlock();
             needsLock = false;
@@ -88,11 +77,9 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
         lock.lock();
         try {
             for (InetSocketAddress is : isa) {
-                client
-                    .removeTransportAddress(new InetSocketTransportAddress(is));
+                client.removeTransportAddress(new InetSocketTransportAddress(is));
             }
-            client.admin().cluster().prepareHealth().setWaitForYellowStatus()
-                .execute().actionGet();
+            client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
         } finally {
             lock.unlock();
         }

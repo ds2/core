@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.elasticsearch.api;
 
 import java.net.InetSocketAddress;
@@ -51,7 +48,14 @@ public interface ElasticSearchNode {
      *            the transports to remove.
      */
     void removeTransport(InetSocketAddress... isa);
-
+    
+    /**
+     * Waits for the cluster state to become yellow.
+     */
     void waitForClusterYellowState();
+    
+    /**
+     * Waits for the cluster state to become green.
+     */
     void waitForClusterGreenState();
 }

@@ -38,8 +38,7 @@ public class HashGeneratorImpl implements HashGenerator {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(HashGeneratorImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HashGeneratorImpl.class);
     
     /**
      * Inits the implementation.
@@ -57,14 +56,12 @@ public class HashGeneratorImpl implements HashGenerator {
             LOG.warn("No algorithm given!");
         } else {
             try {
-                final MessageDigest inst =
-                    MessageDigest.getInstance(g.getAlgorithm());
+                final MessageDigest inst = MessageDigest.getInstance(g.getAlgorithm());
                 inst.reset();
                 inst.update(b);
                 rc = inst.digest();
             } catch (final NoSuchAlgorithmException e) {
-                LOG.error("No provider found for this algorithm: "
-                    + e.getLocalizedMessage());
+                LOG.error("No provider found for this algorithm: " + e.getLocalizedMessage());
             }
         }
         return rc;

@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.base.itest;
 
 import javax.ejb.Local;
@@ -23,8 +20,10 @@ import javax.ejb.Local;
 import ds2.oss.core.api.PersistenceSupport;
 
 /**
- * @author dstrauss
+ * Dummy persistence contract.
  * 
+ * @author dstrauss
+ * @version 0.2
  */
 @Local
 public interface DummyPersistence extends PersistenceSupport<DummyEntity, Long> {

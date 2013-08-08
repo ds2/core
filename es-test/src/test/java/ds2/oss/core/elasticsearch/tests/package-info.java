@@ -14,5 +14,7 @@
  * limitations under the License.
  */
 /**
+ * The test cases.
  */
 package ds2.oss.core.elasticsearch.tests;
+

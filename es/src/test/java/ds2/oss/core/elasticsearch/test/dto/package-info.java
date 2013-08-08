@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
- */
-/**
- * @author dstrauss
- *
+ * The package containing some DTOs to parse.
  */
 package ds2.oss.core.elasticsearch.test.dto;
+

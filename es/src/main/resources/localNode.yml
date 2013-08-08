@@ -8,7 +8,8 @@ path:
   logs: target/es/logs
   data: target/es/data
 index:
-  number_of_shards: 1
+  number_of_shards: 3
   number_of_replicas: 0
+  refresh_interval: 50s
 network:
   host: 127.0.0.1

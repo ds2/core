@@ -13,29 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
-package ds2.oss.core.elasticsearch.test;
+package ds2.oss.core.elasticsearch.api.annotations;
 
-import ds2.oss.core.elasticsearch.api.EsConfig;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Qualifier;
 
 /**
- * @author  dstrauss
+ * Marks a deserializer.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Qualifier
 @ApplicationScoped
-public class TestEsConfigDto implements EsConfig {
-
+public @interface GsonDeserializer {
     /**
+     * The dto class for this deserializer.
      */
-    public TestEsConfigDto() {
-        // nothing special to do
-    }
-
-    @Override
-    public String getClusterName() {
-        return "localCluster";
-    }
+    Class<?> value();
 }

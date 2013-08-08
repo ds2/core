@@ -15,17 +15,21 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
+import java.lang.annotation.Annotation;
+import java.util.Set;
+
+import javax.enterprise.inject.spi.Bean;
+
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 /**
- * Created with IntelliJ IDEA.
- * User: dstrauss
- * Date: 27.05.13
- * Time: 15:30
- * To change this template use File | Settings | File Templates.
+ * The injection env. Basically the same as the WeldWrapper.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
 public abstract class AbstractInjectionEnvironment {
     /**
@@ -36,23 +40,37 @@ public abstract class AbstractInjectionEnvironment {
      * The container.
      */
     private static WeldContainer wc;
-    @BeforeSuite
+    
+    @BeforeSuite(alwaysRun = true)
     public void onSuite() {
         wc = weld.initialize();
     }
-
-    @AfterSuite
+    
+    @AfterSuite(alwaysRun = true)
     public void onSuiteEnd() {
         weld.shutdown();
+        weld = null;
     }
+    
     /**
      * Returns an instance of the given class.
-     *
+     * 
      * @param c
      *            the class
+     * 
      * @return an instance
      */
     public static <T> T getInstance(final Class<T> c) {
         return wc.instance().select(c).get();
+    }
+    
+    public static <T> T getInstance(final Class<T> c, final Annotation... annotations) {
+        Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
+        if ((beans != null) && !beans.isEmpty()) {
+            for (Bean b : beans) {
+                System.out.println("Bean is " + b);
+            }
+        }
+        return wc.instance().select(c, annotations).get();
     }
 }

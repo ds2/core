@@ -13,49 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.elasticsearch.test.support;
 
-import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.test.dto.CountryDto;
-
+import java.io.IOException;
 import java.util.Map;
 
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
+import ds2.oss.core.elasticsearch.impl.AbstractTypeCodec;
+import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+
 /**
- * @author  dstrauss
+ * The country codec.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
-public class CountryCodec implements TypeCodec<CountryDto> {
-
+@EsCodec(CountryDto.class)
+public class CountryCodec extends AbstractTypeCodec<CountryDto> implements TypeCodec<CountryDto> {
     /**
+     * A logger.
      */
-    public CountryCodec() {
-        // nothing special to do
-    }
-
+    private static final Logger LOG = LoggerFactory.getLogger(CountryCodec.class);
+    
     @Override
     public String toJson(final CountryDto t) {
+        try {
+            final XContentBuilder builder =
+                XContentFactory.jsonBuilder().startObject().field("name", t.getName()).field("isoCode", t.getIsoCode())
+                    .endObject();
+            return builder.string();
+        } catch (final IOException e) {
+            LOG.warn("Error when generating the JSON", e);
+        }
         return null;
     }
-
-    @Override
-    public CountryDto toDto(final Map<String, Object> o) {
-        return null;
-    }
-
+    
     @Override
     public String getIndexTypeName() {
         return "country";
     }
-
-    @Override
-    public String getIndexName() {
-        return null;
-    }
-
+    
     @Override
     public String getMapping() {
+        return "{\"country\":{\"properties\":{\"name\":{\"type\":\"string\",\"index\":\"analyzed\"},\"isoCode\":{\"type\":\"string\",\"index\":\"analyzed\"}}}}\n";
+    }
+    
+    @Override
+    public CountryDto toDto(final Map<String, Object> fields) {
+        // TODO Auto-generated method stub
         return null;
     }
+    
 }

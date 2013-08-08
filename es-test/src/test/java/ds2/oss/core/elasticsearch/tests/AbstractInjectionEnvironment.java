@@ -21,11 +21,10 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 /**
- * Created with IntelliJ IDEA.
- * User: dstrauss
- * Date: 27.05.13
- * Time: 15:30
- * To change this template use File | Settings | File Templates.
+ * The abstract injection env to use weld.
+ * 
+ * @author dstrauss
+ * @version 0.2
  */
 public abstract class AbstractInjectionEnvironment {
     /**
@@ -36,18 +35,20 @@ public abstract class AbstractInjectionEnvironment {
      * The container.
      */
     private static WeldContainer wc;
+    
     @BeforeSuite
     public void onSuite() {
         wc = weld.initialize();
     }
-
+    
     @AfterSuite
     public void onSuiteEnd() {
         weld.shutdown();
     }
+    
     /**
      * Returns an instance of the given class.
-     *
+     * 
      * @param c
      *            the class
      * @return an instance
