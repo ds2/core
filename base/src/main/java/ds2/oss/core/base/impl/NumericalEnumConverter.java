@@ -39,8 +39,7 @@ public class NumericalEnumConverter<E extends Enum<?>> {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles
-        .lookup().lookupClass());
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The enum class.
      */
@@ -56,6 +55,76 @@ public class NumericalEnumConverter<E extends Enum<?>> {
      */
     public NumericalEnumConverter(final Class<E> c1) {
         this.c = c1;
+    }
+    
+    /**
+     * Performs an enum lookup with specific reflection parameters.
+     * 
+     * @param methodName
+     *            the method name
+     * @param cT
+     *            the class of the parameter
+     * @param val
+     *            the value to use for lookup
+     * @param targetClass
+     *            the enum class
+     * @return the found enum value, or null if not found
+     * @param <T>
+     *            the type of the index value
+     */
+    private <T> E getByLookup(final String methodName, final Class<T> cT, final T val, final Class<E> targetClass) {
+        final Method m = getMethodWithSpecificParam(methodName, cT);
+        if (m != null) {
+            try {
+                return targetClass.cast(m.invoke(null, val));
+            } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                LOG.debug("Error when invoking!", e);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Returns the enum value for a given numerical value.
+     * 
+     * @param i
+     *            the numerical value
+     * @param methodName
+     *            the name of the static method of the enum class which performs the lookup
+     * @param targetClass
+     *            the enum class
+     * @return the enum value, or null if not found
+     */
+    public final E getEnumByReflection(final int i, final String methodName, final Class<E> targetClass) {
+        E rc = null;
+        try {
+            rc = getByLookup(methodName, int.class, Integer.valueOf(i), targetClass);
+            if (rc == null) {
+                rc = getByLookup(methodName, long.class, Long.valueOf(i), targetClass);
+            }
+        } catch (final SecurityException | IllegalArgumentException e) {
+            LOG.error("Error when looking up an enum value via reflection!", e);
+        }
+        return rc;
+    }
+    
+    /**
+     * Performs a lookup.
+     * 
+     * @param methodName
+     *            the method name
+     * @param type
+     *            the class of the parameters
+     * @return the found method
+     */
+    private Method getMethodWithSpecificParam(final String methodName, final Class<?>... type) {
+        Method rc = null;
+        try {
+            rc = c.getDeclaredMethod(methodName, type);
+        } catch (final NoSuchMethodException | SecurityException e) {
+            LOG.debug("Error when looking up a specific method!", e);
+        }
+        return rc;
     }
     
     /**
@@ -75,76 +144,6 @@ public class NumericalEnumConverter<E extends Enum<?>> {
             rc = nev.getNumericalValue();
         } else {
             rc = e.ordinal();
-        }
-        return rc;
-    }
-    
-    /**
-     * Returns the enum value for a given numerical value.
-     * 
-     * @param i
-     *            the numerical value
-     * @param methodName
-     *            the name of the static method of the enum class which performs
-     *            the lookup
-     * @return the enum value, or null if not found
-     */
-    public final E getEnumByReflection(final int i, final String methodName) {
-        E rc = null;
-        try {
-            rc = getByLookup(methodName, int.class, Integer.valueOf(i));
-            if (rc == null) {
-                rc = getByLookup(methodName, long.class, Long.valueOf(i));
-            }
-        } catch (final SecurityException | IllegalArgumentException e) {
-            LOG.error("Error when looking up an enum value via reflection!", e);
-        }
-        return rc;
-    }
-    
-    /**
-     * Performs an enum lookup with specific reflection parameters.
-     * 
-     * @param methodName
-     *            the method name
-     * @param cT
-     *            the class of the parameter
-     * @param val
-     *            the value to use for lookup
-     * @return the found enum value, or null if not found
-     * @param <T>
-     *            the type of the index value
-     */
-    private <T> E getByLookup(final String methodName, final Class<T> cT,
-        final T val) {
-        final Method m = getMethodWithSpecificParam(methodName, cT);
-        if (m != null) {
-            try {
-                return (E) m.invoke(null, val);
-            } catch (final IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException e) {
-                LOG.debug("Error when invoking!", e);
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * Performs a lookup.
-     * 
-     * @param methodName
-     *            the method name
-     * @param type
-     *            the class of the parameters
-     * @return the found method
-     */
-    private Method getMethodWithSpecificParam(final String methodName,
-        final Class<?>... type) {
-        Method rc = null;
-        try {
-            rc = c.getDeclaredMethod(methodName, type);
-        } catch (final NoSuchMethodException | SecurityException e) {
-            LOG.debug("Error when looking up a specific method!", e);
         }
         return rc;
     }

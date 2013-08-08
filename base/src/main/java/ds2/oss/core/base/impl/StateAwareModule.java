@@ -20,6 +20,7 @@ package ds2.oss.core.base.impl;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.StateAware;
@@ -38,14 +39,15 @@ public class StateAwareModule implements StateAware {
      */
     private static final long serialVersionUID = 8358311170080845039L;
     /**
+     * The converter.
+     */
+    @Transient
+    private final NumericalEnumConverter<EntryStates> c;
+    /**
      * The state id.
      */
     @Column(name = "state_id", nullable = false, updatable = true)
     private int stateId;
-    /**
-     * The converter.
-     */
-    private final NumericalEnumConverter<EntryStates> c;
     
     /**
      * Inits the module.
@@ -61,7 +63,7 @@ public class StateAwareModule implements StateAware {
      */
     @Override
     public EntryStates getEntryState() {
-        return c.getEnumByReflection(stateId, "getById");
+        return c.getEnumByReflection(stateId, "getById", EntryStates.class);
     }
     
     /**

@@ -22,6 +22,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import ds2.oss.core.api.CreatedModifiedAware;
 
@@ -42,38 +44,21 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
      * The creation date.
      */
     @Column(name = "created", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     /**
      * The modification date.
      */
     @Column(name = "modified", nullable = false, updatable = true)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     
     /**
      * Inits the module.
      */
     public CreatedModifiedAwareModule() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    /**
-     * Sets the creation date.
-     * 
-     * @param c
-     *            the created to set
-     */
-    public void setCreated(final Date c) {
-        this.created = c;
-    }
-    
-    /**
-     * Sets the modification date.
-     * 
-     * @param m
-     *            the modified to set
-     */
-    public void setModified(final Date m) {
-        this.modified = m;
+        created = new Date();
+        modified = new Date();
     }
     
     @Override
@@ -84,6 +69,26 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
     @Override
     public Date getModified() {
         return modified;
+    }
+    
+    /**
+     * Sets the creation date.
+     * 
+     * @param c
+     *            the created to set
+     */
+    public void setCreated(final Date c) {
+        created = c;
+    }
+    
+    /**
+     * Sets the modification date.
+     * 
+     * @param m
+     *            the modified to set
+     */
+    public void setModified(final Date m) {
+        modified = m;
     }
     
 }
