@@ -20,8 +20,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Locale;
+
 /**
- * Created by dstrauss on 08.08.13.
+ * The test for the LocaleSupport.
+ * @author dstrauss
+ * @version  0.3
  */
 @Test(groups = "localeSupport")
 public class LocaleSupportImplTest extends WeldWrapper{
@@ -34,5 +38,16 @@ public class LocaleSupportImplTest extends WeldWrapper{
   @Test
   public void testHelloNull(){
     Assert.assertEquals(to.getHello(null), "Hello");
+  }
+  @Test
+  public void testHelloGerman(){
+    Assert.assertEquals(to.getHello(Locale.GERMANY), "Hallo");
+  }
+  @Test
+  public void testHelloGermanParams(){
+    Assert.assertEquals(to.getHelloParam(Locale.GERMANY, "Dirk"), "Hallo, Dirk");
+  }
+  public void testHelloParams(){
+    Assert.assertEquals(to.getHelloParam(Locale.US, "Dirk"), "Hello, Dirk");
   }
 }

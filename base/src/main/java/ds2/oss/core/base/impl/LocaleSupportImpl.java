@@ -16,6 +16,8 @@
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.LocaleSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -28,13 +30,48 @@ import java.util.*;
  * @version 0.3
  */
 public class LocaleSupportImpl implements LocaleSupport {
+  /**
+   * A logger.
+   */
+  private static final Logger LOG = LoggerFactory.getLogger(LocaleSupportImpl.class);
+  /**
+   * The base name to load the resources from.
+   */
   private String baseName;
+  /**
+   * The bundle controller to allow only a specific set of locales to search for.
+   */
+  private static final ResourceBundle.Control ctrl = new ResourceBundle.Control() {
+    @Override
+    public List<Locale> getCandidateLocales(String baseName, Locale locale) {
+      LOG.debug("Calling candidates for base {} and locale {}", new Object[]{baseName, locale});
+      if (baseName == null) {
+        throw new IllegalArgumentException("No baseName given to load data from!");
+      }
+      if (locale == null) {
+        LOG.warn("No locale given, using root locale!");
+        return Arrays.asList(Locale.ROOT);
+      }
+      Locale langLocale = new Locale(locale.getLanguage());
+      List<Locale> rc = Arrays.asList(locale, langLocale, Locale.ROOT);
+      LOG.debug("Locales to return are {}", rc);
+      return rc;
+    }
+
+    @Override
+    public Locale getFallbackLocale(String baseName, Locale locale) {
+      Locale rc = super.getFallbackLocale(baseName, locale);
+      LOG.debug("Fallback locale is assumed to be {}", rc);
+      rc = null;
+      return rc;
+    }
+  };
 
   public LocaleSupportImpl(String bn) {
     this.baseName = bn;
   }
 
-  private Locale parseLocale(Locale locale) {
+  private static Locale parseLocale(Locale locale) {
     if (locale != null) {
       return locale;
     }
@@ -44,20 +81,18 @@ public class LocaleSupportImpl implements LocaleSupport {
   @Override
   public String resolve(String key, Locale loc, Object... params) {
     Locale thisLocale = parseLocale(loc);
+    LOG.debug("Entering resolve with key {}, locale {} and params like {}", new Object[]{key, thisLocale, params});
+    String rc = null;
     try {
-      ResourceBundle.Control ctrl=new ResourceBundle.Control(){
-        @Override
-        public List<Locale> getCandidateLocales(String baseName, Locale locale) {
-          return Arrays.asList(locale,Locale.ROOT);
-        }
-      };
       ResourceBundle rb = ResourceBundle.getBundle(baseName, thisLocale, getClass().getClassLoader(), ctrl);
-      String pattern = rb.getString(key);
-      if (params == null || params.length <= 0) {
-        return pattern;
+      LOG.debug("bundle is {}", rb);
+      rc = rb.getString(key);
+      LOG.debug("Pattern found is {}", rc);
+      if (params != null && params.length > 0) {
+        MessageFormat mf2 = new MessageFormat(rc, thisLocale);
+        rc = mf2.format(params);
       }
-      MessageFormat mf2 = new MessageFormat(pattern, thisLocale);
-      String rc = mf2.format(params);
+      LOG.debug("Returning value {}", rc);
       return rc;
     } catch (MissingResourceException e) {
       throw new IllegalStateException("Cannot find resource with base " + baseName, e);
