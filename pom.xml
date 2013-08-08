@@ -10,7 +10,7 @@
   <artifactId>core</artifactId>
   <packaging>pom</packaging>
   <name>DS/2 OSS Core</name>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.3-SNAPSHOT</version>
   <description>The OSS components of DS/2 Core.</description>
   <properties>
     <siteProjectName>ds2OssCore</siteProjectName>
