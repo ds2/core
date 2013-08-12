@@ -19,11 +19,16 @@ import java.util.Locale;
 
 /**
  * THe locale support.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface LocaleSupport {
-    String resolve(String key, Locale loc, Object... params);
+  String resolve(String key, Locale loc, Object... params);
+
   String formatCurrency(Locale locale, double val);
+
+  <E extends Enum<E>> String resolveException(Locale locale, E errorEnum, Throwable t, Object... params);
+
+  <E extends Enum<E>> String resolveEnum(Locale locale, E e);
 }

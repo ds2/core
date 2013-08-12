@@ -105,4 +105,15 @@ public class LocaleSupportImpl implements LocaleSupport {
     NumberFormat nf = NumberFormat.getCurrencyInstance(thisLocale);
     return nf.format(val);
   }
+
+  @Override
+  public <E extends Enum<E>> String resolveException(Locale locale, E errorEnum, Throwable t, Object... params) {
+    return null;
+  }
+
+  @Override
+  public <E extends Enum<E>> String resolveEnum(Locale locale, E e) {
+    String key=e.getClass().getSimpleName()+"."+e.name();
+    return resolve(key, locale);
+  }
 }

@@ -53,7 +53,7 @@ public class LocaleSupportImplTest extends WeldWrapper{
   }
   @Test
   public void testCurrencyConvertNull(){
-    Assert.assertNull(to.formatCurrency(null,0));
+    Assert.assertEquals(to.formatCurrency(null,0),"$0.00");
   }
   @Test
   public void testCurrencyConvert1(){
