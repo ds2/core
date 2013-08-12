@@ -35,4 +35,7 @@ public class LocaleSupportTestProvider {
   public String getHelloParam(Locale locale, String name){
     return localeSupport.resolve("helloParam", locale, name);
   }
+  public String formatCurrency(Locale locale, double val){
+    return localeSupport.formatCurrency(locale, val);
+  }
 }
