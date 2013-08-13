@@ -9,11 +9,11 @@ import ds2.oss.core.api.Persistable;
  * @author dstrauss
  * @version 0.3
  * @param <E>
- *            the persistence type
+ *            the persistable type
  * @param <V>
  *            the value type of the option
  */
-public interface Option<E, V> extends Persistable<E>, OptionIdentifier, CreatedModifiedAware {
+public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, CreatedModifiedAware {
     /**
      * Returns the default value of the option.
      * 
