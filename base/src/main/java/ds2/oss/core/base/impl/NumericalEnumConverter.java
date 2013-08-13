@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.base.impl;
 
 import java.lang.invoke.MethodHandles;
@@ -35,7 +32,7 @@ import ds2.oss.core.api.NumericEnumValue;
  *            The enum
  * @version 0.1
  */
-public class NumericalEnumConverter<E extends Enum<?>> {
+public class NumericalEnumConverter<E extends Enum<E>> {
     /**
      * A logger.
      */
