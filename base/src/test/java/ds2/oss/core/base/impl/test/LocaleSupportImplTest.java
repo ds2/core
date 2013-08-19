@@ -47,7 +47,20 @@ public class LocaleSupportImplTest extends WeldWrapper{
   public void testHelloGermanParams(){
     Assert.assertEquals(to.getHelloParam(Locale.GERMANY, "Dirk"), "Hallo, Dirk");
   }
+  @Test
   public void testHelloParams(){
     Assert.assertEquals(to.getHelloParam(Locale.US, "Dirk"), "Hello, Dirk");
+  }
+  @Test
+  public void testCurrencyConvertNull(){
+    Assert.assertEquals(to.formatCurrency(null,0),"$0.00");
+  }
+  @Test
+  public void testCurrencyConvert1(){
+    Assert.assertEquals(to.formatCurrency(Locale.GERMANY,1234.56),"1.234,56 €");
+  }
+  @Test
+  public void testCurrencyConvert2(){
+    Assert.assertEquals(to.formatCurrency(Locale.US,1234.56),"$1,234.56");
   }
 }
