@@ -58,6 +58,7 @@
     <module>base-it</module>
     <module>es</module>
     <module>es-test</module>
+    <module>webtools</module>
   </modules>
   <profiles>
     <profile>
