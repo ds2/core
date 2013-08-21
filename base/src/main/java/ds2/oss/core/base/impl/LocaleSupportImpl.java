@@ -19,8 +19,10 @@ import ds2.oss.core.api.LocaleSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -115,5 +117,17 @@ public class LocaleSupportImpl implements LocaleSupport {
   public <E extends Enum<E>> String resolveEnum(Locale locale, E e) {
     String key=e.getClass().getSimpleName()+"."+e.name();
     return resolve(key, locale);
+  }
+
+  @Override
+  public String formatDate(Date date, Locale locale, int dateStyle) {
+    DateFormat df=DateFormat.getDateInstance(dateStyle, locale);
+    return df.format(date);
+  }
+
+  @Override
+  public String formatDateTime(Date date, Locale locale, int dateStyle, int timeStyle) {
+    DateFormat df=DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);
+    return df.format(date);
   }
 }

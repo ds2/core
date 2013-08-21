@@ -19,6 +19,7 @@ import ds2.oss.core.api.LocaleSupport;
 import ds2.oss.core.api.annotations.LocaleData;
 
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -37,5 +38,11 @@ public class LocaleSupportTestProvider {
   }
   public String formatCurrency(Locale locale, double val){
     return localeSupport.formatCurrency(locale, val);
+  }
+  public String formatDate(Date date, Locale locale, int dateStyle){
+    return localeSupport.formatDate(date, locale, dateStyle);
+  }
+  public String formatDateTime(Date date, Locale locale, int dateStyle, int timeStyle){
+    return localeSupport.formatDateTime(date, locale, dateStyle, timeStyle);
   }
 }

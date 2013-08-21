@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.api;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -31,4 +32,6 @@ public interface LocaleSupport {
   <E extends Enum<E>> String resolveException(Locale locale, E errorEnum, Throwable t, Object... params);
 
   <E extends Enum<E>> String resolveEnum(Locale locale, E e);
+  String formatDate(Date date, Locale locale, int dateStyle);
+  String formatDateTime(Date date, Locale locale, int dateStyle, int timeStyle);
 }
