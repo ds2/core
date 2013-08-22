@@ -2,10 +2,15 @@ package ds2.oss.core.infinispan.impl;
 
 import java.io.IOException;
 
+import javax.enterprise.inject.Produces;
+
 import org.infinispan.Cache;
 import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.api.InfinispanService;
+import ds2.oss.core.api.Persistable;
 
 /**
  * Created by dstrauss on 20.08.13.
@@ -36,5 +41,10 @@ public class CacheControllerImpl {
             LOG.error("Error when loading cache config!", e);
         }
         return rc;
+    }
+    
+    @Produces
+    public <K, V extends Persistable<K>> InfinispanService<K, V> createInjection() {
+        return null;
     }
 }
