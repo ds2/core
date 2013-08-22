@@ -15,33 +15,42 @@
  */
 package ds2.oss.core.base.impl;
 
+import java.lang.annotation.Annotation;
+
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+
 import ds2.oss.core.api.LocaleSupport;
 import ds2.oss.core.api.annotations.LocaleData;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-import java.lang.annotation.Annotation;
-import java.util.ResourceBundle;
-
 /**
- * Created by dstrauss on 07.08.13.
+ * A producer for LocaleSupport instances.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public class LocaleSupportProducer {
-  @Produces
-  public LocaleSupport createLocaleSupport(InjectionPoint p){
-    String rb=null;
-    for(Annotation a:p.getAnnotated().getAnnotations()){
-      if(a instanceof LocaleData){
-        LocaleData d= (LocaleData) a;
-        rb=d.baseName();
-        break;
-      }
+    /**
+     * Produces a locale support instance.
+     * 
+     * @param p
+     *            the injection point
+     * @return the locale support.
+     */
+    @Produces
+    public LocaleSupport createLocaleSupport(final InjectionPoint p) {
+        String rb = null;
+        for (Annotation a : p.getAnnotated().getAnnotations()) {
+            if (a instanceof LocaleData) {
+                final LocaleData d = (LocaleData) a;
+                rb = d.baseName();
+                break;
+            }
+        }
+        if (rb == null) {
+            throw new IllegalStateException("Injection point does not provide LocaleData to configure!");
+        }
+        final LocaleSupportImpl rc = new LocaleSupportImpl(rb);
+        return rc;
     }
-    if(rb==null){
-      throw new IllegalStateException("Injection point does not provide LocaleData to configure!");
-    }
-    LocaleSupportImpl rc=new LocaleSupportImpl(rb);
-    return rc;
-  }
 }
