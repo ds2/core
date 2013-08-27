@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ds2.oss.core.webtools;
 
 import java.io.IOException;

@@ -83,6 +83,9 @@ public class WrappingServletResponse implements HttpServletResponse {
      * A print writer. Connected to the output stream.
      */
     private PrintWriter writer;
+    /**
+     * The content length, as long.
+     */
     private long contentLengthLong;
     
     /**
@@ -184,6 +187,9 @@ public class WrappingServletResponse implements HttpServletResponse {
         e.setContentType(getContentType());
         if (contentLength > 0) {
             e.setContentLength(getContentLength());
+        }
+        if (contentLengthLong > 0) {
+            e.setContentLengthLong(contentLengthLong);
         }
         e.setCharacterEncoding(getCharacterEncoding());
         for (String hN : headers.keySet()) {
