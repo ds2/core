@@ -1,10 +1,12 @@
 package ds2.oss.core.infinispan.impl;
 
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.infinispan.Cache;
 
-import ds2.oss.core.api.InfinispanService;
+import ds2.oss.core.api.InfinispanStore;
 import ds2.oss.core.api.Persistable;
 
 /**
@@ -18,20 +20,21 @@ import ds2.oss.core.api.Persistable;
  * @param <V>
  *            the value type
  */
-public class InfinispanServiceImpl<K, V extends Persistable<K>> implements InfinispanService<K, V> {
+@ApplicationScoped
+public class InfinispanStoreImpl<K, V extends Persistable<K>> implements InfinispanStore<K, V> {
     /**
      * The cache instance.
      */
+    @Inject
+    @ds2.oss.core.api.es.InfinispanStore
     private Cache<K, V> cache;
     
     /**
      * Inits the impl.
      * 
-     * @param c
-     *            the cache to use.
      */
-    public InfinispanServiceImpl(final Cache<K, V> c) {
-        cache = c;
+    public InfinispanStoreImpl() {
+        
     }
     
     /**

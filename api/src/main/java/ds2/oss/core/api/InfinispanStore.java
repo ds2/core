@@ -10,7 +10,7 @@ package ds2.oss.core.api;
  * @param <V>
  *            the value type
  */
-public interface InfinispanService<K, V extends Persistable<K>> {
+public interface InfinispanStore<K, V extends Persistable<K>> {
     /**
      * Stores an item in the cluster.
      * 
