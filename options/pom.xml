@@ -13,7 +13,7 @@
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-api</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
