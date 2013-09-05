@@ -8,8 +8,10 @@ import java.util.List;
  * 
  * @author dstrauss
  * @version 0.3
+ * @param <E>
+ *            the type of the primary key
  */
-public interface OptionStorageService {
+public interface OptionStorageService<E> {
     
     /**
      * Returns the option with the given identifier.
@@ -20,7 +22,7 @@ public interface OptionStorageService {
      *            the value type of the option
      * @return the option, or null if not found
      */
-    <V> Option<?, V> getOptionByIdentifier(OptionIdentifier<V> ident);
+    <V> Option<E, V> getOptionByIdentifier(OptionIdentifier<V> ident);
     
     /**
      * Creates a new option value.
@@ -33,14 +35,12 @@ public interface OptionStorageService {
      *            the schedule date for this value
      * @param value
      *            the value of the option value
-     * @param <E>
-     *            the persistable type
      * @param <V>
      *            the value type
      * @return the created option value
      */
-    <E, V> OptionValue<E, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx,
-        Date scheduleDate, V value);
+    <V> OptionValue<E, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx, Date scheduleDate,
+        V value);
     
     /**
      * Creates a new option.
@@ -49,13 +49,11 @@ public interface OptionStorageService {
      *            the option identifier
      * @param val
      *            the value for the option
-     * @param <E>
-     *            the persistable type
      * @param <V>
      *            the value type
      * @return the created option
      */
-    <E, V> Option<E, V> createOption(OptionIdentifier<V> ident, V val);
+    <V> Option<E, V> createOption(OptionIdentifier<V> ident, V val);
     
     /**
      * Finds the best option value for the given context.
@@ -64,22 +62,18 @@ public interface OptionStorageService {
      *            the option identifier
      * @param ctx
      *            the option value context
-     * @param <E>
-     *            the persistable type
      * @param <V>
      *            the value type
      * @return the option value to use. This MAY return a virtual option value with the option.
      */
-    <E, V> OptionValue<E, V> findBestOptionValueByContext(OptionIdentifier<V> ident, OptionValueContext ctx);
+    <V> OptionValue<E, V> findBestOptionValueByContext(OptionIdentifier<V> ident, OptionValueContext ctx);
     
     /**
      * Returns all known options for the given application name.
      * 
      * @param appName
      *            the application name
-     * @param <E>
-     *            the persistable type
      * @return A list of all known options.
      */
-    <E> List<Option<E, ?>> getAllOptions(String appName);
+    List<Option<E, ?>> getAllOptions(String appName);
 }
