@@ -30,5 +30,13 @@ public interface OptionIdentifier<V> extends Serializable {
      * 
      * @return the value type
      */
-    Class<V> getValueType();
+    ValueType getValueType();
+    
+    /**
+     * Flag to indicate that this option contains an encrypted value and must be decoded.
+     * 
+     * @return TRUE if the values for this option must be stored in an encrypted manor, otherwise
+     *         and by default FALSE.
+     */
+    boolean isEncrypted();
 }
