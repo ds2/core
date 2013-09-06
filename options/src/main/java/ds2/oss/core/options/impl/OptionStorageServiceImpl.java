@@ -4,7 +4,9 @@
 package ds2.oss.core.options.impl;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
+import ds2.oss.core.api.PersistenceSupport;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStorageService;
@@ -19,6 +21,9 @@ import ds2.oss.core.api.options.OptionStorageService;
  */
 @ApplicationScoped
 public abstract class OptionStorageServiceImpl<E> implements OptionStorageService<E> {
+  @Inject
+  private PersistenceSupport persistenceSupport;
+
     @Override
     public <V> Option<E, V> createOption(final OptionIdentifier<V> ident, final V val) {
         // TODO Auto-generated method stub
