@@ -91,4 +91,11 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
         modified = m;
     }
     
+    /**
+     * Updates the modified date.
+     */
+    public final void touchModified() {
+        modified = new Date();
+    }
+    
 }

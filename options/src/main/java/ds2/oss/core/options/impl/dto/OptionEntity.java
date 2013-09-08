@@ -155,4 +155,101 @@ public class OptionEntity implements Option<Long, Object> {
         return stageVal.getValue();
     }
     
+    /**
+     * Sets the stage value.
+     * 
+     * @param s
+     *            the stage value
+     */
+    public void setStage(final OptionStage s) {
+        stageVal.setValue(s);
+    }
+    
+    /**
+     * Sets the application name.
+     * 
+     * @param applicationName
+     *            the applicationName to set
+     */
+    public void setApplicationName(final String applicationName) {
+        this.applicationName = applicationName;
+    }
+    
+    /**
+     * Sets the option name.
+     * 
+     * @param optionName1
+     *            the optionName to set
+     */
+    public void setOptionName(final String optionName1) {
+        optionName = optionName1;
+    }
+    
+    /**
+     * Sets the value type.
+     * 
+     * @param valueType1
+     *            the valueType to set
+     */
+    public void setValueType(final ValueType valueType1) {
+        valueType.setValue(valueType1);
+    }
+    
+    /**
+     * Sets the encrypted flag.
+     * 
+     * @param encrypted1
+     *            the encrypted to set
+     */
+    public void setEncrypted(final boolean encrypted1) {
+        encrypted = encrypted1;
+    }
+    
+    /**
+     * Sets the default value.
+     * 
+     * @param defaultValue
+     *            the defaultValue to set
+     */
+    public void setDefaultValue(final String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+    
+    /**
+     * Sets the modifier.
+     * 
+     * @param modifierName
+     *            the modifierName to set
+     */
+    public void setModifierName(final String modifierName) {
+        this.modifierName = modifierName;
+    }
+    
+    /**
+     * Sets another creation date.
+     * 
+     * @param created
+     *            the creation date.
+     */
+    public void setCreated(final Date created) {
+        cma.setCreated(created);
+    }
+    
+    /**
+     * Sets another modified date.
+     * 
+     * @param modified
+     *            the modified date
+     */
+    public void setModified(final Date modified) {
+        cma.setModified(modified);
+    }
+    
+    /**
+     * Updates the modified date.
+     */
+    public void touchModified() {
+        cma.touchModified();
+    }
+    
 }

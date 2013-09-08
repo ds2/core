@@ -21,10 +21,22 @@ public interface ValueTypeParser {
      *            the target class
      * @param thisVal
      *            the object to parse
-     * @param onNull TODO
+     * @param onNull
+     *            TODO
      * @param <V>
      *            the target value
      * @return the value
      */
     <V> V parseValue(ValueType t, Class<V> targetClass, Object thisVal, V onNull);
+    
+    /**
+     * Parses a given object into a string.
+     * 
+     * @param valueType
+     *            the value type
+     * @param defaultValue
+     *            the default value object.
+     * @return null, or the value to persist.
+     */
+    String toString(ValueType valueType, Object defaultValue);
 }

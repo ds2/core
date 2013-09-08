@@ -59,6 +59,7 @@
     <module>es</module>
     <module>es-test</module>
     <module>options</module>
+    <module>options-it</module>
   </modules>
   <profiles>
     <profile>

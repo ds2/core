@@ -3,8 +3,13 @@
  */
 package ds2.oss.core.options.impl;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.constraints.NotNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.api.ValueTypeParser;
@@ -17,6 +22,10 @@ import ds2.oss.core.options.api.ValueTypeParser;
  */
 @ApplicationScoped
 public class ValueTypeParserImpl implements ValueTypeParser {
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     @Override
     public <V> V parseValue(@NotNull final ValueType t, final Class<V> targetClass, final Object thisVal, final V onNull) {
@@ -35,6 +44,22 @@ public class ValueTypeParserImpl implements ValueTypeParser {
                 break;
             default:
                 rc = targetClass.cast(thisVal);
+                break;
+        }
+        return rc;
+    }
+    
+    @Override
+    public String toString(@NotNull final ValueType valueType, final Object val) {
+        String rc = null;
+        switch (valueType) {
+            case STRING:
+                if (val != null) {
+                    rc = val.toString();
+                }
+                break;
+            default:
+                LOG.error("Unknown value type: {}, cannot parse to string!", valueType);
                 break;
         }
         return rc;
