@@ -18,6 +18,8 @@
  */
 package ds2.oss.core.options.it;
 
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -44,9 +46,15 @@ public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBea
      */
     @PersistenceContext(unitName = "corePU")
     private EntityManager em;
+    /**
+     * The invoker context.
+     */
+    @Resource
+    private EJBContext ctx;
     
     @Override
     public void persist(final OptionDto<Long, Object> t) {
+        t.setModifierName(ctx.getCallerPrincipal().getName());
         performPersist(em, t);
     }
     

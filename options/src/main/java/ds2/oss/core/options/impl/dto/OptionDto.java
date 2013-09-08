@@ -20,9 +20,8 @@ package ds2.oss.core.options.impl.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -52,7 +51,6 @@ public class OptionDto<E, V> implements Option<E, V> {
     /**
      * The id for the persistence.
      */
-    @NotNull
     private E id;
     /**
      * The stage of this option.
@@ -74,7 +72,6 @@ public class OptionDto<E, V> implements Option<E, V> {
     /**
      * The creation date.
      */
-    @NotNull
     private Date created;
     /**
      * Flag for encrypted value.
@@ -89,13 +86,13 @@ public class OptionDto<E, V> implements Option<E, V> {
      * The option name.
      */
     @NotNull
-    @Min(3)
-    @Max(30)
+    @Size(min = 3, max = 30)
     private String optionName;
     /**
      * The application name.
      */
     @NotNull
+    @Size(min = 1, max = 30)
     private String applicationName;
     
     /**
@@ -265,6 +262,37 @@ public class OptionDto<E, V> implements Option<E, V> {
      */
     public void setApplicationName(final String applicationName) {
         this.applicationName = applicationName;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("OptionDto (id=");
+        builder.append(id);
+        builder.append(", stage=");
+        builder.append(stage);
+        builder.append(", modifierName=");
+        builder.append(modifierName);
+        builder.append(", defaultValue=");
+        builder.append(defaultValue);
+        builder.append(", modified=");
+        builder.append(modified);
+        builder.append(", created=");
+        builder.append(created);
+        builder.append(", encrypted=");
+        builder.append(encrypted);
+        builder.append(", valueType=");
+        builder.append(valueType);
+        builder.append(", optionName=");
+        builder.append(optionName);
+        builder.append(", applicationName=");
+        builder.append(applicationName);
+        builder.append(")");
+        return builder.toString();
     }
     
 }

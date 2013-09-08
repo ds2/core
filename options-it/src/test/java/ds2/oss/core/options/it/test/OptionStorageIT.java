@@ -18,6 +18,8 @@
  */
 package ds2.oss.core.options.it.test;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -25,6 +27,8 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -37,6 +41,7 @@ import ds2.oss.core.options.it.MyOptions;
  * 
  */
 public class OptionStorageIT extends Arquillian implements MyOptions {
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The test object.
      */
@@ -57,6 +62,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     @Test
     public void testPersist() {
         Option<Long, String> option = to.createOption(USERNAME, "googleUsername");
+        LOG.info("Option is {}", option);
         Assert.assertNotNull(option);
         Assert.assertNotNull(option.getId());
     }

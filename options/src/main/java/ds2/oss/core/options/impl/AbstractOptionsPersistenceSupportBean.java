@@ -19,9 +19,11 @@
 package ds2.oss.core.options.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,11 @@ public abstract class AbstractOptionsPersistenceSupportBean
      */
     @Inject
     private ValueTypeParser parser;
+    /**
+     * The platform validator.
+     */
+    @Inject
+    private Validator val;
     
     /**
      * Persists a given entry into the database.
@@ -59,16 +66,25 @@ public abstract class AbstractOptionsPersistenceSupportBean
      *            the option to store
      */
     protected void performPersist(final EntityManager em, final OptionDto<Long, ?> t) {
+        LOG.debug("Trying to persist given dto {}", t);
+        final Set<?> valResult = val.validate(t);
+        if (valResult.size() > 0) {
+            LOG.warn("Given dto has errors and cannot be used: {}", valResult);
+            throw new IllegalArgumentException("Given DTO has validation errors!");
+        }
         final OptionEntity ent = new OptionEntity();
         ent.setApplicationName(t.getApplicationName());
         ent.setDefaultValue(parser.toString(t.getValueType(), t.getDefaultValue()));
         ent.setEncrypted(t.isEncrypted());
-        ent.setModifierName("TODO");
+        ent.setModifierName(t.getModifierName());
         ent.setOptionName(t.getOptionName());
         ent.setValueType(t.getValueType());
         ent.setStage(t.getStage());
         em.persist(ent);
         LOG.debug("Persisted option is {}", ent);
         t.setId(ent.getId());
+        t.setCreated(ent.getCreated());
+        t.setModified(ent.getModified());
+        t.setModifierName(ent.getModifierName());
     }
 }

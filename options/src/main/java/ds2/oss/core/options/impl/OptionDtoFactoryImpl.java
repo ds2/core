@@ -15,7 +15,10 @@
  */
 package ds2.oss.core.options.impl;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.OptionFactory;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
@@ -25,6 +28,7 @@ import ds2.oss.core.options.impl.dto.OptionDto;
  * @author dstrauss
  * @version 0.3
  */
+@ApplicationScoped
 public class OptionDtoFactoryImpl implements OptionFactory {
     
     @Override
@@ -35,6 +39,7 @@ public class OptionDtoFactoryImpl implements OptionFactory {
         rc.setEncrypted(ident.isEncrypted());
         rc.setOptionName(ident.getOptionName());
         rc.setValueType(ident.getValueType());
+        rc.setStage(OptionStage.Online);
         return rc;
     }
     
