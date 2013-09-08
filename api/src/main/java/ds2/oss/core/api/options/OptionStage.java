@@ -3,6 +3,8 @@ package ds2.oss.core.api.options;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
+import ds2.oss.core.api.NumericEnumValue;
+
 /**
  * Any stage an option can have.
  * 
@@ -11,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlEnum
 @XmlType(name = "optionStageType")
-public enum OptionStage {
+public enum OptionStage implements NumericEnumValue {
     /**
      * The option is deleted.
      */
@@ -35,12 +37,24 @@ public enum OptionStage {
         stageId = i;
     }
     
-    /**
-     * Returns the stage id for this stage.
-     * 
-     * @return the stage id
-     */
-    public int getStageId() {
+    @Override
+    public int getNumericalValue() {
         return stageId;
+    }
+    
+    /**
+     * Id lookup.
+     * 
+     * @param id
+     *            the id of the stage
+     * @return the stage, or null
+     */
+    public static OptionStage getById(final int id) {
+        for (OptionStage s : values()) {
+            if (id == s.stageId) {
+                return s;
+            }
+        }
+        return null;
     }
 }

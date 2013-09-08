@@ -34,8 +34,7 @@ public class EnumConverterTest {
     /**
      * The test object.
      */
-    private final NumericalEnumConverter<EntryStates> to =
-        new NumericalEnumConverter<>(EntryStates.class);
+    private final NumericalEnumConverter<EntryStates> to = new NumericalEnumConverter<>(EntryStates.class);
     
     /**
      * Inits the test.
@@ -58,13 +57,13 @@ public class EnumConverterTest {
     
     @Test
     public void getEnum() {
-        final EntryStates s = to.getEnumByReflection(1, "getById",EntryStates.class);
+        final EntryStates s = to.getEnumByReflection(1, "getById");
         Assert.assertEquals(s, EntryStates.ACTIVE);
     }
     
     @Test
     public void getEnum2() {
-        final EntryStates s = to.getEnumByReflection(3, "getById",EntryStates.class);
+        final EntryStates s = to.getEnumByReflection(3, "getById");
         Assert.assertEquals(s, EntryStates.DELETED);
     }
 }
