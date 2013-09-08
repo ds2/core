@@ -16,7 +16,7 @@
 package ds2.oss.core.api;
 
 /**
- * A persistence support contract.
+ * A persistence support contract. This can be a database, or a cache instance. Or ElasticSearch.
  * 
  * @author dstrauss
  * @param <DTO>

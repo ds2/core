@@ -17,7 +17,7 @@ import javax.inject.Qualifier;
  * @version 0.3
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
+@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 @Qualifier
 public @interface OptionsPersistenceSupport {
     /**

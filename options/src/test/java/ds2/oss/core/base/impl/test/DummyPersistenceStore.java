@@ -19,20 +19,20 @@ import ds2.oss.core.options.impl.dto.OptionDto;
  */
 @ApplicationScoped
 @OptionsPersistenceSupport(type = StorageType.NUMBERED)
-public class DummyPersistenceStore implements PersistenceSupport<Option<Long, ?>, Long> {
+public class DummyPersistenceStore implements PersistenceSupport<Option<Long, Object>, Long> {
     /**
      * Runtime primary key id.
      */
     private long id;
     
     @Override
-    public void persist(final Option<Long, ?> t) {
+    public void persist(final Option<Long, Object> t) {
         final OptionDto<Long, ?> o = (OptionDto<Long, ?>) t;
         o.setId(Long.valueOf(id++));
     }
     
     @Override
-    public Option<Long, ?> getById(final Long e) {
+    public Option<Long, Object> getById(final Long e) {
         // TODO Auto-generated method stub
         return null;
     }
