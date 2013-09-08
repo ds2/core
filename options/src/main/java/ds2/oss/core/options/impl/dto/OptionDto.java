@@ -83,6 +83,9 @@ public class OptionDto<E, V> implements Option<E, V> {
     @NotNull
     private String applicationName;
     
+    /**
+     * Inits the option with dummy default values.
+     */
     public OptionDto() {
         // nothing special to do
         stage = OptionStage.Online;
@@ -90,6 +93,11 @@ public class OptionDto<E, V> implements Option<E, V> {
         modified = created;
     }
     
+    /**
+     * Inits the option with a default id.
+     * 
+     * @param id1
+     */
     public OptionDto(final E id1) {
         this.id = id1;
     }
