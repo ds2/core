@@ -19,20 +19,20 @@ package ds2.oss.core.api;
  * A persistence support contract.
  * 
  * @author dstrauss
- * @param <T>
+ * @param <DTO>
  *            the entity type
- * @param <E>
+ * @param <PRIMKEY>
  *            the entity primary key type
  * @version 0.2
  */
-public interface PersistenceSupport<T extends Persistable<E>, E> {
+public interface PersistenceSupport<DTO extends Persistable<PRIMKEY>, PRIMKEY> {
     /**
      * Persists the given dto.
      * 
      * @param t
      *            the dto to persist.
      */
-    void persist(T t);
+    void persist(DTO t);
     
     /**
      * Returns the object with the given id.
@@ -41,5 +41,5 @@ public interface PersistenceSupport<T extends Persistable<E>, E> {
      *            the id
      * @return the found object, or null
      */
-    T getById(E e);
+    DTO getById(PRIMKEY e);
 }

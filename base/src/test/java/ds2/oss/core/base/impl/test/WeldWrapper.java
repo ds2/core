@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.base.impl.test;
 
 import java.util.concurrent.locks.Lock;
@@ -38,8 +35,7 @@ public abstract class WeldWrapper {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(WeldWrapper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WeldWrapper.class);
     /**
      * The lock.
      */

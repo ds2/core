@@ -19,6 +19,10 @@ public enum ValueType {
      */
     URL,
     /**
+     * Option value is a boolean value.
+     */
+    BOOLEAN,
+    /**
      * Option value is a list.
      */
     LIST_OF_STRINGS;
