@@ -27,8 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.PersistenceSupport;
-import ds2.oss.core.api.options.Option;
 import ds2.oss.core.options.api.ValueTypeParser;
+import ds2.oss.core.options.impl.dto.OptionDto;
 import ds2.oss.core.options.impl.dto.OptionEntity;
 
 /**
@@ -37,7 +37,9 @@ import ds2.oss.core.options.impl.dto.OptionEntity;
  * @author dstrauss
  * @version 0.3
  */
-public abstract class AbstractOptionsPersistenceSupportBean implements PersistenceSupport<Option<Long, Object>, Long> {
+public abstract class AbstractOptionsPersistenceSupportBean
+    implements
+    PersistenceSupport<OptionDto<Long, Object>, Long> {
     /**
      * A logger.
      */
@@ -56,7 +58,7 @@ public abstract class AbstractOptionsPersistenceSupportBean implements Persisten
      * @param t
      *            the option to store
      */
-    protected void performPersist(final EntityManager em, final Option<Long, ?> t) {
+    protected void performPersist(final EntityManager em, final OptionDto<Long, ?> t) {
         final OptionEntity ent = new OptionEntity();
         ent.setApplicationName(t.getApplicationName());
         ent.setDefaultValue(parser.toString(t.getValueType(), t.getDefaultValue()));
@@ -67,5 +69,6 @@ public abstract class AbstractOptionsPersistenceSupportBean implements Persisten
         ent.setStage(t.getStage());
         em.persist(ent);
         LOG.debug("Persisted option is {}", ent);
+        t.setId(ent.getId());
     }
 }

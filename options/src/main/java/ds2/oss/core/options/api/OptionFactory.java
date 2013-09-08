@@ -18,8 +18,8 @@
  */
 package ds2.oss.core.options.api;
 
-import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * Factory to create options. Implementations of this contract will return a dto object that matches
@@ -45,5 +45,5 @@ public interface OptionFactory {
      *            the value type
      * @return the option implementation
      */
-    <K, V> Option<K, V> createOptionDto(OptionIdentifier<V> ident, K primaryKey, V defaultVal);
+    <K, V> OptionDto<K, V> createOptionDto(OptionIdentifier<V> ident, K primaryKey, V defaultVal);
 }

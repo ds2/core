@@ -18,8 +18,6 @@
  */
 package ds2.oss.core.options.impl;
 
-import ds2.oss.core.api.PersistenceSupport;
-import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStorageService;
 
 /**
@@ -31,10 +29,5 @@ import ds2.oss.core.api.options.OptionStorageService;
  *            the persistence type
  */
 public abstract class AbstractOptionStorageServiceImpl<E> implements OptionStorageService<E> {
-    /**
-     * Returns the datastore to use to store and load options.
-     * 
-     * @return the persistence support for dealing with options.
-     */
-    protected abstract PersistenceSupport<Option<E, ?>, E> getDataStore();
+    // no special methods needed yet
 }

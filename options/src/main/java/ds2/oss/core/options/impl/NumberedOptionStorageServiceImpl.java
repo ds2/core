@@ -34,6 +34,7 @@ import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.api.OptionFactory;
 import ds2.oss.core.options.api.OptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionsPersistenceSupport.StorageType;
+import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * The implementation for numbered options.
@@ -51,7 +52,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Inject
     @OptionsPersistenceSupport(type = StorageType.NUMBERED)
-    private PersistenceSupport<Option<Long, ?>, Long> numberedPersistenceSupport;
+    private PersistenceSupport<OptionDto<Long, ?>, Long> numberedPersistenceSupport;
     /**
      * The option factory.
      */
@@ -108,13 +109,8 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     }
     
     @Override
-    protected PersistenceSupport<Option<Long, ?>, Long> getDataStore() {
-        return numberedPersistenceSupport;
-    }
-    
-    @Override
     public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) {
-        final Option<Long, V> option = optionFac.createOptionDto(ident, null, val);
+        final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, val);
         numberedPersistenceSupport.persist(option);
         return option;
     }

@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.impl;
 
-import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.options.api.OptionFactory;
 import ds2.oss.core.options.impl.dto.OptionDto;
@@ -29,10 +25,10 @@ import ds2.oss.core.options.impl.dto.OptionDto;
  * @author dstrauss
  * @version 0.3
  */
-public class OptionFactoryImpl implements OptionFactory {
+public class OptionDtoFactoryImpl implements OptionFactory {
     
     @Override
-    public <K, V> Option<K, V> createOptionDto(final OptionIdentifier<V> ident, final K primKey, final V defaultVal) {
+    public <K, V> OptionDto<K, V> createOptionDto(final OptionIdentifier<V> ident, final K primKey, final V defaultVal) {
         final OptionDto<K, V> rc = new OptionDto<>(primKey);
         rc.setApplicationName(ident.getApplicationName());
         rc.setDefaultValue(defaultVal);

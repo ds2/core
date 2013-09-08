@@ -26,9 +26,9 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import ds2.oss.core.api.options.Option;
 import ds2.oss.core.options.api.OptionsPersistenceSupport;
 import ds2.oss.core.options.impl.AbstractOptionsPersistenceSupportBean;
+import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * @author dstrauss
@@ -46,12 +46,12 @@ public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBea
     private EntityManager em;
     
     @Override
-    public void persist(final Option<Long, Object> t) {
+    public void persist(final OptionDto<Long, Object> t) {
         performPersist(em, t);
     }
     
     @Override
-    public Option<Long, Object> getById(final Long e) {
+    public OptionDto<Long, Object> getById(final Long e) {
         return null;
     }
     
