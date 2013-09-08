@@ -18,8 +18,13 @@
  */
 package ds2.oss.core.options.impl;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.PersistenceSupport;
 import ds2.oss.core.api.options.Option;
@@ -33,6 +38,10 @@ import ds2.oss.core.options.impl.dto.OptionEntity;
  * @version 0.3
  */
 public abstract class AbstractOptionsPersistenceSupportBean implements PersistenceSupport<Option<Long, Object>, Long> {
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The parser.
      */
@@ -57,5 +66,6 @@ public abstract class AbstractOptionsPersistenceSupportBean implements Persisten
         ent.setValueType(t.getValueType());
         ent.setStage(t.getStage());
         em.persist(ent);
+        LOG.debug("Persisted option is {}", ent);
     }
 }

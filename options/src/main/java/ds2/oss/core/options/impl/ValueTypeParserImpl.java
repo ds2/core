@@ -21,7 +21,6 @@ package ds2.oss.core.options.impl;
 import java.lang.invoke.MethodHandles;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +42,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     @Override
-    public <V> V parseValue(@NotNull final ValueType t, final Class<V> targetClass, final Object thisVal, final V onNull) {
+    public <V> V parseValue(final ValueType t, final Class<V> targetClass, final Object thisVal, final V onNull) {
         if (thisVal == null) {
             return onNull;
         }
@@ -65,7 +64,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     }
     
     @Override
-    public String toString(@NotNull final ValueType valueType, final Object val) {
+    public String toString(final ValueType valueType, final Object val) {
         String rc = null;
         switch (valueType) {
             case STRING:

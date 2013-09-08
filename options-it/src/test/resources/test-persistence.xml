@@ -22,7 +22,9 @@
         http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="corePU">
     <jta-data-source>jdbc/core</jta-data-source>
-    <class>ds2.oss.core.base.itest.DummyEntity</class>
+    <class>ds2.oss.core.options.impl.dto.OptionEntity</class>
+    <class>ds2.oss.core.options.impl.dto.OptionStageModule</class>
+    <class>ds2.oss.core.options.impl.dto.ValueTypeModule</class>
     <class>ds2.oss.core.base.impl.StateAwareModule</class>
     <class>ds2.oss.core.base.impl.CreatedModifiedAwareModule</class>
     <properties>

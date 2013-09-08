@@ -45,5 +45,5 @@ public interface OptionFactory {
      *            the value type
      * @return the option implementation
      */
-    <K, V> Option<K, V> createOptionEntity(OptionIdentifier<V> ident, K primaryKey, V defaultVal);
+    <K, V> Option<K, V> createOptionDto(OptionIdentifier<V> ident, K primaryKey, V defaultVal);
 }

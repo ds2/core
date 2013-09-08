@@ -31,7 +31,7 @@ import javax.persistence.Transient;
  *            the enum to wrap
  */
 @Embeddable
-public class EnumModule<E extends Enum<E>> {
+public abstract class EnumModule<E extends Enum<E>> {
     /**
      * The represented int value.
      */
@@ -48,7 +48,7 @@ public class EnumModule<E extends Enum<E>> {
     private String reflMethodName = "getById";
     
     /**
-     * Inits the module.
+     * Inits the module. Be aware that this module cannot provide a default constructor.
      * 
      * @param c
      *            the enum class
@@ -90,4 +90,22 @@ public class EnumModule<E extends Enum<E>> {
     public E getValue() {
         return conv.getEnumByReflection(value, reflMethodName);
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("EnumModule (value=");
+        builder.append(value);
+        builder.append(", conv=");
+        builder.append(conv);
+        builder.append(", reflMethodName=");
+        builder.append(reflMethodName);
+        builder.append(")");
+        return builder.toString();
+    }
+    
 }

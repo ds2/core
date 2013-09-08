@@ -37,7 +37,6 @@ import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
-import ds2.oss.core.base.impl.EnumModule;
 
 /**
  * A database option.
@@ -88,7 +87,7 @@ public class OptionEntity implements Option<Long, Object> {
      */
     @Embedded
     @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "value_type")) })
-    private EnumModule<ValueType> valueType;
+    private ValueTypeModule valueType = new ValueTypeModule();
     /**
      * The encrypted flag.
      */
@@ -104,7 +103,7 @@ public class OptionEntity implements Option<Long, Object> {
      */
     @Embedded
     @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "stage")) })
-    private EnumModule<OptionStage> stageVal;
+    private OptionStageModule stageVal = new OptionStageModule();
     /**
      * The modifier username.
      */
@@ -116,8 +115,6 @@ public class OptionEntity implements Option<Long, Object> {
      */
     public OptionEntity() {
         cma = new CreatedModifiedAwareModule();
-        stageVal = new EnumModule<>(OptionStage.class);
-        valueType = new EnumModule<>(ValueType.class);
     }
     
     @Override
@@ -265,6 +262,35 @@ public class OptionEntity implements Option<Long, Object> {
      */
     public void touchModified() {
         cma.touchModified();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("OptionEntity (id=");
+        builder.append(id);
+        builder.append(", applicationName=");
+        builder.append(applicationName);
+        builder.append(", cma=");
+        builder.append(cma);
+        builder.append(", optionName=");
+        builder.append(optionName);
+        builder.append(", valueType=");
+        builder.append(valueType);
+        builder.append(", encrypted=");
+        builder.append(encrypted);
+        builder.append(", defaultValue=");
+        builder.append(defaultValue);
+        builder.append(", stageVal=");
+        builder.append(stageVal);
+        builder.append(", modifierName=");
+        builder.append(modifierName);
+        builder.append(")");
+        return builder.toString();
     }
     
 }

@@ -24,7 +24,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -50,7 +49,8 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
             ShrinkWrap.create(JavaArchive.class, "options.jar").addPackages(true, "ds2.oss.core.options")
                 .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 // Enable CDI
-                .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+                // .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+                .addAsManifestResource("my-beans.xml", ArchivePaths.create("beans.xml"));
         return jar;
     }
     
