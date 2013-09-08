@@ -87,4 +87,8 @@ public abstract class AbstractOptionsPersistenceSupportBean
         t.setModified(ent.getModified());
         t.setModifierName(ent.getModifierName());
     }
+    
+    protected OptionDto<Long, Object> performGetById(final EntityManager em, final Long e) {
+        return null;
+    }
 }

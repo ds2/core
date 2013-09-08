@@ -60,7 +60,8 @@ public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBea
     
     @Override
     public OptionDto<Long, Object> getById(final Long e) {
-        return null;
+        OptionDto<Long, Object> rc = performGetById(em, e);
+        return rc;
     }
     
 }
