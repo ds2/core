@@ -14,10 +14,26 @@
  * limitations under the License.
  */
 /**
- * All known contracts to deal with option storage systems.
+ * 
  */
-@javax.xml.bind.annotation.XmlSchema(
-    namespace = "http://www.ds2/ns/oss/core/options",
-    elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package ds2.oss.core.api.options;
+package ds2.oss.core.options.it;
 
+import ds2.oss.core.options.impl.SecureStringOptionIdentifier;
+import ds2.oss.core.options.impl.StringOptionIdentifier;
+
+/**
+ * The known options for this test app.
+ * 
+ * @author dstrauss
+ * @version 0.3
+ */
+public interface MyOptions {
+    /**
+     * The username option identifier.
+     */
+    StringOptionIdentifier USERNAME = new StringOptionIdentifier("testApp", "username");
+    /**
+     * The client secret.
+     */
+    SecureStringOptionIdentifier PW = new SecureStringOptionIdentifier("testApp", "clientSecret");
+}
