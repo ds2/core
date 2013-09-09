@@ -19,15 +19,18 @@
 package ds2.oss.core.options.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.dto.OptionDto;
@@ -54,6 +57,12 @@ public abstract class AbstractOptionsPersistenceSupportBean implements NumberedO
      */
     @Inject
     private Validator val;
+    
+    @Override
+    public OptionDto<Long, Object> getById(final Long e) {
+        throw new UnsupportedOperationException(
+            "getById is not supported for options! Use the OptionIdentifier instead.");
+    }
     
     /**
      * Persists a given entry into the database.
@@ -86,7 +95,12 @@ public abstract class AbstractOptionsPersistenceSupportBean implements NumberedO
         t.setModifierName(ent.getModifierName());
     }
     
-    protected OptionDto<Long, Object> performGetById(final EntityManager em, final Long e) {
-        return null;
+    protected <V> OptionDto<Long, V> findOptionByIdentifier(final EntityManager em, final OptionIdentifier<V> ident) {
+        final Query q = em.createNamedQuery(QUERY_FINDOPTIONBYIDENTIFIER);
+        q.setParameter("optionName", ident.getOptionName());
+        q.setParameter("appName", ident.getApplicationName());
+        q.setMaxResults(1);
+        final List<OptionEntity> foundOptions = q.getResultList();
+        return parser.toDto(foundOptions.get(0), ident);
     }
 }

@@ -28,6 +28,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -37,6 +39,7 @@ import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
+import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 
 /**
  * A database option.
@@ -55,6 +58,9 @@ import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
     valueColumnName = "next_id",
     allocationSize = 1)
 @SequenceGenerator(initialValue = 1, name = "seqGen1", sequenceName = "SEQ_CORE_OPTIONS", allocationSize = 1)
+@NamedQueries({ @NamedQuery(
+    name = NumberedOptionsPersistenceSupport.QUERY_FINDOPTIONBYIDENTIFIER,
+    query = "select o from coreOption where o.optionName = :optionName and o.applicationName = :appName") })
 public class OptionEntity implements Option<Long, Object> {
     
     /**

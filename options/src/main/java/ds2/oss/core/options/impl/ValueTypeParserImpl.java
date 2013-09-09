@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.impl;
 
-import java.lang.invoke.MethodHandles;
+import java.lang.annotation.Annotation;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
+import ds2.oss.core.options.api.ValueCodec;
 import ds2.oss.core.options.api.ValueTypeParser;
+import ds2.oss.core.options.impl.dto.OptionDto;
+import ds2.oss.core.options.impl.dto.OptionEntity;
 
 /**
  * The value type parser impl.
@@ -37,9 +38,11 @@ import ds2.oss.core.options.api.ValueTypeParser;
 @ApplicationScoped
 public class ValueTypeParserImpl implements ValueTypeParser {
     /**
-     * A logger.
+     * The codecs.
      */
-    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    @Any
+    @Inject
+    private Instance<ValueCodec<?>> codecs;
     
     @Override
     public <V> V parseValue(final ValueType t, final Class<V> targetClass, final Object thisVal, final V onNull) {
@@ -47,45 +50,38 @@ public class ValueTypeParserImpl implements ValueTypeParser {
             return onNull;
         }
         V rc = null;
-        switch (t) {
-            case STRING:
-                rc = targetClass.cast(thisVal);
-                break;
-            case BOOLEAN:
-                if (thisVal instanceof String) {
-                    rc = targetClass.cast(Boolean.parseBoolean(thisVal.toString()));
-                }
-                break;
-            default:
-                rc = targetClass.cast(thisVal);
-                break;
-        }
+        final Annotation a = new ValueCodecMarkerLiteral(t);
+        final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
+        rc = codec.toValue((String) thisVal);
         return rc;
     }
     
     @Override
     public String toString(final ValueType valueType, final Object val) {
         String rc = null;
-        switch (valueType) {
-            case STRING:
-                if (val != null) {
-                    rc = val.toString();
-                }
-                break;
-            case URL:
-                if (val != null) {
-                    rc = val.toString();
-                }
-                break;
-            case BOOLEAN:
-                if (val != null) {
-                    rc = val.toString();
-                }
-                break;
-            default:
-                LOG.error("Unknown value type: {}, cannot parse to string!", valueType);
-                break;
+        final Annotation a = new ValueCodecMarkerLiteral(valueType);
+        final ValueCodec<Object> codec = (ValueCodec<Object>) codecs.select(a).get();
+        rc = codec.toString(val);
+        return rc;
+    }
+    
+    @Override
+    public <V> OptionDto<Long, V> toDto(final OptionEntity e, final OptionIdentifier<V> ident) {
+        if (e == null) {
+            return null;
         }
+        final OptionDto<Long, V> rc = new OptionDto<>(e.getId());
+        rc.setApplicationName(e.getApplicationName());
+        rc.setCreated(e.getCreated());
+        rc.setEncrypted(e.isEncrypted());
+        rc.setModified(e.getModified());
+        rc.setModifierName(e.getModifierName());
+        rc.setOptionName(e.getOptionName());
+        rc.setStage(e.getStage());
+        rc.setValueType(e.getValueType());
+        final Annotation a = new ValueCodecMarkerLiteral(ident.getValueType());
+        final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
+        rc.setDefaultValue(codec.toValue((String) e.getDefaultValue()));
         return rc;
     }
     

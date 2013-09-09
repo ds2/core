@@ -55,11 +55,16 @@ public enum ValueType implements NumericEnumValue {
      *            the id of the entry
      */
     private ValueType(final int id1) {
-        this.id = id1;
+        id = id1;
     }
     
     @Override
     public int getNumericalValue() {
         return id;
+    }
+    
+    public Class<?> getClassValue() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

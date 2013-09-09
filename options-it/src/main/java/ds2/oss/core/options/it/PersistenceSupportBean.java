@@ -51,15 +51,8 @@ public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBea
     private EJBContext ctx;
     
     @Override
-    public OptionDto<Long, Object> getById(final Long e) {
-        OptionDto<Long, Object> rc = performGetById(em, e);
-        return rc;
-    }
-    
-    @Override
     public <V> OptionDto<Long, V> findOptionByIdentifier(final OptionIdentifier<V> ident) {
-        // TODO Auto-generated method stub
-        return null;
+        return findOptionByIdentifier(em, ident);
     }
     
     @Override

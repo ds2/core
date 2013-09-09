@@ -18,7 +18,10 @@
  */
 package ds2.oss.core.options.api;
 
+import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
+import ds2.oss.core.options.impl.dto.OptionDto;
+import ds2.oss.core.options.impl.dto.OptionEntity;
 
 /**
  * A value parser.
@@ -54,4 +57,6 @@ public interface ValueTypeParser {
      * @return null, or the value to persist.
      */
     String toString(ValueType valueType, Object defaultValue);
+    
+    <V> OptionDto<Long, V> toDto(OptionEntity e, OptionIdentifier<V> ident);
 }

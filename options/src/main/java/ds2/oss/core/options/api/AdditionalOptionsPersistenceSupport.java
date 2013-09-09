@@ -22,6 +22,8 @@ public interface AdditionalOptionsPersistenceSupport<K> extends PersistenceSuppo
      * 
      * @param ident
      *            the option identifier
+     * @param <V>
+     *            the value type of the option
      * @return the found option, or null
      */
     <V> OptionDto<K, V> findOptionByIdentifier(OptionIdentifier<V> ident);
