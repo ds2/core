@@ -60,7 +60,7 @@ import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 @SequenceGenerator(initialValue = 1, name = "seqGen1", sequenceName = "SEQ_CORE_OPTIONS", allocationSize = 1)
 @NamedQueries({ @NamedQuery(
     name = NumberedOptionsPersistenceSupport.QUERY_FINDOPTIONBYIDENTIFIER,
-    query = "select o from coreOption where o.optionName = :optionName and o.applicationName = :appName") })
+    query = "select o from coreOption o where o.optionName = :optionName and o.applicationName = :appName") })
 public class OptionEntity implements Option<Long, Object> {
     
     /**
