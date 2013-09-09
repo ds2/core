@@ -50,9 +50,9 @@ import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
     name = "tableGen1",
     initialValue = 1,
     pkColumnName = "table_name",
-    pkColumnValue = "next_id",
+    pkColumnValue = "core_options",
     table = "core_id",
-    valueColumnName = "core_options",
+    valueColumnName = "next_id",
     allocationSize = 1)
 @SequenceGenerator(initialValue = 1, name = "seqGen1", sequenceName = "SEQ_CORE_OPTIONS", allocationSize = 1)
 public class OptionEntity implements Option<Long, Object> {
