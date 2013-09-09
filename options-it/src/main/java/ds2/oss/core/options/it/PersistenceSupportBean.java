@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.it;
 
 import javax.annotation.Resource;
@@ -28,6 +25,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.options.api.OptionsPersistenceSupport;
 import ds2.oss.core.options.impl.AbstractOptionsPersistenceSupportBean;
 import ds2.oss.core.options.impl.dto.OptionDto;
@@ -53,15 +51,21 @@ public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBea
     private EJBContext ctx;
     
     @Override
-    public void persist(final OptionDto<Long, Object> t) {
-        t.setModifierName(ctx.getCallerPrincipal().getName());
-        performPersist(em, t);
-    }
-    
-    @Override
     public OptionDto<Long, Object> getById(final Long e) {
         OptionDto<Long, Object> rc = performGetById(em, e);
         return rc;
+    }
+    
+    @Override
+    public <V> OptionDto<Long, V> findOptionByIdentifier(final OptionIdentifier<V> ident) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public void persist(final OptionDto<Long, ?> t) {
+        t.setModifierName(ctx.getCallerPrincipal().getName());
+        performPersist(em, t);
     }
     
 }

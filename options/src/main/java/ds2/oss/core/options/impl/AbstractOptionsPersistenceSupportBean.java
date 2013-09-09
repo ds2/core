@@ -28,7 +28,7 @@ import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.PersistenceSupport;
+import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.dto.OptionDto;
 import ds2.oss.core.options.impl.dto.OptionEntity;
@@ -39,9 +39,7 @@ import ds2.oss.core.options.impl.dto.OptionEntity;
  * @author dstrauss
  * @version 0.3
  */
-public abstract class AbstractOptionsPersistenceSupportBean
-    implements
-    PersistenceSupport<OptionDto<Long, Object>, Long> {
+public abstract class AbstractOptionsPersistenceSupportBean implements NumberedOptionsPersistenceSupport {
     /**
      * A logger.
      */

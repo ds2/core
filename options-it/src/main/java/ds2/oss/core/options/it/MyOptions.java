@@ -20,6 +20,7 @@ package ds2.oss.core.options.it;
 
 import ds2.oss.core.options.impl.SecureStringOptionIdentifier;
 import ds2.oss.core.options.impl.StringOptionIdentifier;
+import ds2.oss.core.options.impl.UrlOptionIdentifier;
 
 /**
  * The known options for this test app.
@@ -32,6 +33,7 @@ public interface MyOptions {
      * The username option identifier.
      */
     StringOptionIdentifier USERNAME = new StringOptionIdentifier("testApp", "username");
+    UrlOptionIdentifier ENDPOINT = new UrlOptionIdentifier("testApp", "googleEndpoint");
     /**
      * The client secret.
      */

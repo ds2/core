@@ -25,12 +25,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-import ds2.oss.core.api.PersistenceSupport;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
 import ds2.oss.core.options.api.OptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionsPersistenceSupport.StorageType;
@@ -52,7 +52,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Inject
     @OptionsPersistenceSupport(type = StorageType.NUMBERED)
-    private PersistenceSupport<OptionDto<Long, ?>, Long> numberedPersistenceSupport;
+    private NumberedOptionsPersistenceSupport numberedPersistenceSupport;
     /**
      * The option factory.
      */
@@ -67,8 +67,8 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Override
     public <V> Option<Long, V> getOptionByIdentifier(final OptionIdentifier<V> ident) {
-        // TODO Auto-generated method stub
-        return null;
+        final OptionDto<Long, V> foundOption = numberedPersistenceSupport.findOptionByIdentifier(ident);
+        return foundOption;
     }
     
     /*

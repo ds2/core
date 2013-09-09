@@ -72,6 +72,16 @@ public class ValueTypeParserImpl implements ValueTypeParser {
                     rc = val.toString();
                 }
                 break;
+            case URL:
+                if (val != null) {
+                    rc = val.toString();
+                }
+                break;
+            case BOOLEAN:
+                if (val != null) {
+                    rc = val.toString();
+                }
+                break;
             default:
                 LOG.error("Unknown value type: {}, cannot parse to string!", valueType);
                 break;
