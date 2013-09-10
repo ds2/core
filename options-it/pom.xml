@@ -10,6 +10,11 @@
   <description>The integrationtest for the options.</description>
   <dependencies>
     <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-options</artifactId>
       <version>${project.version}</version>
@@ -30,11 +35,7 @@
       <groupId>org.jboss.arquillian.container</groupId>
       <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <scope>test</scope>
-    </dependency>
+    
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
