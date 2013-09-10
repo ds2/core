@@ -21,14 +21,16 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg%n" />
     </Console>
+      <FastFile name="FastFile" fileName="target/ds2Core.log" immediateFlush="false" append="true">
+          <PatternLayout>
+              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg%n</pattern>
+          </PatternLayout>
+      </FastFile>
   </appenders>
   <loggers>
-    <logger name="ds2.oss.core.elasticsearch" level="debug">
-      <appender-ref ref="Console" />
-    </logger>
-      <logger name="org.jboss.weld" level="debug">
-          <appender-ref ref="Console" />
-      </logger>
+    <asyncLogger name="ds2.oss.core" level="debug" additivity="false">
+      <appender-ref ref="FastFile" />
+    </asyncLogger>
     <root level="info">
       <appender-ref ref="Console" />
     </root>
