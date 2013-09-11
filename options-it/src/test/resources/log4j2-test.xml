@@ -19,17 +19,24 @@
 <configuration status="WARN">
   <appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg%n" />
+      <PatternLayout pattern="%d{ISO8601} [%thread][%X{reqId}] %-5level %C{1.} - %msg %ex%n" />
     </Console>
       <FastFile name="FastFile" fileName="target/ds2Core.log" immediateFlush="false" append="true">
           <PatternLayout>
-              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg%n</pattern>
+              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg %ex%n</pattern>
           </PatternLayout>
+      </FastFile>
+      <FastFile name="liveLog" fileName="target/ds2Core_live.log" immediateFlush="false" append="true">
+          <PatternLayout>
+              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg %ex%n</pattern>
+          </PatternLayout>
+          <ThresholdFilter level="info"/>
       </FastFile>
   </appenders>
   <loggers>
     <asyncLogger name="ds2.oss.core" level="debug" additivity="false">
       <appender-ref ref="FastFile" />
+      <appender-ref ref="liveLog" />
     </asyncLogger>
     <root level="info">
       <appender-ref ref="Console" />
