@@ -17,18 +17,21 @@
 
 -->
 <configuration status="WARN">
+    <properties>
+        <property name="filters">org.junit,org.apache.maven,sun.reflect,java.lang.reflect,org.jboss.arquillian,org.testng</property>
+    </properties>
   <appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{ISO8601} [%thread][%X{reqId}] %-5level %C{1.} - %msg %ex%n" />
+      <PatternLayout pattern="%d{ISO8601} [%thread][%X{reqId}] %-5level %c{1.} - %msg%n%xEx{short}%n" />
     </Console>
       <FastFile name="FastFile" fileName="target/ds2Core.log" immediateFlush="false" append="true">
-          <PatternLayout>
-              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg %ex%n</pattern>
+          <PatternLayout charset="utf-8">
+              <pattern>%d{ISO8601} [%X{sessionId}][%X{reqId}][%thread] %-5level %logger{36} - %msg%n%xEx{filters(${filters})}</pattern>
           </PatternLayout>
       </FastFile>
       <FastFile name="liveLog" fileName="target/ds2Core_live.log" immediateFlush="false" append="true">
-          <PatternLayout>
-              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg %ex%n</pattern>
+          <PatternLayout charset="utf-8">
+              <pattern>%d{ISO8601} [%thread][%X{reqId}] %-5level %logger{36} - %msg%n%xEx{30,filters(${filters})}</pattern>
           </PatternLayout>
           <ThresholdFilter level="info"/>
       </FastFile>
@@ -37,6 +40,7 @@
     <asyncLogger name="ds2.oss.core" level="debug" additivity="false">
       <appender-ref ref="FastFile" />
       <appender-ref ref="liveLog" />
+      <appender-ref ref="Console" />
     </asyncLogger>
     <root level="info">
       <appender-ref ref="Console" />
