@@ -31,6 +31,10 @@ import ds2.oss.core.base.impl.EnumModule;
  */
 @Embeddable
 public class ValueTypeModule extends EnumModule<ValueType> {
+    /**
+     * Dummy value field.
+     */
+    @SuppressWarnings("unused")
     private int value;
     
     public ValueTypeModule() {

@@ -31,6 +31,10 @@ import ds2.oss.core.base.impl.EnumModule;
  */
 @Embeddable
 public class OptionStageModule extends EnumModule<OptionStage> {
+    /**
+     * Dummy value to map the enum module.
+     */
+    @SuppressWarnings("unused")
     private int value;
     
     /**
