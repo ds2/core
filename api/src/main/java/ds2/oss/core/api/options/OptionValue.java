@@ -16,6 +16,7 @@
 package ds2.oss.core.api.options;
 
 import ds2.oss.core.api.CreatedModifiedAware;
+import ds2.oss.core.api.LifeCycleAware;
 import ds2.oss.core.api.Persistable;
 
 /**
@@ -28,7 +29,7 @@ import ds2.oss.core.api.Persistable;
  * @param <V>
  *            the value type of this value
  */
-public interface OptionValue<E, V> extends Persistable<E>, CreatedModifiedAware, TimeRanged {
+public interface OptionValue<E, V> extends Persistable<E>, CreatedModifiedAware, LifeCycleAware {
     /**
      * Returns the name or identifier of the approver of this option value.
      * 

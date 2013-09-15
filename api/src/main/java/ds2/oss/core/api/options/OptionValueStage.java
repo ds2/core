@@ -23,7 +23,7 @@ package ds2.oss.core.api.options;
  */
 public enum OptionValueStage {
     /**
-     * The value is approved and may switch to LIVE state.
+     * The value is approved and may switch to LIVE state depending on its lifecycle.
      */
     Approved(2),
     /**
