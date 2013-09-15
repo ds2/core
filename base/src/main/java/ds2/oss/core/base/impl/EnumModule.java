@@ -100,8 +100,6 @@ public abstract class EnumModule<E extends Enum<E>> {
         final StringBuilder builder = new StringBuilder();
         builder.append("EnumModule (value=");
         builder.append(value);
-        builder.append(", conv=");
-        builder.append(conv);
         builder.append(", reflMethodName=");
         builder.append(reflMethodName);
         builder.append(")");

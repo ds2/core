@@ -89,11 +89,15 @@ public class NumericalEnumConverter<E extends Enum<E>> {
      * @return the enum value, or null if not found
      */
     public final E getEnumByReflection(final int i, final String methodName) {
+        LOG.debug("perform lookup of id {} via method {} in  {}", new Object[] { Integer.valueOf(i), methodName, c });
         E rc = null;
         try {
             rc = getByLookup(methodName, int.class, Integer.valueOf(i));
             if (rc == null) {
                 rc = getByLookup(methodName, long.class, Long.valueOf(i));
+            }
+            if (rc == null) {
+                LOG.warn("Method {} not defined in {}! Please verify lookup.", new Object[] { methodName, c });
             }
         } catch (final SecurityException | IllegalArgumentException e) {
             LOG.error("Error when looking up an enum value via reflection!", e);
@@ -133,8 +137,10 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         Method rc = null;
         try {
             rc = c.getDeclaredMethod(methodName, type);
-        } catch (final NoSuchMethodException | SecurityException e) {
+        } catch (final SecurityException e) {
             LOG.debug("Error when looking up a specific method!", e);
+        } catch (final NoSuchMethodException e) {
+            LOG.debug("Method {} not found, ignoring", new Object[] { methodName, type });
         }
         return rc;
     }

@@ -35,6 +35,7 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.it.MyOptions;
 
 /**
@@ -89,9 +90,19 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     }
     
     @Test(dependsOnMethods = "testPersist3")
-    public void testFindOption1() {
+    public void testFindOption1() throws MalformedURLException {
         Option<Long, URL> option = to.getOptionByIdentifier(ENDPOINT);
         Assert.assertNotNull(option);
+        Assert.assertEquals(option.getDefaultValue(), new URL("https://my.test.url/endpoint"));
+    }
+    
+    @Test(dependsOnMethods = "testPersist3")
+    public void testDeleteOption() {
+        Option<Long, URL> foundOption = to.getOptionByIdentifier(ENDPOINT);
+        Assert.assertEquals(foundOption.getStage(), OptionStage.Online);
+        to.setOptionStage(ENDPOINT, OptionStage.Deleted);
+        foundOption = to.getOptionByIdentifier(ENDPOINT);
+        Assert.assertEquals(foundOption.getStage(), OptionStage.Deleted);
     }
     
     public static void createFileUser(final String userName, final String userPassword, final String userGroups)

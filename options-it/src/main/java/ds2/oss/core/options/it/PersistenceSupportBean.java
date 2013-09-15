@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.OptionsPersistenceSupport;
 import ds2.oss.core.options.impl.AbstractOptionsPersistenceSupportBean;
 import ds2.oss.core.options.impl.dto.OptionDto;
@@ -59,6 +60,11 @@ public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBea
     public void persist(final OptionDto<Long, ?> t) {
         t.setModifierName(ctx.getCallerPrincipal().getName());
         performPersist(em, t);
+    }
+    
+    @Override
+    public <V> OptionDto<Long, V> setOptionStage(final OptionIdentifier<V> ident, final OptionStage newStage) {
+        return setOptionStage(em, ident, newStage);
     }
     
 }
