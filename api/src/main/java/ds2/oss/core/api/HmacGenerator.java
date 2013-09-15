@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 import javax.crypto.SecretKey;
@@ -28,9 +25,8 @@ import javax.crypto.SecretKey;
  */
 public interface HmacGenerator {
     /**
-     * Generates a hash value for the given bytes, using the given hash
-     * algorithm. The result will be a pseudo random sequence which is not equal
-     * anytime it may be invoked!
+     * Generates a hash value for the given bytes, using the given hash algorithm. The result will
+     * be a pseudo random sequence which is not equal anytime it may be invoked!
      * 
      * @param b
      *            the bytes to hash
@@ -41,8 +37,8 @@ public interface HmacGenerator {
     byte[] generate(byte[] b, HashAlgorithm g);
     
     /**
-     * Same as {@link #generate(byte[], HashAlgorithm)} but this time, the given
-     * key is used to generate the hash.
+     * Same as {@link #generate(byte[], HashAlgorithm)} but this time, the given key is used to
+     * generate the hash.
      * 
      * @param key
      *            the key to use
