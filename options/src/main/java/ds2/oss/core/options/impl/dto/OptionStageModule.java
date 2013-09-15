@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.impl.dto;
 
 import javax.persistence.Embeddable;
@@ -53,4 +50,5 @@ public class OptionStageModule extends EnumModule<OptionStage> {
     public void setValue(final OptionStage e) {
         super.setValue(e);
     }
+    
 }

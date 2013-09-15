@@ -20,9 +20,12 @@ package ds2.oss.core.options.impl.dto;
 
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +43,7 @@ import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
+import ds2.oss.core.options.internal.OptionStageConverter;
 
 /**
  * A database option.
@@ -61,6 +65,7 @@ import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 @NamedQueries({ @NamedQuery(
     name = NumberedOptionsPersistenceSupport.QUERY_FINDOPTIONBYIDENTIFIER,
     query = "select o from coreOption o where o.optionName = :optionName and o.applicationName = :appName") })
+@Access(AccessType.FIELD)
 public class OptionEntity implements Option<Long, Object> {
     
     /**
@@ -107,9 +112,9 @@ public class OptionEntity implements Option<Long, Object> {
     /**
      * The stage value.
      */
-    @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "stage")) })
-    private OptionStageModule stageVal = new OptionStageModule();
+    @Column(name = "stage", nullable = false)
+    @Convert(converter = OptionStageConverter.class)
+    private OptionStage stageVal;
     /**
      * The modifier username.
      */
@@ -121,6 +126,7 @@ public class OptionEntity implements Option<Long, Object> {
      */
     public OptionEntity() {
         cma = new CreatedModifiedAwareModule();
+        valueType = new ValueTypeModule();
     }
     
     @Override
@@ -170,7 +176,7 @@ public class OptionEntity implements Option<Long, Object> {
     
     @Override
     public OptionStage getStage() {
-        return stageVal.getValue();
+        return stageVal;
     }
     
     /**
@@ -180,7 +186,7 @@ public class OptionEntity implements Option<Long, Object> {
      *            the stage value
      */
     public void setStage(final OptionStage s) {
-        stageVal.setValue(s);
+        stageVal = s;
     }
     
     /**

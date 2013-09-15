@@ -165,4 +165,17 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         }
         return rc;
     }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("NumericalEnumConverter (c=");
+        builder.append(c);
+        builder.append(")");
+        return builder.toString();
+    }
 }

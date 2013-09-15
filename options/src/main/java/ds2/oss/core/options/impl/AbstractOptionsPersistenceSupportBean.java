@@ -115,6 +115,7 @@ public abstract class AbstractOptionsPersistenceSupportBean
         q.setParameter("appName", ident.getApplicationName());
         q.setMaxResults(1);
         final OptionEntity foundOption = getSecureSingle(q, OptionEntity.class);
+        LOG.debug("Found entity is {}", foundOption);
         return parser.toDto(foundOption, ident);
     }
     

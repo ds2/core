@@ -18,6 +18,8 @@
  */
 package ds2.oss.core.base.impl;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
@@ -31,11 +33,12 @@ import javax.persistence.Transient;
  *            the enum to wrap
  */
 @Embeddable
-public abstract class EnumModule<E extends Enum<E>> {
+@Access(AccessType.PROPERTY)
+public class EnumModule<E extends Enum<E>> {
     /**
      * The represented int value.
      */
-    @Column(name = "value")
+    @Transient
     private int value;
     /**
      * The converter to use.
@@ -45,6 +48,7 @@ public abstract class EnumModule<E extends Enum<E>> {
     /**
      * The method name to use for enum value lookup.
      */
+    @Transient
     private String reflMethodName = "getById";
     
     /**
@@ -55,7 +59,7 @@ public abstract class EnumModule<E extends Enum<E>> {
      * 
      */
     public EnumModule(final Class<E> c) {
-        conv = new NumericalEnumConverter<>(c);
+        setEnumClass(c);
     }
     
     /**
@@ -73,6 +77,24 @@ public abstract class EnumModule<E extends Enum<E>> {
     }
     
     /**
+     * Inits an empty non-resolvable enum module.
+     */
+    public EnumModule() {
+        // nothing special to do yet
+        super();
+    }
+    
+    /**
+     * Sets the enum class to use.
+     * 
+     * @param c
+     *            the enum class
+     */
+    public void setEnumClass(final Class<E> c) {
+        conv = new NumericalEnumConverter<>(c);
+    }
+    
+    /**
      * Sets the value.
      * 
      * @param e
@@ -87,7 +109,12 @@ public abstract class EnumModule<E extends Enum<E>> {
      * 
      * @return the enum value
      */
+    @Column(name = "value", nullable = false)
+    @Access(AccessType.PROPERTY)
     public E getValue() {
+        if (conv == null) {
+            throw new IllegalStateException("Converter has not been setup! Please check creation.");
+        }
         return conv.getEnumByReflection(value, reflMethodName);
     }
     

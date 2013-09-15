@@ -16,10 +16,10 @@
     limitations under the License.
 
 -->
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="
-        http://java.sun.com/xml/ns/persistence
-        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="corePU">
   	<description>the core persistence ctx</description>
   	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
@@ -29,6 +29,7 @@
     <class>ds2.oss.core.options.impl.dto.ValueTypeModule</class>
     <class>ds2.oss.core.base.impl.StateAwareModule</class>
     <class>ds2.oss.core.base.impl.CreatedModifiedAwareModule</class>
+    <class>ds2.oss.core.options.internal.OptionStageConverter</class>
     <properties>
       <property name="eclipselink.logging.parameters" value="true" />
       <property name="eclipselink.ddl-generation.output-mode" value="both"/>
