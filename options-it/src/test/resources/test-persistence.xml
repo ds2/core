@@ -27,6 +27,8 @@
     <class>ds2.oss.core.options.impl.dto.ValueTypeModule</class>
     <class>ds2.oss.core.base.impl.StateAwareModule</class>
     <class>ds2.oss.core.base.impl.CreatedModifiedAwareModule</class>
+    <class>ds2.oss.core.options.internal.OptionStageConverter</class>
+    <class>ds2.oss.core.options.internal.ValueTypeConverter</class>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
       <property name="eclipselink.logging.level.sql" value="FINE" />

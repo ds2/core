@@ -91,4 +91,17 @@ public interface OptionStorageService<E> {
      * @return A list of all known options.
      */
     List<Option<E, ?>> getAllOptions(String appName);
+    
+    /**
+     * Sets the stage of an option.
+     * 
+     * @param endpoint
+     *            the option identifier
+     * @param <V>
+     *            the value type of the option identifier
+     * @param deleted
+     *            the new stage
+     * @return the updated option
+     */
+    <V> Option<E, V> setOptionStage(OptionIdentifier<V> endpoint, OptionStage deleted);
 }

@@ -13,28 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api.options;
-
-import java.util.Date;
+package ds2.oss.core.api;
 
 /**
- * A contract for a time ranged value.
+ * A helper service to convert enums to ints, and vice versa.
  * 
  * @author dstrauss
  * @version 0.3
+ * @param <E>
+ *            the enum type
  */
-public interface TimeRanged {
+public interface EnumPersistenceSupport<E extends Enum<E>> {
     /**
-     * Returns the start date of the value.
+     * Converts the given enum value into an int value.
      * 
-     * @return the start date
+     * @param e
+     *            the enum value
+     * @return the int value
      */
-    Date validFrom();
+    int toInt(E e);
     
     /**
-     * Returns the stop date of the value.
+     * Converts a given int value into an enum value.
      * 
-     * @return the stop date
+     * @param e
+     *            the int value
+     * @return the enum value, or null if not found
      */
-    Date validTo();
+    E toValue(int e);
 }

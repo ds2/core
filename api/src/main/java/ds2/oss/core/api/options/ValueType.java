@@ -63,8 +63,19 @@ public enum ValueType implements NumericEnumValue {
         return id;
     }
     
-    public Class<?> getClassValue() {
-        // TODO Auto-generated method stub
+    /**
+     * id lookup.
+     * 
+     * @param i
+     *            the int id
+     * @return the value type, or null
+     */
+    public static ValueType getById(final int i) {
+        for (ValueType v : values()) {
+            if (v.id == i) {
+                return v;
+            }
+        }
         return null;
     }
 }

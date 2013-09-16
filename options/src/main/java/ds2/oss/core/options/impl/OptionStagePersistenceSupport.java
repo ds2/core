@@ -16,37 +16,25 @@
 /**
  * 
  */
-package ds2.oss.core.options.impl.dto;
-
-import javax.persistence.Embeddable;
+package ds2.oss.core.options.impl;
 
 import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.base.impl.EnumModule;
+import ds2.oss.core.base.impl.AbstractEnumPersistenceSupport;
 
 /**
- * The option stage module.
+ * The option stage persistence support.
  * 
  * @author dstrauss
  * @version 0.3
  */
-@Embeddable
-public class OptionStageModule extends EnumModule<OptionStage> {
-    private int value;
+public class OptionStagePersistenceSupport extends AbstractEnumPersistenceSupport<OptionStage> {
     
     /**
-     * Inits the module.
+     * Inits the support.
      */
-    public OptionStageModule() {
-        super(OptionStage.class);
+    public OptionStagePersistenceSupport() {
+        super();
+        fillLookup(OptionStage.values());
     }
     
-    @Override
-    public OptionStage getValue() {
-        return super.getValue();
-    }
-    
-    @Override
-    public void setValue(final OptionStage e) {
-        super.setValue(e);
-    }
 }

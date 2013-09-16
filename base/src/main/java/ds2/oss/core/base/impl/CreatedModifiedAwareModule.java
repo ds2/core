@@ -98,4 +98,19 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
         modified = new Date();
     }
     
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("CreatedModifiedAwareModule (created=");
+        builder.append(created);
+        builder.append(", modified=");
+        builder.append(modified);
+        builder.append(")");
+        return builder.toString();
+    }
+    
 }

@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.impl;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +23,13 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
@@ -47,6 +49,10 @@ import ds2.oss.core.options.impl.dto.OptionDto;
 public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServiceImpl<Long>
     implements
     NumberedOptionStorageService {
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The persistence support to use for options..
      */
@@ -68,6 +74,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Override
     public <V> Option<Long, V> getOptionByIdentifier(final OptionIdentifier<V> ident) {
         final OptionDto<Long, V> foundOption = numberedPersistenceSupport.findOptionByIdentifier(ident);
+        LOG.debug("Found this option: {}", foundOption);
         return foundOption;
     }
     
@@ -104,7 +111,6 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Override
     public List<Option<Long, ?>> getAllOptions(final String appName) {
-        // TODO Auto-generated method stub
         return null;
     }
     
@@ -113,6 +119,11 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, val);
         numberedPersistenceSupport.persist(option);
         return option;
+    }
+    
+    @Override
+    public <V> Option<Long, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage deleted) {
+        return numberedPersistenceSupport.setOptionStage(endpoint, deleted);
     }
     
 }

@@ -16,35 +16,38 @@
 /**
  * 
  */
-package ds2.oss.core.options.impl.dto;
+package ds2.oss.core.options.internal;
 
-import javax.persistence.Embeddable;
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
 import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.base.impl.EnumModule;
 
 /**
- * The value type module.
+ * A value type converter.
  * 
  * @author dstrauss
  * @version 0.3
  */
-@Embeddable
-public class ValueTypeModule extends EnumModule<ValueType> {
-    private int value;
+@Converter
+public class ValueTypeConverter implements AttributeConverter<ValueType, Integer> {
     
-    public ValueTypeModule() {
-        super(ValueType.class);
+    /*
+     * (non-Javadoc)
+     * @see javax.persistence.AttributeConverter#convertToDatabaseColumn(java.lang.Object)
+     */
+    @Override
+    public Integer convertToDatabaseColumn(final ValueType attribute) {
+        return Integer.valueOf(attribute.getNumericalValue());
     }
     
+    /*
+     * (non-Javadoc)
+     * @see javax.persistence.AttributeConverter#convertToEntityAttribute(java.lang.Object)
+     */
     @Override
-    public void setValue(final ValueType e) {
-        super.setValue(e);
-    }
-    
-    @Override
-    public ValueType getValue() {
-        return super.getValue();
+    public ValueType convertToEntityAttribute(final Integer dbData) {
+        return ValueType.getById(dbData.intValue());
     }
     
 }

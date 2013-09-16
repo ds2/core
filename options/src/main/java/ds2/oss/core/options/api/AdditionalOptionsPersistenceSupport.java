@@ -20,6 +20,7 @@ package ds2.oss.core.options.api;
 
 import ds2.oss.core.api.PersistenceSupport;
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
@@ -42,4 +43,17 @@ public interface AdditionalOptionsPersistenceSupport<K> extends PersistenceSuppo
      * @return the found option, or null
      */
     <V> OptionDto<K, V> findOptionByIdentifier(OptionIdentifier<V> ident);
+    
+    /**
+     * Sets a new option stage for a found option.
+     * 
+     * @param ident
+     *            the option identifier
+     * @param newStage
+     *            the new stage
+     * @param <V>
+     *            the value type of the option
+     * @return the updated option
+     */
+    <V> OptionDto<K, V> setOptionStage(OptionIdentifier<V> ident, OptionStage newStage);
 }

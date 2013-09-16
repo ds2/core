@@ -20,9 +20,10 @@ package ds2.oss.core.options.impl.dto;
 
 import java.util.Date;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,8 @@ import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
+import ds2.oss.core.options.internal.OptionStageConverter;
+import ds2.oss.core.options.internal.ValueTypeConverter;
 
 /**
  * A database option.
@@ -61,6 +64,7 @@ import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 @NamedQueries({ @NamedQuery(
     name = NumberedOptionsPersistenceSupport.QUERY_FINDOPTIONBYIDENTIFIER,
     query = "select o from coreOption o where o.optionName = :optionName and o.applicationName = :appName") })
+@Access(AccessType.FIELD)
 public class OptionEntity implements Option<Long, Object> {
     
     /**
@@ -91,9 +95,9 @@ public class OptionEntity implements Option<Long, Object> {
     /**
      * The value type.
      */
-    @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "value_type")) })
-    private ValueTypeModule valueType = new ValueTypeModule();
+    @Column(name = "value_type", nullable = false)
+    @Convert(converter = ValueTypeConverter.class)
+    private ValueType valueType;
     /**
      * The encrypted flag.
      */
@@ -107,9 +111,9 @@ public class OptionEntity implements Option<Long, Object> {
     /**
      * The stage value.
      */
-    @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "value", column = @Column(name = "stage")) })
-    private OptionStageModule stageVal = new OptionStageModule();
+    @Column(name = "stage", nullable = false)
+    @Convert(converter = OptionStageConverter.class)
+    private OptionStage stageVal;
     /**
      * The modifier username.
      */
@@ -140,7 +144,7 @@ public class OptionEntity implements Option<Long, Object> {
     
     @Override
     public ValueType getValueType() {
-        return valueType.getValue();
+        return valueType;
     }
     
     @Override
@@ -170,7 +174,7 @@ public class OptionEntity implements Option<Long, Object> {
     
     @Override
     public OptionStage getStage() {
-        return stageVal.getValue();
+        return stageVal;
     }
     
     /**
@@ -180,7 +184,7 @@ public class OptionEntity implements Option<Long, Object> {
      *            the stage value
      */
     public void setStage(final OptionStage s) {
-        stageVal.setValue(s);
+        stageVal = s;
     }
     
     /**
@@ -210,7 +214,7 @@ public class OptionEntity implements Option<Long, Object> {
      *            the valueType to set
      */
     public void setValueType(final ValueType valueType1) {
-        valueType.setValue(valueType1);
+        valueType = valueType1;
     }
     
     /**
