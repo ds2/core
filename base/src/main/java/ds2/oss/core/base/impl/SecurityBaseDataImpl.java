@@ -42,8 +42,9 @@ public class SecurityBaseDataImpl implements SecurityBaseData {
      * generated!
      */
     private byte[] salt;
-    
-    /**
+  private byte[] initVector;
+
+  /**
      * Inits the impl.
      */
     public SecurityBaseDataImpl() {
@@ -57,8 +58,13 @@ public class SecurityBaseDataImpl implements SecurityBaseData {
     public int getMinIteration() {
         return 1000;
     }
-    
-    @Override
+
+  @Override
+  public byte[] getInitVector() {
+    return initVector;
+  }
+
+  @Override
     public byte[] getSalt() {
         return salt;
     }

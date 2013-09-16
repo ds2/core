@@ -21,11 +21,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.invoke.MethodHandles;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.spec.InvalidParameterSpecException;
 
 /**
  * The encryption service.
@@ -41,13 +43,21 @@ public class EncryptionServiceImpl implements EncryptionService {
       Cipher c = cipher.getCipherInstance();
       c.init(Cipher.ENCRYPT_MODE, secretKey);
       rc = c.doFinal(src);
+      byte[] iv=c.getParameters().getParameterSpec(IvParameterSpec.class).getIV();
     } catch (NoSuchPaddingException e) {
+      LOG.error("Padding unknown!",e);
     } catch (NoSuchAlgorithmException e) {
+      LOG.error("Algorithm unknown!",e);
     } catch (InvalidKeyException e) {
+      LOG.error("Invalid key given to encrypt!",e);
     } catch (BadPaddingException e) {
+      LOG.error("Padding error!",e);
     } catch (IllegalBlockSizeException e) {
+      LOG.error("Given block size is invalid!",e);
     } catch (NoSuchProviderException e) {
-      e.printStackTrace();
+      LOG.error("Given provider is unknown!",e);
+    } catch (InvalidParameterSpecException e) {
+      LOG.error("Given encoding parameter is invalid!",e);
     }
     return rc;
   }

@@ -35,4 +35,10 @@ public interface SecurityBaseData {
      * @return the iteration count
      */
     int getMinIteration();
+
+  /**
+   * Returns the init vector bytes.
+   * @return the init vector bytes
+   */
+  byte[] getInitVector();
 }
