@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.base.impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.annotation.PostConstruct;
@@ -46,7 +47,10 @@ public class SecurityBaseDataImpl implements SecurityBaseData {
      * Inits the impl.
      */
     public SecurityBaseDataImpl() {
-        random = new SecureRandom();
+      try {
+        random = SecureRandom.getInstance("SHA1PRNG");
+      } catch (NoSuchAlgorithmException e) {
+      }
     }
     
     @Override

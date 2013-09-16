@@ -13,7 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Some contracts to deal with cryptographic data.
- */
 package ds2.oss.core.api.crypto;
+
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
+/**
+ * Created by dstrauss on 16.09.13.
+ */
+public enum Ciphers {
+  AES("AES/CBC/NoPadding");
+  private String instanceName;
+
+  private Ciphers(String name) {
+    instanceName = name;
+  }
+
+  public Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
+    return Cipher.getInstance(instanceName, "BC");
+  }
+}

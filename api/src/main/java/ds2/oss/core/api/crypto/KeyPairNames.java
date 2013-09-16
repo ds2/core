@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Some contracts to deal with cryptographic data.
- */
 package ds2.oss.core.api.crypto;
+
+/**
+ * Created by dstrauss on 16.09.13.
+ */
+public enum KeyPairNames {
+  RSA;
+}

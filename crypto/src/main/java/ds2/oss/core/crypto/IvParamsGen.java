@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package ds2.oss.core.crypto;
+
+import javax.crypto.spec.IvParameterSpec;
+
 /**
- * Some contracts to deal with cryptographic data.
+ * Created by dstrauss on 16.09.13.
  */
-package ds2.oss.core.api.crypto;
+public class IvParamsGen {
+  public IvParameterSpec generate(byte[] bytes){
+    return new IvParameterSpec(bytes);
+  }
+}

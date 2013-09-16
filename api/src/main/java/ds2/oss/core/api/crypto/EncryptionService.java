@@ -13,7 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Some contracts to deal with cryptographic data.
- */
 package ds2.oss.core.api.crypto;
+
+import javax.crypto.SecretKey;
+
+/**
+ * Encryption and decryption service.
+ */
+public interface EncryptionService {
+  byte[] encode(SecretKey secretKey, Ciphers cipher, byte[] src);
+  byte[] decode(SecretKey secretKey, Ciphers cipher, byte[] src);
+}
