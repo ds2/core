@@ -15,23 +15,50 @@
  */
 package ds2.oss.core.api.crypto;
 
-import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+
 /**
- * Created by dstrauss on 16.09.13.
+ * All supported ciphers.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public enum Ciphers {
-  AES("AES/CBC/NoPadding");
-  private String instanceName;
-
-  private Ciphers(String name) {
-    instanceName = name;
-  }
-
-  public Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-    return Cipher.getInstance(instanceName, "BC");
-  }
+    /**
+     * AES cipher.
+     */
+    AES("AES/CBC/NoPadding");
+    /**
+     * The instance name.
+     */
+    private String instanceName;
+    
+    /**
+     * Inits the cipher enum value.
+     * 
+     * @param name
+     *            the instance name
+     */
+    private Ciphers(final String name) {
+        instanceName = name;
+    }
+    
+    /**
+     * Returns an instance of this enum cipher value.
+     * 
+     * @return an instance
+     * @throws NoSuchPaddingException
+     *             if the padding used is unknown
+     * @throws NoSuchAlgorithmException
+     *             if the algorithm is unknown for this provider
+     * @throws NoSuchProviderException
+     *             if the provider is unknown
+     */
+    public Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
+        return Cipher.getInstance(instanceName, "BC");
+    }
 }

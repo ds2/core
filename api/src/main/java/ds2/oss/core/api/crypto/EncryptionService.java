@@ -19,8 +19,12 @@ import javax.crypto.SecretKey;
 
 /**
  * Encryption and decryption service.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public interface EncryptionService {
-  byte[] encode(SecretKey secretKey, Ciphers cipher, byte[] src);
-  byte[] decode(SecretKey secretKey, Ciphers cipher, byte[] src);
+    byte[] encode(SecretKey secretKey, Ciphers cipher, byte[] src);
+    
+    byte[] decode(SecretKey secretKey, Ciphers cipher, byte[] src);
 }

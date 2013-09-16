@@ -16,8 +16,14 @@
 package ds2.oss.core.api.crypto;
 
 /**
- * Created by dstrauss on 21.08.13.
+ * The known key generator names.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public enum KeyGeneratorNames {
-  AES;
+    /**
+     * AES.
+     */
+    AES;
 }

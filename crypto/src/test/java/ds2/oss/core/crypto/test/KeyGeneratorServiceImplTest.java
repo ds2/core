@@ -15,32 +15,41 @@
  */
 package ds2.oss.core.crypto.test;
 
-import ds2.oss.core.api.crypto.KeyGeneratorNames;
-import ds2.oss.core.api.crypto.KeyGeneratorService;
-import ds2.oss.core.crypto.KeyGeneratorServiceImpl;
+import javax.crypto.SecretKey;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.crypto.SecretKey;
+import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import ds2.oss.core.api.crypto.KeyGeneratorService;
 
 /**
- * Created by dstrauss on 21.08.13.
+ * Testcases for the AES keygen.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
-public class KeyGeneratorServiceImplTest {
-  private KeyGeneratorService to;
-  @BeforeClass
-  public void onClass(){
-    to=new KeyGeneratorServiceImpl();
-  }
-  @Test
-  public void testAes1(){
-    Assert.assertNotNull(to.generate(256, KeyGeneratorNames.AES));
-  }
-  @Test
-  public void testAesPw1(){
-    SecretKey key=to.generate("hello", KeyGeneratorNames.AES);
-    Assert.assertNotNull(key);
-    Assert.assertEquals(to.generate("hello", KeyGeneratorNames.AES),key);
-  }
+public class KeyGeneratorServiceImplTest extends AbstractInjectionEnvironment {
+    /**
+     * The service to test.
+     */
+    private KeyGeneratorService to;
+    
+    @BeforeClass
+    public void onClass() {
+        to = getInstance(KeyGeneratorService.class);
+    }
+    
+    @Test
+    public void testAes1() {
+        Assert.assertNotNull(to.generate(256, KeyGeneratorNames.AES));
+    }
+    
+    @Test
+    public void testAesPw1() {
+        SecretKey key = to.generate("hello", KeyGeneratorNames.AES);
+        Assert.assertNotNull(key);
+        Assert.assertEquals(to.generate("hello", KeyGeneratorNames.AES), key);
+    }
 }

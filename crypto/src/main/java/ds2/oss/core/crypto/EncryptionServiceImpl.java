@@ -15,68 +15,80 @@
  */
 package ds2.oss.core.crypto;
 
-import ds2.oss.core.api.crypto.Ciphers;
-import ds2.oss.core.api.crypto.EncryptionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.enterprise.context.ApplicationScoped;
 import java.lang.invoke.MethodHandles;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidParameterSpecException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.enterprise.context.ApplicationScoped;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.api.crypto.Ciphers;
+import ds2.oss.core.api.crypto.EncryptionService;
+
 /**
  * The encryption service.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 @ApplicationScoped
 public class EncryptionServiceImpl implements EncryptionService {
-  private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-  @Override
-  public byte[] encode(SecretKey secretKey, Ciphers cipher, byte[] src) {
-    byte[] rc = null;
-    try {
-      Cipher c = cipher.getCipherInstance();
-      c.init(Cipher.ENCRYPT_MODE, secretKey);
-      rc = c.doFinal(src);
-      byte[] iv=c.getParameters().getParameterSpec(IvParameterSpec.class).getIV();
-    } catch (NoSuchPaddingException e) {
-      LOG.error("Padding unknown!",e);
-    } catch (NoSuchAlgorithmException e) {
-      LOG.error("Algorithm unknown!",e);
-    } catch (InvalidKeyException e) {
-      LOG.error("Invalid key given to encrypt!",e);
-    } catch (BadPaddingException e) {
-      LOG.error("Padding error!",e);
-    } catch (IllegalBlockSizeException e) {
-      LOG.error("Given block size is invalid!",e);
-    } catch (NoSuchProviderException e) {
-      LOG.error("Given provider is unknown!",e);
-    } catch (InvalidParameterSpecException e) {
-      LOG.error("Given encoding parameter is invalid!",e);
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
+    @Override
+    public byte[] encode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
+        byte[] rc = null;
+        try {
+            final Cipher c = cipher.getCipherInstance();
+            c.init(Cipher.ENCRYPT_MODE, secretKey);
+            rc = c.doFinal(src);
+            final byte[] iv = c.getParameters().getParameterSpec(IvParameterSpec.class).getIV();
+        } catch (final NoSuchPaddingException e) {
+            LOG.error("Padding unknown!", e);
+        } catch (final NoSuchAlgorithmException e) {
+            LOG.error("Algorithm unknown!", e);
+        } catch (final InvalidKeyException e) {
+            LOG.error("Invalid key given to encrypt!", e);
+        } catch (final BadPaddingException e) {
+            LOG.error("Padding error!", e);
+        } catch (final IllegalBlockSizeException e) {
+            LOG.error("Given block size is invalid!", e);
+        } catch (final NoSuchProviderException e) {
+            LOG.error("Given provider is unknown!", e);
+        } catch (final InvalidParameterSpecException e) {
+            LOG.error("Given encoding parameter is invalid!", e);
+        }
+        return rc;
     }
-    return rc;
-  }
-
-  @Override
-  public byte[] decode(SecretKey secretKey, Ciphers cipher, byte[] src) {
-    byte[] rc = null;
-    try {
-      Cipher c = cipher.getCipherInstance();
-      c.init(Cipher.DECRYPT_MODE, secretKey);
-      rc = c.doFinal(src);
-    } catch (NoSuchPaddingException e) {
-    } catch (NoSuchAlgorithmException e) {
-    } catch (InvalidKeyException e) {
-    } catch (BadPaddingException e) {
-    } catch (IllegalBlockSizeException e) {
-    } catch (NoSuchProviderException e) {
-      e.printStackTrace();
+    
+    @Override
+    public byte[] decode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
+        byte[] rc = null;
+        try {
+            final Cipher c = cipher.getCipherInstance();
+            c.init(Cipher.DECRYPT_MODE, secretKey);
+            rc = c.doFinal(src);
+        } catch (final NoSuchPaddingException e) {
+        } catch (final NoSuchAlgorithmException e) {
+        } catch (final InvalidKeyException e) {
+        } catch (final BadPaddingException e) {
+        } catch (final IllegalBlockSizeException e) {
+        } catch (final NoSuchProviderException e) {
+            e.printStackTrace();
+        }
+        return rc;
     }
-    return rc;
-  }
 }

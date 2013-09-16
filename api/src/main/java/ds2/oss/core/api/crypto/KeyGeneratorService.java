@@ -19,26 +19,32 @@ import javax.crypto.SecretKey;
 
 /**
  * To generate some keys.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public interface KeyGeneratorService {
-  SecretKey generate(int length, KeyGeneratorNames name);
-
-  /**
-   * Generates a very plain secret key.
-   *
-   * @param pw   the password to use the bytes from
-   * @param name the key spec name to use
-   *
-   * @return the key, or null
-   */
-  SecretKey generate(String pw, KeyGeneratorNames name);
-
-  /**
-   * Generates an AES key.
-   *
-   * @param pw the password to use the bytes from
-   *
-   * @return the secret key
-   */
-  SecretKey generateSecure(String pw);
+    SecretKey generate(int length, KeyGeneratorNames name);
+    
+    /**
+     * Generates a very plain secret key.
+     * 
+     * @param pw
+     *            the password to use the bytes from
+     * @param name
+     *            the key spec name to use
+     * 
+     * @return the key, or null
+     */
+    SecretKey generate(String pw, KeyGeneratorNames name);
+    
+    /**
+     * Generates an AES key.
+     * 
+     * @param pw
+     *            the password to use the bytes from
+     * 
+     * @return the secret key
+     */
+    SecretKey generateSecure(String pw);
 }

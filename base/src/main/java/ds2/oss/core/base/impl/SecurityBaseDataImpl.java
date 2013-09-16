@@ -42,29 +42,32 @@ public class SecurityBaseDataImpl implements SecurityBaseData {
      * generated!
      */
     private byte[] salt;
-  private byte[] initVector;
-
-  /**
+    /**
+     * The init vector.
+     */
+    private byte[] initVector;
+    
+    /**
      * Inits the impl.
      */
     public SecurityBaseDataImpl() {
-      try {
-        random = SecureRandom.getInstance("SHA1PRNG");
-      } catch (NoSuchAlgorithmException e) {
-      }
+        try {
+            random = SecureRandom.getInstance("SHA1PRNG");
+        } catch (NoSuchAlgorithmException e) {
+        }
     }
     
     @Override
     public int getMinIteration() {
         return 1000;
     }
-
-  @Override
-  public byte[] getInitVector() {
-    return initVector;
-  }
-
-  @Override
+    
+    @Override
+    public byte[] getInitVector() {
+        return initVector;
+    }
+    
+    @Override
     public byte[] getSalt() {
         return salt;
     }

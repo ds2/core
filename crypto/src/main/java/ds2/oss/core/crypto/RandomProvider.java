@@ -1,17 +1,29 @@
 package ds2.oss.core.crypto;
 
-import javax.enterprise.inject.Produces;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.Random;
 
+import javax.enterprise.inject.Produces;
+
 /**
- * Created by dstrauss on 16.09.13.
+ * Simple provider for Random instances.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public class RandomProvider {
-  @Produces
-  @SecureRandomizer
-  public Random createRandom() throws NoSuchAlgorithmException {
-    Random rc= java.security.SecureRandom.getInstance("SHA1PRNG");
-    return rc;
-  }
+    @Produces
+    @SecureRandomizer
+    public Random createRandom() throws NoSuchAlgorithmException, NoSuchProviderException {
+        final Random rc = java.security.SecureRandom.getInstance("SHA1PRNG", "BC");
+        return rc;
+    }
+    
+    @Produces
+    @SecureRandomizer
+    public Random createSimpleRandom() throws NoSuchAlgorithmException {
+        final Random rc = new Random(System.currentTimeMillis());
+        return rc;
+    }
 }

@@ -16,8 +16,14 @@
 package ds2.oss.core.api.crypto;
 
 /**
- * Created by dstrauss on 16.09.13.
+ * The PKI names.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public enum KeyPairNames {
-  RSA;
+    /**
+     * RSA.
+     */
+    RSA;
 }
