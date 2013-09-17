@@ -31,7 +31,16 @@ public enum Ciphers {
     /**
      * AES cipher.
      */
-    AES("AES/CBC/NoPadding");
+    AES("AES/CBC/PKCS5Padding"),
+  /**
+   * Simple DES cipher.
+   */
+    DES("DES/CBC/PKCS5Padding"),
+  /**
+   * Triple DES cipher.
+   */
+  DESede("DESede/CBC/PKCS5Padding")
+  ;
     /**
      * The instance name.
      */
@@ -59,6 +68,9 @@ public enum Ciphers {
      *             if the provider is unknown
      */
     public Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-        return Cipher.getInstance(instanceName, "BC");
+        return Cipher.getInstance(instanceName);
     }
+  public Cipher getCipherInstance(String providerName) throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
+    return Cipher.getInstance(instanceName, providerName);
+  }
 }
