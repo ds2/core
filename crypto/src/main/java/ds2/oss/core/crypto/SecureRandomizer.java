@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
@@ -17,4 +18,8 @@ import javax.inject.Qualifier;
 @Target({ ElementType.FIELD, ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SecureRandomizer {
+  @Nonbinding
+  String providerName() default "";
+  @Nonbinding
+  String algorithm() default "SHA1PRNG";
 }
