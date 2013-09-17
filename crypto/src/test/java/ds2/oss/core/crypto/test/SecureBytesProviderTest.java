@@ -15,12 +15,17 @@
  */
 package ds2.oss.core.crypto.test;
 
+import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.crypto.BytesProvider;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.lang.invoke.MethodHandles;
+import java.math.BigInteger;
 import java.security.Security;
 
 /**
@@ -29,12 +34,15 @@ import java.security.Security;
  * @version 0.3
  */
 public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
+  private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   private BytesProvider to;
+  private HexCodec hex;
 
   @BeforeClass
   public void onClass(){
     Security.addProvider(new BouncyCastleProvider());
     to=getInstance(BytesProvider.class);
+    hex=getInstance(HexCodec.class);
   }
   @Test
   public void testCreateNegativeOr0(){
@@ -48,6 +56,8 @@ public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
   public void testCreate1(){
     byte[] bytes=to.createRandomByteArray(16);
     Assert.assertNotNull(bytes);
-    Assert.assertTrue(bytes.length==16);
+    Assert.assertTrue(bytes.length == 16);
+    String encodedChars=hex.encode(bytes);
+    LOG.info("Hex is {}",encodedChars);
   }
 }
