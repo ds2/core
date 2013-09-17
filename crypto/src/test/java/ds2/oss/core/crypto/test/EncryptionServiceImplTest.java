@@ -15,8 +15,35 @@
  */
 package ds2.oss.core.crypto.test;
 
+import ds2.oss.core.api.crypto.Ciphers;
+import ds2.oss.core.api.crypto.EncryptionService;
+import ds2.oss.core.api.crypto.KeyGeneratorService;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import javax.crypto.SecretKey;
+import java.io.UnsupportedEncodingException;
+import java.security.Security;
+
 /**
  * Created by dstrauss on 16.09.13.
  */
-public class EncryptionServiceImplTest {
+public class EncryptionServiceImplTest extends  AbstractInjectionEnvironment{
+  private EncryptionService to;
+  private KeyGeneratorService keygen;
+
+  @BeforeClass
+  public void onClass(){
+    Security.insertProviderAt(new BouncyCastleProvider(), 1);
+    to=getInstance(EncryptionService.class);
+    keygen=getInstance(KeyGeneratorService.class);
+  }
+  @Test
+  public void testEncrypt() throws UnsupportedEncodingException {
+    SecretKey sk=keygen.generateSecure("test");
+    byte[] enc=to.encode(sk, Ciphers.AES, "Hallo, Welt".getBytes("utf-8"));
+    Assert.assertNotNull(enc);
+  }
 }

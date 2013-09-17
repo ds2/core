@@ -60,4 +60,12 @@ public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
     String encodedChars=hex.encode(bytes);
     LOG.info("Hex is {}",encodedChars);
   }
+  @Test
+  public void testCreate2(){
+    byte[] bytes=to.createRandomByteArray(256);
+    Assert.assertNotNull(bytes);
+    Assert.assertTrue(bytes.length == 256);
+    String encodedChars=hex.encode(bytes);
+    LOG.info("Hex is {}",encodedChars);
+  }
 }

@@ -17,8 +17,10 @@ package ds2.oss.core.crypto;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Random;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -27,6 +29,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
+import ds2.oss.core.api.crypto.Ciphers;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,18 +54,23 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
      */
     @Inject
     private SecurityBaseData baseData;
+  @Inject
+  @SecureRandomizer
+  private Random random;
     
     @Override
     public SecretKey generate(final int length, final KeyGeneratorNames name) {
         SecretKey rc = null;
         try {
-            KeyGenerator kgInstance = KeyGenerator.getInstance(name.name(), new BouncyCastleProvider());
+            KeyGenerator kgInstance = KeyGenerator.getInstance(name.name(), "BC");
             kgInstance.init(length);
             rc = kgInstance.generateKey();
         } catch (NoSuchAlgorithmException e) {
             LOG.error("Given Algorithm is unknown!", e);
+        } catch (NoSuchProviderException e) {
+          LOG.error("Given provider is unknown!", e);
         }
-        return rc;
+      return rc;
     }
     
     @Override
@@ -84,15 +92,17 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         }
         SecretKey rc = null;
         try {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec keySpec = new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(), 256);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1","BC");
+            KeySpec keySpec = new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(), Ciphers.AES.getSuggestedKeyLength());
             SecretKey sk1 = factory.generateSecret(keySpec);
             rc = new SecretKeySpec(sk1.getEncoded(), "AES");
         } catch (InvalidKeySpecException e) {
             LOG.error("Invalid key spec!", e);
         } catch (NoSuchAlgorithmException e) {
             LOG.error("Strange algorithm!", e);
+        } catch (NoSuchProviderException e) {
+          LOG.error("Unkown provider!", e);
         }
-        return rc;
+      return rc;
     }
 }

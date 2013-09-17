@@ -19,7 +19,9 @@ import java.lang.invoke.MethodHandles;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidParameterSpecException;
+import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -28,6 +30,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,13 +50,17 @@ public class EncryptionServiceImpl implements EncryptionService {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
-    @Override
+  @Inject
+  @SecureRandomizer
+  private SecureRandom random;
+
+  @Override
     public byte[] encode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
         byte[] rc = null;
         try {
-            final Cipher c = cipher.getCipherInstance();
-            c.init(Cipher.ENCRYPT_MODE, secretKey);
+            final Cipher c = cipher.getCipherInstance("BC");
+          LOG.debug("Cipher {}, sk={}",new Object[]{c,secretKey});
+            c.init(Cipher.ENCRYPT_MODE, secretKey, random);
             rc = c.doFinal(src);
             final byte[] iv = c.getParameters().getParameterSpec(IvParameterSpec.class).getIV();
         } catch (final NoSuchPaddingException e) {

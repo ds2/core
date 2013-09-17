@@ -17,12 +17,15 @@ package ds2.oss.core.crypto.test;
 
 import javax.crypto.SecretKey;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
+
+import java.security.Security;
 
 /**
  * Testcases for the AES keygen.
@@ -38,6 +41,7 @@ public class KeyGeneratorServiceImplTest extends AbstractInjectionEnvironment {
     
     @BeforeClass
     public void onClass() {
+      Security.insertProviderAt(new BouncyCastleProvider(),1);
         to = getInstance(KeyGeneratorService.class);
     }
     

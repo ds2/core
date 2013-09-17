@@ -31,29 +31,31 @@ public enum Ciphers {
     /**
      * AES cipher.
      */
-    AES("AES/CBC/PKCS5Padding"),
+    AES("AES/CBC/PKCS5Padding",256),
   /**
    * Simple DES cipher.
    */
-    DES("DES/CBC/PKCS5Padding"),
+    DES("DES/CBC/PKCS5Padding",0),
   /**
    * Triple DES cipher.
    */
-  DESede("DESede/CBC/PKCS5Padding")
+  DESede("DESede/CBC/PKCS5Padding",0)
   ;
     /**
      * The instance name.
      */
     private String instanceName;
-    
-    /**
+  private int suggestedKeyLength;
+
+  /**
      * Inits the cipher enum value.
      * 
      * @param name
      *            the instance name
      */
-    private Ciphers(final String name) {
+    private Ciphers(final String name, int suggestedKeyLength) {
         instanceName = name;
+      this.suggestedKeyLength=suggestedKeyLength;
     }
     
     /**
@@ -72,5 +74,9 @@ public enum Ciphers {
     }
   public Cipher getCipherInstance(String providerName) throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
     return Cipher.getInstance(instanceName, providerName);
+  }
+
+  public int getSuggestedKeyLength() {
+    return suggestedKeyLength;
   }
 }
