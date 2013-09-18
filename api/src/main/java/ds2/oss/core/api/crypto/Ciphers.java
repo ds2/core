@@ -31,31 +31,35 @@ public enum Ciphers {
     /**
      * AES cipher.
      */
-    AES("AES/CBC/PKCS5Padding",256),
-  /**
-   * Simple DES cipher.
-   */
-    DES("DES/CBC/PKCS5Padding",0),
-  /**
-   * Triple DES cipher.
-   */
-  DESede("DESede/CBC/PKCS5Padding",0)
-  ;
+    AES("AES/CBC/PKCS5Padding", 256),
+    /**
+     * Simple DES cipher.
+     */
+    DES("DES/CBC/PKCS5Padding", 0),
+    /**
+     * Triple DES cipher.
+     */
+    DESede("DESede/CBC/PKCS5Padding", 0);
     /**
      * The instance name.
      */
     private String instanceName;
-  private int suggestedKeyLength;
-
-  /**
+    /**
+     * The suggested key length.
+     */
+    private int suggestedKeyLength;
+    
+    /**
      * Inits the cipher enum value.
      * 
      * @param name
      *            the instance name
+     * @param suggestedKeyLength
+     *            the suggested key length
      */
-    private Ciphers(final String name, int suggestedKeyLength) {
+    private Ciphers(final String name, final int suggestedKeyLength) {
         instanceName = name;
-      this.suggestedKeyLength=suggestedKeyLength;
+        this.suggestedKeyLength = suggestedKeyLength;
     }
     
     /**
@@ -72,11 +76,31 @@ public enum Ciphers {
     public Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
         return Cipher.getInstance(instanceName);
     }
-  public Cipher getCipherInstance(String providerName) throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-    return Cipher.getInstance(instanceName, providerName);
-  }
-
-  public int getSuggestedKeyLength() {
-    return suggestedKeyLength;
-  }
+    
+    /**
+     * Returns the cipher instance using the given provider.
+     * 
+     * @param providerName
+     *            the provider name
+     * @return the cipher instance
+     * @throws NoSuchPaddingException
+     *             if the padding is unknown
+     * @throws NoSuchAlgorithmException
+     *             if the algorithm is unknown
+     * @throws NoSuchProviderException
+     *             if the provider is unknown
+     */
+    public Cipher getCipherInstance(final String providerName) throws NoSuchPaddingException, NoSuchAlgorithmException,
+        NoSuchProviderException {
+        return Cipher.getInstance(instanceName, providerName);
+    }
+    
+    /**
+     * Returns the suggested key length for this cipher.
+     * 
+     * @return the suggested key length
+     */
+    public int getSuggestedKeyLength() {
+        return suggestedKeyLength;
+    }
 }
