@@ -16,10 +16,7 @@
 package ds2.oss.core.crypto;
 
 import java.lang.invoke.MethodHandles;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.spec.InvalidParameterSpecException;
 import java.util.Random;
 
@@ -32,6 +29,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import ds2.oss.core.api.SecurityBaseData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +51,8 @@ public class EncryptionServiceImpl implements EncryptionService {
   @Inject
   @SecureRandomizer
   private SecureRandom random;
+  @Inject
+  private SecurityBaseData baseData;
 
   @Override
     public byte[] encode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
@@ -60,9 +60,8 @@ public class EncryptionServiceImpl implements EncryptionService {
         try {
             final Cipher c = cipher.getCipherInstance("BC");
           LOG.debug("Cipher {}, sk={}",new Object[]{c,secretKey});
-            c.init(Cipher.ENCRYPT_MODE, secretKey, random);
+            c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(baseData.getInitVector()), random);
             rc = c.doFinal(src);
-            final byte[] iv = c.getParameters().getParameterSpec(IvParameterSpec.class).getIV();
         } catch (final NoSuchPaddingException e) {
             LOG.error("Padding unknown!", e);
         } catch (final NoSuchAlgorithmException e) {
@@ -75,27 +74,34 @@ public class EncryptionServiceImpl implements EncryptionService {
             LOG.error("Given block size is invalid!", e);
         } catch (final NoSuchProviderException e) {
             LOG.error("Given provider is unknown!", e);
-        } catch (final InvalidParameterSpecException e) {
-            LOG.error("Given encoding parameter is invalid!", e);
+        } catch (InvalidAlgorithmParameterException e) {
+          LOG.error("The parameter for this algorithm is invalid!", e);
         }
-        return rc;
+    return rc;
     }
     
     @Override
     public byte[] decode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
         byte[] rc = null;
         try {
-            final Cipher c = cipher.getCipherInstance();
-            c.init(Cipher.DECRYPT_MODE, secretKey);
+            final Cipher c = cipher.getCipherInstance("BC");
+            c.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(baseData.getInitVector()));
             rc = c.doFinal(src);
         } catch (final NoSuchPaddingException e) {
+          LOG.error("Padding unknown!",e);
         } catch (final NoSuchAlgorithmException e) {
+          LOG.error("Unknown Algorithm!",e);
         } catch (final InvalidKeyException e) {
+          LOG.error("Invalid key!",e);
         } catch (final BadPaddingException e) {
+          LOG.error("Bad padding!",e);
         } catch (final IllegalBlockSizeException e) {
+          LOG.error("Block size is invalid!",e);
         } catch (final NoSuchProviderException e) {
-            e.printStackTrace();
+          LOG.error("Given provider is unknown!",e);
+        } catch (InvalidAlgorithmParameterException e) {
+          LOG.error("The parameter for this algorithm is invalid!", e);
         }
-        return rc;
+      return rc;
     }
 }

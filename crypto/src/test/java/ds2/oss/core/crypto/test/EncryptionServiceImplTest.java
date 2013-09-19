@@ -33,6 +33,8 @@ import java.security.Security;
 public class EncryptionServiceImplTest extends  AbstractInjectionEnvironment{
   private EncryptionService to;
   private KeyGeneratorService keygen;
+  private byte[] encodedStuff;
+  private String msg="Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
 
   @BeforeClass
   public void onClass(){
@@ -43,7 +45,15 @@ public class EncryptionServiceImplTest extends  AbstractInjectionEnvironment{
   @Test
   public void testEncrypt() throws UnsupportedEncodingException {
     SecretKey sk=keygen.generateSecure("test");
-    byte[] enc=to.encode(sk, Ciphers.AES, "Hallo, Welt".getBytes("utf-8"));
-    Assert.assertNotNull(enc);
+    encodedStuff=to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
+    Assert.assertNotNull(encodedStuff);
+  }
+  @Test(dependsOnMethods = "testEncrypt")
+  public void testDecrypt() throws UnsupportedEncodingException {
+    SecretKey sk=keygen.generateSecure("test");
+    byte[] decoded=to.decode(sk,Ciphers.AES,encodedStuff);
+    Assert.assertNotNull(decoded);
+    String s=new String(decoded, "utf-8");
+    Assert.assertEquals(s, msg);
   }
 }
