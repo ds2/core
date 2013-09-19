@@ -15,12 +15,13 @@
  */
 package ds2.oss.core.base.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
+import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.Properties;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -82,4 +83,21 @@ public class IoServiceImpl implements IoService {
         }
         return rc;
     }
+
+  @Override
+  public String loadFile(Path file, Charset cs) {
+    String rc=null;
+    if(Files.isReadable(file)){
+      try {
+        List<String> lines=Files.readAllLines(file, cs);
+      } catch (IOException e) {
+      }
+    }
+    return rc;
+  }
+
+  @Override
+  public Properties loadProperties(Path file) {
+    return null;
+  }
 }

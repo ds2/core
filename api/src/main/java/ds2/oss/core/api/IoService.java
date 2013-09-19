@@ -15,6 +15,9 @@
  */
 package ds2.oss.core.api;
 
+import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.Properties;
 
 /**
@@ -43,4 +46,13 @@ public interface IoService {
      * @return the resource content, or null if not found or an error occurred
      */
     String loadResource(String resName);
+
+  /**
+   * Loads a file.
+   * @param file the file to load
+   * @return the content, or null if an error occurred
+   */
+  String loadFile(Path file, Charset cs);
+
+  Properties loadProperties(Path file);
 }
