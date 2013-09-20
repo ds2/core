@@ -16,11 +16,14 @@
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.PathLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
@@ -30,6 +33,10 @@ import java.util.Set;
  */
 @Alternative
 public class PathLocationProvider {
+  /**
+   * A logger.
+   */
+  private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   @Produces
   @PathLocation
   public Path createPath(InjectionPoint p) {
@@ -41,15 +48,18 @@ public class PathLocationProvider {
         String newLoc = null;
         if (pl.environment() != null) {
           newLoc = System.getenv(pl.environment());
+          LOG.debug("Environment found is {}",newLoc);
         }
         if (pl.property() != null) {
           newLoc = System.getProperty(pl.property());
+          LOG.debug("property value is {}",newLoc);
         }
         if (newLoc != null) {
           rc = Paths.get(newLoc);
         }
       }
     }
+    LOG.debug("returning found path {}",rc);
     return rc;
   }
 }

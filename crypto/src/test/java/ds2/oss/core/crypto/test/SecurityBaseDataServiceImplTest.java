@@ -17,10 +17,12 @@ package ds2.oss.core.crypto.test;
 
 import ds2.oss.core.api.SecurityBaseDataService;
 import ds2.oss.core.crypto.SecurityBaseDataServiceImpl;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -31,12 +33,12 @@ public class SecurityBaseDataServiceImplTest extends AbstractInjectionEnvironmen
   private SecurityBaseDataService to;
   @BeforeClass
   public void onClass(){
-    Path targetDummy= Paths.get("target","dummySec");
-    System.setProperty(SecurityBaseDataServiceImpl.SYS_PROPERTY,targetDummy.toString());
     to=getInstance(SecurityBaseDataService.class);
   }
   @Test
   public void testStoreData(){
-    //to.storeData(Charset.defaultCharset());
+    to.storeData(Charset.defaultCharset());
+    Path path=Paths.get("target","dummySec");
+    Assert.assertTrue(Files.exists(path.resolve("0xsalt.txt")));
   }
 }
