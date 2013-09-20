@@ -125,7 +125,6 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
     Path saltFile =storageLocation.resolve(SALT_FILENAME) ;
     Path ivFile = storageLocation.resolve(IV_FILENAME);
     Path propsF = storageLocation.resolve(PROPS_FILENAME);
-    Set<PosixFilePermission> permissions=PosixFilePermissions.fromString("rw-r-----");
     LOG.info("Writing security data to {}",storageLocation);
     Set<PosixFilePermission> perms =
         PosixFilePermissions.fromString("rwxr-x---");
@@ -133,10 +132,8 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         PosixFilePermissions.asFileAttribute(perms);
     try {
       Files.createDirectories(storageLocation,attr);
-      try (BufferedWriter bw=Files.newBufferedWriter(saltFile,cs, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
-        bw.write(hex.encode(salt));
-        Files.setPosixFilePermissions(saltFile, permissions);
-      }
+      io.writeFile(salt,saltFile,"rw-r-----");
+      io.writeFile(initVector,ivFile,"rw-r-----");
     }catch (IOException e) {
       LOG.error("Error when writing the salt file!",e);
     }

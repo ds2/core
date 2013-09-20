@@ -16,6 +16,7 @@
 package ds2.oss.core.api;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Properties;
@@ -55,4 +56,7 @@ public interface IoService {
   String loadFile(Path file, Charset cs);
 
   Properties loadProperties(Path file);
+  void writeFile(byte[] data, Path target, String permissionMask) throws IOException;
+  void writeFile(String data, Charset cs, Path target, String permissionMask) throws IOException;
+  void writeProperties(Properties props, Path target, String permissionMask) throws IOException;
 }

@@ -18,12 +18,12 @@ package ds2.oss.core.base.impl;
 import java.io.*;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
+import java.nio.file.*;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -108,5 +108,27 @@ public class IoServiceImpl implements IoService {
       LOG.debug("Error when reading the properties from file " + file, e);
     }
     return rc;
+  }
+
+  @Override
+  public void writeFile(byte[] data, Path target, String permissionMask) throws IOException {
+    try (OutputStream os=Files.newOutputStream(target,StandardOpenOption.CREATE, StandardOpenOption.WRITE)){
+      os.write(data);
+    }
+    if(permissionMask!=null){
+      Set<PosixFilePermission> perms =PosixFilePermissions.fromString(permissionMask);
+      Files.setPosixFilePermissions(target, perms);
+    }
+  }
+
+  @Override
+  public void writeFile(String data, Charset cs, Path target, String permissionMask) throws IOException {
+    byte[] bytes=data.getBytes(cs);
+    writeFile(bytes,target,permissionMask);
+  }
+
+  @Override
+  public void writeProperties(Properties props, Path target, String permissionMask) throws IOException {
+
   }
 }
