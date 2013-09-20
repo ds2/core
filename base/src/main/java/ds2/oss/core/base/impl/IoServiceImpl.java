@@ -105,7 +105,7 @@ public class IoServiceImpl implements IoService {
     try (InputStream is = Files.newInputStream(file)) {
       rc.load(is);
     } catch (IOException e) {
-      LOG.error("Error when reading the properties from file " + file, e);
+      LOG.debug("Error when reading the properties from file " + file, e);
     }
     return rc;
   }

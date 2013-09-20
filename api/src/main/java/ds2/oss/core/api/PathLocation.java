@@ -15,22 +15,23 @@
  */
 package ds2.oss.core.api;
 
-import java.nio.charset.Charset;
+import javax.enterprise.util.Nonbinding;
+import javax.inject.Qualifier;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.nio.file.Path;
 
 /**
- * A service to read a salt value and a IV from a specific file location, and provides this information
- * to the application server.
- * @author dstrauss
- * @version 0.3
+ * Used to dynamically inject a path.
  */
-public interface SecurityBaseDataService extends SecurityBaseData {
-  /**
-   * Creates new salt value, new init vector, resets iteration count.
-   */
-  void createData();
-
-  /**
-   * Stores the current value of the salt and init vector.
-   */
-  void storeData(Charset cs);
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+public @interface PathLocation {
+  @Nonbinding
+  String property() default "";
+  @Nonbinding
+  String environment() default "";
 }

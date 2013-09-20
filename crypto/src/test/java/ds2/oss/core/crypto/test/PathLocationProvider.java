@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
+package ds2.oss.core.crypto.test;
 
-import java.nio.charset.Charset;
+import ds2.oss.core.api.PathLocation;
+
+import javax.enterprise.inject.Produces;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
- * A service to read a salt value and a IV from a specific file location, and provides this information
- * to the application server.
- * @author dstrauss
- * @version 0.3
+ * Created by dstrauss on 20.09.13.
  */
-public interface SecurityBaseDataService extends SecurityBaseData {
-  /**
-   * Creates new salt value, new init vector, resets iteration count.
-   */
-  void createData();
-
-  /**
-   * Stores the current value of the salt and init vector.
-   */
-  void storeData(Charset cs);
+public class PathLocationProvider {
+  @Produces
+  @PathLocation
+  public Path createPath(){
+    return Paths.get("target","dummySec");
+  }
 }
