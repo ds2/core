@@ -15,6 +15,10 @@ import javax.inject.Inject;
 import java.io.File;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -41,19 +45,18 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
 
   @PostConstruct
   public void onLoad() {
-    String homeDir = System.getProperty("user.home") + File.separator + ".ds2AppSec";
-    String envHomeDir = System.getProperty("ds2.app.sec.home");
-    File homeDirF = new File(homeDir);
-    File location = homeDirF;
-    if (envHomeDir != null) {
-      location = new File(envHomeDir);
+    Path defaultLocation= Paths.get(System.getProperty("user.home"),".ds2AppSec");
+    Path envHomeDir=Paths.get(System.getProperty("ds2.app.sec.home"));
+    Path location=defaultLocation;
+    if (Files.exists(envHomeDir)) {
+      location = envHomeDir;
     }
     LOG.debug("Location to use is {}", location);
-    File saltFile = new File(location, "0xsalt.txt");
-    File ivFile = new File(location, "0xiv.txt");
-    File propsF = new File(location, "sec.properties");
-    String saltContent = io.loadFile(saltFile);
-    String ivContent = io.loadFile(ivFile);
+    Path saltFile =location.resolve("0xsalt.txt") ;
+    Path ivFile = location.resolve("0xiv.txt");
+    Path propsF = location.resolve("sec.properties");
+    String saltContent = io.loadFile(saltFile, Charset.defaultCharset());
+    String ivContent = io.loadFile(ivFile,Charset.defaultCharset());
     Properties props = io.loadProperties(propsF);
     LOG.debug("Salt is {}, iv is {}, props is {}", new Object[]{saltContent, ivContent, props});
     salt = hex.decode(saltContent.toCharArray());
