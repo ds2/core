@@ -217,9 +217,9 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         try {
             lock.lock();
             io.createDirectories(storageLocation, attr);
-            io.writeFile(salt, saltFile, "rw-r-----");
-            io.writeFile(initVector, ivFile, "rw-r-----");
-            io.writeFile(aesSecretKey.getEncoded(), aesF, "rw-------");
+            io.writeFile(hex.encode(salt), Charset.defaultCharset(), saltFile, "rw-r-----");
+            io.writeFile(hex.encode(initVector), Charset.defaultCharset(), ivFile, "rw-r-----");
+            io.writeFile(hex.encode(aesSecretKey.getEncoded()), Charset.defaultCharset(), aesF, "rw-------");
             final Properties props = new Properties();
             props.setProperty("iterations", "" + minIteration);
             io.writeProperties(props, propsF, "rwxr-x---");

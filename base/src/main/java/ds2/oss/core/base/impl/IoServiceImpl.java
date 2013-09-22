@@ -141,8 +141,14 @@ public class IoServiceImpl implements IoService {
     @Override
     public void writeFile(final String data, final Charset cs, final Path target, final String permissionMask)
         throws IOException {
-        final byte[] bytes = data.getBytes(cs);
-        writeFile(bytes, target, permissionMask);
+        try (BufferedWriter os =
+            Files.newBufferedWriter(target, cs, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+            os.write(data);
+        }
+        if ((permissionMask != null) && !isWindows()) {
+            final Set<PosixFilePermission> perms = PosixFilePermissions.fromString(permissionMask);
+            Files.setPosixFilePermissions(target, perms);
+        }
     }
     
     @Override
