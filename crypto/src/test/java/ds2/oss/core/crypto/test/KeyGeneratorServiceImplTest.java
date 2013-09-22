@@ -57,15 +57,24 @@ public class KeyGeneratorServiceImplTest extends AbstractInjectionEnvironment {
     
     @Test
     public void testAesPw1() {
-        SecretKey key = to.generate("hello", KeyGeneratorNames.AES);
+        final SecretKey key = to.generate("hello", KeyGeneratorNames.AES);
         Assert.assertNotNull(key);
         Assert.assertEquals(to.generate("hello", KeyGeneratorNames.AES), key);
     }
     
     @Test
     public void testAesPw2() {
-        SecretKey key = to.generateSecureAesKey("hello");
+        final SecretKey key = to.generateSecureAesKey("hello");
         Assert.assertNotNull(key);
         Assert.assertEquals(to.generateSecureAesKey("hello"), key);
+    }
+    
+    @Test
+    public void testAesStore1() {
+        final SecretKey key = to.generateAesKey();
+        Assert.assertNotNull(key);
+        final byte[] b = key.getEncoded();
+        final SecretKey sk2 = to.generateAesFromBytes(b);
+        Assert.assertEquals(sk2, key);
     }
 }
