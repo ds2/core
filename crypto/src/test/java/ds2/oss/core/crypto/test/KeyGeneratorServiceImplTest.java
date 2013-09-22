@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.crypto.test;
 
+import java.security.Security;
+
 import javax.crypto.SecretKey;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -24,8 +26,6 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
-
-import java.security.Security;
 
 /**
  * Testcases for the AES keygen.
@@ -41,7 +41,7 @@ public class KeyGeneratorServiceImplTest extends AbstractInjectionEnvironment {
     
     @BeforeClass
     public void onClass() {
-      Security.insertProviderAt(new BouncyCastleProvider(),1);
+        Security.insertProviderAt(new BouncyCastleProvider(), 1);
         to = getInstance(KeyGeneratorService.class);
     }
     
@@ -51,15 +51,21 @@ public class KeyGeneratorServiceImplTest extends AbstractInjectionEnvironment {
     }
     
     @Test
+    public void testAes2() {
+        Assert.assertNotNull(to.generateAesKey());
+    }
+    
+    @Test
     public void testAesPw1() {
         SecretKey key = to.generate("hello", KeyGeneratorNames.AES);
         Assert.assertNotNull(key);
         Assert.assertEquals(to.generate("hello", KeyGeneratorNames.AES), key);
     }
-  @Test
-  public void testAesPw2() {
-    SecretKey key = to.generateSecureAesKey("hello");
-    Assert.assertNotNull(key);
-    Assert.assertEquals(to.generateSecureAesKey("hello"), key);
-  }
+    
+    @Test
+    public void testAesPw2() {
+        SecretKey key = to.generateSecureAesKey("hello");
+        Assert.assertNotNull(key);
+        Assert.assertEquals(to.generateSecureAesKey("hello"), key);
+    }
 }

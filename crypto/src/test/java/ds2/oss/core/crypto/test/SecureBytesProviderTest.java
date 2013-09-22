@@ -15,8 +15,9 @@
  */
 package ds2.oss.core.crypto.test;
 
-import ds2.oss.core.api.HexCodec;
-import ds2.oss.core.api.crypto.BytesProvider;
+import java.lang.invoke.MethodHandles;
+import java.security.Security;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,48 +25,61 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.lang.invoke.MethodHandles;
-import java.math.BigInteger;
-import java.security.Security;
+import ds2.oss.core.api.HexCodec;
+import ds2.oss.core.api.crypto.BytesProvider;
 
 /**
  * Simple test for the secure bytes provider.
+ * 
  * @author dstrauss
  * @version 0.3
  */
 public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
-  private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-  private BytesProvider to;
-  private HexCodec hex;
-
-  @BeforeClass
-  public void onClass(){
-    Security.addProvider(new BouncyCastleProvider());
-    to=getInstance(BytesProvider.class);
-    hex=getInstance(HexCodec.class);
-  }
-  @Test
-  public void testCreateNegativeOr0(){
-    Assert.assertNull(to.createRandomByteArray(-1));
-  }
-  @Test
-  public void testCreate0(){
-    Assert.assertNull(to.createRandomByteArray(0));
-  }
-  @Test
-  public void testCreate1(){
-    byte[] bytes=to.createRandomByteArray(16);
-    Assert.assertNotNull(bytes);
-    Assert.assertTrue(bytes.length == 16);
-    String encodedChars=hex.encode(bytes);
-    LOG.info("Hex is {}",encodedChars);
-  }
-  @Test
-  public void testCreate2(){
-    byte[] bytes=to.createRandomByteArray(256);
-    Assert.assertNotNull(bytes);
-    Assert.assertTrue(bytes.length == 256);
-    String encodedChars=hex.encode(bytes);
-    LOG.info("Hex is {}",encodedChars);
-  }
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    /**
+     * The bytes provider.
+     */
+    private BytesProvider to;
+    /**
+     * The hex codec.
+     */
+    private HexCodec hex;
+    
+    @BeforeClass
+    public void onClass() {
+        Security.addProvider(new BouncyCastleProvider());
+        to = getInstance(BytesProvider.class);
+        hex = getInstance(HexCodec.class);
+    }
+    
+    @Test
+    public void testCreateNegativeOr0() {
+        Assert.assertNull(to.createRandomByteArray(-1));
+    }
+    
+    @Test
+    public void testCreate0() {
+        Assert.assertNull(to.createRandomByteArray(0));
+    }
+    
+    @Test
+    public void testCreate1() {
+        byte[] bytes = to.createRandomByteArray(16);
+        Assert.assertNotNull(bytes);
+        Assert.assertTrue(bytes.length == 16);
+        String encodedChars = hex.encode(bytes);
+        LOG.info("Hex is {}", encodedChars);
+    }
+    
+    @Test
+    public void testCreate2() {
+        byte[] bytes = to.createRandomByteArray(256);
+        Assert.assertNotNull(bytes);
+        Assert.assertTrue(bytes.length == 256);
+        String encodedChars = hex.encode(bytes);
+        LOG.info("Hex is {}", encodedChars);
+    }
 }

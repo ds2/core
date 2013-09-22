@@ -15,14 +15,15 @@
  */
 package ds2.oss.core.crypto.test;
 
+import java.lang.annotation.Annotation;
+import java.util.Set;
+
+import javax.enterprise.inject.spi.Bean;
+
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-
-import javax.enterprise.inject.spi.Bean;
-import java.lang.annotation.Annotation;
-import java.util.Set;
 
 /**
  * The injection env. Basically the same as the WeldWrapper.

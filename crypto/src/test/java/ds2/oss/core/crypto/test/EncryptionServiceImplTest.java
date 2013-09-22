@@ -78,10 +78,10 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
     
     @Test(dependsOnMethods = "testEncrypt")
     public void testDecrypt() throws UnsupportedEncodingException {
-        SecretKey sk = keygen.generateSecureAesKey("test");
-        byte[] decoded = to.decode(sk, Ciphers.AES, encodedStuff);
+        final SecretKey sk = keygen.generateSecureAesKey("test");
+        final byte[] decoded = to.decode(sk, Ciphers.AES, encodedStuff);
         Assert.assertNotNull(decoded);
-        String s = new String(decoded, "utf-8");
+        final String s = new String(decoded, "utf-8");
         Assert.assertEquals(s, msg);
     }
 }

@@ -15,30 +15,38 @@
  */
 package ds2.oss.core.crypto.test;
 
-import ds2.oss.core.api.SecurityBaseDataService;
-import ds2.oss.core.crypto.SecurityBaseDataServiceImpl;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import ds2.oss.core.api.SecurityBaseDataService;
+
 /**
- * Created by dstrauss on 20.09.13.
+ * Testcases for the security base data service.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public class SecurityBaseDataServiceImplTest extends AbstractInjectionEnvironment {
-  private SecurityBaseDataService to;
-  @BeforeClass
-  public void onClass(){
-    to=getInstance(SecurityBaseDataService.class);
-  }
-  @Test
-  public void testStoreData(){
-    to.storeData(Charset.defaultCharset());
-    Path path=Paths.get("target","dummySec");
-    Assert.assertTrue(Files.exists(path.resolve("0xsalt.txt")));
-  }
+    /**
+     * The test object.
+     */
+    private SecurityBaseDataService to;
+    
+    @BeforeClass
+    public void onClass() {
+        to = getInstance(SecurityBaseDataService.class);
+    }
+    
+    @Test
+    public void testStoreData() {
+        to.storeData(Charset.defaultCharset());
+        Path path = Paths.get("target", "dummySec");
+        Assert.assertTrue(Files.exists(path.resolve("0xsalt.txt")));
+    }
 }

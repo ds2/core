@@ -18,9 +18,9 @@ package ds2.oss.core.crypto;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.Random;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -58,14 +58,14 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
      */
     @Inject
     @SecureRandomizer
-    private Random random;
+    private SecureRandom random;
     
     @Override
     public SecretKey generate(final int length, final KeyGeneratorNames name) {
         SecretKey rc = null;
         try {
             final KeyGenerator kgInstance = KeyGenerator.getInstance(name.name(), "BC");
-            kgInstance.init(length);
+            kgInstance.init(length, random);
             rc = kgInstance.generateKey();
         } catch (final NoSuchAlgorithmException e) {
             LOG.error("Given Algorithm is unknown!", e);
@@ -108,5 +108,10 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
             LOG.error("Unkown provider!", e);
         }
         return rc;
+    }
+    
+    @Override
+    public SecretKey generateAesKey() {
+        return this.generate(256, KeyGeneratorNames.AES);
     }
 }

@@ -24,6 +24,15 @@ import javax.crypto.SecretKey;
  * @version 0.3
  */
 public interface KeyGeneratorService {
+    /**
+     * Creates a secret key.
+     * 
+     * @param length
+     *            the key size
+     * @param name
+     *            the algorithm to use
+     * @return the key, or null if an error occurred
+     */
     SecretKey generate(int length, KeyGeneratorNames name);
     
     /**
@@ -47,4 +56,11 @@ public interface KeyGeneratorService {
      * @return the secret key
      */
     SecretKey generateSecureAesKey(String pw);
+    
+    /**
+     * Generates an AES key.
+     * 
+     * @return the AES key to use
+     */
+    SecretKey generateAesKey();
 }

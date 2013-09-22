@@ -15,19 +15,23 @@
  */
 package ds2.oss.core.crypto.test;
 
-import ds2.oss.core.api.PathLocation;
-
-import javax.enterprise.inject.Produces;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.enterprise.inject.Produces;
+
+import ds2.oss.core.api.PathLocation;
+
 /**
- * Created by dstrauss on 20.09.13.
+ * Dummy provider for the sec path test.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public class PathLocationProvider {
-  @Produces
-  @PathLocation
-  public Path createPath(){
-    return Paths.get("target","dummySec");
-  }
+    @Produces
+    @PathLocation
+    public Path createPath() {
+        return Paths.get("target", "dummySec");
+    }
 }
