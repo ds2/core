@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.api;
 
+
 /**
  * Contract for sec base data.
  * 
@@ -35,10 +36,11 @@ public interface SecurityBaseData {
      * @return the iteration count
      */
     int getMinIteration();
-
-  /**
-   * Returns the init vector bytes.
-   * @return the init vector bytes
-   */
-  byte[] getInitVector();
+    
+    /**
+     * Returns the init vector bytes.
+     * 
+     * @return the init vector bytes
+     */
+    byte[] getInitVector();
 }

@@ -114,4 +114,9 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     public SecretKey generateAesKey() {
         return this.generate(256, KeyGeneratorNames.AES);
     }
+    
+    @Override
+    public SecretKey generateAesFromBytes(final byte[] encodedBytes) {
+        return new SecretKeySpec(encodedBytes, "AES");
+    }
 }

@@ -25,8 +25,11 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
@@ -40,6 +43,7 @@ import ds2.oss.core.api.IoService;
 import ds2.oss.core.api.PathLocation;
 import ds2.oss.core.api.SecurityBaseDataService;
 import ds2.oss.core.api.crypto.BytesProvider;
+import ds2.oss.core.api.crypto.KeyGeneratorService;
 
 /**
  * The impl.
@@ -67,9 +71,17 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
      */
     private static final String IV_FILENAME = "0xiv.txt";
     /**
+     * The filename containing the AES secret key data.
+     */
+    private static final String SK_FILENAME = "0xsk.txt";
+    /**
      * The properties filename.
      */
     private static final String PROPS_FILENAME = "sec.properties";
+    /**
+     * A simple lock.
+     */
+    private static Lock lock = new ReentrantLock();
     
     /**
      * The hex codec.
@@ -109,6 +121,15 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
     @Inject
     @PathLocation(property = SYS_PROPERTY, environment = "DS2_APPSEC_HOME")
     private Path storageLocation;
+    /**
+     * The AES secret key.
+     */
+    private SecretKey aesSecretKey;
+    /**
+     * The key generator service.
+     */
+    @Inject
+    private KeyGeneratorService kg;
     
     /**
      * Actions to perform on load.
@@ -124,6 +145,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         final Path propsF = storageLocation.resolve(PROPS_FILENAME);
         final String saltContent = io.loadFile(saltFile, Charset.defaultCharset());
         final String ivContent = io.loadFile(ivFile, Charset.defaultCharset());
+        final String skContent = io.loadFile(storageLocation.resolve(SK_FILENAME), Charset.defaultCharset());
         final Properties props = io.loadProperties(propsF);
         LOG.debug("Salt is {}, iv is {}, props is {}", new Object[] { saltContent, ivContent, props });
         if (saltContent != null) {
@@ -135,14 +157,23 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         if (props != null) {
             minIteration = conv.toInt(props.getProperty("iterations"), minIteration);
         }
-        if ((salt == null) || (initVector == null)) {
+        if (skContent != null) {
+            aesSecretKey = kg.generateAesFromBytes(hex.decode(skContent.toCharArray()));
+        }
+        
+        if ((salt == null) || (initVector == null) || (aesSecretKey == null)) {
             createData();
         }
     }
     
     @Override
     public byte[] getSalt() {
-        return salt;
+        try {
+            lock.lock();
+            return salt;
+        } finally {
+            lock.unlock();
+        }
     }
     
     @Override
@@ -152,15 +183,26 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
     
     @Override
     public byte[] getInitVector() {
-        return initVector;
+        try {
+            lock.lock();
+            return initVector;
+        } finally {
+            lock.unlock();
+        }
     }
     
     @Override
     public void createData() {
-        LOG.debug("Creating new salt, init vector etc.");
-        salt = bytes.createRandomByteArray(512);
-        initVector = bytes.createRandomByteArray(16);
-        minIteration = 65535;
+        try {
+            lock.lock();
+            LOG.debug("Creating new salt, init vector etc.");
+            salt = bytes.createRandomByteArray(512);
+            initVector = bytes.createRandomByteArray(16);
+            minIteration = 65535;
+        } finally {
+            lock.unlock();
+        }
+        aesSecretKey = kg.generateAesKey();
     }
     
     @Override
@@ -168,18 +210,23 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         final Path saltFile = storageLocation.resolve(SALT_FILENAME);
         final Path ivFile = storageLocation.resolve(IV_FILENAME);
         final Path propsF = storageLocation.resolve(PROPS_FILENAME);
+        final Path aesF = storageLocation.resolve(SK_FILENAME);
         LOG.info("Writing security data to {}", storageLocation);
         final Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr-x---");
         final FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
         try {
+            lock.lock();
             io.createDirectories(storageLocation, attr);
             io.writeFile(salt, saltFile, "rw-r-----");
             io.writeFile(initVector, ivFile, "rw-r-----");
+            io.writeFile(aesSecretKey.getEncoded(), aesF, "rw-------");
             final Properties props = new Properties();
             props.setProperty("iterations", "" + minIteration);
             io.writeProperties(props, propsF, "rwxr-x---");
         } catch (final IOException e) {
             LOG.error("Error when writing the salt file!", e);
+        } finally {
+            lock.unlock();
         }
     }
 }

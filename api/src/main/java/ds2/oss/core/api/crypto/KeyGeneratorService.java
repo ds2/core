@@ -63,4 +63,13 @@ public interface KeyGeneratorService {
      * @return the AES key to use
      */
     SecretKey generateAesKey();
+    
+    /**
+     * Generates an AES Secret key from a serialized version of a key.
+     * 
+     * @param encodedBytes
+     *            the encoded bytes of the key
+     * @return the key, or null in case of an error
+     */
+    SecretKey generateAesFromBytes(byte[] encodedBytes);
 }
