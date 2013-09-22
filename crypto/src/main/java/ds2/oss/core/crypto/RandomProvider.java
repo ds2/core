@@ -23,7 +23,6 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Set;
 
-import javax.crypto.SecretKeyFactory;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
@@ -36,20 +35,34 @@ import org.slf4j.LoggerFactory;
  * @author dstrauss
  * @version 0.3
  */
-public class RandomProvider {
+public final class RandomProvider {
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
+    /**
+     * Hide constructor.
+     */
+    private RandomProvider() {
+        // nothing to do
+    }
+    
+    /**
+     * Creates a secure randomizer.
+     * 
+     * @param p
+     *            the injection point
+     * @return a secure randomizer. Or null if an error occurred.
+     */
     @Produces
     @SecureRandomizer
-    public SecureRandom createSecureRandom(final InjectionPoint p) {
-        Set<Annotation> qualifiers = p.getQualifiers();
+    public static SecureRandom createSecureRandom(final InjectionPoint p) {
+        final Set<Annotation> qualifiers = p.getQualifiers();
         SecureRandom rc = null;
         for (Annotation a : qualifiers) {
             if (a instanceof SecureRandomizer) {
-                SecureRandomizer secureRandomizer = (SecureRandomizer) a;
+                final SecureRandomizer secureRandomizer = (SecureRandomizer) a;
                 try {
                     if (secureRandomizer.providerName().length() <= 0) {
                         rc = SecureRandom.getInstance(secureRandomizer.algorithm());
@@ -57,9 +70,9 @@ public class RandomProvider {
                         rc = SecureRandom.getInstance(secureRandomizer.algorithm(), secureRandomizer.providerName());
                     }
                     rc.setSeed(System.currentTimeMillis());
-                } catch (NoSuchAlgorithmException e) {
+                } catch (final NoSuchAlgorithmException e) {
                     LOG.error("Unknown algorithm!", e);
-                } catch (NoSuchProviderException e) {
+                } catch (final NoSuchProviderException e) {
                     LOG.error("Unknown provider!", e);
                 }
                 
@@ -71,15 +84,17 @@ public class RandomProvider {
         return rc;
     }
     
+    /**
+     * Creates a simple randomizer.
+     * 
+     * @return a simple randomizer
+     * @throws NoSuchAlgorithmException
+     *             if an error occurred
+     */
     @Produces
-    public Random createSimpleRandom() throws NoSuchAlgorithmException {
+    public static Random createSimpleRandom() throws NoSuchAlgorithmException {
         final Random rc = new Random(System.currentTimeMillis());
         return rc;
     }
     
-    @Produces
-    @SecretKeyFactoryInstance(algorithm = "PBKDF2WithHmacSHA1")
-    public SecretKeyFactory createSKF(final InjectionPoint p) {
-        return null;
-    }
 }

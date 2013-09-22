@@ -82,7 +82,7 @@ public class EncryptionServiceImpl implements EncryptionService {
             LOG.error("Given block size is invalid!", e);
         } catch (final NoSuchProviderException e) {
             LOG.error("Given provider is unknown!", e);
-        } catch (InvalidAlgorithmParameterException e) {
+        } catch (final InvalidAlgorithmParameterException e) {
             LOG.error("The parameter for this algorithm is invalid!", e);
         }
         return rc;
@@ -107,7 +107,7 @@ public class EncryptionServiceImpl implements EncryptionService {
             LOG.error("Block size is invalid!", e);
         } catch (final NoSuchProviderException e) {
             LOG.error("Given provider is unknown!", e);
-        } catch (InvalidAlgorithmParameterException e) {
+        } catch (final InvalidAlgorithmParameterException e) {
             LOG.error("The parameter for this algorithm is invalid!", e);
         }
         return rc;
