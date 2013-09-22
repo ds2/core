@@ -29,12 +29,11 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
-import ds2.oss.core.api.crypto.Ciphers;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.SecurityBaseData;
+import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
 
@@ -54,55 +53,60 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
      */
     @Inject
     private SecurityBaseData baseData;
-  @Inject
-  @SecureRandomizer
-  private Random random;
+    /**
+     * A randomizer.
+     */
+    @Inject
+    @SecureRandomizer
+    private Random random;
     
     @Override
     public SecretKey generate(final int length, final KeyGeneratorNames name) {
         SecretKey rc = null;
         try {
-            KeyGenerator kgInstance = KeyGenerator.getInstance(name.name(), "BC");
+            final KeyGenerator kgInstance = KeyGenerator.getInstance(name.name(), "BC");
             kgInstance.init(length);
             rc = kgInstance.generateKey();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             LOG.error("Given Algorithm is unknown!", e);
-        } catch (NoSuchProviderException e) {
-          LOG.error("Given provider is unknown!", e);
+        } catch (final NoSuchProviderException e) {
+            LOG.error("Given provider is unknown!", e);
         }
-      return rc;
+        return rc;
     }
     
     @Override
     public SecretKey generate(final String pw, final KeyGeneratorNames name) {
         SecretKey rc = null;
         try {
-            byte[] pwBytes = pw.getBytes("utf-8");
+            final byte[] pwBytes = pw.getBytes("utf-8");
             rc = new SecretKeySpec(pwBytes, name.name());
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             LOG.error("Unknown encoding!", e);
         }
         return rc;
     }
     
     @Override
-    public SecretKey generateSecure(final String pw) {
+    public SecretKey generateSecureAesKey(final String pw) {
         if (pw == null) {
             throw new IllegalArgumentException("No password given to use!");
         }
         SecretKey rc = null;
         try {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1","BC");
-            KeySpec keySpec = new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(), Ciphers.AES.getSuggestedKeyLength());
-            SecretKey sk1 = factory.generateSecret(keySpec);
+            final SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", "BC");
+            final KeySpec keySpec =
+                new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(),
+                    Ciphers.AES.getSuggestedKeyLength());
+            final SecretKey sk1 = factory.generateSecret(keySpec);
             rc = new SecretKeySpec(sk1.getEncoded(), "AES");
-        } catch (InvalidKeySpecException e) {
+        } catch (final InvalidKeySpecException e) {
             LOG.error("Invalid key spec!", e);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             LOG.error("Strange algorithm!", e);
-        } catch (NoSuchProviderException e) {
-          LOG.error("Unkown provider!", e);
+        } catch (final NoSuchProviderException e) {
+            LOG.error("Unkown provider!", e);
         }
-      return rc;
+        return rc;
     }
 }

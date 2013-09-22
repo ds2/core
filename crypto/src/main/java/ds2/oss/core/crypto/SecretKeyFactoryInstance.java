@@ -15,22 +15,27 @@
  */
 package ds2.oss.core.crypto;
 
-import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.util.Nonbinding;
+import javax.inject.Qualifier;
+
 /**
- * Created by dstrauss on 17.09.13.
+ * Marker for secret key factory instance.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 @Qualifier
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SecretKeyFactoryInstance {
-  @Nonbinding
-  String algorithm();
-  @Nonbinding
-  String provider() default "";
+    @Nonbinding
+    String algorithm();
+    
+    @Nonbinding
+    String provider() default "";
 }

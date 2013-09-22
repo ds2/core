@@ -16,8 +16,20 @@
 package ds2.oss.core.api;
 
 /**
- * Created by dstrauss on 19.09.13.
+ * A basic and simple converter tool.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 public interface ConverterTool {
-  int toInt(Object o, int defValue);
+    /**
+     * Converts a given object into int.
+     * 
+     * @param o
+     *            the object
+     * @param defValue
+     *            the default value, if the conversion failed
+     * @return the found value, or the default value
+     */
+    int toInt(Object o, int defValue);
 }

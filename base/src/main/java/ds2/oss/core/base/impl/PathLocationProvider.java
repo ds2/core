@@ -15,51 +15,64 @@
  */
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.PathLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.api.PathLocation;
+
 /**
- * Created by dstrauss on 20.09.13.
+ * The path location provider.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 @Alternative
 public class PathLocationProvider {
-  /**
-   * A logger.
-   */
-  private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-  @Produces
-  @PathLocation
-  public Path createPath(InjectionPoint p) {
-    Path rc = null;
-    Set<Annotation> annotations = p.getQualifiers();
-    for (Annotation a : annotations) {
-      if (a instanceof PathLocation) {
-        PathLocation pl = (PathLocation) a;
-        String newLoc = null;
-        if (pl.environment() != null) {
-          newLoc = System.getenv(pl.environment());
-          LOG.debug("Environment found is {}",newLoc);
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
+    /**
+     * Produces the path object.
+     * 
+     * @param p
+     *            the injection point
+     * @return the path, or null if not found
+     */
+    @Produces
+    @PathLocation
+    public Path createPath(final InjectionPoint p) {
+        Path rc = null;
+        final Set<Annotation> annotations = p.getQualifiers();
+        for (Annotation a : annotations) {
+            if (a instanceof PathLocation) {
+                final PathLocation pl = (PathLocation) a;
+                String newLoc = null;
+                if (pl.environment() != null) {
+                    newLoc = System.getenv(pl.environment());
+                    LOG.debug("Environment found is {}", newLoc);
+                }
+                if (pl.property() != null) {
+                    newLoc = System.getProperty(pl.property());
+                    LOG.debug("property value is {}", newLoc);
+                }
+                if (newLoc != null) {
+                    rc = Paths.get(newLoc);
+                }
+            }
         }
-        if (pl.property() != null) {
-          newLoc = System.getProperty(pl.property());
-          LOG.debug("property value is {}",newLoc);
-        }
-        if (newLoc != null) {
-          rc = Paths.get(newLoc);
-        }
-      }
+        LOG.debug("returning found path {}", rc);
+        return rc;
     }
-    LOG.debug("returning found path {}",rc);
-    return rc;
-  }
 }

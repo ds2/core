@@ -15,29 +15,37 @@
  */
 package ds2.oss.core.crypto;
 
-import ds2.oss.core.api.crypto.BytesProvider;
+import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
-import java.util.Random;
+
+import ds2.oss.core.api.crypto.BytesProvider;
 
 /**
- * Created by dstrauss on 17.09.13.
+ * Implementation for some random bytes.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 @Alternative
 @ApplicationScoped
-public class SecureBytesProvider implements BytesProvider{
-  @Inject
-  @SecureRandomizer
-  private Random zufall;
-  @Override
-  public byte[] createRandomByteArray(int size) {
-    if(size<=0){
-      return null;
+public class SecureBytesProvider implements BytesProvider {
+    /**
+     * The randomizer.
+     */
+    @Inject
+    @SecureRandomizer
+    private Random zufall;
+    
+    @Override
+    public byte[] createRandomByteArray(final int size) {
+        if (size <= 0) {
+            return null;
+        }
+        final byte[] rc = new byte[size];
+        zufall.nextBytes(rc);
+        return rc;
     }
-    byte[] rc=new byte[size];
-    zufall.nextBytes(rc);
-    return rc;
-  }
 }

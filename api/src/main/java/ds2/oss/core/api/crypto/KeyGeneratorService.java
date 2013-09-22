@@ -46,5 +46,5 @@ public interface KeyGeneratorService {
      * 
      * @return the secret key
      */
-    SecretKey generateSecure(String pw);
+    SecretKey generateSecureAesKey(String pw);
 }

@@ -18,19 +18,23 @@ package ds2.oss.core.api;
 import java.nio.charset.Charset;
 
 /**
- * A service to read a salt value and a IV from a specific file location, and provides this information
- * to the application server.
+ * A service to read a salt value and a IV from a specific file location, and provides this
+ * information to the application server.
+ * 
  * @author dstrauss
  * @version 0.3
  */
 public interface SecurityBaseDataService extends SecurityBaseData {
-  /**
-   * Creates new salt value, new init vector, resets iteration count.
-   */
-  void createData();
-
-  /**
-   * Stores the current value of the salt and init vector.
-   */
-  void storeData(Charset cs);
+    /**
+     * Creates new salt value, new init vector, resets iteration count.
+     */
+    void createData();
+    
+    /**
+     * Stores the current value of the salt and init vector.
+     * 
+     * @param cs
+     *            the charset to use
+     */
+    void storeData(Charset cs);
 }

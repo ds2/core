@@ -15,45 +15,73 @@
  */
 package ds2.oss.core.crypto.test;
 
-import ds2.oss.core.api.crypto.Ciphers;
-import ds2.oss.core.api.crypto.EncryptionService;
-import ds2.oss.core.api.crypto.KeyGeneratorService;
+import java.io.UnsupportedEncodingException;
+import java.security.Security;
+
+import javax.crypto.SecretKey;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.crypto.SecretKey;
-import java.io.UnsupportedEncodingException;
-import java.security.Security;
+import ds2.oss.core.api.crypto.Ciphers;
+import ds2.oss.core.api.crypto.EncryptionService;
+import ds2.oss.core.api.crypto.KeyGeneratorService;
 
 /**
- * Created by dstrauss on 16.09.13.
+ * The encryption service test.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
-public class EncryptionServiceImplTest extends  AbstractInjectionEnvironment{
-  private EncryptionService to;
-  private KeyGeneratorService keygen;
-  private byte[] encodedStuff;
-  private String msg="Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
-
-  @BeforeClass
-  public void onClass(){
-    Security.insertProviderAt(new BouncyCastleProvider(), 1);
-    to=getInstance(EncryptionService.class);
-    keygen=getInstance(KeyGeneratorService.class);
-  }
-  @Test
-  public void testEncrypt() throws UnsupportedEncodingException {
-    SecretKey sk=keygen.generateSecure("test");
-    encodedStuff=to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
-    Assert.assertNotNull(encodedStuff);
-  }
-  @Test(dependsOnMethods = "testEncrypt")
-  public void testDecrypt() throws UnsupportedEncodingException {
-    SecretKey sk=keygen.generateSecure("test");
-    byte[] decoded=to.decode(sk,Ciphers.AES,encodedStuff);
-    Assert.assertNotNull(decoded);
-    String s=new String(decoded, "utf-8");
-    Assert.assertEquals(s, msg);
-  }
+public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
+    /**
+     * The test object.
+     */
+    private EncryptionService to;
+    /**
+     * A key generator.
+     */
+    private KeyGeneratorService keygen;
+    /**
+     * The encoded bytes.
+     */
+    private byte[] encodedStuff;
+    /**
+     * The message to encode.
+     */
+    private String msg = "Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
+    
+    /**
+     * Actions to perform at start.
+     */
+    @BeforeClass
+    public void onClass() {
+        Security.insertProviderAt(new BouncyCastleProvider(), 1);
+        to = getInstance(EncryptionService.class);
+        keygen = getInstance(KeyGeneratorService.class);
+    }
+    
+    /**
+     * Encryption test.
+     * 
+     * @throws UnsupportedEncodingException
+     *             if an error occurred
+     */
+    @Test
+    public void testEncrypt() throws UnsupportedEncodingException {
+        final SecretKey sk = keygen.generateSecureAesKey("test");
+        encodedStuff = to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
+        Assert.assertNotNull(encodedStuff);
+    }
+    
+    @Test(dependsOnMethods = "testEncrypt")
+    public void testDecrypt() throws UnsupportedEncodingException {
+        SecretKey sk = keygen.generateSecureAesKey("test");
+        byte[] decoded = to.decode(sk, Ciphers.AES, encodedStuff);
+        Assert.assertNotNull(decoded);
+        String s = new String(decoded, "utf-8");
+        Assert.assertEquals(s, msg);
+    }
 }

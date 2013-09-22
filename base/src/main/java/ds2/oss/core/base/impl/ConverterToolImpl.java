@@ -15,26 +15,29 @@
  */
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.ConverterTool;
-
 import javax.enterprise.context.ApplicationScoped;
 
+import ds2.oss.core.api.ConverterTool;
+
 /**
- * Created by dstrauss on 19.09.13.
+ * Implemenation of the converter.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 @ApplicationScoped
-public class ConverterToolImpl implements ConverterTool{
-  @Override
-  public int toInt(Object o, int defValue) {
-    int rc=defValue;
-    if(o!=null){
-      if(o instanceof Number){
-        Number number= (Number) o;
-        rc=number.intValue();
-      } else if(o instanceof String){
-        rc=Integer.parseInt(o.toString());
-      }
+public class ConverterToolImpl implements ConverterTool {
+    @Override
+    public int toInt(final Object o, final int defValue) {
+        int rc = defValue;
+        if (o != null) {
+            if (o instanceof Number) {
+                final Number number = (Number) o;
+                rc = number.intValue();
+            } else if (o instanceof String) {
+                rc = Integer.parseInt(o.toString());
+            }
+        }
+        return rc;
     }
-    return rc;
-  }
 }
