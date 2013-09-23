@@ -3,6 +3,8 @@
  */
 package ds2.oss.core.crypto;
 
+import java.util.Arrays;
+
 import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
@@ -39,6 +41,23 @@ public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedC
      */
     public void setInitVector(final byte[] iv) {
         initVector = iv;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final int maxLen = 16;
+        final StringBuilder builder = new StringBuilder();
+        builder.append("IvEncodedContentDto (initVector=");
+        builder.append(initVector != null ? Arrays.toString(Arrays.copyOf(initVector,
+            Math.min(initVector.length, maxLen))) : null);
+        builder.append(", toString()=");
+        builder.append(super.toString());
+        builder.append(")");
+        return builder.toString();
     }
     
 }
