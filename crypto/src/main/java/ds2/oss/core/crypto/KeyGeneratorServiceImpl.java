@@ -16,8 +16,6 @@
 package ds2.oss.core.crypto;
 
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -59,19 +57,18 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     @Inject
     @SecureRandomizer
     private SecureRandom random;
+    /**
+     * The security instance provider.
+     */
+    @Inject
+    private SecurityInstanceProvider secProv;
     
     @Override
     public SecretKey generate(final int length, final KeyGeneratorNames name) {
         SecretKey rc = null;
-        try {
-            final KeyGenerator kgInstance = KeyGenerator.getInstance(name.name(), "BC");
-            kgInstance.init(length, random);
-            rc = kgInstance.generateKey();
-        } catch (final NoSuchAlgorithmException e) {
-            LOG.error("Given Algorithm is unknown!", e);
-        } catch (final NoSuchProviderException e) {
-            LOG.error("Given provider is unknown!", e);
-        }
+        final KeyGenerator kgInstance = secProv.createKeyGenerator(name);
+        kgInstance.init(length, random);
+        rc = kgInstance.generateKey();
         return rc;
     }
     
@@ -94,7 +91,7 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         }
         SecretKey rc = null;
         try {
-            final SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", "BC");
+            final SecretKeyFactory factory = secProv.createSecretKeyFactoryInstance("PBKDF2WithHmacSHA1");
             final KeySpec keySpec =
                 new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(),
                     Ciphers.AES.getSuggestedKeyLength());
@@ -102,10 +99,6 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
             rc = new SecretKeySpec(sk1.getEncoded(), "AES");
         } catch (final InvalidKeySpecException e) {
             LOG.error("Invalid key spec!", e);
-        } catch (final NoSuchAlgorithmException e) {
-            LOG.error("Strange algorithm!", e);
-        } catch (final NoSuchProviderException e) {
-            LOG.error("Unkown provider!", e);
         }
         return rc;
     }

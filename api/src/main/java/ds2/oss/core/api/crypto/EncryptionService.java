@@ -24,7 +24,29 @@ import javax.crypto.SecretKey;
  * @version 0.3
  */
 public interface EncryptionService {
-    byte[] encode(SecretKey secretKey, Ciphers cipher, byte[] src);
+    /**
+     * Encodes a given byte sequence.
+     * 
+     * @param secretKey
+     *            the secret key to use
+     * @param cipher
+     *            the cipher to use
+     * @param src
+     *            the bytes to encode
+     * @return the encoded object
+     */
+    EncodedContent encode(SecretKey secretKey, Ciphers cipher, byte[] src);
     
-    byte[] decode(SecretKey secretKey, Ciphers cipher, byte[] src);
+    /**
+     * Decodes a given encoded content.
+     * 
+     * @param secretKey
+     *            the secret key to decode
+     * @param cipher
+     *            the cipher
+     * @param src
+     *            the encoded content
+     * @return the decoded bytes, or null if an error occurred
+     */
+    byte[] decode(SecretKey secretKey, Ciphers cipher, EncodedContent src);
 }

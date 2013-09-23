@@ -21,5 +21,6 @@
     <alternatives>
         <class>ds2.oss.core.crypto.SecureBytesProvider</class>
         <class>ds2.oss.core.crypto.SecurityBaseDataServiceImpl</class>
+        <class>ds2.oss.core.crypto.BouncyCastleSecurityProvider</class>
     </alternatives>
 </beans>

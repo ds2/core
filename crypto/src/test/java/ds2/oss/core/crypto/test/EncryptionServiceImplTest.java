@@ -26,6 +26,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.crypto.Ciphers;
+import ds2.oss.core.api.crypto.EncodedContent;
 import ds2.oss.core.api.crypto.EncryptionService;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
 
@@ -47,7 +48,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
     /**
      * The encoded bytes.
      */
-    private byte[] encodedStuff;
+    private EncodedContent encodedStuff;
     /**
      * The message to encode.
      */
@@ -76,6 +77,12 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(encodedStuff);
     }
     
+    /**
+     * Decode test.
+     * 
+     * @throws UnsupportedEncodingException
+     *             if the encoding is unknown
+     */
     @Test(dependsOnMethods = "testEncrypt")
     public void testDecrypt() throws UnsupportedEncodingException {
         final SecretKey sk = keygen.generateSecureAesKey("test");
