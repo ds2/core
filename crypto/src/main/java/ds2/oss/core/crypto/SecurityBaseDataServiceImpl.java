@@ -29,6 +29,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.crypto.SecretKey;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
@@ -207,5 +208,13 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         } finally {
             lock.unlock();
         }
+    }
+    
+    /**
+     * Store the data on exit.
+     */
+    @PreDestroy
+    public void onExit() {
+        storeData(Charset.defaultCharset());
     }
 }
