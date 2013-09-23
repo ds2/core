@@ -13,34 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
-
+package ds2.oss.core.api.crypto;
 
 /**
- * Contract for sec base data.
- * 
+ * A bytes provider.
  * @author dstrauss
- * @version 0.2
+ * @version 0.3
  */
-public interface SecurityBaseData {
-    /**
-     * Returns the salt to use.
-     * 
-     * @return the salt value
-     */
-    byte[] getSalt();
-    
-    /**
-     * Returns the minimum number of iterations to use to create a hash value.
-     * 
-     * @return the iteration count
-     */
-    int getMinIteration();
-    
-    /**
-     * Returns the init vector bytes.
-     * 
-     * @return the init vector bytes
-     */
-    byte[] getInitVector();
+public interface BytesProvider {
+  byte[] createRandomByteArray(int size);
 }

@@ -13,34 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
+package ds2.oss.core.api.crypto;
 
+import java.io.Serializable;
 
 /**
- * Contract for sec base data.
+ * A DTO contract for an object having an encoded content.
  * 
  * @author dstrauss
- * @version 0.2
+ * @version 0.3
  */
-public interface SecurityBaseData {
+public interface EncodedContent extends Serializable {
     /**
-     * Returns the salt to use.
+     * Returns the encoded bytes of the content.
      * 
-     * @return the salt value
+     * @return the encoded content, or null if not set
      */
-    byte[] getSalt();
-    
-    /**
-     * Returns the minimum number of iterations to use to create a hash value.
-     * 
-     * @return the iteration count
-     */
-    int getMinIteration();
-    
-    /**
-     * Returns the init vector bytes.
-     * 
-     * @return the init vector bytes
-     */
-    byte[] getInitVector();
+    byte[] getEncoded();
 }

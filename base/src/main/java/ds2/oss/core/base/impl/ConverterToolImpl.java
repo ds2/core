@@ -13,34 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.base.impl.test;
-
-import java.nio.charset.Charset;
+package ds2.oss.core.base.impl;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import ds2.oss.core.api.SecurityBaseData;
+import ds2.oss.core.api.ConverterTool;
 
 /**
- * The dto.
+ * Implemenation of the converter.
  * 
- * @version 0.2
  * @author dstrauss
+ * @version 0.3
  */
 @ApplicationScoped
-public class SecBaseDto implements SecurityBaseData {
+public class ConverterToolImpl implements ConverterTool {
     @Override
-    public byte[] getSalt() {
-        return "mySaltedWord".getBytes(Charset.forName("utf-8"));
+    public int toInt(final Object o, final int defValue) {
+        int rc = defValue;
+        if (o != null) {
+            if (o instanceof Number) {
+                final Number number = (Number) o;
+                rc = number.intValue();
+            } else if (o instanceof String) {
+                rc = Integer.parseInt(o.toString());
+            }
+        }
+        return rc;
     }
-    
-    @Override
-    public int getMinIteration() {
-        return 20000;
-    }
-
-  @Override
-  public byte[] getInitVector() {
-    return new byte[0];
-  }
 }

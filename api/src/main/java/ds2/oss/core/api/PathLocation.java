@@ -15,32 +15,27 @@
  */
 package ds2.oss.core.api;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import javax.enterprise.util.Nonbinding;
+import javax.inject.Qualifier;
 
 /**
- * Contract for sec base data.
+ * Used to dynamically inject a path.
  * 
  * @author dstrauss
- * @version 0.2
+ * @version 0.3
  */
-public interface SecurityBaseData {
-    /**
-     * Returns the salt to use.
-     * 
-     * @return the salt value
-     */
-    byte[] getSalt();
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
+public @interface PathLocation {
+    @Nonbinding
+    String property() default "";
     
-    /**
-     * Returns the minimum number of iterations to use to create a hash value.
-     * 
-     * @return the iteration count
-     */
-    int getMinIteration();
-    
-    /**
-     * Returns the init vector bytes.
-     * 
-     * @return the init vector bytes
-     */
-    byte[] getInitVector();
+    @Nonbinding
+    String environment() default "";
 }
