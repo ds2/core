@@ -63,14 +63,6 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
-     * The filename of the salt file.
-     */
-    private static final String SALT_FILENAME = "0xsalt.txt";
-    /**
-     * The filename of the init vector file.
-     */
-    private static final String IV_FILENAME = "0xiv.txt";
-    /**
      * The filename containing the AES secret key data.
      */
     private static final String SK_FILENAME = "0xsk.txt";
@@ -140,29 +132,21 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             storageLocation = Paths.get(System.getProperty("user.home"), ".ds2AppSec");
         }
         LOG.debug("Location to use is {}", storageLocation);
-        final Path saltFile = storageLocation.resolve(SALT_FILENAME);
-        final Path ivFile = storageLocation.resolve(IV_FILENAME);
-        final Path propsF = storageLocation.resolve(PROPS_FILENAME);
-        final String saltContent = io.loadFile(saltFile, Charset.defaultCharset());
-        final String ivContent = io.loadFile(ivFile, Charset.defaultCharset());
         final String skContent = io.loadFile(storageLocation.resolve(SK_FILENAME), Charset.defaultCharset());
-        final Properties props = io.loadProperties(propsF);
-        LOG.debug("Salt is {}, iv is {}, props is {}", new Object[] { saltContent, ivContent, props });
-        if (saltContent != null) {
-            salt = hex.decode(saltContent.toCharArray());
-        }
-        if (ivContent != null) {
-            initVector = hex.decode(ivContent.toCharArray());
-        }
+        final Properties props = io.loadProperties(storageLocation.resolve(PROPS_FILENAME));
+        LOG.debug("Props is {}", new Object[] { props });
         if (props != null) {
             minIteration = conv.toInt(props.getProperty("iterations"), minIteration);
+            if (minIteration <= 1000) {
+                LOG.warn("MinIt too small, using base default value!");
+                minIteration = 65535;
+            }
+        }
+        if ((salt == null) || (initVector == null)) {
+            createData();
         }
         if (skContent != null) {
             aesSecretKey = kg.generateAesFromBytes(hex.decode(skContent.toCharArray()));
-        }
-        
-        if ((salt == null) || (initVector == null) || (aesSecretKey == null)) {
-            createData();
         }
     }
     
@@ -198,7 +182,6 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             LOG.debug("Creating new salt, init vector etc.");
             salt = bytes.createRandomByteArray(512);
             initVector = bytes.createRandomByteArray(16);
-            minIteration = 65535;
         } finally {
             lock.unlock();
         }
@@ -207,8 +190,6 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
     
     @Override
     public void storeData(final Charset cs) {
-        final Path saltFile = storageLocation.resolve(SALT_FILENAME);
-        final Path ivFile = storageLocation.resolve(IV_FILENAME);
         final Path propsF = storageLocation.resolve(PROPS_FILENAME);
         final Path aesF = storageLocation.resolve(SK_FILENAME);
         LOG.info("Writing security data to {}", storageLocation);
@@ -217,8 +198,6 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         try {
             lock.lock();
             io.createDirectories(storageLocation, attr);
-            io.writeFile(hex.encode(salt), Charset.defaultCharset(), saltFile, "rw-r-----");
-            io.writeFile(hex.encode(initVector), Charset.defaultCharset(), ivFile, "rw-r-----");
             io.writeFile(hex.encode(aesSecretKey.getEncoded()), Charset.defaultCharset(), aesF, "rw-------");
             final Properties props = new Properties();
             props.setProperty("iterations", "" + minIteration);

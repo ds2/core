@@ -26,7 +26,7 @@ import java.nio.charset.Charset;
  */
 public interface SecurityBaseDataService extends SecurityBaseData {
     /**
-     * Creates new salt value, new init vector, resets iteration count.
+     * Creates new salt value, new init vector, resets iteration count, creates new AES key.
      */
     void createData();
     

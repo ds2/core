@@ -46,7 +46,7 @@ public class SecurityBaseDataServiceImplTest extends AbstractInjectionEnvironmen
     @Test
     public void testStoreData() {
         to.storeData(Charset.defaultCharset());
-        Path path = Paths.get("target", "dummySec");
-        Assert.assertTrue(Files.exists(path.resolve("0xsalt.txt")));
+        final Path path = Paths.get("target", "dummySec");
+        Assert.assertTrue(Files.exists(path.resolve("0xsk.txt")));
     }
 }
