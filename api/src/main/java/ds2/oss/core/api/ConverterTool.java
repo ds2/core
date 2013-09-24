@@ -15,32 +15,21 @@
  */
 package ds2.oss.core.api;
 
-
 /**
- * Contract for sec base data.
+ * A basic and simple converter tool.
  * 
  * @author dstrauss
- * @version 0.2
+ * @version 0.3
  */
-public interface SecurityBaseData {
+public interface ConverterTool {
     /**
-     * Returns the salt to use.
+     * Converts a given object into int.
      * 
-     * @return the salt value
+     * @param o
+     *            the object
+     * @param defValue
+     *            the default value, if the conversion failed
+     * @return the found value, or the default value
      */
-    byte[] getSalt();
-    
-    /**
-     * Returns the minimum number of iterations to use to create a hash value.
-     * 
-     * @return the iteration count
-     */
-    int getMinIteration();
-    
-    /**
-     * Returns the init vector bytes.
-     * 
-     * @return the init vector bytes
-     */
-    byte[] getInitVector();
+    int toInt(Object o, int defValue);
 }

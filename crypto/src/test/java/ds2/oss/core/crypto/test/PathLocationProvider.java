@@ -13,34 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
+package ds2.oss.core.crypto.test;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.enterprise.inject.Produces;
+
+import ds2.oss.core.api.PathLocation;
 
 /**
- * Contract for sec base data.
+ * Dummy provider for the sec path test.
  * 
  * @author dstrauss
- * @version 0.2
+ * @version 0.3
  */
-public interface SecurityBaseData {
-    /**
-     * Returns the salt to use.
-     * 
-     * @return the salt value
-     */
-    byte[] getSalt();
-    
-    /**
-     * Returns the minimum number of iterations to use to create a hash value.
-     * 
-     * @return the iteration count
-     */
-    int getMinIteration();
-    
-    /**
-     * Returns the init vector bytes.
-     * 
-     * @return the init vector bytes
-     */
-    byte[] getInitVector();
+public class PathLocationProvider {
+    @Produces
+    @PathLocation
+    public Path createPath() {
+        return Paths.get("target", "dummySec");
+    }
 }

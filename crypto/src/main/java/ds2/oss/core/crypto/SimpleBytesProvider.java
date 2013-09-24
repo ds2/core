@@ -13,34 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.base.impl.test;
+package ds2.oss.core.crypto;
 
-import java.nio.charset.Charset;
+import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
 
-import ds2.oss.core.api.SecurityBaseData;
+import ds2.oss.core.api.crypto.BytesProvider;
 
 /**
- * The dto.
+ * A bytes provider, using a simple randomizer.
  * 
- * @version 0.2
  * @author dstrauss
+ * @version 0.3
  */
+@Alternative
 @ApplicationScoped
-public class SecBaseDto implements SecurityBaseData {
-    @Override
-    public byte[] getSalt() {
-        return "mySaltedWord".getBytes(Charset.forName("utf-8"));
-    }
+public class SimpleBytesProvider implements BytesProvider {
+    /**
+     * A simple randomizer.
+     */
+    @Inject
+    private Random zufall;
     
     @Override
-    public int getMinIteration() {
-        return 20000;
+    public byte[] createRandomByteArray(final int size) {
+        if (size <= 0) {
+            return null;
+        }
+        final byte[] rc = new byte[size];
+        zufall.nextBytes(rc);
+        return rc;
     }
-
-  @Override
-  public byte[] getInitVector() {
-    return new byte[0];
-  }
 }

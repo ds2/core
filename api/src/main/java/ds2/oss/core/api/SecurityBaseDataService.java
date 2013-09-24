@@ -15,32 +15,26 @@
  */
 package ds2.oss.core.api;
 
+import java.nio.charset.Charset;
 
 /**
- * Contract for sec base data.
+ * A service to read a salt value and a IV from a specific file location, and provides this
+ * information to the application server.
  * 
  * @author dstrauss
- * @version 0.2
+ * @version 0.3
  */
-public interface SecurityBaseData {
+public interface SecurityBaseDataService extends SecurityBaseData {
     /**
-     * Returns the salt to use.
-     * 
-     * @return the salt value
+     * Creates new salt value, new init vector, resets iteration count, creates new AES key.
      */
-    byte[] getSalt();
+    void createData();
     
     /**
-     * Returns the minimum number of iterations to use to create a hash value.
+     * Stores the current value of the salt and init vector.
      * 
-     * @return the iteration count
+     * @param cs
+     *            the charset to use
      */
-    int getMinIteration();
-    
-    /**
-     * Returns the init vector bytes.
-     * 
-     * @return the init vector bytes
-     */
-    byte[] getInitVector();
+    void storeData(Charset cs);
 }

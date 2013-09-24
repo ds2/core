@@ -60,6 +60,7 @@
     <module>es-test</module>
     <module>options</module>
     <module>options-it</module>
+    <module>crypto</module>
   </modules>
   <profiles>
     <profile>
