@@ -55,7 +55,7 @@
       <groupId>org.eclipse.persistence</groupId>
       <artifactId>javax.persistence</artifactId>
       <version>2.1.0</version>
-    </dependency>
+      </dependency>
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-base</artifactId>

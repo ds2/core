@@ -18,7 +18,9 @@ package ds2.oss.core.api.environment;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -28,6 +30,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 0.3
  */
 @XmlType(name = "ClusterType")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ClusterDto implements Cluster {
     /**
      * The regex pattern for getting the cluster name.
@@ -36,6 +39,7 @@ public class ClusterDto implements Cluster {
     /**
      * the name of the cluster.
      */
+    @XmlAttribute(name = "name")
     private char clusterName;
     
     /**
@@ -70,7 +74,6 @@ public class ClusterDto implements Cluster {
     /**
      * {@inheritDoc}
      */
-    @XmlElement
     @Override
     public final synchronized char getClusterName() {
         return clusterName;

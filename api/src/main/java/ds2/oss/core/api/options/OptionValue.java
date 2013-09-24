@@ -29,7 +29,7 @@ import ds2.oss.core.api.Persistable;
  * @param <V>
  *            the value type of this value
  */
-public interface OptionValue<E, V> extends Persistable<E>, CreatedModifiedAware, LifeCycleAware {
+public interface OptionValue<E, V> extends Persistable<E>, CreatedModifiedAware, LifeCycleAware, OptionValueContext {
     /**
      * Returns the name or identifier of the approver of this option value.
      * 
