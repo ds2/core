@@ -164,7 +164,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         LOG.debug("Performing refresh on indexes {}", new Object[] { indexes });
         boolean rc = false;
         final RefreshRequestBuilder cmd = esNode.get().admin().indices().prepareRefresh(indexes);
-        cmd.setWaitForOperations(true);
         final RefreshResponse result = cmd.execute().actionGet();
         if (result.getSuccessfulShards() <= 0) {
             LOG.warn("Shards could not be refreshed successfully! result is {}", result);
