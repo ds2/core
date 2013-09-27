@@ -38,8 +38,7 @@ public abstract class WeldWrapper {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(WeldWrapper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WeldWrapper.class);
     /**
      * The lock.
      */
@@ -55,34 +54,30 @@ public abstract class WeldWrapper {
     private static WeldContainer wc;
     
     /**
-     * Inits the wrapper.
+     * Actions to perform at start.
      */
-    public WeldWrapper() {
-        // nothing special to do
-    }
-    
-    @BeforeSuite(groups = { "sym", "hex", "bit", "base64" })
+    @BeforeSuite(alwaysRun = true)
     public static void onSuiteStart() {
-        LOG.info("Entering Weld Init");
+        LOG.debug("Entering Weld Init");
         lock.lock();
         try {
             if (wc != null) {
                 LOG.info("Nothing to do, ignoring");
                 return;
             }
-            LOG.info("Starting init");
+            LOG.debug("Starting init");
             wc = weld.initialize();
         } finally {
             lock.unlock();
         }
-        LOG.info("Done with init");
+        LOG.debug("Done with init");
     }
     
-    @AfterSuite(groups = { "sym", "hex", "bit", "base64" })
+    @AfterSuite(alwaysRun = true)
     public static void afterSuite() {
         lock.lock();
         try {
-            LOG.info("Shutting down Weld");
+            LOG.debug("Shutting down Weld");
             weld.shutdown();
             wc = null;
         } finally {
