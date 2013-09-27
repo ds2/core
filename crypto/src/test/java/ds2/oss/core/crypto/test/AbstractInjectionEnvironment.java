@@ -49,7 +49,6 @@ public abstract class AbstractInjectionEnvironment {
     @AfterSuite(alwaysRun = true)
     public void onSuiteEnd() {
         weld.shutdown();
-        weld = null;
     }
     
     /**
