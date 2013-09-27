@@ -10,8 +10,8 @@
   <description>The api contracts to access some core services.</description>
     <dependencies>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
         </dependency>
     </dependencies>
 </project>
