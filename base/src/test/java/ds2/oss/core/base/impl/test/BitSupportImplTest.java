@@ -34,13 +34,6 @@ public class BitSupportImplTest extends WeldWrapper {
     private BitSupport to;
     
     /**
-     * Inits the test.
-     */
-    public BitSupportImplTest() {
-        // nothing special to do
-    }
-    
-    /**
      * Actions to perform on class start.
      */
     @BeforeClass
