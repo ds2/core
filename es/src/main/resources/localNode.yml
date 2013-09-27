@@ -13,3 +13,5 @@ index:
   refresh_interval: 50s
 network:
   host: 127.0.0.1
+action:
+  disable_delete_all_indices: true
