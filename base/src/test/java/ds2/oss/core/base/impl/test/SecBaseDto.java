@@ -38,4 +38,9 @@ public class SecBaseDto implements SecurityBaseData {
     public int getMinIteration() {
         return 20000;
     }
+
+  @Override
+  public byte[] getInitVector() {
+    return new byte[0];
+  }
 }
