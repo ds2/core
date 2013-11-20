@@ -15,6 +15,10 @@
  */
 package ds2.oss.core.api;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
 import java.util.Properties;
 
 /**
@@ -43,4 +47,32 @@ public interface IoService {
      * @return the resource content, or null if not found or an error occurred
      */
     String loadResource(String resName);
+    
+    /**
+     * Loads a file.
+     * 
+     * @param file
+     *            the file to load
+     * @param cs
+     *            The charset
+     * @return the content, or null if an error occurred
+     */
+    String loadFile(Path file, Charset cs);
+    
+    /**
+     * Loads the properties from a given file.
+     * 
+     * @param file
+     *            the properties file
+     * @return the loaded file, or null
+     */
+    Properties loadProperties(Path file);
+    
+    void writeFile(byte[] data, Path target, String permissionMask) throws IOException;
+    
+    void writeFile(String data, Charset cs, Path target, String permissionMask) throws IOException;
+    
+    void writeProperties(Properties props, Path target, String permissionMask) throws IOException;
+    
+    void createDirectories(Path storageLocation, FileAttribute<?> attr);
 }
