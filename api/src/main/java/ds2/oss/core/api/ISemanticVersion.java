@@ -3,6 +3,8 @@
  */
 package ds2.oss.core.api;
 
+import java.util.List;
+
 /**
  * Specialization of a version: the semantic version.
  * 
@@ -24,4 +26,18 @@ public interface ISemanticVersion extends Version {
      * Increments the patch number.
      */
     void incrementPatchNumber();
+    
+    /**
+     * Returns the prerelease data list.
+     * 
+     * @return the prerelease data list
+     */
+    List<String> getPreReleaseDataList();
+    
+    /**
+     * Returns the build data list content.
+     * 
+     * @return the build data
+     */
+    List<String> getBuildDataList();
 }
