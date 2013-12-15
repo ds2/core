@@ -160,21 +160,24 @@ public final class SemanticVersion implements ISemanticVersion {
         return rc;
     }
     
-    private static int compareInt(final int i1, final int i2) {
-        return i1 - i2;
+    private static int compareInt(final int a, final int b) {
+        int rc = 0;
+        // a-b
+        if (a > b) {
+            rc = 0x2;
+        } else if (a < b) {
+            rc = 0x1;
+        }
+        return rc;
     }
     
     private static int compareThree(final int m1, final int m2, final int min1, final int min2, final int p1,
         final int p2) {
-        int rc = 0;
-        final int a1 = compareInt(m1, m2);
-        if (a1 > 0) {
-            rc = 0x2;
-        } else if (a1 == 0) {
-            rc = 0x0;
-        } else if (a1 < 0) {
-            rc = 0x1;
-        }
+        int rc = compareInt(m1, m2);
+        rc <<= 3;
+        rc |= compareInt(min1, min2);
+        rc <<= 3;
+        rc |= compareInt(p1, p2);
         return rc;
     }
     

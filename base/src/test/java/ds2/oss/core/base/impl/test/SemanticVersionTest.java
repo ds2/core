@@ -58,14 +58,41 @@ public class SemanticVersionTest {
     }
     
     @Test
+    public void testOrderingSingle() {
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.0.1")) > 0);
+    }
+    
+    @Test
+    public void testOrderingSingle2() {
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.1.0")) > 0);
+    }
+    
+    @Test
+    public void testOrderingSingle3() {
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("2.0.0")) > 0);
+    }
+    
+    @Test
+    public void testOrderingSingle4() {
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.0.0")) == 0);
+    }
+    
+    @Test
+    public void testOrderingSingle5() {
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("0.12.1")) < 0);
+    }
+    
+    @Test
     public void testOrdering1() {
         final List<SemanticVersion> l = new ArrayList<>();
         l.add(SemanticVersion.parse("2.0.0"));
         l.add(SemanticVersion.parse("1.0.1"));
         l.add(SemanticVersion.parse("1.0.0"));
+        l.add(SemanticVersion.parse("1.0.2"));
         Collections.sort(l);
-        Assert.assertEquals(l.get(2).toString(), "1.0.0");
-        Assert.assertEquals(l.get(1).toString(), "1.0.1");
+        Assert.assertEquals(l.get(3).toString(), "1.0.0");
+        Assert.assertEquals(l.get(2).toString(), "1.0.1");
+        Assert.assertEquals(l.get(1).toString(), "1.0.2");
         Assert.assertEquals(l.get(0).toString(), "2.0.0");
     }
 }
