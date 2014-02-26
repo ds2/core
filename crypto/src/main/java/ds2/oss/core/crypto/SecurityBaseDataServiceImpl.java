@@ -48,17 +48,14 @@ import ds2.oss.core.api.crypto.KeyGeneratorService;
 
 /**
  * The impl.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
 public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
-    /**
-     * The system property name.
-     */
-    public static final String SYS_PROPERTY = "ds2.app.sec.home";
+
     /**
      * A logger.
      */
@@ -74,8 +71,8 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
     /**
      * A simple lock.
      */
-    private static Lock lock = new ReentrantLock();
-    
+    private static final Lock lock = new ReentrantLock();
+
     /**
      * The hex codec.
      */
@@ -123,7 +120,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
      */
     @Inject
     private KeyGeneratorService kg;
-    
+
     /**
      * Actions to perform on load.
      */
@@ -135,7 +132,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         LOG.debug("Location to use is {}", storageLocation);
         final String skContent = io.loadFile(storageLocation.resolve(SK_FILENAME), Charset.defaultCharset());
         final Properties props = io.loadProperties(storageLocation.resolve(PROPS_FILENAME));
-        LOG.debug("Props is {}", new Object[] { props });
+        LOG.debug("Props is {}", new Object[]{props});
         if (props != null) {
             minIteration = conv.toInt(props.getProperty("iterations"), minIteration);
             if (minIteration <= 1000) {
@@ -150,7 +147,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             aesSecretKey = kg.generateAesFromBytes(hex.decode(skContent.toCharArray()));
         }
     }
-    
+
     @Override
     public byte[] getSalt() {
         try {
@@ -160,12 +157,12 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             lock.unlock();
         }
     }
-    
+
     @Override
     public int getMinIteration() {
         return minIteration;
     }
-    
+
     @Override
     public byte[] getInitVector() {
         try {
@@ -175,7 +172,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             lock.unlock();
         }
     }
-    
+
     @Override
     public void createData() {
         try {
@@ -188,7 +185,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         }
         aesSecretKey = kg.generateAesKey();
     }
-    
+
     @Override
     public void storeData(final Charset cs) {
         final Path propsF = storageLocation.resolve(PROPS_FILENAME);
@@ -209,7 +206,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             lock.unlock();
         }
     }
-    
+
     /**
      * Store the data on exit.
      */
