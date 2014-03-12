@@ -15,32 +15,23 @@
  */
 package ds2.oss.core.api;
 
-import java.nio.charset.Charset;
+import java.util.Date;
+import java.util.Locale;
 
 /**
- * A service to read a salt value and a IV from a specific file location, and
- * provides this information to the application server.
+ * THe locale support.
  *
  * @author dstrauss
  * @version 0.3
  */
-public interface SecurityBaseDataService extends SecurityBaseData {
+public interface LocaleSupport {
+  String resolve(String key, Locale loc, Object... params);
 
-    /**
-     * The system property name.
-     */
-    String SYS_PROPERTY = "ds2.app.sec.home";
+  String formatCurrency(Locale locale, double val);
 
-    /**
-     * Creates new salt value, new init vector, resets iteration count, creates
-     * new AES key.
-     */
-    void createData();
+  <E extends Enum<E>> String resolveException(Locale locale, E errorEnum, Throwable t, Object... params);
 
-    /**
-     * Stores the current value of the salt and init vector.
-     *
-     * @param cs the charset to use
-     */
-    void storeData(Charset cs);
+  <E extends Enum<E>> String resolveEnum(Locale locale, E e);
+  String formatDate(Date date, Locale locale, int dateStyle);
+  String formatDateTime(Date date, Locale locale, int dateStyle, int timeStyle);
 }
