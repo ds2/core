@@ -32,7 +32,7 @@ import javax.inject.Qualifier;
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.FIELD })
+@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
 @ApplicationScoped
 @Documented
 @Qualifier

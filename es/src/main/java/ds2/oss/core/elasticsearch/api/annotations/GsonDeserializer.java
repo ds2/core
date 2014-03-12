@@ -30,7 +30,7 @@ import javax.inject.Qualifier;
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
 @Qualifier
 @ApplicationScoped
 public @interface GsonDeserializer {
