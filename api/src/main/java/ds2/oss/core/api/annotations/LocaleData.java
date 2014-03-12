@@ -15,7 +15,6 @@
  */
 package ds2.oss.core.api.annotations;
 
-import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
