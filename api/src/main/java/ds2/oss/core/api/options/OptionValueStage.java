@@ -41,7 +41,7 @@ public enum OptionValueStage {
     /**
      * The numerical value of the stage.
      */
-    private int stageId;
+    private final int stageId;
     
     /**
      * Creates the option value stage.

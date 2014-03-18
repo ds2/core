@@ -22,30 +22,40 @@ import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifier;
 
 /**
- * The context of an option value.
- * 
+ * The context of an option value. These are any attributes that may change an
+ * option value request.
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface OptionValueContext extends Serializable {
+
     /**
      * Returns the cluster of the option value.
-     * 
+     *
      * @return the cluster
      */
     Cluster getCluster();
-    
+
     /**
      * Returns the configuration this value is meant for.
-     * 
+     *
      * @return the runtime configuration
      */
     RuntimeConfiguration getConfiguration();
-    
+
     /**
      * Returns the server this value is meant for.
-     * 
+     *
      * @return the server. Null indicates all servers, no specific one.
      */
     ServerIdentifier getServer();
+
+    /**
+     * Returns the domain name that is being used on the client side to access
+     * the server.
+     *
+     * @return the requested domain name
+     */
+    String getRequestedDomain();
 }
