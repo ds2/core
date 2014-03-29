@@ -8,10 +8,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +23,10 @@ import java.util.logging.Logger;
  * @version 0.3
  */
 public final class UriTool {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = Logger.getLogger(UriTool.class.getName());
     /**
      * The port.
      */
@@ -75,6 +79,9 @@ public final class UriTool {
      * @return the uri tool
      */
     public static UriTool createFrom(final URI u) {
+        if (u == null) {
+            throw new IllegalArgumentException("No uri given to parse!");
+        }
         final UriTool rc = new UriTool();
         rc.authority = u.getAuthority();
         rc.fragment = u.getFragment();
@@ -97,6 +104,9 @@ public final class UriTool {
      */
     private static Map<String, List<String>> fillQueryParamsFromQuery(final String query2) {
         final Map<String, List<String>> rc = new HashMap<>();
+        if ((query2 == null) || (query2.length() <= 0)) {
+            return rc;
+        }
         try (Scanner scanner = new Scanner(query2);) {
             scanner.useDelimiter("&");
             while (scanner.hasNext()) {
@@ -107,6 +117,7 @@ public final class UriTool {
                 List<String> vals = rc.get(paramName);
                 if (vals == null) {
                     vals = new ArrayList<>();
+                    rc.put(paramName, vals);
                 }
                 vals.add(paramVal);
             }
@@ -122,7 +133,7 @@ public final class UriTool {
      * @return this tool
      */
     public UriTool setHost(final String hostname) {
-        this.host = hostname;
+        host = hostname;
         return this;
     }
     
@@ -139,6 +150,7 @@ public final class UriTool {
         List<String> valList = queryParams.get(name);
         if (valList == null) {
             valList = new ArrayList<>();
+            queryParams.put(name, valList);
         }
         valList.clear();
         for (String givenVal : val) {
@@ -160,6 +172,7 @@ public final class UriTool {
         List<String> valList = queryParams.get(name);
         if (valList == null) {
             valList = new ArrayList<>();
+            queryParams.put(name, valList);
         }
         for (String givenVal : val) {
             valList.add(givenVal);
@@ -206,7 +219,7 @@ public final class UriTool {
         try {
             return build();
         } catch (final UnsupportedEncodingException | URISyntaxException e) {
-            Logger.getLogger(UriTool.class.getName()).log(Level.FINE, "Error when creating the URI!", e);
+            LOG.log(Level.FINE, "Error when creating the URI!", e);
         }
         return null;
     }
@@ -224,9 +237,10 @@ public final class UriTool {
         throws UnsupportedEncodingException {
         final StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
-        for (Entry<String, List<String>> entry : queryParams2.entrySet()) {
-            final String paramName = entry.getKey();
-            final List<String> paramVals = entry.getValue();
+        final List<String> paramNames = new ArrayList<>(queryParams2.keySet());
+        Collections.sort(paramNames);
+        for (String paramName : paramNames) {
+            final List<String> paramVals = queryParams2.get(paramName);
             for (String val : paramVals) {
                 if (!isFirst) {
                     sb.append("&");
@@ -237,6 +251,25 @@ public final class UriTool {
                 isFirst = false;
             }
         }
+        if (sb.length() <= 0) {
+            return null;
+        }
         return sb.toString();
+    }
+    
+    /**
+     * Creates a tool from a given string that is considered to be a uri string.
+     * 
+     * @param string
+     *            the string considered to be a uri
+     * @return the uri tool
+     */
+    public static UriTool createFrom(final String string) {
+        try {
+            return UriTool.createFrom(new URI(string));
+        } catch (final URISyntaxException e) {
+            LOG.log(Level.WARNING, "Error when creating the URI!", e);
+        }
+        return null;
     }
 }
