@@ -160,6 +160,25 @@ public final class UriTool {
     }
     
     /**
+     * Adds a path segment to the current path.
+     * 
+     * @param pathSegment
+     *            the path segment to add
+     * @return this tool
+     */
+    public UriTool path(final String pathSegment) {
+        if (path == null) {
+            path = "";
+        }
+        try {
+            path += "/" + URLEncoder.encode(pathSegment, "utf-8");
+        } catch (final UnsupportedEncodingException e) {
+            LOG.log(Level.FINE, "Error when adding a path segment!", e);
+        }
+        return this;
+    }
+    
+    /**
      * Adds the values to a query parameter.
      * 
      * @param name
