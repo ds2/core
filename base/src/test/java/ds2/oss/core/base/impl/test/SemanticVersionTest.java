@@ -8,6 +8,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.base.impl.SemanticVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Testcases for the semVer.
@@ -16,6 +18,11 @@ import ds2.oss.core.base.impl.SemanticVersion;
  * @version 0.3
  */
 public class SemanticVersionTest {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG=LoggerFactory.getLogger(SemanticVersionTest.class);
+    
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNull() {
         SemanticVersion.parse(null);
@@ -59,17 +66,17 @@ public class SemanticVersionTest {
     
     @Test
     public void testOrderingSingle() {
-        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.0.1")) > 0);
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.0.1")) < 0);
     }
     
     @Test
     public void testOrderingSingle2() {
-        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.1.0")) > 0);
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("1.1.0")) < 0);
     }
     
     @Test
     public void testOrderingSingle3() {
-        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("2.0.0")) > 0);
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("2.0.0")) < 0);
     }
     
     @Test
@@ -79,7 +86,7 @@ public class SemanticVersionTest {
     
     @Test
     public void testOrderingSingle5() {
-        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("0.12.1")) < 0);
+        Assert.assertTrue(SemanticVersion.parse("1.0.0").compareTo(SemanticVersion.parse("0.12.1")) > 0);
     }
     
     @Test
@@ -90,9 +97,10 @@ public class SemanticVersionTest {
         l.add(SemanticVersion.parse("1.0.0"));
         l.add(SemanticVersion.parse("1.0.2"));
         Collections.sort(l);
-        Assert.assertEquals(l.get(3).toString(), "1.0.0");
-        Assert.assertEquals(l.get(2).toString(), "1.0.1");
-        Assert.assertEquals(l.get(1).toString(), "1.0.2");
-        Assert.assertEquals(l.get(0).toString(), "2.0.0");
+        LOG.info("Ordering is {}", l);
+        Assert.assertEquals(l.get(0).toString(), "1.0.0");
+        Assert.assertEquals(l.get(1).toString(), "1.0.1");
+        Assert.assertEquals(l.get(2).toString(), "1.0.2");
+        Assert.assertEquals(l.get(3).toString(), "2.0.0");
     }
 }
