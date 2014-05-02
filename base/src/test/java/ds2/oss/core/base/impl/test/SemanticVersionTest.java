@@ -94,6 +94,8 @@ public class SemanticVersionTest {
         final List<SemanticVersion> l = new ArrayList<>();
         l.add(SemanticVersion.parse("2.0.0"));
         l.add(SemanticVersion.parse("1.0.1"));
+        l.add(SemanticVersion.parse("3.2.1"));
+        l.add(SemanticVersion.parse("3.0.1"));
         l.add(SemanticVersion.parse("1.0.0"));
         l.add(SemanticVersion.parse("1.0.2"));
         Collections.sort(l);
@@ -102,5 +104,7 @@ public class SemanticVersionTest {
         Assert.assertEquals(l.get(1).toString(), "1.0.1");
         Assert.assertEquals(l.get(2).toString(), "1.0.2");
         Assert.assertEquals(l.get(3).toString(), "2.0.0");
+        Assert.assertEquals(l.get(4).toString(), "3.0.1");
+        Assert.assertEquals(l.get(5).toString(), "3.2.1");
     }
 }
