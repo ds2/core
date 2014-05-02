@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * The bouncy castle security provider.
@@ -48,6 +49,7 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String PROVIDER_ID = BouncyCastleProvider.PROVIDER_NAME;
     
     /*
      * (non-Javadoc)
@@ -57,7 +59,7 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
     @Override
     public Cipher createCipherInstance(final Ciphers c) {
         try {
-            return c.getCipherInstance("BC");
+            return c.getCipherInstance(PROVIDER_ID);
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
@@ -68,7 +70,7 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
     public KeyGenerator createKeyGenerator(final KeyGeneratorNames name) {
         KeyGenerator rc = null;
         try {
-            rc = KeyGenerator.getInstance(name.name(), "BC");
+            rc = KeyGenerator.getInstance(name.name(), PROVIDER_ID);
         } catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the key generator instance!", e);
         }
@@ -79,7 +81,7 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
     public SecretKeyFactory createSecretKeyFactoryInstance(final String string) {
         SecretKeyFactory rc = null;
         try {
-            rc = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", "BC");
+            rc = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", PROVIDER_ID);
         } catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when generating the SKF!", e);
         }
