@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -153,9 +154,7 @@ public final class UriTool {
             queryParams.put(name, valList);
         }
         valList.clear();
-        for (String givenVal : val) {
-            valList.add(givenVal);
-        }
+        valList.addAll(Arrays.asList(val));
         return this;
     }
     
@@ -193,9 +192,7 @@ public final class UriTool {
             valList = new ArrayList<>();
             queryParams.put(name, valList);
         }
-        for (String givenVal : val) {
-            valList.add(givenVal);
-        }
+        valList.addAll(Arrays.asList(val));
         return this;
     }
     
