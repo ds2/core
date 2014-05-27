@@ -54,5 +54,12 @@ public class UriToolTest {
         u.setQueryParam("a", "23");
         Assert.assertEquals(u.build().toString(), "http://www.test.bla/baumkuchen?a=23&bla=test");
     }
+    @Test
+    public void testChangeVal3() throws UnsupportedEncodingException, URISyntaxException {
+        final UriTool u = UriTool.createFrom("http://www.test.bla/baumkuchen?bla=test");
+        Assert.assertNotNull(u);
+        u.addQueryParam("bla", "bla");
+        Assert.assertEquals(u.build().toString(), "http://www.test.bla/baumkuchen?bla=test&bla=bla");
+    }
     
 }
