@@ -15,21 +15,41 @@
  */
 package ds2.oss.core.api;
 
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * A basic and simple converter tool.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface ConverterTool {
+
     /**
      * Converts a given object into int.
-     * 
-     * @param o
-     *            the object
-     * @param defValue
-     *            the default value, if the conversion failed
+     *
+     * @param o the object
+     * @param defValue the default value, if the conversion failed
      * @return the found value, or the default value
      */
     int toInt(Object o, int defValue);
+
+    /**
+     * Converts a given date into the milliseconds starting from Jan 1 1970 GMT.
+     *
+     * @param d the date
+     * @return the milliseconds
+     */
+    long getDateMillis(Date d);
+
+    /**
+     * Converts a given milliseconds timestamp into a date object.
+     *
+     * @param ms the milliseconds from Jan 1 1970 GMT
+     * @param thisZone if required, give a target timezone here. Otherwise the
+     * JRE specific timezone will be used.
+     * @return the date object
+     */
+    Date toDate(long ms, TimeZone thisZone);
 }

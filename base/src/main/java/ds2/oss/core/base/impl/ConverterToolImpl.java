@@ -18,6 +18,9 @@ package ds2.oss.core.base.impl;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.ConverterTool;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Implemenation of the converter.
@@ -39,5 +42,23 @@ public class ConverterToolImpl implements ConverterTool {
             }
         }
         return rc;
+    }
+
+    @Override
+    public long getDateMillis(Date d) {
+        if(d==null){
+            throw new IllegalArgumentException("You must give a date to convert!");
+        }
+        return d.getTime();
+    }
+
+    @Override
+    public Date toDate(long ms, TimeZone thisZone) {
+        Calendar cal=Calendar.getInstance();
+        if(thisZone!=null){
+            cal.setTimeZone(thisZone);
+        }
+        cal.setTimeInMillis(ms);
+        return cal.getTime();
     }
 }
