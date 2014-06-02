@@ -52,7 +52,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
     /**
      * Flag to indicate that a lock is required on the client.
      */
-    protected boolean needsLock;
+    protected volatile boolean needsLock;
     
     /**
      * The node instance.
@@ -71,8 +71,13 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
      */
     @PreDestroy
     public void onShutdown() {
+        lock.lock();
+        try {
         LOG.debug("Shutting down node...");
         client.close();
+        } finally {
+            lock.unlock();
+        }
     }
     
     @Override
@@ -92,7 +97,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
         try {
-            if (!lock.tryLock(5, TimeUnit.SECONDS)) {
+            if (!lock.tryLock(10, TimeUnit.SECONDS)) {
                 LOG.error("Could not get lock for this node! Cannot add given sockets.");
                 return;
             }
