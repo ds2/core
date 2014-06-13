@@ -94,6 +94,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
      *            the keystore file to read data from
      */
     private static void loadLocalKeystore(final KeyStore rc, final char[] ksPw, final File javaHomeKs) {
+        LOG.debug("Loading data from {}", javaHomeKs);
         try (FileInputStream fis = new FileInputStream(javaHomeKs)) {
             rc.load(fis, ksPw);
         } catch (final NoSuchAlgorithmException e) {
@@ -169,6 +170,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
     @Override
     public X509Certificate[] getServerCertificates(final String hostname, final int port) {
         final KeyStore platformKeystore = getCurrentKeystore();
+        LOG.debug("Using ca store {}", platformKeystore);
         X509Certificate[] rc = null;
         try {
             final SSLContext sslCtx = SSLContext.getInstance("TLS");
@@ -182,6 +184,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
             try (SSLSocket socket = (SSLSocket) sslsf.createSocket(hostname, port)) {
                 socket.setSoTimeout(15000);
                 socket.startHandshake();
+            } finally {
                 rc = tmw.getServerCerts();
                 writeTempKeystore(hostname, rc, "changeit".toCharArray());
             }
