@@ -52,14 +52,13 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
     /**
      * The message to encode.
      */
-    private String msg = "Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
+    private final String msg = "Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
     
     /**
      * Actions to perform at start.
      */
     @BeforeClass
     public void onClass() {
-        Security.insertProviderAt(new BouncyCastleProvider(), 1);
         to = getInstance(EncryptionService.class);
         keygen = getInstance(KeyGeneratorService.class);
     }

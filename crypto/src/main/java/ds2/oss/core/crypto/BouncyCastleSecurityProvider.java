@@ -31,6 +31,9 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import java.security.Security;
+import javax.annotation.PostConstruct;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * The bouncy castle security provider.
@@ -45,6 +48,12 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
+    @PostConstruct
+    public void onLoad(){
+        LOG.debug("Loading BC Provider");
+        Security.insertProviderAt(new BouncyCastleProvider(), 1);
+    }
     
     /*
      * (non-Javadoc)
