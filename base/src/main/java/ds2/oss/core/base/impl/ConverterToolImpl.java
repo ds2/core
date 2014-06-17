@@ -18,18 +18,17 @@ package ds2.oss.core.base.impl;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.ConverterTool;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Implemenation of the converter.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 public class ConverterToolImpl implements ConverterTool {
+
     @Override
     public int toInt(final Object o, final int defValue) {
         int rc = defValue;
@@ -46,19 +45,14 @@ public class ConverterToolImpl implements ConverterTool {
 
     @Override
     public long getDateMillis(Date d) {
-        if(d==null){
+        if (d == null) {
             throw new IllegalArgumentException("You must give a date to convert!");
         }
         return d.getTime();
     }
 
     @Override
-    public Date toDate(long ms, TimeZone thisZone) {
-        Calendar cal=Calendar.getInstance();
-        if(thisZone!=null){
-            cal.setTimeZone(thisZone);
-        }
-        cal.setTimeInMillis(ms);
-        return cal.getTime();
+    public Date toDate(long ms) {
+        return new Date(ms);
     }
 }

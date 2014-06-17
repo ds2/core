@@ -16,7 +16,6 @@
 package ds2.oss.core.api;
 
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * A basic and simple converter tool.
@@ -47,9 +46,7 @@ public interface ConverterTool {
      * Converts a given milliseconds timestamp into a date object.
      *
      * @param ms the milliseconds from Jan 1 1970 GMT
-     * @param thisZone if required, give a target timezone here. Otherwise the
-     * JRE specific timezone will be used.
      * @return the date object
      */
-    Date toDate(long ms, TimeZone thisZone);
+    Date toDate(long ms);
 }
