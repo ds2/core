@@ -43,11 +43,11 @@ public enum Ciphers {
     /**
      * The instance name.
      */
-    private String instanceName;
+    private final String instanceName;
     /**
      * The suggested key length.
      */
-    private int suggestedKeyLength;
+    private final int suggestedKeyLength;
     
     /**
      * Inits the cipher enum value.
