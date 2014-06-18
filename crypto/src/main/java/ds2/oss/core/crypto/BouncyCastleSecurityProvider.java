@@ -37,24 +37,27 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * The bouncy castle security provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
 public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
+
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
+    private static final String ID = BouncyCastleProvider.PROVIDER_NAME;
+
     @PostConstruct
-    public void onLoad(){
+    public void onLoad() {
         LOG.debug("Loading BC Provider");
-        Security.insertProviderAt(new BouncyCastleProvider(), 1);
+        Security.addProvider(new BouncyCastleProvider());
     }
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -62,30 +65,32 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
      */
     @Override
     public Cipher createCipherInstance(final Ciphers c) {
+        Cipher rc = null;
         try {
-            return c.getCipherInstance("BC");
+            rc = c.getCipherInstance(ID);
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        return null;
+        LOG.debug("Using {} -> {}", new Object[]{c, rc});
+        return rc;
     }
-    
+
     @Override
     public KeyGenerator createKeyGenerator(final KeyGeneratorNames name) {
         KeyGenerator rc = null;
         try {
-            rc = KeyGenerator.getInstance(name.name(), "BC");
+            rc = KeyGenerator.getInstance(name.name(), ID);
         } catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the key generator instance!", e);
         }
         return rc;
     }
-    
+
     @Override
     public SecretKeyFactory createSecretKeyFactoryInstance(final String string) {
         SecretKeyFactory rc = null;
         try {
-            rc = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", "BC");
+            rc = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", ID);
         } catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when generating the SKF!", e);
         }
