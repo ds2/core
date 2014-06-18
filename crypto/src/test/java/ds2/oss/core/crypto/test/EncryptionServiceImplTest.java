@@ -16,11 +16,9 @@
 package ds2.oss.core.crypto.test;
 
 import java.io.UnsupportedEncodingException;
-import java.security.Security;
 
 import javax.crypto.SecretKey;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -71,7 +69,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
      */
     @Test
     public void testEncrypt() throws UnsupportedEncodingException {
-        final SecretKey sk = keygen.generateSecureAesKey("test");
+        final SecretKey sk = keygen.generateSecureAesKey("test", 128);
         encodedStuff = to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
         Assert.assertNotNull(encodedStuff);
     }
@@ -84,7 +82,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
      */
     @Test(dependsOnMethods = "testEncrypt")
     public void testDecrypt() throws UnsupportedEncodingException {
-        final SecretKey sk = keygen.generateSecureAesKey("test");
+        final SecretKey sk = keygen.generateSecureAesKey("test", 128);
         final byte[] decoded = to.decode(sk, Ciphers.AES, encodedStuff);
         Assert.assertNotNull(decoded);
         final String s = new String(decoded, "utf-8");
