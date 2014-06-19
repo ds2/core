@@ -58,6 +58,9 @@
     <module>es</module>
     <module>es-test</module>
       <module>crypto</module>
+    <module>codec-boon</module>
+    <module>codec-gson</module>
+    <module>codec-fastxml</module>
   </modules>
   <profiles>
     <profile>

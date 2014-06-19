@@ -15,12 +15,16 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
+import ds2.oss.core.api.JsonCodec;
+
 /**
  * A codec contract to deal with JSON strings via Gson.
  * 
  * @author dstrauss
  * @version 0.2
+ * @deprecated In favor of {@link JsonCodec}.
  */
+@Deprecated
 public interface GsonCodec {
     /**
      * Encodes a given type into a json.
