@@ -1,7 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2012-2014 Dirk Strauss
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package ds2.oss.core.codec.boon;
 
@@ -9,12 +19,16 @@ import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.JsonCodec;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import org.boon.json.JsonParserFactory;
+import org.boon.json.JsonSerializerFactory;
 import org.boon.json.ObjectMapper;
 import org.boon.json.implementation.ObjectMapperImpl;
 
 /**
+ * A json codec, using the boon json parser.
  *
  * @author dstrauss
+ * @version 0.3
  */
 @ApplicationScoped
 public class BoonJsonCodec implements JsonCodec {
@@ -23,7 +37,10 @@ public class BoonJsonCodec implements JsonCodec {
 
     @PostConstruct
     public void onLoad() {
-        om = new ObjectMapperImpl();
+        JsonParserFactory parser = new JsonParserFactory();
+        JsonSerializerFactory serializer = new JsonSerializerFactory();
+        serializer.useFieldsOnly();
+        om = new ObjectMapperImpl(parser, serializer);
     }
 
     @Override
@@ -34,7 +51,7 @@ public class BoonJsonCodec implements JsonCodec {
 
     @Override
     public Object decode(String a) throws CoreException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
