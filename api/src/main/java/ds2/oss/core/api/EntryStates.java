@@ -45,17 +45,17 @@ public enum EntryStates implements NumericEnumValue {
     /**
      * A cache map.
      */
-    private static Map<Integer, EntryStates> cacheMap = new HashMap<>(4);
+    private static final Map<Integer, EntryStates> cacheMap = new HashMap<>(4);
     static {
-        cacheMap.put(Integer.valueOf(PREPARED.getNumericalValue()), PREPARED);
-        cacheMap.put(Integer.valueOf(ACTIVE.getNumericalValue()), ACTIVE);
-        cacheMap.put(Integer.valueOf(LOCKED.getNumericalValue()), LOCKED);
-        cacheMap.put(Integer.valueOf(DELETED.getNumericalValue()), DELETED);
+        cacheMap.put(PREPARED.getNumericalValue(), PREPARED);
+        cacheMap.put(ACTIVE.getNumericalValue(), ACTIVE);
+        cacheMap.put(LOCKED.getNumericalValue(), LOCKED);
+        cacheMap.put(DELETED.getNumericalValue(), DELETED);
     }
     /**
      * The numerical value.
      */
-    private int numericalValue;
+    private final int numericalValue;
     
     /**
      * Inits the enum value.
@@ -80,6 +80,6 @@ public enum EntryStates implements NumericEnumValue {
      * @return the enum value, or null if not found
      */
     public static EntryStates getById(final int i) {
-        return cacheMap.get(Integer.valueOf(i));
+        return cacheMap.get(i);
     }
 }
