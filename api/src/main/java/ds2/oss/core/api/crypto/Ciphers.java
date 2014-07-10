@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,11 +43,11 @@ public enum Ciphers {
     /**
      * The instance name.
      */
-    private String instanceName;
+    private final String instanceName;
     /**
      * The suggested key length.
      */
-    private int suggestedKeyLength;
+    private final int suggestedKeyLength;
     
     /**
      * Inits the cipher enum value.

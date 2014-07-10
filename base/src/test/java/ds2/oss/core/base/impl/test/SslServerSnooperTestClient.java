@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public final class SslServerSnooperTestClient {
         WeldWrapper.onSuiteStart();
         final SslServerSnooper to =
             WeldWrapper.getInstance(SslServerSnooper.class);
-        final String hostname = args.length > 0 ? args[0] : "localhost";
+        final String hostname = args.length > 0 ? args[0] : "jiri.jamba.net";
         final X509Certificate[] certs = to.getServerCertificates(hostname, 443);
         System.out.println(certs);
         WeldWrapper.afterSuite();
