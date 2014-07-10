@@ -49,7 +49,6 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
     private static final String ID = BouncyCastleProvider.PROVIDER_NAME;
     
     static {
