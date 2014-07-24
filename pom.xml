@@ -57,10 +57,11 @@
     <module>base-it</module>
     <module>es</module>
     <module>es-test</module>
-      <module>crypto</module>
+    <module>crypto</module>
     <module>codec-boon</module>
     <module>codec-gson</module>
     <module>codec-fastxml</module>
+    <module>webtools</module>
   </modules>
   <profiles>
     <profile>
