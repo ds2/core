@@ -8,8 +8,10 @@ package ds2.oss.core.xmpp.impl;
 import ds2.oss.core.api.ITrustingSslSocketFactoryProvider;
 import ds2.oss.core.api.xmpp.IXmppConnectionData;
 import ds2.oss.core.api.xmpp.IXmppSupport;
+import ds2.oss.core.xmpp.api.XmppActionsListener;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
@@ -23,6 +25,8 @@ import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.sasl.SASLMechanism.Response;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +57,8 @@ public class XmppSupport implements IXmppSupport {
     private volatile boolean connected = false;
     @Inject
     private ITrustingSslSocketFactoryProvider sslProv;
+    @Inject
+    private XmppActionsListener actionsListener;
 
     @PostConstruct
     public void onLoad() {
@@ -118,9 +124,31 @@ public class XmppSupport implements IXmppSupport {
 
                 @Override
                 public void processPacket(Packet packet) throws SmackException.NotConnectedException {
-                    LOG.debug("Got packet: {}", packet);
+                    LOG.debug("Got message packet: {}", packet);
+                    Message m = (Message) packet;
+                    if (m.getBody() != null) {
+                        actionsListener.onMessageReceived(m.getFrom(), m.getBody());
+                    }
                 }
             }, new PacketTypeFilter(Message.class));
+            conn.addPacketListener(new PacketListener() {
+
+                @Override
+                public void processPacket(Packet packet) throws SmackException.NotConnectedException {
+                    LOG.debug("Presence packet: {}", packet.toXML());
+                    Presence p = (Presence) packet;
+                    if (Presence.Type.subscribe.equals(p.getType())) {
+                        actionsListener.onSubscribe(p.getFrom());
+                    }
+                }
+            }, new PacketTypeFilter(Presence.class));
+            conn.addPacketListener(new PacketListener() {
+
+                @Override
+                public void processPacket(Packet packet) throws SmackException.NotConnectedException {
+                    LOG.debug("Response packet: {}", packet);
+                }
+            }, new PacketTypeFilter(Response.class));
 
             LOG.debug("Performing login...");
             if (connectData.getUsername() != null) {
@@ -147,14 +175,44 @@ public class XmppSupport implements IXmppSupport {
         LOG.debug("Finished");
     }
 
-    private void sendPacket(Packet packet) throws SmackException.NotConnectedException {
+    private void sendPacket(Packet packet) {
         if (connected) {
-            conn.sendPacket(packet);
+            LOG.debug("Sending packet {}", packet);
+            try {
+                conn.sendPacket(packet);
+            } catch (SmackException.NotConnectedException ex) {
+                connected = false;
+                LOG.debug("Error when sending the packet!", ex);
+            }
+        } else {
+            LOG.debug("Sending cancelled, not connected!");
         }
     }
 
     @Override
     public boolean isConnected() {
         return connected;
+    }
+
+    @Override
+    public void sendPresenseSubscribedTo(String jid) {
+        if (connected) {
+            Presence p = new Presence(Presence.Type.subscribed);
+            p.setTo(jid);
+            sendPacket(p);
+        }
+    }
+
+    @Override
+    public void sendPlainMessage(String jid, String msg) {
+        Message m = new Message(jid, Message.Type.chat);
+        m.setPacketID(generatePacketId());
+        m.setFrom(conn.getUser());
+        m.setBody(msg);
+        sendPacket(m);
+    }
+
+    private String generatePacketId() {
+        return UUID.randomUUID().toString();
     }
 }
