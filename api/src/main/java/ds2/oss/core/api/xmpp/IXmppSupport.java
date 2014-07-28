@@ -35,4 +35,12 @@ public interface IXmppSupport {
      * @param msg the message
      */
     void sendPlainMessage(String jid, String msg);
+
+    /**
+     * Sends the given object. It is considered that the given object is of type
+     * Packet.
+     *
+     * @param o the packet to send
+     */
+    void sendPacket(Object o);
 }

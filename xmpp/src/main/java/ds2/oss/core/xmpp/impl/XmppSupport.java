@@ -267,4 +267,14 @@ public class XmppSupport implements IXmppSupport {
     private String generatePacketId() {
         return UUID.randomUUID().toString();
     }
+
+    @Override
+    public void sendPacket(Object o) {
+        if (o == null || !(o instanceof Packet)) {
+            LOG.warn("Given object is not a packet, ignoring.");
+            return;
+        }
+        sendPacket((Packet) o);
+    }
+
 }

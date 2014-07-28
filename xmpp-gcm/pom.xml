@@ -25,5 +25,9 @@
             <artifactId>smack-tcp</artifactId>
             <version>4.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+        </dependency>
     </dependencies>
 </project>
