@@ -34,7 +34,7 @@ public interface IXmppSupport {
      * @param jid the jid to write to
      * @param msg the message
      */
-    void sendPlainMessage(String jid, String msg);
+    void sendPlainTextMessage(String jid, String msg);
 
     /**
      * Sends the given object. It is considered that the given object is of type

@@ -256,7 +256,7 @@ public class XmppSupport implements IXmppSupport {
     }
 
     @Override
-    public void sendPlainMessage(String jid, String msg) {
+    public void sendPlainTextMessage(String jid, String msg) {
         Message m = new Message(jid, Message.Type.chat);
         m.setPacketID(generatePacketId());
         m.setFrom(conn.getUser());
