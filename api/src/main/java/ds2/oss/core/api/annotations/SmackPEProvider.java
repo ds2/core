@@ -10,6 +10,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
@@ -24,7 +25,19 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SmackPEProvider {
 
+    /**
+     * The element name.
+     *
+     * @return the element name
+     */
+    @Nonbinding
     String elementName() default "";
 
+    /**
+     * The namespace to watch for.
+     *
+     * @return the namespace
+     */
+    @Nonbinding
     String namespace() default "";
 }
