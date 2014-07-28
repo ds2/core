@@ -11,8 +11,14 @@ import org.jivesoftware.smack.provider.PacketExtensionProvider;
 import org.xmlpull.v1.XmlPullParser;
 
 /**
+ * Taken from the android gcm tutorial, this extension provider registers any
+ * incoming package with a specific namespace to be handled with this extension.
+ * It will basically find the first text node within the received package, and
+ * expects this node to be a json document. This json document is given and
+ * returned as its packet extension content.
  *
- * @author dstrauss
+ * @author unknown
+ * @version 0.3
  */
 @SmackPEProvider(elementName = "gcm", namespace = "google:mobile:data")
 public class GcmPacketExtensionProvider implements PacketExtensionProvider {

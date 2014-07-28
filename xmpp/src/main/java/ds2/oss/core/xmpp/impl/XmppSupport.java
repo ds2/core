@@ -82,8 +82,9 @@ public class XmppSupport implements IXmppSupport {
         if (!packetExtensions.isUnsatisfied()) {
             LOG.debug("Adding some providers");
             for (PacketExtensionProvider p : packetExtensions) {
-                SmackPEProvider anno2 = p.getClass().getAnnotation(ds2.oss.core.api.annotations.SmackPEProvider.class);
+                SmackPEProvider anno2 = p.getClass().getAnnotation(SmackPEProvider.class);
                 if (anno2 == null) {
+                    LOG.debug("Found provider x has no annotation, ignoring it", p.getClass());
                     continue;
                 }
                 LOG.info("Adding provider {}", p.getClass());
@@ -227,7 +228,6 @@ public class XmppSupport implements IXmppSupport {
 
     private void sendPacket(Packet packet) {
         if (connected) {
-            LOG.debug("Sending packet {}", packet);
             try {
                 conn.sendPacket(packet);
             } catch (SmackException.NotConnectedException ex) {
