@@ -6,7 +6,7 @@
 package ds2.oss.core.xmpp.tests;
 
 import ds2.oss.core.api.xmpp.IXmppSupport;
-import ds2.oss.core.xmpp.api.XmppActionsListener;
+import ds2.oss.core.api.xmpp.XmppActionsListener;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.slf4j.Logger;

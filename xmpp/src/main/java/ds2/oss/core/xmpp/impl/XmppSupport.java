@@ -6,18 +6,22 @@
 package ds2.oss.core.xmpp.impl;
 
 import ds2.oss.core.api.ITrustingSslSocketFactoryProvider;
+import ds2.oss.core.api.annotations.SmackPEProvider;
 import ds2.oss.core.api.xmpp.IXmppConnectionData;
 import ds2.oss.core.api.xmpp.IXmppSupport;
-import ds2.oss.core.xmpp.api.XmppActionsListener;
+import ds2.oss.core.api.xmpp.XmppActionsListener;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
+import org.jivesoftware.smack.PacketInterceptor;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPConnection;
@@ -26,6 +30,8 @@ import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.provider.PacketExtensionProvider;
+import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.sasl.SASLMechanism.Response;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.slf4j.Logger;
@@ -59,9 +65,24 @@ public class XmppSupport implements IXmppSupport {
     private ITrustingSslSocketFactoryProvider sslProv;
     @Inject
     private XmppActionsListener actionsListener;
+    @Inject
+    @SmackPEProvider
+    @Any
+    private Instance<PacketExtensionProvider> packetExtensions;
 
     @PostConstruct
     public void onLoad() {
+        LOG.debug("Adding some providers");
+        if (packetExtensions != null && !packetExtensions.isUnsatisfied()) {
+            for (PacketExtensionProvider p : packetExtensions) {
+                SmackPEProvider anno2 = p.getClass().getAnnotation(ds2.oss.core.api.annotations.SmackPEProvider.class);
+                if (anno2 == null) {
+                    continue;
+                }
+                ProviderManager.addExtensionProvider(anno2.elementName(), anno2.namespace(), p);
+            }
+        }
+
         LOG.info("Starting XMPP connection");
         try {
             ConnectionConfiguration config
@@ -149,6 +170,13 @@ public class XmppSupport implements IXmppSupport {
                     LOG.debug("Response packet: {}", packet);
                 }
             }, new PacketTypeFilter(Response.class));
+            conn.addPacketInterceptor(new PacketInterceptor() {
+
+                @Override
+                public void interceptPacket(Packet packet) {
+                    LOG.debug("Sending message: {}", packet.toXML());
+                }
+            }, new PacketTypeFilter(Message.class));
 
             LOG.debug("Performing login...");
             if (connectData.getUsername() != null) {
