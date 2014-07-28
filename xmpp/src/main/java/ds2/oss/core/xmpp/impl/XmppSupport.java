@@ -7,6 +7,7 @@ package ds2.oss.core.xmpp.impl;
 
 import ds2.oss.core.api.ITrustingSslSocketFactoryProvider;
 import ds2.oss.core.api.annotations.SmackPEProvider;
+import ds2.oss.core.api.annotations.SmackPacketListener;
 import ds2.oss.core.api.xmpp.IXmppConnectionData;
 import ds2.oss.core.api.xmpp.IXmppSupport;
 import ds2.oss.core.api.xmpp.XmppActionsListener;
@@ -66,19 +67,26 @@ public class XmppSupport implements IXmppSupport {
     @Inject
     private XmppActionsListener actionsListener;
     @Inject
-    @SmackPEProvider
     @Any
+    @SmackPEProvider
     private Instance<PacketExtensionProvider> packetExtensions;
+    @Inject
+    @Any
+    @SmackPacketListener
+    private Instance<PacketListener> packetListeners;
+    @Inject
+    private PacketTypeFilterResolver typeResolver;
 
     @PostConstruct
     public void onLoad() {
-        LOG.debug("Adding some providers");
-        if (packetExtensions != null && !packetExtensions.isUnsatisfied()) {
+        if (!packetExtensions.isUnsatisfied()) {
+            LOG.debug("Adding some providers");
             for (PacketExtensionProvider p : packetExtensions) {
                 SmackPEProvider anno2 = p.getClass().getAnnotation(ds2.oss.core.api.annotations.SmackPEProvider.class);
                 if (anno2 == null) {
                     continue;
                 }
+                LOG.info("Adding provider {}", p.getClass());
                 ProviderManager.addExtensionProvider(anno2.elementName(), anno2.namespace(), p);
             }
         }
@@ -96,7 +104,7 @@ public class XmppSupport implements IXmppSupport {
             conn = new XMPPTCPConnection(config);
             LOG.debug("Perform connect...");
             conn.connect();
-            LOG.debug("Adding listeners");
+            LOG.debug("Adding common listeners");
             conn.addConnectionListener(new ConnectionListener() {
 
                 @Override
@@ -141,6 +149,7 @@ public class XmppSupport implements IXmppSupport {
                     connected = false;
                 }
             });
+            LOG.debug("Adding common packet listeners");
             conn.addPacketListener(new PacketListener() {
 
                 @Override
@@ -170,6 +179,19 @@ public class XmppSupport implements IXmppSupport {
                     LOG.debug("Response packet: {}", packet);
                 }
             }, new PacketTypeFilter(Response.class));
+
+            if (!packetListeners.isUnsatisfied()) {
+                for (PacketListener l : packetListeners) {
+                    SmackPacketListener anno = l.getClass().getAnnotation(SmackPacketListener.class);
+                    if (anno == null) {
+                        continue;
+                    }
+                    LOG.info("Adding found listener {}", l.getClass());
+                    conn.addPacketListener(l, typeResolver.resolve(anno.type()));
+                }
+            }
+
+            LOG.debug("Adding interceptors");
             conn.addPacketInterceptor(new PacketInterceptor() {
 
                 @Override
