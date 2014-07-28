@@ -26,4 +26,8 @@ public interface IXmppConnectionData extends Serializable {
     boolean isRosterLoadedAtLogin();
 
     boolean isIgnoreSslTrustErrors();
+
+    boolean isDebuggerEnabled();
+
+    RequireSecurity getSecurityLevel();
 }

@@ -96,11 +96,13 @@ public class XmppSupport implements IXmppSupport {
         try {
             ConnectionConfiguration config
                     = new ConnectionConfiguration(connectData.getServerHostname(), connectData.getServerPort());
-            config.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
+            ConnectionConfiguration.SecurityMode sec = typeResolver.resolve(connectData.getSecurityLevel());
+            config.setSecurityMode(sec);
             config.setReconnectionAllowed(true);
             config.setRosterLoadedAtLogin(connectData.isRosterLoadedAtLogin());
             config.setSendPresence(connectData.isSendPresence());
             config.setSocketFactory(sslProv.getTrustingFactory(connectData.isIgnoreSslTrustErrors()));
+            config.setDebuggerEnabled(connectData.isDebuggerEnabled());
 
             conn = new XMPPTCPConnection(config);
             LOG.debug("Perform connect...");

@@ -6,6 +6,8 @@
 package ds2.oss.core.xmpp.impl;
 
 import ds2.oss.core.api.xmpp.PacketTypes;
+import ds2.oss.core.api.xmpp.RequireSecurity;
+import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
@@ -33,5 +35,16 @@ public class PacketTypeFilterResolver {
                 break;
         }
         return new PacketTypeFilter(p);
+    }
+
+    ConnectionConfiguration.SecurityMode resolve(RequireSecurity s) {
+        switch (s) {
+            case no:
+                return ConnectionConfiguration.SecurityMode.disabled;
+            case required:
+                return ConnectionConfiguration.SecurityMode.required;
+            default:
+                return ConnectionConfiguration.SecurityMode.enabled;
+        }
     }
 }

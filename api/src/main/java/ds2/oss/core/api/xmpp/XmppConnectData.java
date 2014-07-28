@@ -18,6 +18,8 @@ public class XmppConnectData implements IXmppConnectionData {
     private int serverPort = 5223;
     private String serverHostname = "localhost";
     private boolean ignoreSslTrustErrors = false;
+    private boolean debuggerEnabled = false;
+    private RequireSecurity securityLevel = RequireSecurity.optional;
 
     public void setIgnoreSslTrustErrors(boolean ignoreSslTrustErrors) {
         this.ignoreSslTrustErrors = ignoreSslTrustErrors;
@@ -85,6 +87,24 @@ public class XmppConnectData implements IXmppConnectionData {
     @Override
     public boolean isIgnoreSslTrustErrors() {
         return ignoreSslTrustErrors;
+    }
+
+    @Override
+    public boolean isDebuggerEnabled() {
+        return debuggerEnabled;
+    }
+
+    public void setDebuggerEnabled(boolean debuggerEnabled) {
+        this.debuggerEnabled = debuggerEnabled;
+    }
+
+    @Override
+    public RequireSecurity getSecurityLevel() {
+        return securityLevel;
+    }
+
+    public void setSecurityLevel(RequireSecurity securityLevel) {
+        this.securityLevel = securityLevel;
     }
 
 }
