@@ -84,10 +84,10 @@ public class XmppSupport implements IXmppSupport {
             for (PacketExtensionProvider p : packetExtensions) {
                 SmackPEProvider anno2 = p.getClass().getAnnotation(SmackPEProvider.class);
                 if (anno2 == null) {
-                    LOG.debug("Found provider x has no annotation, ignoring it", p.getClass());
+                    LOG.debug("Found provider {} has no annotation, ignoring it", p.getClass());
                     continue;
                 }
-                LOG.info("Adding provider {}", p.getClass());
+                LOG.info("Adding found provider {}", p.getClass());
                 ProviderManager.addExtensionProvider(anno2.elementName(), anno2.namespace(), p);
             }
         }
