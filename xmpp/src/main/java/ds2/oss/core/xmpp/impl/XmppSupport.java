@@ -105,7 +105,7 @@ public class XmppSupport implements IXmppSupport {
             config.setDebuggerEnabled(connectData.isDebuggerEnabled());
 
             conn = new XMPPTCPConnection(config);
-            LOG.debug("Perform connect...");
+            LOG.debug("Perform connect to {}:{}...", new Object[]{connectData.getServerHostname(), connectData.getServerPort()});
             conn.connect();
             LOG.debug("Adding common listeners");
             conn.addConnectionListener(new ConnectionListener() {

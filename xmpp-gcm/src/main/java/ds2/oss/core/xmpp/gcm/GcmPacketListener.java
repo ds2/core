@@ -26,16 +26,16 @@ import org.slf4j.LoggerFactory;
  */
 @SmackPacketListener(type = PacketTypes.Message)
 public class GcmPacketListener implements PacketListener {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(GcmPacketListener.class);
-    
+
     @Inject
     private JsonCodec codec;
     @Inject
     private GcmActionListener actions;
     @Inject
-    private IXmppSupport xmpp;
-    
+    private IGcmSupport gcmSender;
+
     @Override
     public void processPacket(Packet packet) throws SmackException.NotConnectedException {
         //check if packet is for us
@@ -65,18 +65,13 @@ public class GcmPacketListener implements PacketListener {
             LOG.warn("Error when decoding the given json!", ex);
         }
     }
-    
+
     private void sendAck(String from, String mesageId) {
         BaseJsonContent b = new BaseJsonContent();
         b.setTo(from);
         b.setMesageId(mesageId);
         b.setMessageType("ack");
-        try {
-            GcmPacketExtension p = new GcmPacketExtension(codec.encode(b));
-            xmpp.sendPacket(p.toPacket());
-        } catch (CoreException ex) {
-            LOG.error("Error when generating the json ack!", ex);
-        }
+        gcmSender.sendMessage(b);
     }
-    
+
 }

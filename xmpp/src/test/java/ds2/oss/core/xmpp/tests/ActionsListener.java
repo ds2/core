@@ -31,7 +31,7 @@ public class ActionsListener implements XmppActionsListener {
 
     @Override
     public void onMessageReceived(String from, String msg) {
-        xmpp.sendPlainTextMessage(from, "Nachricht erhalten: " + msg);
+        //xmpp.sendPlainTextMessage(from, "Nachricht erhalten: " + msg);
     }
 
 }
