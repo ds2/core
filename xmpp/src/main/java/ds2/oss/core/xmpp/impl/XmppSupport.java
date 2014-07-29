@@ -11,6 +11,7 @@ import ds2.oss.core.api.annotations.SmackPacketListener;
 import ds2.oss.core.api.xmpp.IXmppConnectionData;
 import ds2.oss.core.api.xmpp.IXmppSupport;
 import ds2.oss.core.api.xmpp.XmppActionsListener;
+import ds2.oss.core.api.xmpp.IPacketIdProvider;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.util.UUID;
@@ -76,6 +77,8 @@ public class XmppSupport implements IXmppSupport {
     private Instance<PacketListener> packetListeners;
     @Inject
     private PacketTypeFilterResolver typeResolver;
+    @Inject
+    private IPacketIdProvider numGenerator;
 
     @PostConstruct
     public void onLoad() {
@@ -231,6 +234,9 @@ public class XmppSupport implements IXmppSupport {
     private void sendPacket(Packet packet) {
         if (connected) {
             try {
+                if (packet.getPacketID() == null) {
+                    packet.setPacketID(numGenerator.getNextId());
+                }
                 conn.sendPacket(packet);
             } catch (SmackException.NotConnectedException ex) {
                 connected = false;
@@ -258,14 +264,9 @@ public class XmppSupport implements IXmppSupport {
     @Override
     public void sendPlainTextMessage(String jid, String msg) {
         Message m = new Message(jid, Message.Type.chat);
-        m.setPacketID(generatePacketId());
         m.setFrom(conn.getUser());
         m.setBody(msg);
         sendPacket(m);
-    }
-
-    private String generatePacketId() {
-        return UUID.randomUUID().toString();
     }
 
     @Override
