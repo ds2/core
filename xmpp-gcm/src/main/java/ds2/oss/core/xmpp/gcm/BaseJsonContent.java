@@ -33,6 +33,8 @@ public class BaseJsonContent {
     private String from;
     @JsonProperty("to")
     private String to;
+    @JsonProperty("category")
+    private String category;
 
     public String getMessageType() {
         return messageType;
@@ -64,6 +66,19 @@ public class BaseJsonContent {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append("BaseJsonContent{messageType=").append(messageType).append(", mesageId=").append(mesageId).append(", from=").append(from).append(", to=").append(to).append(", category=").append(category).append('}').toString();
     }
 
 }
