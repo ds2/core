@@ -5,12 +5,24 @@
  */
 package ds2.oss.core.xmpp.gcm;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
  * @author dstrauss
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonAutoDetect(
+        fieldVisibility = Visibility.ANY,
+        getterVisibility = Visibility.NONE,
+        setterVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.NONE
+)
 public class BaseJsonContent {
 
     @JsonProperty("message_type")

@@ -16,6 +16,7 @@ public interface IGcmSupport {
     /**
      * Sends a message to gcm.
      *
+     * @param <E> the type of the dto
      * @param m the message
      */
     <E extends BaseJsonContent> void sendMessage(E m);
