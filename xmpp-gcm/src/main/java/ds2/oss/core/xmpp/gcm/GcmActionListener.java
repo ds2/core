@@ -11,7 +11,7 @@ package ds2.oss.core.xmpp.gcm;
  */
 public interface GcmActionListener {
 
-    void onUpstreamMessage(String json);
+    void onUpstreamMessage(String json, GcmDownstreamMessage m);
 
     void onAckMessage(String json);
 

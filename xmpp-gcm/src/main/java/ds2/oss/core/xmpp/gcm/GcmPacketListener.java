@@ -8,7 +8,6 @@ package ds2.oss.core.xmpp.gcm;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.api.annotations.SmackPacketListener;
-import ds2.oss.core.api.xmpp.IXmppSupport;
 import ds2.oss.core.api.xmpp.PacketTypes;
 import javax.inject.Inject;
 import org.jivesoftware.smack.PacketListener;
@@ -50,7 +49,7 @@ public class GcmPacketListener implements PacketListener {
         try {
             BaseJsonContent obj = codec.decode(json, BaseJsonContent.class);
             if (obj.getMessageType() == null) {
-                actions.onUpstreamMessage(json);
+                actions.onUpstreamMessage(json, codec.decode(json, GcmDownstreamMessage.class));
                 sendAck(obj.getFrom(), obj.getMesageId());
             } else if ("ack".equalsIgnoreCase(obj.getMessageType())) {
                 actions.onAckMessage(json);

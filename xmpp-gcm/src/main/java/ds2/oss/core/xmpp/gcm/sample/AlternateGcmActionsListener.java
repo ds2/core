@@ -5,8 +5,12 @@
  */
 package ds2.oss.core.xmpp.gcm.sample;
 
+import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.xmpp.gcm.GcmActionListener;
+import ds2.oss.core.xmpp.gcm.GcmDownstreamMessage;
 import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +24,9 @@ public class AlternateGcmActionsListener implements GcmActionListener {
     private static final Logger LOG = LoggerFactory.getLogger(AlternateGcmActionsListener.class);
 
     @Override
-    public void onUpstreamMessage(String json) {
+    public void onUpstreamMessage(String json, GcmDownstreamMessage m) {
         LOG.info("upstream message: {}", json);
+        LOG.info("Obj is {}", m);
     }
 
     @Override
