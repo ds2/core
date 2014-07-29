@@ -26,7 +26,7 @@ public class AtomicLongNumberProvider implements IPacketIdProvider {
 
     @Override
     public String getNextId() {
-        return "" + l.addAndGet(1);
+        return "" + l.incrementAndGet();
     }
 
 }

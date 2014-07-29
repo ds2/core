@@ -22,6 +22,7 @@
     <alternatives>
         <class>ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl</class>
         <class>ds2.oss.core.xmpp.gcm.sample.AlternateGcmActionsListener</class>
+        <class>ds2.oss.core.xmpp.impl.AtomicLongNumberProvider</class>
     </alternatives>
     <scan>
         <exclude name="com.google.common.util.concurrent.ServiceManager" />
