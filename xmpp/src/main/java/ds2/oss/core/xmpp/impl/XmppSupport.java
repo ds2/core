@@ -14,7 +14,6 @@ import ds2.oss.core.api.xmpp.XmppActionsListener;
 import ds2.oss.core.api.xmpp.IPacketIdProvider;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
@@ -108,7 +107,7 @@ public class XmppSupport implements IXmppSupport {
             config.setDebuggerEnabled(connectData.isDebuggerEnabled());
 
             conn = new XMPPTCPConnection(config);
-            LOG.debug("Perform connect to {}:{}...", new Object[]{connectData.getServerHostname(), connectData.getServerPort()});
+            LOG.debug("Perform connect to {}:{} as {}...", new Object[]{connectData.getServerHostname(), connectData.getServerPort(), connectData.getUsername()});
             conn.connect();
             LOG.debug("Adding common listeners");
             conn.addConnectionListener(new ConnectionListener() {

@@ -35,6 +35,7 @@ public class TestProvider {
         rc.setServerHostname("gcm-staging.googleapis.com");
         rc.setServerPort(5236);
         rc.setIgnoreSslTrustErrors(true);
+        rc.setDebuggerEnabled(true);
         rc.setSecurityLevel(RequireSecurity.optional);
         return rc;
     }

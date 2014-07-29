@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * checking if it works.
  *
  * @author dstrauss
+ * @version 0.3
  */
 public class LocalhostTestClient extends AbstractInjectionEnvironment {
 
