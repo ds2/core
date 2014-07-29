@@ -50,7 +50,7 @@ public class GcmPacketListener implements PacketListener {
             BaseJsonContent obj = codec.decode(json, BaseJsonContent.class);
             if (obj.getMessageType() == null) {
                 actions.onUpstreamMessage(json, codec.decode(json, GcmDownstreamMessage.class));
-                sendAck(obj.getFrom(), obj.getMesageId());
+                sendAck(obj.getFrom(), obj.getMessageId());
             } else if ("ack".equalsIgnoreCase(obj.getMessageType())) {
                 actions.onAckMessage(json);
             } else if ("nack".equalsIgnoreCase(obj.getMessageType())) {
@@ -68,7 +68,7 @@ public class GcmPacketListener implements PacketListener {
     private void sendAck(String from, String mesageId) {
         BaseJsonContent b = new BaseJsonContent();
         b.setTo(from);
-        b.setMesageId(mesageId);
+        b.setMessageId(mesageId);
         b.setMessageType("ack");
         gcmSender.sendMessage(b);
     }

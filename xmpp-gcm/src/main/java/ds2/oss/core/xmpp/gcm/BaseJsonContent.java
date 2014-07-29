@@ -28,7 +28,7 @@ public class BaseJsonContent {
     @JsonProperty("message_type")
     private String messageType;
     @JsonProperty("message_id")
-    private String mesageId;
+    private String messageId;
     @JsonProperty("from")
     private String from;
     @JsonProperty("to")
@@ -44,12 +44,12 @@ public class BaseJsonContent {
         this.messageType = messageType;
     }
 
-    public String getMesageId() {
-        return mesageId;
+    public String getMessageId() {
+        return messageId;
     }
 
-    public void setMesageId(String mesageId) {
-        this.mesageId = mesageId;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public String getFrom() {
@@ -78,7 +78,7 @@ public class BaseJsonContent {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("BaseJsonContent{messageType=").append(messageType).append(", mesageId=").append(mesageId).append(", from=").append(from).append(", to=").append(to).append(", category=").append(category).append('}').toString();
+        return new StringBuilder().append("BaseJsonContent{messageType=").append(messageType).append(", messageId=").append(messageId).append(", from=").append(from).append(", to=").append(to).append(", category=").append(category).append('}').toString();
     }
 
 }
