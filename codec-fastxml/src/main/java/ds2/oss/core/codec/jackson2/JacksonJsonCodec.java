@@ -49,6 +49,9 @@ public class JacksonJsonCodec implements JsonCodec {
     @Override
     public String encode(Object z) throws CoreException {
         String rc = null;
+        if (z == null) {
+            throw new IllegalArgumentException("No object given to transform!");
+        }
         try {
             rc = om.writeValueAsString(z);
         } catch (JsonProcessingException ex) {

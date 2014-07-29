@@ -6,34 +6,36 @@
         <artifactId>core</artifactId>
         <version>0.3-SNAPSHOT</version>
     </parent>
-    <artifactId>ds2-oss-core-codec-fastxml</artifactId>
+    <artifactId>ds2-oss-core-xmpp</artifactId>
     <packaging>jar</packaging>
-    <name>DS/2 OSS Core Codec Jackson2</name>
+    <name>DS/2 OSS Core XMPP</name>
+    <description>A basic support to enable communication with an XMPP server (GCM in particular).</description>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>ds2-oss-core-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <groupId>org.igniterealtime.smack</groupId>
+            <artifactId>smack-tcp</artifactId>
+            <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -41,8 +43,14 @@
             <artifactId>weld-se-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ds2-oss-core-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>ds2-oss-core-xmpp-gcm</artifactId>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -62,6 +62,8 @@
     <module>codec-gson</module>
     <module>codec-fastxml</module>
     <module>webtools</module>
+    <module>xmpp</module>
+    <module>xmpp-gcm</module>
   </modules>
   <profiles>
     <profile>
