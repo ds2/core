@@ -28,7 +28,7 @@ public class LocalhostTestClient extends AbstractInjectionEnvironment {
         LOG.info("Is connected: {}", xmpp.isConnected());
         if (xmpp.isConnected()) {
             try {
-                Thread.sleep(1000 * 60);
+                Thread.sleep(1000 * 60 * 60);
             } catch (InterruptedException ex) {
                 LOG.error("Error when waiting!", ex);
             }
