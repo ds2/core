@@ -5,7 +5,7 @@
  */
 package ds2.oss.core.xmpp.gcm;
 
-import org.boon.json.annotations.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *

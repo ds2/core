@@ -5,8 +5,8 @@
  */
 package ds2.oss.core.xmpp.gcm;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
-import org.boon.json.annotations.JsonProperty;
 
 /**
  *
