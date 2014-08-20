@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,9 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-/**
- * 
  */
 package ds2.oss.core.crypto;
 
@@ -34,21 +31,35 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import java.security.Security;
+import javax.annotation.PostConstruct;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * The bouncy castle security provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
 public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
+
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String ID = BouncyCastleProvider.PROVIDER_NAME;
     
+    static {
+        Security.insertProviderAt(new BouncyCastleProvider(), 1);
+    }
+
+    @PostConstruct
+    public void onLoad() {
+        LOG.debug("Loading BC Provider");
+    }
+
     /*
      * (non-Javadoc)
      * @see
@@ -56,30 +67,32 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
      */
     @Override
     public Cipher createCipherInstance(final Ciphers c) {
+        Cipher rc = null;
         try {
-            return c.getCipherInstance("BC");
+            rc = c.getCipherInstance(ID);
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        return null;
+        LOG.debug("Using {} -> {}", new Object[]{c, rc});
+        return rc;
     }
-    
+
     @Override
     public KeyGenerator createKeyGenerator(final KeyGeneratorNames name) {
         KeyGenerator rc = null;
         try {
-            rc = KeyGenerator.getInstance(name.name(), "BC");
+            rc = KeyGenerator.getInstance(name.name(), ID);
         } catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the key generator instance!", e);
         }
         return rc;
     }
-    
+
     @Override
     public SecretKeyFactory createSecretKeyFactoryInstance(final String string) {
         SecretKeyFactory rc = null;
         try {
-            rc = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", "BC");
+            rc = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1", ID);
         } catch (final NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when generating the SKF!", e);
         }

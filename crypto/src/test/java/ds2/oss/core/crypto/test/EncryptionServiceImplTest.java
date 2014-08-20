@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,9 @@
 package ds2.oss.core.crypto.test;
 
 import java.io.UnsupportedEncodingException;
-import java.security.Security;
 
 import javax.crypto.SecretKey;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -52,14 +50,13 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
     /**
      * The message to encode.
      */
-    private String msg = "Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
+    private final String msg = "Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
     
     /**
      * Actions to perform at start.
      */
     @BeforeClass
     public void onClass() {
-        Security.insertProviderAt(new BouncyCastleProvider(), 1);
         to = getInstance(EncryptionService.class);
         keygen = getInstance(KeyGeneratorService.class);
     }
@@ -72,7 +69,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
      */
     @Test
     public void testEncrypt() throws UnsupportedEncodingException {
-        final SecretKey sk = keygen.generateSecureAesKey("test");
+        final SecretKey sk = keygen.generateSecureAesKey("test", 128);
         encodedStuff = to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
         Assert.assertNotNull(encodedStuff);
     }
@@ -85,7 +82,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
      */
     @Test(dependsOnMethods = "testEncrypt")
     public void testDecrypt() throws UnsupportedEncodingException {
-        final SecretKey sk = keygen.generateSecureAesKey("test");
+        final SecretKey sk = keygen.generateSecureAesKey("test", 128);
         final byte[] decoded = to.decode(sk, Ciphers.AES, encodedStuff);
         Assert.assertNotNull(decoded);
         final String s = new String(decoded, "utf-8");

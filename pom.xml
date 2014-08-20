@@ -17,7 +17,7 @@
     <issueTrackerId>OSSCORE</issueTrackerId>
     <license.header.author>Dirk Strauss</license.header.author>
     <license.header.email>dstrauss@ds-2.de</license.header.email>
-    <license.header.year>2012-2013</license.header.year>
+    <license.header.year>2012-2014</license.header.year>
     <license.id>asl_v2</license.id>
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
@@ -58,7 +58,13 @@
     <module>es</module>
     <module>es-test</module>
     <module>infinispan</module>
-      <module>crypto</module>
+    <module>crypto</module>
+    <module>codec-boon</module>
+    <module>codec-gson</module>
+    <module>codec-fastxml</module>
+    <module>webtools</module>
+    <module>xmpp</module>
+    <module>xmpp-gcm</module>
   </modules>
   <profiles>
     <profile>
