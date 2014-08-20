@@ -6,3 +6,6 @@ test-output
 nbproject
 *.iml
 out
+*.orig
+*.log
+/xmpp/src/test/resources/google-authdata.properties

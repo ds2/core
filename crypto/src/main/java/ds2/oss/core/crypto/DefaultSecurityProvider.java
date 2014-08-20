@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,9 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-/**
- * 
  */
 package ds2.oss.core.crypto;
 
@@ -34,21 +31,28 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import javax.annotation.PostConstruct;
 
 /**
  * The JVM default security provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
 public class DefaultSecurityProvider implements SecurityInstanceProvider {
+
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
+    @PostConstruct
+    public void onLoad() {
+        LOG.debug("Loading JCE default provider.");
+    }
+
     /*
      * (non-Javadoc)
      * @see
@@ -57,14 +61,16 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
      */
     @Override
     public Cipher createCipherInstance(final Ciphers c) {
+        Cipher rc = null;
         try {
-            return c.getCipherInstance();
+            rc = c.getCipherInstance();
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        return null;
+        LOG.debug("Returning cipher {} for {}", new Object[]{rc, c});
+        return rc;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.crypto.SecurityInstanceProvider#createKeyGenerator(ds2.oss.core.api.crypto.
@@ -79,7 +85,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         }
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -94,5 +100,5 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         }
         return null;
     }
-    
+
 }

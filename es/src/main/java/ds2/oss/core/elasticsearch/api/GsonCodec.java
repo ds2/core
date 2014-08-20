@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,16 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
+import ds2.oss.core.api.JsonCodec;
+
 /**
  * A codec contract to deal with JSON strings via Gson.
  * 
  * @author dstrauss
  * @version 0.2
+ * @deprecated In favor of {@link JsonCodec}.
  */
+@Deprecated
 public interface GsonCodec {
     /**
      * Encodes a given type into a json.

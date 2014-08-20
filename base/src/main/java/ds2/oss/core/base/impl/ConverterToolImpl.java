@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,17 @@ package ds2.oss.core.base.impl;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.ConverterTool;
+import java.util.Date;
 
 /**
  * Implemenation of the converter.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 public class ConverterToolImpl implements ConverterTool {
+
     @Override
     public int toInt(final Object o, final int defValue) {
         int rc = defValue;
@@ -39,5 +41,18 @@ public class ConverterToolImpl implements ConverterTool {
             }
         }
         return rc;
+    }
+
+    @Override
+    public long getDateMillis(Date d) {
+        if (d == null) {
+            throw new IllegalArgumentException("You must give a date to convert!");
+        }
+        return d.getTime();
+    }
+
+    @Override
+    public Date toDate(long ms) {
+        return new Date(ms);
     }
 }

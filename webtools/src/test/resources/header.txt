@@ -1,0 +1,1 @@
+This is a long täxt which is read by a büffer and ä lögger.

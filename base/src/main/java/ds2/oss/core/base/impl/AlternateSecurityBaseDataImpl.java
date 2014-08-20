@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,55 +23,64 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 
 import ds2.oss.core.api.SecurityBaseData;
+import java.lang.invoke.MethodHandles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Dummy alternative for the sec base data.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @Alternative
 @ApplicationScoped
-public class SecurityBaseDataImpl implements SecurityBaseData {
+public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
+
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * A randomizer.
      */
     private SecureRandom random;
     /**
-     * A randomly generated salt value. On every restart of the component, a new salt value will be
-     * generated!
+     * A randomly generated salt value. On every restart of the component, a new
+     * salt value will be generated!
      */
     private byte[] salt;
     /**
      * The init vector.
      */
     private byte[] initVector;
-    
+
     /**
      * Inits the impl.
      */
-    public SecurityBaseDataImpl() {
+    public AlternateSecurityBaseDataImpl() {
         try {
             random = SecureRandom.getInstance("SHA1PRNG");
         } catch (NoSuchAlgorithmException e) {
+            LOG.error("Error when setting up the randomizer!", e);
         }
     }
-    
+
     @Override
     public int getMinIteration() {
         return 1000;
     }
-    
+
     @Override
     public byte[] getInitVector() {
         return initVector;
     }
-    
+
     @Override
     public byte[] getSalt() {
         return salt;
     }
-    
+
     /**
      * Actions to perform after init, after CDI injections.
      */

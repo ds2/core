@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    Copyright 2012-2013 Dirk Strauss
+    Copyright 2012-2014 Dirk Strauss
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
   bean-discovery-mode="annotated">
   <alternatives>
     <class>ds2.oss.core.elasticsearch.impl.LocalNodeImpl</class>
-    <class>ds2.oss.core.base.impl.SecurityBaseDataImpl</class>
+    <class>ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl</class>
   </alternatives>
   <scan>
     <exclude name="com.google.common.util.concurrent.ServiceManager" />
