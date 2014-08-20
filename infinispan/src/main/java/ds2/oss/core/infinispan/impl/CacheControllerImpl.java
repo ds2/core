@@ -1,9 +1,9 @@
 package ds2.oss.core.infinispan.impl;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.Set;
 
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
@@ -22,6 +22,7 @@ import ds2.oss.core.api.es.InfinispanConfig;
 /**
  * Created by dstrauss on 20.08.13.
  */
+@Dependent
 public class CacheControllerImpl {
     /**
      * A logger.
@@ -37,7 +38,7 @@ public class CacheControllerImpl {
      * @param vClass
      * @return the cache, or null
      */
-    public static <K, V> Cache<K, V> provideCache(final String resFile, final String cName, final Class<K> kClass,
+    private static <K, V> Cache<K, V> provideCache(final String resFile, final String cName, final Class<K> kClass,
         final Class<V> vClass) {
         LOG.debug("Loading cache {} from resource {}", new Object[] { cName, resFile });
         Cache<K, V> rc = null;
@@ -51,39 +52,25 @@ public class CacheControllerImpl {
     }
     
     @Produces
+    @Dependent
+    @InfinispanConfig
+    @Any
     public <K, V extends Persistable<K>> InfinispanStore<K, V> createInjection(final InjectionPoint p) {
-        Set<Annotation> qualifiers = p.getQualifiers();
-        InfinispanConfig config = findAnnotation(qualifiers, InfinispanConfig.class);
+        LOG.debug("Checking cut point..");
+        InfinispanConfig config = p.getAnnotated().getAnnotation(InfinispanConfig.class);
         if (config == null) {
             throw new IllegalStateException("Cannot find the infinispan config annotation at injection point " + p);
         }
-        // provideCache(config.xmlFile(), config.cacheName(), null, null)
-        return null;
+        Cache<K, V> foundCache =
+            provideCache(config.xmlFile(), config.cacheName(), null,
+                null);
+        InfinispanStoreImpl<K, V> rc = new InfinispanStoreImpl<K, V>();
+        rc.setCache(foundCache);
+        return rc;
     }
     
     @Produces
     public <K, V> Configuration loadConfig() {
         return new ConfigurationBuilder().eviction().strategy(EvictionStrategy.LRU).maxEntries(100).build();
-    }
-    
-    /**
-     * Finds a specific annotation.
-     * 
-     * @param qualifiers
-     *            the qualifiers to scan
-     * @param c
-     *            the annotation class
-     * @return the found annotation qualifier, or null if not found
-     */
-    private static <A extends Annotation> A findAnnotation(final Set<Annotation> qualifiers, final Class<A> c) {
-        if (qualifiers != null) {
-            for (Annotation a : qualifiers) {
-                if (c.isAssignableFrom(a.getClass())) {
-                    A rc = c.cast(a);
-                    return rc;
-                }
-            }
-        }
-        return null;
     }
 }
