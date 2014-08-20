@@ -15,11 +15,18 @@
  */
 package ds2.oss.core.elasticsearch.ap;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import ds2.oss.core.elasticsearch.api.FieldTypes;
+import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
+import ds2.oss.core.elasticsearch.api.annotations.TimestampPath;
+import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -35,14 +42,6 @@ import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
-import ds2.oss.core.elasticsearch.api.FieldTypes;
-import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
-
 /**
  * The type mapping annotation processor.
  * 
@@ -52,6 +51,15 @@ import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 @SupportedAnnotationTypes(value = "ds2.oss.core.elasticsearch.api.annotations.TypeMapping")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class CreateTypeMappingsAP extends AbstractProcessor {
+
+  private static Element searchFieldsFor(Class<? extends Annotation> aClass, List<? extends Element> fields) {
+    for(Element el : fields){
+      if(el.getAnnotation(aClass)!=null){
+        return el;
+      }
+    }
+    return null;
+  }
     /**
      * Inits the processor.
      */
@@ -99,7 +107,7 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
                 final JsonObject typeJs = new JsonObject();
                 // the type name structure
                 mainJs.add(tm.value(), typeJs);
-                scanType(typeJs, tm);
+                scanType(typeJs, tm, te.getEnclosedElements());
                 final JsonObject properties = scanProperties(log, te.getEnclosedElements());
                 if (properties != null) {
                     typeJs.add("properties", properties);
@@ -120,7 +128,7 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
      * @param tm
      *            the type mapping data
      */
-    private static void scanType(final JsonObject typeJs, final TypeMapping tm) {
+    private static void scanType(final JsonObject typeJs, final TypeMapping tm, List<? extends Element> fields) {
         final JsonObject sourceEnabled = new JsonObject();
         sourceEnabled.addProperty("enabled", Boolean.valueOf(tm.storeSource()));
         typeJs.add("_source", sourceEnabled);
@@ -135,6 +143,18 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
             final JsonObject parent = new JsonObject();
             parent.addProperty("type", tm.parentType());
             typeJs.add("_parent", parent);
+        }
+        if (tm.indexTimestamp()) {
+            final JsonObject parent = new JsonObject();
+            boolean indexTs=tm.indexTimestamp();
+            Element tsPathEl=searchFieldsFor(TimestampPath.class, fields);
+            if(tsPathEl!=null){
+              PropertyMapping pm=tsPathEl.getAnnotation(PropertyMapping.class);
+              parent.addProperty("path", tsPathEl.getSimpleName().toString());
+              indexTs=true;
+            }
+            parent.addProperty("enabled", indexTs);
+            typeJs.add("_timestamp", parent);
         }
     }
     
