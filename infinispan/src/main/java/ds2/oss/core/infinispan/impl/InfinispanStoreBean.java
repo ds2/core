@@ -1,8 +1,13 @@
 package ds2.oss.core.infinispan.impl;
 
+import java.lang.invoke.MethodHandles;
+
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.infinispan.Cache;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.InfinispanStore;
 import ds2.oss.core.api.Persistable;
@@ -18,17 +23,27 @@ import ds2.oss.core.api.Persistable;
  * @param <V>
  *            the value type
  */
-public class InfinispanStoreImpl<K, V extends Persistable<K>> implements InfinispanStore<K, V> {
+public class InfinispanStoreBean<K, V extends Persistable<K>> implements InfinispanStore<K, V> {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The cache instance.
      */
     private Cache<K, V> cache;
+    
+    @PostConstruct
+    public void onLoad() {
+        LOG.debug("I am alive");
+    }
     
     /**
      * Actions to perform at stop.
      */
     @PreDestroy
     public void onStop() {
+        LOG.debug("Stopping cache..");
         cache.stop();
     }
     
@@ -48,7 +63,7 @@ public class InfinispanStoreImpl<K, V extends Persistable<K>> implements Infinis
         return cache.get(k);
     }
     
-    public void setCache(Cache<K, V> foundCache) {
+    void setCache(Cache<K, V> foundCache) {
         cache = foundCache;
     }
 }

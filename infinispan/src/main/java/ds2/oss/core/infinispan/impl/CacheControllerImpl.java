@@ -2,10 +2,14 @@ package ds2.oss.core.infinispan.impl;
 
 import java.io.IOException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 import org.infinispan.Cache;
 import org.infinispan.configuration.cache.Configuration;
@@ -22,12 +26,15 @@ import ds2.oss.core.api.es.InfinispanConfig;
 /**
  * Created by dstrauss on 20.08.13.
  */
-@Dependent
+@ApplicationScoped
 public class CacheControllerImpl {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(CacheControllerImpl.class);
+    @Inject
+    @Any
+    private Provider<InfinispanStoreBean<?, ?>> stores;
     
     /**
      * Loads a cache for the given coordinates.
@@ -52,20 +59,23 @@ public class CacheControllerImpl {
     }
     
     @Produces
-    @Dependent
     @InfinispanConfig
+    @Dependent
     @Any
-    public <K, V extends Persistable<K>> InfinispanStore<K, V> createInjection(final InjectionPoint p) {
+    public <K, V extends Persistable<K>> InfinispanStore<K, V> createInjection(final InjectionPoint p, BeanManager bm) {
         LOG.debug("Checking cut point..");
         InfinispanConfig config = p.getAnnotated().getAnnotation(InfinispanConfig.class);
         if (config == null) {
             throw new IllegalStateException("Cannot find the infinispan config annotation at injection point " + p);
         }
+        LOG.debug("Loading cache from given config data");
         Cache<K, V> foundCache =
             provideCache(config.xmlFile(), config.cacheName(), null,
                 null);
-        InfinispanStoreImpl<K, V> rc = new InfinispanStoreImpl<K, V>();
+        LOG.debug("Getting new instance of store bean");
+        InfinispanStoreBean<K, V> rc = (InfinispanStoreBean<K, V>) stores.get();
         rc.setCache(foundCache);
+        LOG.debug("Done, returning new impl");
         return rc;
     }
     
