@@ -34,6 +34,7 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 @Qualifier
+@Deprecated
 public @interface OptionsPersistenceSupport {
     /**
      * The type of the store.

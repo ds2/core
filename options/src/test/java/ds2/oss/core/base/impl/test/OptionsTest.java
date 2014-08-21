@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
  * @author dstrauss
  * @version 0.3
  */
-public class OptionsTest implements Options {
+public class OptionsTest extends AbstractInjectionEnvironment implements Options {
     @Test
     public void testInit() {
         Assert.assertNotNull(USERNAME);

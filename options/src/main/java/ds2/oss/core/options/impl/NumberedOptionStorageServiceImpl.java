@@ -34,8 +34,6 @@ import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
-import ds2.oss.core.options.api.OptionsPersistenceSupport;
-import ds2.oss.core.options.api.OptionsPersistenceSupport.StorageType;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
@@ -57,7 +55,6 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      * The persistence support to use for options..
      */
     @Inject
-    @OptionsPersistenceSupport(type = StorageType.NUMBERED)
     private NumberedOptionsPersistenceSupport numberedPersistenceSupport;
     /**
      * The option factory.

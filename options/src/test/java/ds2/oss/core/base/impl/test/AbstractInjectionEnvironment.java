@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package ds2.oss.core.base.impl.test;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.enterprise.inject.spi.Bean;
 
@@ -40,16 +42,33 @@ public abstract class AbstractInjectionEnvironment {
      * The container.
      */
     private static WeldContainer wc;
+    /**
+     * A lock.
+     */
+    private static final Lock LOCK = new ReentrantLock();
     
     @BeforeSuite(alwaysRun = true)
     public void onSuite() {
-        wc = weld.initialize();
+        try {
+            LOCK.lock();
+            if (weld == null) {
+                weld = new Weld();
+            }
+            wc = weld.initialize();
+        } finally {
+            LOCK.unlock();
+        }
     }
     
     @AfterSuite(alwaysRun = true)
     public void onSuiteEnd() {
-        weld.shutdown();
-        weld = null;
+        try {
+            LOCK.lock();
+            weld.shutdown();
+            weld = null;
+        } finally {
+            LOCK.unlock();
+        }
     }
     
     /**
@@ -61,16 +80,26 @@ public abstract class AbstractInjectionEnvironment {
      * @return an instance
      */
     public static <T> T getInstance(final Class<T> c) {
-        return wc.instance().select(c).get();
+        try {
+            LOCK.lock();
+            return wc.instance().select(c).get();
+        } finally {
+            LOCK.unlock();
+        }
     }
     
     public static <T> T getInstance(final Class<T> c, final Annotation... annotations) {
-        Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
-        if ((beans != null) && !beans.isEmpty()) {
-            for (Bean b : beans) {
-                System.out.println("Bean is " + b);
+        try {
+            LOCK.lock();
+            Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
+            if ((beans != null) && !beans.isEmpty()) {
+                for (Bean b : beans) {
+                    System.out.println("Bean is " + b);
+                }
             }
+            return wc.instance().select(c, annotations).get();
+        } finally {
+            LOCK.unlock();
         }
-        return wc.instance().select(c, annotations).get();
     }
 }

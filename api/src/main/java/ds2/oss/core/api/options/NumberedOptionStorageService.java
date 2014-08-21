@@ -15,9 +15,8 @@
  */
 package ds2.oss.core.api.options;
 
-
 /**
- * The option storage for numerical keys.
+ * The option storage, using numerical keys.
  * 
  * @author dstrauss
  * @version 0.3
