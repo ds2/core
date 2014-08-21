@@ -3,6 +3,7 @@
  */
 package ds2.oss.core.infinispan.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -36,5 +37,11 @@ public class InfinispanTest extends AbstractInjectionEnvironment {
         option.setKey("k1");
         option.setVal("val");
         to.store(option);
+    }
+    
+    @Test(dependsOnMethods = "testOptionValid")
+    public void testGetOption() {
+        MyOption option = to.get("k1");
+        Assert.assertNotNull(option);
     }
 }
