@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<infinispan
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="urn:infinispan:config:5.3 http://www.infinispan.org/schemas/infinispan-config-5.3.xsd"
+  xmlns="urn:infinispan:config:5.3">
+  <namedCache name="xml-configured-cache">
+    <eviction
+      strategy="LIRS"
+      maxEntries="10" />
+  </namedCache>
+  <namedCache name="options">
+    <clustering mode="local">
+    </clustering>
+    <versioning
+      enabled="true"
+      versioningScheme="SIMPLE" />
+    <eviction
+      maxEntries="100"
+      strategy="LRU" />
+    <expiration lifespan="60000" />
+    <loaders preload="true">
+      <fileStore
+        fetchPersistentState="true"
+        purgerThreads="3"
+        purgeSynchronously="true"
+        ignoreModifications="false"
+        purgeOnStartup="false"
+        location="${java.io.tmpdir}">
+        <async
+          enabled="true"
+          flushLockTimeout="15000"
+          threadPoolSize="5" />
+        <singletonStore
+          enabled="true"
+          pushStateWhenCoordinator="true"
+          pushStateTimeout="20000" />
+      </fileStore>
+    </loaders>
+  </namedCache>
+</infinispan>
