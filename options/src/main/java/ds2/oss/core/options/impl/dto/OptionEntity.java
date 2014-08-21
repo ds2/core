@@ -110,12 +110,17 @@ public class OptionEntity implements Option<Long, Object> {
      */
     @Column(name = "stage", nullable = false)
     @Convert(converter = OptionStageConverter.class)
-    private OptionStage stageVal;
+    private OptionStage stage;
     /**
      * The modifier username.
      */
     @Column(name = "modified_by")
     private String modifierName;
+    /**
+     * A description of the option.
+     */
+    @Column(name = "description")
+    private String description;
     
     /**
      * Inits the entity.
@@ -171,7 +176,7 @@ public class OptionEntity implements Option<Long, Object> {
     
     @Override
     public OptionStage getStage() {
-        return stageVal;
+        return stage;
     }
     
     /**
@@ -181,7 +186,7 @@ public class OptionEntity implements Option<Long, Object> {
      *            the stage value
      */
     public void setStage(final OptionStage s) {
-        stageVal = s;
+        stage = s;
     }
     
     /**
@@ -293,11 +298,20 @@ public class OptionEntity implements Option<Long, Object> {
         builder.append(", defaultValue=");
         builder.append(defaultValue);
         builder.append(", stageVal=");
-        builder.append(stageVal);
+        builder.append(stage);
         builder.append(", modifierName=");
         builder.append(modifierName);
         builder.append(")");
         return builder.toString();
+    }
+    
+    @Override
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

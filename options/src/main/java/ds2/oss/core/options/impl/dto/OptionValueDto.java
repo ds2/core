@@ -105,6 +105,7 @@ public class OptionValueDto<E, V> implements OptionValue<E, V> {
      * The value.
      */
     private V value;
+    private String requestedDomain;
     
     @Override
     public E getId() {
@@ -299,6 +300,15 @@ public class OptionValueDto<E, V> implements OptionValue<E, V> {
      */
     public void setValue(final V value) {
         this.value = value;
+    }
+    
+    @Override
+    public String getRequestedDomain() {
+        return requestedDomain;
+    }
+    
+    public void setRequestedDomain(String requestedDomain) {
+        this.requestedDomain = requestedDomain;
     }
     
 }

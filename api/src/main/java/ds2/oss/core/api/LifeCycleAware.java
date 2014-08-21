@@ -25,7 +25,17 @@ import java.util.Date;
  * @version 0.3
  */
 public interface LifeCycleAware extends Serializable {
+    /**
+     * Returns the start date from this item.
+     * 
+     * @return the start date
+     */
     Date getValidFrom();
     
+    /**
+     * Returns the stop date from this item.
+     * 
+     * @return the stop date
+     */
     Date getValidTo();
 }

@@ -46,6 +46,10 @@ public abstract class AbstractOptionIdentifier<V> implements OptionIdentifier<V>
      * the value type.
      */
     private ValueType valueType;
+    /**
+     * A description of the option.
+     */
+    private String description;
     
     /**
      * Inits the option identifier.
@@ -83,5 +87,10 @@ public abstract class AbstractOptionIdentifier<V> implements OptionIdentifier<V>
     @Override
     public boolean isEncrypted() {
         return false;
+    }
+    
+    @Override
+    public String getDescription() {
+        return description;
     }
 }

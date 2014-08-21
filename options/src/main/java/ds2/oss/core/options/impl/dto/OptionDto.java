@@ -94,6 +94,7 @@ public class OptionDto<E, V> implements Option<E, V> {
     @NotNull
     @Size(min = 1, max = 30)
     private String applicationName;
+    private String description;
     
     /**
      * Inits the option with dummy default values.
@@ -293,6 +294,15 @@ public class OptionDto<E, V> implements Option<E, V> {
         builder.append(applicationName);
         builder.append(")");
         return builder.toString();
+    }
+    
+    @Override
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

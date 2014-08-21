@@ -25,8 +25,6 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
   	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/core</jta-data-source>
     <class>ds2.oss.core.options.impl.dto.OptionEntity</class>
-    <class>ds2.oss.core.options.impl.dto.OptionStageModule</class>
-    <class>ds2.oss.core.options.impl.dto.ValueTypeModule</class>
     <class>ds2.oss.core.base.impl.StateAwareModule</class>
     <class>ds2.oss.core.base.impl.CreatedModifiedAwareModule</class>
     <class>ds2.oss.core.options.internal.OptionStageConverter</class>
