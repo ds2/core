@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,45 +22,50 @@ import javax.inject.Inject;
 
 import ds2.oss.core.api.LocaleSupport;
 import ds2.oss.core.api.annotations.LocaleData;
+import java.util.TimeZone;
 
 /**
  * A dummy provider.
- * 
+ *
  * @version 0.3
  * @author dstrauss
  */
 public class LocaleSupportTestProvider {
+
     /**
      * The injection.
      */
     @Inject
     @LocaleData(baseName = "ds2/oss/core/base/impl/test/LocTest")
     private LocaleSupport localeSupport;
-    
+
     /**
      * The hello method.
-     * 
-     * @param locale
-     *            the locale
+     *
+     * @param locale the locale
      * @return the resolved i18n string.
      */
     public String getHello(final Locale locale) {
         return localeSupport.resolve("hello", locale);
     }
-    
+
     public String getHelloParam(final Locale locale, final String name) {
         return localeSupport.resolve("helloParam", locale, name);
     }
-    
+
     public String formatCurrency(final Locale locale, final double val) {
         return localeSupport.formatCurrency(locale, val);
     }
-    
-    public String formatDate(final Date date, final Locale locale, final int dateStyle) {
-        return localeSupport.formatDate(date, locale, dateStyle);
+
+    public String formatCurrencyNumber(final Locale locale, final double val) {
+        return localeSupport.formatCurrencyNumber(locale, val);
     }
-    
-    public String formatDateTime(final Date date, final Locale locale, final int dateStyle, final int timeStyle) {
-        return localeSupport.formatDateTime(date, locale, dateStyle, timeStyle);
+
+    public String formatDate(final Date date, final Locale locale, TimeZone tz, final int dateStyle) {
+        return localeSupport.formatDate(date, locale, tz, dateStyle);
+    }
+
+    public String formatDateTime(final Date date, final Locale locale, TimeZone tz, final int dateStyle, final int timeStyle) {
+        return localeSupport.formatDateTime(date, locale, tz, dateStyle, timeStyle);
     }
 }

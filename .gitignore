@@ -8,3 +8,4 @@ nbproject
 out
 *.orig
 *.log
+/xmpp/src/test/resources/google-authdata.properties

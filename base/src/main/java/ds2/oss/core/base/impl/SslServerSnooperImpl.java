@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,12 +42,13 @@ import ds2.oss.core.api.SslServerSnooper;
 
 /**
  * The impl.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @ApplicationScoped
 public class SslServerSnooperImpl implements SslServerSnooper {
+
     /**
      * A logger.
      */
@@ -56,13 +57,13 @@ public class SslServerSnooperImpl implements SslServerSnooper {
      * The path separator char to use to setup the file path.
      */
     private static final char PATHSEP = File.separatorChar;
-    
+
     /**
      * Returns an empty keystore, or the platform keystore (aka trust store).
-     * 
+     *
      * @return the keystore
      */
-    private static KeyStore getCurrentKeystore() {
+    static KeyStore getCurrentKeystore() {
         KeyStore rc = null;
         final char[] ksPw = "changeit".toCharArray();
         try {
@@ -82,18 +83,16 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         }
         return rc;
     }
-    
+
     /**
      * Loads keystore data.
-     * 
-     * @param rc
-     *            the keystore to fill
-     * @param ksPw
-     *            the keystore password
-     * @param javaHomeKs
-     *            the keystore file to read data from
+     *
+     * @param rc the keystore to fill
+     * @param ksPw the keystore password
+     * @param javaHomeKs the keystore file to read data from
      */
     private static void loadLocalKeystore(final KeyStore rc, final char[] ksPw, final File javaHomeKs) {
+        LOG.debug("Loading data from {}", javaHomeKs);
         try (FileInputStream fis = new FileInputStream(javaHomeKs)) {
             rc.load(fis, ksPw);
         } catch (final NoSuchAlgorithmException e) {
@@ -104,12 +103,11 @@ public class SslServerSnooperImpl implements SslServerSnooper {
             LOG.error("An IO error occurred on reading the keystore!", e);
         }
     }
-    
+
     /**
      * Prints some data about the given certificate.
-     * 
-     * @param cert
-     *            the certificate
+     *
+     * @param cert the certificate
      * @return the cert data
      */
     private static String printCert(final X509Certificate cert) {
@@ -118,16 +116,13 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         sb.append("\n").append("Issuer: ").append(cert.getIssuerDN());
         return sb.toString();
     }
-    
+
     /**
      * Writes the received server certificates into a temporary file.
-     * 
-     * @param aliasHeader
-     *            the alias header
-     * @param certs
-     *            the certs to store
-     * @param pw
-     *            the password to use to encrypt the certificates
+     *
+     * @param aliasHeader the alias header
+     * @param certs the certs to store
+     * @param pw the password to use to encrypt the certificates
      */
     private static void writeTempKeystore(final String aliasHeader, final X509Certificate[] certs, final char[] pw) {
         if (certs == null || certs.length <= 0) {
@@ -163,12 +158,13 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final CertificateException e1) {
             LOG.warn("Cert error occurred!", e1);
         }
-        
+
     }
-    
+
     @Override
     public X509Certificate[] getServerCertificates(final String hostname, final int port) {
         final KeyStore platformKeystore = getCurrentKeystore();
+        LOG.debug("Using ca store {}", platformKeystore);
         X509Certificate[] rc = null;
         try {
             final SSLContext sslCtx = SSLContext.getInstance("TLS");
@@ -176,12 +172,13 @@ public class SslServerSnooperImpl implements SslServerSnooper {
             tmf.init(platformKeystore);
             final X509TrustManager defTm = (X509TrustManager) tmf.getTrustManagers()[0];
             final TrustManagerWrapper tmw = new TrustManagerWrapper(defTm);
-            sslCtx.init(null, new TrustManager[] { tmw }, null);
+            sslCtx.init(null, new TrustManager[]{tmw}, null);
             final SSLSocketFactory sslsf = sslCtx.getSocketFactory();
             // connect
             try (SSLSocket socket = (SSLSocket) sslsf.createSocket(hostname, port)) {
                 socket.setSoTimeout(15000);
                 socket.startHandshake();
+            } finally {
                 rc = tmw.getServerCerts();
                 writeTempKeystore(hostname, rc, "changeit".toCharArray());
             }
@@ -196,7 +193,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final IOException e) {
             LOG.error("Error when reading the SSL sockets.", e);
         }
-        
+
         return rc;
     }
 }

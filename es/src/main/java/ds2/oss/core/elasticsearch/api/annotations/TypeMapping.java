@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2014 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,10 @@ public @interface TypeMapping {
      * may be 1d etc.
      */
     String ttl() default "";
+    /**
+     * Flag to index the _timestamp value.
+     */
+    boolean indexTimestamp() default false;
     
     /**
      * The _parent declaration.
@@ -68,4 +72,8 @@ public @interface TypeMapping {
      * Flag to indicate if the index should be refreshed on creating a document of this type.
      */
     boolean refreshIndexOnCreate() default false;
+    /**
+     * Flag to indicate that any dealing with this type requires routing data.
+     */
+    boolean requiresRouting() default false;
 }
