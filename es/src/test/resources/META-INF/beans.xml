@@ -21,7 +21,6 @@
   bean-discovery-mode="annotated">
   <alternatives>
     <class>ds2.oss.core.elasticsearch.impl.LocalNodeImpl</class>
-    <class>ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl</class>
   </alternatives>
   <scan>
     <exclude name="com.google.common.util.concurrent.ServiceManager" />

@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * @author dstrauss
  * @version 0.2
  */
-@Alternative
 @ApplicationScoped
 public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
 

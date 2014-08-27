@@ -20,6 +20,7 @@ import java.nio.charset.Charset;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.SecurityBaseData;
+import javax.enterprise.inject.Alternative;
 
 /**
  * The dto.
@@ -27,6 +28,7 @@ import ds2.oss.core.api.SecurityBaseData;
  * @version 0.2
  * @author dstrauss
  */
+@Alternative
 @ApplicationScoped
 public class SecBaseDto implements SecurityBaseData {
     @Override
