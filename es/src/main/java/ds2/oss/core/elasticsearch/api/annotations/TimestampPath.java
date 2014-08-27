@@ -26,10 +26,12 @@ import java.lang.annotation.Target;
 
 /**
  * Attach this annotation to a property field of a java class to use it as _timestamp path field.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.SOURCE)
 public @interface TimestampPath {
-  //nothing special to do
+    // nothing special to do
 }

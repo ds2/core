@@ -21,11 +21,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by dstrauss on 07.08.13.
+ * Marks a field to contain some i18n data.
+ * 
+ * @author dstrauss
+ * @version 0.3
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE,ElementType.METHOD,ElementType.FIELD,ElementType.PARAMETER})
+@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
 @javax.enterprise.context.ApplicationScoped
 public @interface LocaleData {
-  String baseName();
+    /**
+     * The base name to the properties file.
+     */
+    String baseName();
 }

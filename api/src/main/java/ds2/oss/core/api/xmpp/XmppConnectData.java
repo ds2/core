@@ -21,105 +21,140 @@
 package ds2.oss.core.api.xmpp;
 
 /**
- *
+ * The dto implementation from the config contract.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public class XmppConnectData implements IXmppConnectionData {
-
-    private boolean rosterLoadedAtLogin = false;
-    private boolean sendPresence = false;
+    
+    /**
+     * The svuid.
+     */
+    private static final long serialVersionUID = 2352803105230195555L;
+    /**
+     * load roster at login.
+     */
+    private boolean rosterLoadedAtLogin;
+    /**
+     * Send presence.
+     */
+    private boolean sendPresence;
+    /**
+     * The user password.
+     */
     private String password;
+    /**
+     * the username, or user jid.
+     */
     private String username;
+    /**
+     * the server port to connect to.
+     */
     private int serverPort = 5223;
+    /**
+     * The server host name to connect to.
+     */
     private String serverHostname = "localhost";
-    private boolean ignoreSslTrustErrors = false;
-    private boolean debuggerEnabled = false;
+    /**
+     * whether to ignore strange ssl certificates, or crash.
+     */
+    private boolean ignoreSslTrustErrors;
+    /**
+     * Whether to debug this connection.
+     */
+    private boolean debuggerEnabled;
+    /**
+     * The expected security level.
+     */
     private RequireSecurity securityLevel = RequireSecurity.optional;
-
-    public void setIgnoreSslTrustErrors(boolean ignoreSslTrustErrors) {
+    
+    public void setIgnoreSslTrustErrors(final boolean ignoreSslTrustErrors) {
         this.ignoreSslTrustErrors = ignoreSslTrustErrors;
     }
-
-    public void setRosterLoadedAtLogin(boolean rosterLoadedAtLogin) {
+    
+    public void setRosterLoadedAtLogin(final boolean rosterLoadedAtLogin) {
         this.rosterLoadedAtLogin = rosterLoadedAtLogin;
     }
-
-    public void setSendPresence(boolean sendPresence) {
+    
+    public void setSendPresence(final boolean sendPresence) {
         this.sendPresence = sendPresence;
     }
-
-    public void setPassword(String password) {
+    
+    public void setPassword(final String password) {
         this.password = password;
     }
-
-    public void setUsername(String username) {
+    
+    public void setUsername(final String username) {
         this.username = username;
     }
-
-    public void setServerPort(int serverPort) {
+    
+    public void setServerPort(final int serverPort) {
         this.serverPort = serverPort;
     }
-
-    public void setServerHostname(String serverHostname) {
+    
+    public void setServerHostname(final String serverHostname) {
         this.serverHostname = serverHostname;
     }
-
+    
     @Override
     public String getServerHostname() {
         return serverHostname;
     }
-
+    
     @Override
     public int getServerPort() {
         return serverPort;
     }
-
+    
     @Override
     public String getUsername() {
         return username;
     }
-
+    
     @Override
     public String getPassword() {
         return password;
     }
-
+    
     @Override
     public boolean isSendPresence() {
         return sendPresence;
     }
-
+    
     @Override
     public boolean isRosterLoadedAtLogin() {
         return rosterLoadedAtLogin;
     }
-
+    
     @Override
     public String toString() {
-        return "XmppConnectData{" + "rosterLoadedAtLogin=" + rosterLoadedAtLogin + ", sendPresence=" + sendPresence + ", password=" + "***" + ", username=" + username + ", serverPort=" + serverPort + ", serverHostname=" + serverHostname + '}';
+        return "XmppConnectData{" + "rosterLoadedAtLogin=" + rosterLoadedAtLogin + ", sendPresence=" + sendPresence
+            + ", password=" + "***" + ", username=" + username + ", serverPort=" + serverPort + ", serverHostname="
+            + serverHostname + '}';
     }
-
+    
     @Override
     public boolean isIgnoreSslTrustErrors() {
         return ignoreSslTrustErrors;
     }
-
+    
     @Override
     public boolean isDebuggerEnabled() {
         return debuggerEnabled;
     }
-
-    public void setDebuggerEnabled(boolean debuggerEnabled) {
+    
+    public void setDebuggerEnabled(final boolean debuggerEnabled) {
         this.debuggerEnabled = debuggerEnabled;
     }
-
+    
     @Override
     public RequireSecurity getSecurityLevel() {
         return securityLevel;
     }
-
-    public void setSecurityLevel(RequireSecurity securityLevel) {
+    
+    public void setSecurityLevel(final RequireSecurity securityLevel) {
         this.securityLevel = securityLevel;
     }
-
+    
 }

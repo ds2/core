@@ -17,27 +17,38 @@ package ds2.oss.core.api;
 
 /**
  * Some common error codes.
- *
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public enum CoreErrors implements IErrorData {
-
+    
     /**
      * If json encoding failed.
      */
-    JSON_ENCODING_FAILED(1), JSON_DECODING_FAILED(2);
+    JSON_ENCODING_FAILED(1),
+    /**
+     * If json decoding failed.
+     */
+    JSON_DECODING_FAILED(2);
     /**
      * The error code.
      */
     private final int code;
-
-    private CoreErrors(int i) {
+    
+    /**
+     * Inits the enum value.
+     * 
+     * @param i
+     *            the numerical error code
+     */
+    private CoreErrors(final int i) {
         code = i;
     }
-
+    
     @Override
     public int getId() {
         return code;
     }
-
+    
 }

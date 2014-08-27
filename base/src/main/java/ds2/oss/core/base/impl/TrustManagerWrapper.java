@@ -22,12 +22,12 @@ import javax.net.ssl.X509TrustManager;
 
 /**
  * A trust manager that wraps requests.
- *
+ * 
  * @author dstrauss
  * @version 0.2
  */
 public class TrustManagerWrapper implements X509TrustManager {
-
+    
     /**
      * The original trust manager to use.
      */
@@ -36,25 +36,29 @@ public class TrustManagerWrapper implements X509TrustManager {
      * The server certificates.
      */
     private X509Certificate[] serverCerts;
-
+    /**
+     * Whether to crash on invalid certs, or to ignore them.
+     */
+    private boolean ignoreServerTrusted;
+    
     public boolean isIgnoreServerTrusted() {
         return ignoreServerTrusted;
     }
-
-    public void setIgnoreServerTrusted(boolean ignoreServerTrusted) {
+    
+    public void setIgnoreServerTrusted(final boolean ignoreServerTrusted) {
         this.ignoreServerTrusted = ignoreServerTrusted;
     }
-    private boolean ignoreServerTrusted = false;
-
+    
     /**
      * Inits this trust manager with a given original tm.
-     *
-     * @param tm the original trust manager to use
+     * 
+     * @param tm
+     *            the original trust manager to use
      */
     public TrustManagerWrapper(final X509TrustManager tm) {
         origTm = tm;
     }
-
+    
     /*
      * (non-Javadoc)
      * @see javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert. X509Certificate[],
@@ -64,7 +68,7 @@ public class TrustManagerWrapper implements X509TrustManager {
     public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
         origTm.checkClientTrusted(chain, authType);
     }
-
+    
     /*
      * (non-Javadoc)
      * @see javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert. X509Certificate[],
@@ -75,13 +79,13 @@ public class TrustManagerWrapper implements X509TrustManager {
         serverCerts = chain;
         try {
             origTm.checkServerTrusted(chain, authType);
-        } catch (CertificateException e) {
+        } catch (final CertificateException e) {
             if (!ignoreServerTrusted) {
                 throw e;
             }
         }
     }
-
+    
     /*
      * (non-Javadoc)
      * @see javax.net.ssl.X509TrustManager#getAcceptedIssuers()
@@ -90,14 +94,14 @@ public class TrustManagerWrapper implements X509TrustManager {
     public X509Certificate[] getAcceptedIssuers() {
         return origTm.getAcceptedIssuers();
     }
-
+    
     /**
      * Returns the server certificates sent by the server.
-     *
+     * 
      * @return the serverCerts
      */
     public X509Certificate[] getServerCerts() {
         return serverCerts;
     }
-
+    
 }
