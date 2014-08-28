@@ -105,6 +105,9 @@ public class OptionValueDto<E, V> implements OptionValue<E, V> {
      * The value.
      */
     private V value;
+    /**
+     * The requested domain.
+     */
     private String requestedDomain;
     
     @Override

@@ -27,7 +27,7 @@ import javax.persistence.PersistenceContext;
 
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.options.api.OptionsPersistenceSupport;
+import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.AbstractOptionsPersistenceSupportBean;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
@@ -38,8 +38,9 @@ import ds2.oss.core.options.impl.dto.OptionDto;
 @Stateless(name = "persistenceBean")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-@OptionsPersistenceSupport
-public class PersistenceSupportBean extends AbstractOptionsPersistenceSupportBean {
+public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportBean
+    implements
+    NumberedOptionsPersistenceSupport {
     /**
      * The entity manager.
      */

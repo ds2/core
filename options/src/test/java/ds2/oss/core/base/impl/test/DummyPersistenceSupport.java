@@ -11,7 +11,10 @@ import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
+ * Dummy persistence support.
+ * 
  * @author dstrauss
+ * @version 0.3
  *
  */
 @ApplicationScoped

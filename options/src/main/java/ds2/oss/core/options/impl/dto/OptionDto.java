@@ -94,6 +94,9 @@ public class OptionDto<E, V> implements Option<E, V> {
     @NotNull
     @Size(min = 1, max = 30)
     private String applicationName;
+    /**
+     * The description.
+     */
     private String description;
     
     /**

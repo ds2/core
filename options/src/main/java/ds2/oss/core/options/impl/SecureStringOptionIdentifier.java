@@ -35,7 +35,9 @@ public class SecureStringOptionIdentifier extends StringOptionIdentifier {
      * Inits the option identifier.
      * 
      * @param appName
+     *            the app name
      * @param optName
+     *            the option name
      */
     public SecureStringOptionIdentifier(final String appName, final String optName) {
         super(appName, optName);

@@ -18,8 +18,12 @@
  */
 package ds2.oss.core.options.impl;
 
+import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.api.ValueCodec;
@@ -33,6 +37,10 @@ import ds2.oss.core.options.api.ValueCodecMarker;
  */
 @ValueCodecMarker(ValueType.URL)
 public class UrlValueCodec implements ValueCodec<URL> {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     @Override
     public String toString(final URL v) {
@@ -48,6 +56,7 @@ public class UrlValueCodec implements ValueCodec<URL> {
         try {
             rc = new URL(s);
         } catch (final MalformedURLException e) {
+            LOG.debug("Error when converting given string \"{}\" into a url!", s, e);
         }
         return rc;
     }
