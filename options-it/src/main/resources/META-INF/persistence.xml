@@ -28,6 +28,7 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
     <class>ds2.oss.core.base.impl.StateAwareModule</class>
     <class>ds2.oss.core.base.impl.CreatedModifiedAwareModule</class>
     <class>ds2.oss.core.options.internal.OptionStageConverter</class>
+    <class>ds2.oss.core.options.internal.ValueTypeConverter</class>
     <properties>
       <property name="eclipselink.logging.parameters" value="true" />
       <property name="eclipselink.ddl-generation.output-mode" value="both"/>
