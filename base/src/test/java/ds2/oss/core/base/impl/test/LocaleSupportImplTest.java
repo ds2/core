@@ -26,97 +26,102 @@ import org.testng.annotations.Test;
 
 /**
  * The test for the LocaleSupport.
- *
+ * 
  * @author dstrauss
  * @version 0.3
  */
 @Test(groups = "localeSupport")
 public class LocaleSupportImplTest extends WeldWrapper {
-
+    
     /**
      * The provider that contains the injection.
      */
     private LocaleSupportTestProvider to;
-
+    
     @BeforeClass
     public void onClass() {
         to = getInstance(LocaleSupportTestProvider.class);
     }
-
+    
     @Test
     public void testHelloNull() {
         Assert.assertEquals(to.getHello(null), "Hello");
     }
-
+    
     @Test
     public void testHelloGerman() {
         Assert.assertEquals(to.getHello(Locale.GERMANY), "Hallo");
     }
-
+    
     @Test
     public void testHelloGermanParams() {
         Assert.assertEquals(to.getHelloParam(Locale.GERMANY, "Dirk"), "Hallo, Dirk");
     }
-
+    
     @Test
     public void testHelloParams() {
         Assert.assertEquals(to.getHelloParam(Locale.US, "Dirk"), "Hello, Dirk");
     }
-
+    
     @Test
     public void testCurrencyConvertNull() {
         Assert.assertEquals(to.formatCurrency(null, 0), "$0.00");
     }
-
+    
     @Test
     public void testCurrencyConvert1() {
-        Assert.assertEquals(to.formatCurrency(Locale.GERMANY, 1234.56), "1.234,56 €");
+        Assert.assertEquals(to.formatCurrency(Locale.GERMANY, 1234.56), "1.234,56 \u20ac");
     }
-
+    
     @Test
     public void testCurrencyConvert2() {
         Assert.assertEquals(to.formatCurrency(Locale.US, 1234.56), "$1,234.56");
     }
-
+    
     @Test
     public void testCurrencyNumberConvert1() {
         Assert.assertEquals(to.formatCurrencyNumber(Locale.US, 1.23456), "1.23");
     }
-
+    
     @Test
     public void testCurrencyNumberConvert2() {
         Assert.assertEquals(to.formatCurrencyNumber(Locale.US, 123456789.0123456), "123,456,789.01");
     }
-
+    
     @Test
     public void testFormatDate1() {
         Date date = new Date(123456789);
         Assert.assertEquals(to.formatDate(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.SHORT), "1/2/70");
     }
-
+    
     @Test
     public void testFormatDate2() {
         Date date = new Date(123456789);
-        Assert.assertEquals(to.formatDate(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.FULL), "Friday, January 2, 1970");
+        Assert.assertEquals(to.formatDate(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.FULL),
+            "Friday, January 2, 1970");
     }
-
+    
     @Test
     public void testFormatDateTime1() {
         Date date = new Date(123456789);
-        Assert.assertEquals(to.formatDateTime(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.SHORT, DateFormat.SHORT), "1/2/70 2:17 AM");
+        Assert.assertEquals(
+            to.formatDateTime(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.SHORT, DateFormat.SHORT),
+            "1/2/70 2:17 AM");
     }
-
+    
     @Test
     public void testFormatDateTime2() {
         Date date = new Date(123456789);
-        Assert.assertEquals(to.formatDateTime(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.FULL, DateFormat.FULL),
-                "Friday, January 2, 1970 2:17:36 AM PST");
+        Assert.assertEquals(
+            to.formatDateTime(date, Locale.US, TimeZone.getTimeZone("PST"), DateFormat.FULL, DateFormat.FULL),
+            "Friday, January 2, 1970 2:17:36 AM PST");
     }
-
+    
     @Test
     public void testFormatDateTime3() {
         Date date = new Date(123456789);
-        Assert.assertEquals(to.formatDateTime(date, Locale.GERMANY, TimeZone.getTimeZone("CET"), DateFormat.FULL, DateFormat.FULL),
-                "Freitag, 2. Januar 1970 11:17 Uhr MEZ");
+        Assert.assertEquals(
+            to.formatDateTime(date, Locale.GERMANY, TimeZone.getTimeZone("CET"), DateFormat.FULL, DateFormat.FULL),
+            "Freitag, 2. Januar 1970 11:17 Uhr MEZ");
     }
 }

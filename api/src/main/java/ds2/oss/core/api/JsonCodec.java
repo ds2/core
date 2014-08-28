@@ -17,10 +17,22 @@ package ds2.oss.core.api;
 
 /**
  * Contract for a json codec.
- *
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public interface JsonCodec extends Codec<Object, String> {
-
+    
+    /**
+     * Decodes a given json string into the target class.
+     * 
+     * @param z
+     *            the json string
+     * @param c
+     *            the target class
+     * @return the target object
+     * @throws CoreException
+     *             if an error occurred
+     */
     <E extends Object> E decode(String z, Class<E> c) throws CoreException;
 }

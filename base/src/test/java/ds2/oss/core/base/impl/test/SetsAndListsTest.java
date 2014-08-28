@@ -18,15 +18,18 @@ package ds2.oss.core.base.impl.test;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- *
+ * Dummy test for sets and lists.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public class SetsAndListsTest {
-
+    
     @Test
     public void testMultipleSame() {
         Set<DummyDto> s = new HashSet<>();
@@ -35,45 +38,56 @@ public class SetsAndListsTest {
         s.add(new DummyDto(1));
         Assert.assertEquals(s.size(), 1);
     }
-
+    
+    /**
+     * A dummy dto.
+     * 
+     * @author dstrauss
+     * @version 0.3
+     */
     public class DummyDto {
-
+        /**
+         * the id.
+         */
         private int id;
+        /**
+         * The name.
+         */
         private String name;
-
+        
         public DummyDto() {
-            //nothing special to do
+            // nothing special to do
         }
-
-        public DummyDto(int i) {
+        
+        public DummyDto(final int i) {
             id = i;
         }
-
+        
         public int getId() {
             return id;
         }
-
-        public void setId(int id) {
+        
+        public void setId(final int id) {
             this.id = id;
         }
-
+        
         public String getName() {
             return name;
         }
-
-        public void setName(String name) {
+        
+        public void setName(final String name) {
             this.name = name;
         }
-
+        
         @Override
         public int hashCode() {
             int hash = 5;
-            hash = 89 * hash + this.id;
+            hash = (89 * hash) + id;
             return hash;
         }
-
+        
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj == null) {
                 return false;
             }
@@ -81,20 +95,20 @@ public class SetsAndListsTest {
                 return false;
             }
             final DummyDto other = (DummyDto) obj;
-            if (this.id != other.id) {
+            if (id != other.id) {
                 return false;
             }
-            if (!Objects.equals(this.name, other.name)) {
+            if (!Objects.equals(name, other.name)) {
                 return false;
             }
             return true;
         }
-
+        
         @Override
         public String toString() {
             return "DummyDto{" + "id=" + id + ", name=" + name + '}';
         }
-
+        
     }
-
+    
 }

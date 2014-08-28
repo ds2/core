@@ -18,7 +18,9 @@ package ds2.oss.core.crypto;
 import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Security;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
@@ -26,40 +28,41 @@ import javax.crypto.SecretKeyFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
-import java.security.Security;
-import javax.annotation.PostConstruct;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * The bouncy castle security provider.
- *
+ * 
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
 public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
-
+    
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    /**
+     * The BC provider name.
+     */
     private static final String ID = BouncyCastleProvider.PROVIDER_NAME;
     
     static {
         Security.insertProviderAt(new BouncyCastleProvider(), 1);
     }
-
+    
     @PostConstruct
     public void onLoad() {
         LOG.debug("Loading BC Provider");
     }
-
+    
     /*
      * (non-Javadoc)
      * @see
@@ -73,10 +76,10 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        LOG.debug("Using {} -> {}", new Object[]{c, rc});
+        LOG.debug("Using {} -> {}", new Object[] { c, rc });
         return rc;
     }
-
+    
     @Override
     public KeyGenerator createKeyGenerator(final KeyGeneratorNames name) {
         KeyGenerator rc = null;
@@ -87,7 +90,7 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
         }
         return rc;
     }
-
+    
     @Override
     public SecretKeyFactory createSecretKeyFactoryInstance(final String string) {
         SecretKeyFactory rc = null;

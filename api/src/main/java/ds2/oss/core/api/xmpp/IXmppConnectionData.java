@@ -23,26 +23,28 @@ package ds2.oss.core.api.xmpp;
 import java.io.Serializable;
 
 /**
- *
+ * The connection data to use to connect to another server.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public interface IXmppConnectionData extends Serializable {
-
+    
     String getServerHostname();
-
+    
     int getServerPort();
-
+    
     String getUsername();
-
+    
     String getPassword();
-
+    
     boolean isSendPresence();
-
+    
     boolean isRosterLoadedAtLogin();
-
+    
     boolean isIgnoreSslTrustErrors();
-
+    
     boolean isDebuggerEnabled();
-
+    
     RequireSecurity getSecurityLevel();
 }

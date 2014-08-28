@@ -21,11 +21,16 @@
 package ds2.oss.core.api.xmpp;
 
 /**
- *
+ * Contract for a packet id provider.
+ * 
  * @author dstrauss
  * @version 0.3
  */
 public interface IPacketIdProvider {
-
+    /**
+     * Returns the next id.
+     * 
+     * @return the next id to use
+     */
     String getNextId();
 }

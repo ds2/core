@@ -20,29 +20,35 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import ds2.oss.core.api.ConverterTool;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.api.ConverterTool;
+
 /**
- *
+ * Tests for the converter.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public class ConverterToolTest extends WeldWrapper {
-
+    /**
+     * The text object.
+     */
     private ConverterTool to;
-
+    
     @BeforeClass
     public void onClass() {
         to = getInstance(ConverterTool.class);
         Assert.assertNotNull(to);
     }
-
+    
     @Test
     public void testToDate1() {
         long ms = 123456L;
@@ -50,7 +56,7 @@ public class ConverterToolTest extends WeldWrapper {
         Assert.assertNotNull(date);
         Assert.assertEquals(date.getTime(), ms);
     }
-
+    
     @Test
     public void testToDateCal() {
         long ms = 123456L;

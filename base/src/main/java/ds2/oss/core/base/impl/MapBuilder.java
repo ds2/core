@@ -25,38 +25,84 @@ import java.util.Map;
 
 /**
  * A dummy map builder.
- *
+ * 
  * @author dstrauss
  * @version 0.3
+ * @param <K>
+ *            the map key type
+ * @param <V>
+ *            the map value type
  */
-public class MapBuilder<K, V> {
-
+public final class MapBuilder<K, V> {
+    /**
+     * The backing map.
+     */
     private Map<K, V> map;
-
-    private MapBuilder(int initSize) {
+    
+    /**
+     * Inits the hash map with the given size.
+     * 
+     * @param initSize
+     *            the size. If less than 0, initSize will be ignored
+     */
+    private MapBuilder(final int initSize) {
         if (initSize > 0) {
             map = new HashMap<>(initSize);
         } else {
             map = new HashMap<>();
         }
-
+        
     }
-
-    public static <K, V> MapBuilder<K, V> createWith(Class<K> kClass, Class<V> vClass) {
+    
+    /**
+     * Creates the map builder with the given key class and value class.
+     * 
+     * @param kClass
+     *            the key class
+     * @param vClass
+     *            the value class
+     * @return the map builder
+     */
+    public static <K, V> MapBuilder<K, V> createWith(final Class<K> kClass, final Class<V> vClass) {
         return createWith(kClass, vClass, 0);
     }
-
-    public static <K, V> MapBuilder<K, V> createWith(Class<K> kClass, Class<V> vClass, int initSize) {
+    
+    /**
+     * Creates the map builder with the given key class, value class and init size.
+     * 
+     * @param kClass
+     *            the key class
+     * @param vClass
+     *            the value class
+     * @param initSize
+     *            the init size
+     * @return the map builder
+     */
+    public static <K, V> MapBuilder<K, V> createWith(final Class<K> kClass, final Class<V> vClass, final int initSize) {
         return new MapBuilder<>(initSize);
     }
-
-    public MapBuilder<K, V> put(K k, V v) {
+    
+    /**
+     * Puts an element into the map.
+     * 
+     * @param k
+     *            the key
+     * @param v
+     *            the value
+     * @return this map builder
+     */
+    public MapBuilder<K, V> put(final K k, final V v) {
         map.put(k, v);
         return this;
     }
-
+    
+    /**
+     * Returns the backing map.
+     * 
+     * @return the backing map
+     */
     public Map<K, V> build() {
         return map;
     }
-
+    
 }

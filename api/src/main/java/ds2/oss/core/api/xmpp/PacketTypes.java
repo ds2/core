@@ -21,10 +21,14 @@
 package ds2.oss.core.api.xmpp;
 
 /**
- *
+ * The known packet types.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public enum PacketTypes {
-
+    /**
+     * A simple message.
+     */
     Message;
 }

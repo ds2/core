@@ -25,11 +25,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * The routing path marker.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.SOURCE)
 public @interface RoutingPath {
-  //nothing special to do
+    // nothing special to do
 }

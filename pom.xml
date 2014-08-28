@@ -67,6 +67,7 @@
     <module>webtools</module>
     <module>xmpp</module>
     <module>xmpp-gcm</module>
+    <module>test-ear</module>
   </modules>
   <profiles>
     <profile>

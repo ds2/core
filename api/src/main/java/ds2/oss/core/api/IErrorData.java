@@ -18,16 +18,18 @@ package ds2.oss.core.api;
 import java.io.Serializable;
 
 /**
- *
+ * Basic contract for any numerical error.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public interface IErrorData extends Serializable {
-
+    
     /**
      * Returns the error id.
-     *
+     * 
      * @return the error id
      */
     int getId();
-
+    
 }

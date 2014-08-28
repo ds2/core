@@ -20,22 +20,26 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import ds2.oss.core.base.impl.MapBuilder;
 import java.util.Map;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.base.impl.MapBuilder;
+
 /**
- *
+ * test for the map builder.
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public class MapBuilderTest {
-
+    
     @Test
     public void testNull() {
         Assert.assertNotNull(MapBuilder.createWith(String.class, String.class));
     }
-
+    
     @Test
     public void test1() {
         Map<String, String> m = MapBuilder.createWith(String.class, String.class).put("a", "b").build();

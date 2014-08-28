@@ -17,35 +17,63 @@ package ds2.oss.core.api;
 
 /**
  * Abstract definition for any checked core exceptions.
- *
+ * 
  * @author dstrauss
+ * @version 0.3
  */
 public class CoreException extends Exception {
-
-    private IErrorData errorData;
-
+    
+    /**
+     * The svuid.
+     */
+    private static final long serialVersionUID = -1531073962392031816L;
+    /**
+     * The error data.
+     */
+    private final IErrorData errorData;
+    
     /**
      * Inits a simple exception.
-     *
-     * @param msg the error message
-     * @deprecated Please use another constructor. This one here is for backward
-     * compatibility.
+     * 
+     * @param msg
+     *            the error message
+     * @deprecated Please use another constructor. This one here is for backward compatibility.
      */
     @Deprecated
-    public CoreException(String msg) {
+    public CoreException(final String msg) {
         super(msg);
+        errorData = null;
     }
-
-    public CoreException(IErrorData d) {
+    
+    /**
+     * Inits the exception with the given error data.
+     * 
+     * @param d
+     *            the error data
+     */
+    public CoreException(final IErrorData d) {
         super();
         errorData = d;
     }
-
-    public CoreException(IErrorData d, Throwable t) {
+    
+    /**
+     * Inits the exception with the given error data and cause.
+     * 
+     * @param d
+     *            the error data
+     * @param t
+     *            the cause
+     */
+    public CoreException(final IErrorData d, final Throwable t) {
         super(t);
         errorData = d;
     }
-
+    
+    /**
+     * Returns the error data.
+     * 
+     * @return the error data
+     */
     public IErrorData getErrorData() {
         return errorData;
     }
