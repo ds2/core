@@ -15,13 +15,15 @@
  */
 package ds2.oss.core.api.environment;
 
+import java.io.Serializable;
+
 /**
  * A runtime cluster.
  * 
  * @author dstrauss
  * @version 0.3
  */
-public interface Cluster {
+public interface Cluster extends Serializable {
     /**
      * Returns the name of the cluster.
      * 

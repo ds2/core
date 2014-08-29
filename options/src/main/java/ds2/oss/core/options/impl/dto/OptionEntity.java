@@ -36,7 +36,7 @@ import javax.persistence.UniqueConstraint;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
+import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.internal.OptionStageConverter;
 import ds2.oss.core.options.internal.ValueTypeConverter;

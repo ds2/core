@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.base.impl;
+package ds2.oss.core.base.impl.db;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.StateAware;
+import ds2.oss.core.base.impl.NumericalEnumConverter;
 
 /**
  * Module for a state entry.

@@ -61,4 +61,13 @@ public enum OptionValueStage {
     public int getStageId() {
         return stageId;
     }
+    
+    public static OptionValueStage getById(int i) {
+        for (OptionValueStage s : values()) {
+            if (s.stageId == i) {
+                return s;
+            }
+        }
+        return null;
+    }
 }

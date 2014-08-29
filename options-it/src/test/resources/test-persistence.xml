@@ -23,16 +23,19 @@
   <persistence-unit name="corePU">
     <jta-data-source>jdbc/core</jta-data-source>
     <class>ds2.oss.core.options.impl.dto.OptionEntity</class>
-    <class>ds2.oss.core.options.impl.dto.OptionStageModule</class>
-    <class>ds2.oss.core.options.impl.dto.ValueTypeModule</class>
-    <class>ds2.oss.core.base.impl.StateAwareModule</class>
-    <class>ds2.oss.core.base.impl.CreatedModifiedAwareModule</class>
+    <class>ds2.oss.core.base.impl.db.StateAwareModule</class>
+    <class>ds2.oss.core.base.impl.db.CreatedModifiedAwareModule</class>
     <class>ds2.oss.core.options.internal.OptionStageConverter</class>
     <class>ds2.oss.core.options.internal.ValueTypeConverter</class>
+    <class>ds2.oss.core.options.impl.dto.OptionValueEntity</class>
+    <class>ds2.oss.core.base.impl.db.LifeCycleAwareModule</class>
+    <class>ds2.oss.core.options.internal.OptionValueContextModule</class>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
       <property name="eclipselink.logging.level.sql" value="FINE" />
       <property name="eclipselink.logging.parameters" value="true" />
+      <property name="eclipselink.ddl-generation.output-mode" value="both"/>
     </properties>
   </persistence-unit>
 </persistence>

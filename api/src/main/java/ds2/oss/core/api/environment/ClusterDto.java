@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ClusterDto implements Cluster {
     /**
+     * The svuid.
+     */
+    private static final long serialVersionUID = -1435290906373276784L;
+    /**
      * The regex pattern for getting the cluster name.
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("[A-Za-z]");

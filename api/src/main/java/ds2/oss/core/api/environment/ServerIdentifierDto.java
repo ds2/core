@@ -136,4 +136,8 @@ public class ServerIdentifierDto implements ServerIdentifier {
         addresses.add(ia2);
     }
     
+    public boolean isEmpty() {
+        return domain == null && hostName == null && ipAddress == null;
+    }
+    
 }

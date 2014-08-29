@@ -63,6 +63,15 @@ public final class Tools {
         return rc;
     }
     
+    /**
+     * Converts a given object into an int value.
+     * 
+     * @param o
+     *            the object. Possibly a string
+     * @param def
+     *            a default value in case of an error
+     * @return the converted value
+     */
     public static int toInt(final Object o, final int def) {
         int rc = def;
         if (o != null) {

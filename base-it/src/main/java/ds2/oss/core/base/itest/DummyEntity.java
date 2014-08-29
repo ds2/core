@@ -30,8 +30,8 @@ import ds2.oss.core.api.CreatedModifiedAware;
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.Persistable;
 import ds2.oss.core.api.StateAware;
-import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
-import ds2.oss.core.base.impl.StateAwareModule;
+import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
+import ds2.oss.core.base.impl.db.StateAwareModule;
 
 /**
  * Dummy entity.
