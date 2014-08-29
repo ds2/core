@@ -21,8 +21,6 @@ import java.net.URL;
 
 import javax.inject.Inject;
 
-import org.glassfish.api.admin.ParameterMap;
-import org.glassfish.internal.embedded.Server;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -110,13 +108,11 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertEquals(foundOption.getStage(), OptionStage.Deleted);
     }
     
-    public static void createFileUser(final String userName, final String userPassword, final String userGroups)
-        throws Exception {
-        Server server = Server.getServer(Server.getServerNames().get(0));
-        String command = "create-file-user";
-        ParameterMap params = new ParameterMap();
-        params.add("userpassword", userPassword);
-        params.add("groups", userGroups);
-        params.add("username", userName);
-    }
+    /*
+     * public static void createFileUser(final String userName, final String userPassword, final
+     * String userGroups) throws Exception { Server server =
+     * Server.getServer(Server.getServerNames().get(0)); String command = "create-file-user";
+     * ParameterMap params = new ParameterMap(); params.add("userpassword", userPassword);
+     * params.add("groups", userGroups); params.add("username", userName); }
+     */
 }

@@ -17,23 +17,22 @@ import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
- * A non-operational persistence store. Does nothing and will be used by default if not otherwise
- * configured via CDI.
+ * A dummy persistence support for numbered options.
  * 
  * @author dstrauss
  * @version 0.3
  *
  */
 @ApplicationScoped
-public class NoopPersistenceStore implements NumberedOptionsPersistenceSupport {
+public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOptionsPersistenceSupport {
     /**
-     * A logger.
+     * a logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     @PostConstruct
     public void onClass() {
-        LOG.info("You are using the non-operational persistence store for options! Please configure an alternative.");
+        LOG.info("Using a non-operational NumberedOptionsPersistenceSupport. Please reconfigure an alternative.");
     }
     
     /*
@@ -44,7 +43,7 @@ public class NoopPersistenceStore implements NumberedOptionsPersistenceSupport {
      */
     @Override
     public <V> OptionDto<Long, V> findOptionByIdentifier(OptionIdentifier<V> ident) {
-        LOG.info("do nothing!");
+        LOG.info("Using a non-operational method. Returning dummy value!");
         return null;
     }
     
@@ -56,7 +55,7 @@ public class NoopPersistenceStore implements NumberedOptionsPersistenceSupport {
      */
     @Override
     public <V> OptionDto<Long, V> setOptionStage(OptionIdentifier<V> ident, OptionStage newStage) {
-        LOG.info("do nothing!");
+        LOG.info("Using a non-operational method. Returning dummy value!");
         return null;
     }
     
@@ -66,7 +65,7 @@ public class NoopPersistenceStore implements NumberedOptionsPersistenceSupport {
      */
     @Override
     public void persist(OptionDto<Long, ?> t) {
-        LOG.info("do nothing!");
+        LOG.info("Using a non-operational method. Returning dummy value!");
     }
     
     /*
@@ -75,7 +74,7 @@ public class NoopPersistenceStore implements NumberedOptionsPersistenceSupport {
      */
     @Override
     public OptionDto<Long, ?> getById(Long e) {
-        LOG.info("do nothing!");
+        LOG.info("Using a non-operational method. Returning dummy value!");
         return null;
     }
     

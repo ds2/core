@@ -1,4 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>ds2.oss.core</groupId>
@@ -35,7 +38,8 @@
       <groupId>org.jboss.arquillian.container</groupId>
       <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
     </dependency>
-    
+    <!-- <dependency> <groupId>org.wildfly</groupId> <artifactId>wildfly-arquillian-container-embedded</artifactId> 
+      <version>8.1.0.Final</version> <scope>test</scope> </dependency> -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
@@ -56,6 +60,10 @@
       <groupId>org.glassfish.main.extras</groupId>
       <artifactId>glassfish-embedded-all</artifactId>
     </dependency>
+    <!-- <dependency> <groupId>org.jboss.as</groupId> <artifactId>jboss-as-arquillian-container-embedded</artifactId> 
+      <version>7.2.0.Final</version> <scope>provided</scope> </dependency> -->
+    <!-- <dependency> <groupId>org.wildfly</groupId> <artifactId>wildfly-embedded</artifactId> 
+      <version>8.1.0.Final</version> </dependency> -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
