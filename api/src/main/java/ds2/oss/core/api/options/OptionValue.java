@@ -64,4 +64,11 @@ public interface OptionValue<E, V> extends Persistable<E>, CreatedModifiedAware,
      * @return the value
      */
     V getValue();
+    
+    /**
+     * Returns the value of this option value object in case the option was encrypted.
+     * 
+     * @return the value
+     */
+    V getUnencryptedValue();
 }

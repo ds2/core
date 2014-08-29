@@ -109,6 +109,14 @@ public class OptionValueDto<E, V> implements OptionValue<E, V> {
      * The requested domain.
      */
     private String requestedDomain;
+    /**
+     * The unencrypted value.
+     */
+    private transient V unencryptedValue;
+    
+    public void setUnencryptedValue(V unencryptedValue) {
+        this.unencryptedValue = unencryptedValue;
+    }
     
     @Override
     public E getId() {
@@ -312,6 +320,11 @@ public class OptionValueDto<E, V> implements OptionValue<E, V> {
     
     public void setRequestedDomain(String requestedDomain) {
         this.requestedDomain = requestedDomain;
+    }
+    
+    @Override
+    public V getUnencryptedValue() {
+        return unencryptedValue;
     }
     
 }
