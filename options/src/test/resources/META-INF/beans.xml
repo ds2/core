@@ -21,6 +21,5 @@
   bean-discovery-mode="annotated">
   <alternatives>
     <class>ds2.oss.core.options.impl.NumberedOptionStorageServiceImpl</class>
-    <class>ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl</class>
   </alternatives>
 </beans>

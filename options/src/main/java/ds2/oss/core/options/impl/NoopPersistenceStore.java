@@ -1,9 +1,15 @@
 /**
  * 
  */
-package ds2.oss.core.base.impl.test;
+package ds2.oss.core.options.impl;
 
+import java.lang.invoke.MethodHandles;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
@@ -11,14 +17,24 @@ import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
- * Dummy persistence support.
+ * A non-operational persistence store. Does nothing and will be used by default if not otherwise
+ * configured via CDI.
  * 
  * @author dstrauss
  * @version 0.3
  *
  */
 @ApplicationScoped
-public class DummyPersistenceSupport implements NumberedOptionsPersistenceSupport {
+public class NoopPersistenceStore implements NumberedOptionsPersistenceSupport {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
+    @PostConstruct
+    public void onClass() {
+        LOG.info("You are using the non-operational persistence store for options! Please configure an alternative.");
+    }
     
     /*
      * (non-Javadoc)
@@ -28,7 +44,7 @@ public class DummyPersistenceSupport implements NumberedOptionsPersistenceSuppor
      */
     @Override
     public <V> OptionDto<Long, V> findOptionByIdentifier(OptionIdentifier<V> ident) {
-        // TODO Auto-generated method stub
+        LOG.info("do nothing!");
         return null;
     }
     
@@ -40,7 +56,7 @@ public class DummyPersistenceSupport implements NumberedOptionsPersistenceSuppor
      */
     @Override
     public <V> OptionDto<Long, V> setOptionStage(OptionIdentifier<V> ident, OptionStage newStage) {
-        // TODO Auto-generated method stub
+        LOG.info("do nothing!");
         return null;
     }
     
@@ -50,8 +66,7 @@ public class DummyPersistenceSupport implements NumberedOptionsPersistenceSuppor
      */
     @Override
     public void persist(OptionDto<Long, ?> t) {
-        // TODO Auto-generated method stub
-        
+        LOG.info("do nothing!");
     }
     
     /*
@@ -60,7 +75,7 @@ public class DummyPersistenceSupport implements NumberedOptionsPersistenceSuppor
      */
     @Override
     public OptionDto<Long, ?> getById(Long e) {
-        // TODO Auto-generated method stub
+        LOG.info("do nothing!");
         return null;
     }
     

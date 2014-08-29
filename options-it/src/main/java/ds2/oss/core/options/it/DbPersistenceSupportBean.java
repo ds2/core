@@ -22,6 +22,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -38,6 +39,7 @@ import ds2.oss.core.options.impl.dto.OptionDto;
 @Stateless(name = "persistenceBean")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @TransactionManagement(TransactionManagementType.CONTAINER)
+@Alternative
 public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportBean
     implements
     NumberedOptionsPersistenceSupport {

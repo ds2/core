@@ -26,6 +26,7 @@ import org.glassfish.internal.embedded.Server;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,13 +53,19 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     @Inject
     private NumberedOptionStorageService to;
     
+    /**
+     * Creates the archive to deploy into the glassfish container.
+     * 
+     * @return the archive to deploy
+     */
     @Deployment
     public static JavaArchive createTestableDeployment() {
         final JavaArchive jar =
-            ShrinkWrap.create(JavaArchive.class, "options.jar").addPackages(true, "ds2.oss.core.options")
+            ShrinkWrap.create(JavaArchive.class, "options.jar").addPackages(true, "ds2.oss.core")
                 .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 // Enable CDI
                 .addAsManifestResource("my-beans.xml", "beans.xml");
+        LOG.info("Content of archive: {}", jar.toString(Formatters.VERBOSE));
         return jar;
     }
     

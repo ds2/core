@@ -62,6 +62,10 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Inject
     private OptionFactory optionFac;
     
+    public NumberedOptionStorageServiceImpl() {
+        super();
+    }
+    
     /*
      * (non-Javadoc)
      * @see
