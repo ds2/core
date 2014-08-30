@@ -68,11 +68,58 @@ public interface IoService {
      */
     Properties loadProperties(Path file);
     
+    /**
+     * Writes some file data.
+     * 
+     * @param data
+     *            the byte data
+     * @param target
+     *            the target to write to
+     * @param permissionMask
+     *            a possible unix permission mask
+     * @throws IOException
+     *             if an IO error occurred
+     */
     void writeFile(byte[] data, Path target, String permissionMask) throws IOException;
     
+    /**
+     * Writes some file data.
+     * 
+     * @param data
+     *            the string content
+     * @param cs
+     *            the target charset to use to convert the string into bytes
+     * @param target
+     *            the target to write to
+     * @param permissionMask
+     *            a possible unix permission mask
+     * @throws IOException
+     *             if an IO error occurred
+     */
     void writeFile(String data, Charset cs, Path target, String permissionMask) throws IOException;
     
+    /**
+     * Writes a properties collection.
+     * 
+     * @param props
+     *            the properties
+     * 
+     * @param target
+     *            the target to write to
+     * @param permissionMask
+     *            a possible unix permission mask
+     * @throws IOException
+     *             if an IO error occurred
+     */
     void writeProperties(Properties props, Path target, String permissionMask) throws IOException;
     
+    /**
+     * Creates some directories.
+     * 
+     * @param storageLocation
+     *            the directory to create
+     * @param attr
+     *            some directory attributes to use when creating
+     */
     void createDirectories(Path storageLocation, FileAttribute<?> attr);
 }

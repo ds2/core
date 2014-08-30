@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 
 import javax.enterprise.inject.Produces;
 
-import ds2.oss.core.api.PathLocation;
+import ds2.oss.core.api.annotations.PathLocation;
 
 /**
  * Dummy provider for the sec path test.

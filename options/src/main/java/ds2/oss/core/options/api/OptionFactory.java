@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.api;
 
+import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
-import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * Factory to create options. Implementations of this contract will return a dto object that matches

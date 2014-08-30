@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.api;
 
+import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.options.impl.dto.OptionDto;
 import ds2.oss.core.options.impl.dto.OptionEntity;
 
 /**

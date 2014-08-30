@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
-package ds2.oss.core.options.impl.dto;
+package ds2.oss.core.api.dto.impl;
 
 import java.util.Date;
 
@@ -115,6 +112,7 @@ public class OptionDto<E, V> implements Option<E, V> {
      * @param id1
      */
     public OptionDto(final E id1) {
+        this();
         this.id = id1;
     }
     

@@ -26,11 +26,11 @@ import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.AbstractOptionsPersistenceSupportBean;
-import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * @author dstrauss

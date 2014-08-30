@@ -41,8 +41,8 @@ import org.slf4j.LoggerFactory;
 import ds2.oss.core.api.ConverterTool;
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.IoService;
-import ds2.oss.core.api.PathLocation;
 import ds2.oss.core.api.SecurityBaseDataService;
+import ds2.oss.core.api.annotations.PathLocation;
 import ds2.oss.core.api.crypto.BytesProvider;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
 

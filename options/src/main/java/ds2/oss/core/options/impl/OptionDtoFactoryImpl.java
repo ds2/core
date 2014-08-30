@@ -17,10 +17,10 @@ package ds2.oss.core.options.impl;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.OptionFactory;
-import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * The factory.

@@ -16,7 +16,7 @@
 /**
  * 
  */
-package ds2.oss.core.options.impl.dto;
+package ds2.oss.core.api.dto.impl;
 
 import java.util.Date;
 
@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import ds2.oss.core.api.environment.Cluster;
@@ -112,8 +113,15 @@ public class OptionValueDto<E, V> implements OptionValue<E, V> {
     /**
      * The unencrypted value.
      */
+    @XmlTransient
     private transient V unencryptedValue;
     
+    /**
+     * Sets the unencrypted value.
+     * 
+     * @param unencryptedValue
+     *            the unencrypted value
+     */
     public void setUnencryptedValue(V unencryptedValue) {
         this.unencryptedValue = unencryptedValue;
     }

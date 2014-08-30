@@ -17,9 +17,17 @@ package ds2.oss.core.api.crypto;
 
 /**
  * A bytes provider.
+ * 
  * @author dstrauss
  * @version 0.3
  */
 public interface BytesProvider {
-  byte[] createRandomByteArray(int size);
+    /**
+     * Creates some random bytes.
+     * 
+     * @param size
+     *            the count of bytes to return
+     * @return the bytes
+     */
+    byte[] createRandomByteArray(int size);
 }

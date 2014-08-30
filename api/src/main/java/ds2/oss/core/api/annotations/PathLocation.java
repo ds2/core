@@ -13,45 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.api;
+package ds2.oss.core.api.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
- * Flags an implementation to be able to persist options.
+ * Used to dynamically inject a path.
  * 
  * @author dstrauss
  * @version 0.3
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 @Qualifier
-@Deprecated
-public @interface OptionsPersistenceSupport {
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE })
+public @interface PathLocation {
     /**
-     * The type of the store.
+     * the property name to use for injection.
      */
-    StorageType type() default StorageType.NUMBERED;
+    @Nonbinding
+    String property() default "";
     
     /**
-     * The storage type.
-     * 
-     * @author dstrauss
-     * @version 0.3
+     * The environment variable to use to insert its value via injection.
      */
-    enum StorageType {
-        /**
-         * Persistence support uses Long as primary key identifiers.
-         */
-        NUMBERED,
-        /**
-         * Persistence support uses String values as primary key identifiers.
-         */
-        STRING;
-    }
+    @Nonbinding
+    String environment() default "";
 }

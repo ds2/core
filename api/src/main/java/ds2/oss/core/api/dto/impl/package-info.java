@@ -16,5 +16,8 @@
 /**
  * Some DTO implementations.
  */
+@javax.xml.bind.annotation.XmlSchema(
+    namespace = "http://www.ds2/ns/oss/core/dto",
+    elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package ds2.oss.core.api.dto.impl;
 

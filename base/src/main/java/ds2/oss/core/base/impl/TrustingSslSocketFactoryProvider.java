@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ds2.oss.core.base.impl;
 
 import java.security.KeyManagementException;
@@ -62,10 +57,8 @@ public class TrustingSslSocketFactoryProvider implements ITrustingSslSocketFacto
             tmw.setIgnoreServerTrusted(ignoreSslErrors);
             sslCtx.init(null, new TrustManager[] { tmw }, null);
             rc = sslCtx.getSocketFactory();
-        } catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException ex) {
+        } catch (final KeyStoreException | NoSuchAlgorithmException | KeyManagementException ex) {
             LOG.error("Error when setting up the socket factory!", ex);
-        } finally {
-            
         }
         return rc;
     }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api;
+package ds2.oss.core.api.crypto;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -24,18 +24,25 @@ import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
- * Used to dynamically inject a path.
+ * Qualifier for a secure randomizer. Put this on fields to have a SecureRandom object being
+ * injected.
  * 
  * @author dstrauss
  * @version 0.3
  */
 @Qualifier
+@Target({ ElementType.FIELD, ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE })
-public @interface PathLocation {
+public @interface SecureRandomizer {
+    /**
+     * The provider name. If empty, then the platform default will be used.
+     */
     @Nonbinding
-    String property() default "";
+    String providerName() default "";
     
+    /**
+     * The algorithm to use for randomizing.
+     */
     @Nonbinding
-    String environment() default "";
+    String algorithm() default "SHA1PRNG";
 }

@@ -15,17 +15,21 @@
  */
 package ds2.oss.core.codec.jackson2;
 
+import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ds2.oss.core.api.CoreErrors;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.JsonCodec;
-import java.io.IOException;
-import java.lang.invoke.MethodHandles;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -33,19 +37,25 @@ import org.slf4j.LoggerFactory;
  */
 @ApplicationScoped
 public class JacksonJsonCodec implements JsonCodec {
-
+    
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    /**
+     * The object mapper.
+     */
     private ObjectMapper om;
-
+    
+    /**
+     * Actions to perform at start.
+     */
     @PostConstruct
     public void onLoad() {
         LOG.debug("Starting up");
         om = new ObjectMapper();
     }
-
+    
     @Override
     public String encode(Object z) throws CoreException {
         String rc = null;
@@ -60,12 +70,12 @@ public class JacksonJsonCodec implements JsonCodec {
         LOG.debug("Result is {}", rc);
         return rc;
     }
-
+    
     @Override
     public Object decode(String a) throws CoreException {
         throw new UnsupportedOperationException("Please use the other decode method for better type handling!");
     }
-
+    
     @Override
     public <E> E decode(String z, Class<E> c) throws CoreException {
         E rc = null;
@@ -76,5 +86,5 @@ public class JacksonJsonCodec implements JsonCodec {
         }
         return rc;
     }
-
+    
 }

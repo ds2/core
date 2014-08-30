@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 /**
@@ -23,5 +20,10 @@ package ds2.oss.core.api;
  *
  */
 public interface Descriptive {
+    /**
+     * Returns the description.
+     * 
+     * @return the description
+     */
     String getDescription();
 }

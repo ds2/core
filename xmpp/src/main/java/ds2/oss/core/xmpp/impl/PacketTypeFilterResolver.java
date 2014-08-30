@@ -13,30 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ds2.oss.core.xmpp.impl;
 
-import ds2.oss.core.api.xmpp.PacketTypes;
-import ds2.oss.core.api.xmpp.RequireSecurity;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
+
+import ds2.oss.core.api.xmpp.PacketTypes;
+import ds2.oss.core.api.xmpp.RequireSecurity;
 
 /**
  *
  * @author dstrauss
  */
 public class PacketTypeFilterResolver {
-
+    
     /**
      * Resolves the given packet type into a smack packet type filter.
      *
-     * @param t the packet type
+     * @param t
+     *            the packet type
      * @return the filter to use
      */
     PacketTypeFilter resolve(PacketTypes t) {
@@ -46,12 +43,19 @@ public class PacketTypeFilterResolver {
                 p = Message.class;
                 break;
             default:
-                //nothing to do
+                // nothing to do
                 break;
         }
         return new PacketTypeFilter(p);
     }
-
+    
+    /**
+     * Resolves the given guideline into a smack guideline.
+     * 
+     * @param s
+     *            the security guide line
+     * @return the related smack guideline
+     */
     ConnectionConfiguration.SecurityMode resolve(RequireSecurity s) {
         switch (s) {
             case no:

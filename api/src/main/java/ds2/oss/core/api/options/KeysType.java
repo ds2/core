@@ -13,35 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.crypto;
+/**
+ * 
+ */
+package ds2.oss.core.api.options;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.enterprise.util.Nonbinding;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Qualifier;
 
 /**
- * Qualifier for a secure randomizer.
+ * Marker for types, fields etc. to indicate which key type to use.
  * 
  * @author dstrauss
  * @version 0.3
  */
 @Qualifier
-@Target({ ElementType.FIELD, ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER })
+@ApplicationScoped
+@Target({ ElementType.TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SecureRandomizer {
+public @interface KeysType {
     /**
-     * The provider name. If empty, then the platform default will be used.
+     * the type of the keys to use.
      */
-    @Nonbinding
-    String providerName() default "";
+    TYPE value();
     
     /**
-     * The algorithm to use for randomizing.
+     * The known key types.
+     * 
+     * @author dstrauss
+     * @version 0.3
+     *
      */
-    @Nonbinding
-    String algorithm() default "SHA1PRNG";
+    enum TYPE {
+        LONG, STRING;
+    }
 }

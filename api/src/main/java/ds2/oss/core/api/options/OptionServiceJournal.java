@@ -37,4 +37,6 @@ public interface OptionServiceJournal {
      *            the new value
      */
     void addEntry(String invoker, JournalAction action, String affectedId, String oldVal, String newVal);
+    
+    void createdOption(Option<?, ?> option);
 }

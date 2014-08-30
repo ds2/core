@@ -26,15 +26,16 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionServiceJournal;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
-import ds2.oss.core.options.impl.dto.OptionDto;
 
 /**
  * The implementation for numbered options.
@@ -61,6 +62,11 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Inject
     private OptionFactory optionFac;
+    /**
+     * The journal.
+     */
+    @Inject
+    private OptionServiceJournal journal;
     
     /*
      * (non-Javadoc)
@@ -115,6 +121,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) {
         final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, val);
         numberedPersistenceSupport.persist(option);
+        journal.createdOption(option);
         return option;
     }
     

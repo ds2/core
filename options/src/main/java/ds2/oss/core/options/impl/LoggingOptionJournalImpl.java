@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.options.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.options.JournalAction;
+import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionServiceJournal;
 
 /**
@@ -36,12 +37,27 @@ import ds2.oss.core.api.options.OptionServiceJournal;
  * @version 0.3
  */
 @ApplicationScoped
-@Alternative
 public class LoggingOptionJournalImpl implements OptionServiceJournal {
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    /**
+     * The scheduler.
+     */
+    private ScheduledExecutorService scheduler;
+    
+    @PostConstruct
+    public void onLoad() {
+        LOG.debug("Creating new scheduler");
+        scheduler = Executors.newScheduledThreadPool(10);
+    }
+    
+    @PreDestroy
+    public void onExit() {
+        LOG.debug("Shutting down scheduler");
+        scheduler.shutdown();
+    }
     
     /*
      * (non-Javadoc)
@@ -51,8 +67,25 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
     @Override
     public void addEntry(final String invoker, final JournalAction action, final String affectedId,
         final String oldVal, final String newVal) {
-        // TODO Auto-generated method stub
-        
+        scheduler.execute(new Runnable() {
+            
+            @Override
+            public void run() {
+                LOG.info("{} has taken action {} on {}, changing {} to {}", new Object[] { invoker, action, affectedId,
+                    oldVal, newVal });
+            }
+        });
+    }
+    
+    @Override
+    public void createdOption(final Option<?, ?> option) {
+        scheduler.execute(new Runnable() {
+            
+            @Override
+            public void run() {
+                LOG.info("{} created new option {}", new Object[] { option.getModifierName(), option });
+            }
+        });
     }
     
 }

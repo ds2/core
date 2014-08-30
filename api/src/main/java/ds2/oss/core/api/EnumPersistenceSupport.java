@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.api;
 
+
 /**
  * A helper service to convert enums to ints, and vice versa.
  * 
@@ -22,7 +23,9 @@ package ds2.oss.core.api;
  * @version 0.3
  * @param <E>
  *            the enum type
+ * @deprecated Better use the AttributeConverter from JPA2.
  */
+@Deprecated
 public interface EnumPersistenceSupport<E extends Enum<E>> {
     /**
      * Converts the given enum value into an int value.

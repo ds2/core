@@ -41,10 +41,22 @@ public class TrustManagerWrapper implements X509TrustManager {
      */
     private boolean ignoreServerTrusted;
     
+    /**
+     * Returns if we can ignore any server trust errors.
+     * 
+     * @return TRUE to ignore any server trust errors, otherwise FALSE
+     */
     public boolean isIgnoreServerTrusted() {
         return ignoreServerTrusted;
     }
     
+    /**
+     * Sets the server trust flag.
+     * 
+     * @param ignoreServerTrusted
+     *            TRUE to ignore any server trust errors, otherwise and by default FALSE to crash on
+     *            server trust errors
+     */
     public void setIgnoreServerTrusted(final boolean ignoreServerTrusted) {
         this.ignoreServerTrusted = ignoreServerTrusted;
     }

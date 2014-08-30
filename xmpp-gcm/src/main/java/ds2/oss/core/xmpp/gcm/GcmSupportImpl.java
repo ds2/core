@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ds2.oss.core.xmpp.gcm;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.api.xmpp.IXmppSupport;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -34,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 @ApplicationScoped
 public class GcmSupportImpl implements IGcmSupport {
-
+    
     /**
      * A logger.
      */
@@ -43,7 +40,7 @@ public class GcmSupportImpl implements IGcmSupport {
     private IXmppSupport xmpp;
     @Inject
     private JsonCodec codec;
-
+    
     @Override
     public <E extends BaseJsonContent> void sendMessage(E m) {
         String json = "";
@@ -54,6 +51,6 @@ public class GcmSupportImpl implements IGcmSupport {
         } catch (CoreException ex) {
             LOG.error("Error when converting the message to json!", ex);
         }
-
+        
     }
 }

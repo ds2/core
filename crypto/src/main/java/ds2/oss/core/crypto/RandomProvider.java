@@ -29,6 +29,8 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.crypto.SecureRandomizer;
+
 /**
  * Simple provider for Random instances.
  * 

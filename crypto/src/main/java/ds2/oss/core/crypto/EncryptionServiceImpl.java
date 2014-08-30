@@ -36,6 +36,7 @@ import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.EncodedContent;
 import ds2.oss.core.api.crypto.EncryptionService;
 import ds2.oss.core.api.crypto.IvEncodedContent;
+import ds2.oss.core.api.crypto.SecureRandomizer;
 
 /**
  * The encryption service.

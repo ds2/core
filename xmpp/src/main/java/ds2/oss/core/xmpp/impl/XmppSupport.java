@@ -13,28 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ds2.oss.core.xmpp.impl;
 
-import ds2.oss.core.api.ITrustingSslSocketFactoryProvider;
-import ds2.oss.core.api.annotations.SmackPEProvider;
-import ds2.oss.core.api.annotations.SmackPacketListener;
-import ds2.oss.core.api.xmpp.IXmppConnectionData;
-import ds2.oss.core.api.xmpp.IXmppSupport;
-import ds2.oss.core.api.xmpp.XmppActionsListener;
-import ds2.oss.core.api.xmpp.IPacketIdProvider;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.PacketInterceptor;
@@ -53,13 +43,21 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.ITrustingSslSocketFactoryProvider;
+import ds2.oss.core.api.annotations.SmackPEProvider;
+import ds2.oss.core.api.annotations.SmackPacketListener;
+import ds2.oss.core.api.xmpp.IPacketIdProvider;
+import ds2.oss.core.api.xmpp.IXmppConnectionData;
+import ds2.oss.core.api.xmpp.IXmppSupport;
+import ds2.oss.core.api.xmpp.XmppActionsListener;
+
 /**
  *
  * @author dstrauss
  */
 @ApplicationScoped
 public class XmppSupport implements IXmppSupport {
-
+    
     /**
      * A logger.
      */
@@ -93,7 +91,7 @@ public class XmppSupport implements IXmppSupport {
     private PacketTypeFilterResolver typeResolver;
     @Inject
     private IPacketIdProvider numGenerator;
-
+    
     @PostConstruct
     public void onLoad() {
         if (!packetExtensions.isUnsatisfied()) {
@@ -108,11 +106,11 @@ public class XmppSupport implements IXmppSupport {
                 ProviderManager.addExtensionProvider(anno2.elementName(), anno2.namespace(), p);
             }
         }
-
+        
         LOG.info("Starting XMPP connection");
         try {
-            ConnectionConfiguration config
-                    = new ConnectionConfiguration(connectData.getServerHostname(), connectData.getServerPort());
+            ConnectionConfiguration config =
+                new ConnectionConfiguration(connectData.getServerHostname(), connectData.getServerPort());
             ConnectionConfiguration.SecurityMode sec = typeResolver.resolve(connectData.getSecurityLevel());
             config.setSecurityMode(sec);
             config.setReconnectionAllowed(true);
@@ -120,49 +118,51 @@ public class XmppSupport implements IXmppSupport {
             config.setSendPresence(connectData.isSendPresence());
             config.setSocketFactory(sslProv.getTrustingFactory(connectData.isIgnoreSslTrustErrors()));
             config.setDebuggerEnabled(connectData.isDebuggerEnabled());
-
+            
             conn = new XMPPTCPConnection(config);
-            LOG.debug("Perform connect to {}:{} as {}...", new Object[]{connectData.getServerHostname(), connectData.getServerPort(), connectData.getUsername()});
+            LOG.debug(
+                "Perform connect to {}:{} as {}...",
+                new Object[] { connectData.getServerHostname(), connectData.getServerPort(), connectData.getUsername() });
             conn.connect();
             LOG.debug("Adding common listeners");
             conn.addConnectionListener(new ConnectionListener() {
-
+                
                 @Override
                 public void connected(XMPPConnection xmppc) {
                     LOG.info("is connected now");
                     connected = true;
                 }
-
+                
                 @Override
                 public void authenticated(XMPPConnection xmppc) {
                     LOG.debug("is authenticated");
                     connected = true;
                 }
-
+                
                 @Override
                 public void connectionClosed() {
                     LOG.debug("connection is closed");
                     connected = false;
                 }
-
+                
                 @Override
                 public void connectionClosedOnError(Exception excptn) {
                     LOG.debug("Connection has been closed!", excptn);
                     connected = false;
                 }
-
+                
                 @Override
                 public void reconnectingIn(int i) {
                     LOG.debug("perform reconnect in {} seconds", i);
                     connected = false;
                 }
-
+                
                 @Override
                 public void reconnectionSuccessful() {
                     LOG.debug("reconnect successful");
                     connected = true;
                 }
-
+                
                 @Override
                 public void reconnectionFailed(Exception excptn) {
                     LOG.error("Reconnect failed.", excptn);
@@ -171,7 +171,7 @@ public class XmppSupport implements IXmppSupport {
             });
             LOG.debug("Adding common packet listeners");
             conn.addPacketListener(new PacketListener() {
-
+                
                 @Override
                 public void processPacket(Packet packet) throws SmackException.NotConnectedException {
                     LOG.debug("Got message packet: {}", packet);
@@ -182,7 +182,7 @@ public class XmppSupport implements IXmppSupport {
                 }
             }, new PacketTypeFilter(Message.class));
             conn.addPacketListener(new PacketListener() {
-
+                
                 @Override
                 public void processPacket(Packet packet) throws SmackException.NotConnectedException {
                     LOG.debug("Presence packet: {}", packet.toXML());
@@ -193,13 +193,13 @@ public class XmppSupport implements IXmppSupport {
                 }
             }, new PacketTypeFilter(Presence.class));
             conn.addPacketListener(new PacketListener() {
-
+                
                 @Override
                 public void processPacket(Packet packet) throws SmackException.NotConnectedException {
                     LOG.debug("Response packet: {}", packet);
                 }
             }, new PacketTypeFilter(Response.class));
-
+            
             if (!packetListeners.isUnsatisfied()) {
                 for (PacketListener l : packetListeners) {
                     SmackPacketListener anno = l.getClass().getAnnotation(SmackPacketListener.class);
@@ -210,16 +210,16 @@ public class XmppSupport implements IXmppSupport {
                     conn.addPacketListener(l, typeResolver.resolve(anno.type()));
                 }
             }
-
+            
             LOG.debug("Adding interceptors");
             conn.addPacketInterceptor(new PacketInterceptor() {
-
+                
                 @Override
                 public void interceptPacket(Packet packet) {
                     LOG.debug("Sending message: {}", packet.toXML());
                 }
             }, new PacketTypeFilter(Message.class));
-
+            
             LOG.debug("Performing login...");
             if (connectData.getUsername() != null) {
                 conn.login(connectData.getUsername(), connectData.getPassword());
@@ -231,7 +231,7 @@ public class XmppSupport implements IXmppSupport {
             LOG.error("Error when connecting!", ex);
         }
     }
-
+    
     @PreDestroy
     public void onEnd() {
         if (conn != null) {
@@ -244,7 +244,7 @@ public class XmppSupport implements IXmppSupport {
         }
         LOG.debug("Finished");
     }
-
+    
     private void sendPacket(Packet packet) {
         if (connected) {
             try {
@@ -260,12 +260,12 @@ public class XmppSupport implements IXmppSupport {
             LOG.debug("Sending cancelled, not connected!");
         }
     }
-
+    
     @Override
     public boolean isConnected() {
         return connected;
     }
-
+    
     @Override
     public void sendPresenseSubscribedTo(String jid) {
         if (connected) {
@@ -274,7 +274,7 @@ public class XmppSupport implements IXmppSupport {
             sendPacket(p);
         }
     }
-
+    
     @Override
     public void sendPlainTextMessage(String jid, String msg) {
         Message m = new Message(jid, Message.Type.chat);
@@ -282,7 +282,7 @@ public class XmppSupport implements IXmppSupport {
         m.setBody(msg);
         sendPacket(m);
     }
-
+    
     @Override
     public void sendPacket(Object o) {
         if (o == null || !(o instanceof Packet)) {
@@ -291,5 +291,5 @@ public class XmppSupport implements IXmppSupport {
         }
         sendPacket((Packet) o);
     }
-
+    
 }

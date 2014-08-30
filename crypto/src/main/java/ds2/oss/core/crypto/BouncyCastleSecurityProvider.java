@@ -58,6 +58,9 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
         Security.insertProviderAt(new BouncyCastleProvider(), 1);
     }
     
+    /**
+     * Actions to perform at startup.
+     */
     @PostConstruct
     public void onLoad() {
         LOG.debug("Loading BC Provider");

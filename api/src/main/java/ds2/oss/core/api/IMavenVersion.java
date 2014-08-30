@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 import java.util.Date;
@@ -27,7 +24,17 @@ import java.util.Date;
  * @version 0.3
  */
 public interface IMavenVersion extends Version {
+    /**
+     * Checks if this version is a snapshot version.
+     * 
+     * @return TRUE or FALSE
+     */
     boolean isSnapshot();
     
+    /**
+     * Returns the date of this snapshot version, if available.
+     * 
+     * @return the snapshot date
+     */
     Date getSnapshotDate();
 }
