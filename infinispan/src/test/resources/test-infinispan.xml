@@ -34,24 +34,17 @@
     <eviction
       maxEntries="100"
       strategy="LRU" />
-    <expiration lifespan="60000" />
-    <loaders preload="true">
-      <fileStore
-        fetchPersistentState="true"
-        purgerThreads="3"
-        purgeSynchronously="true"
-        ignoreModifications="false"
-        purgeOnStartup="false"
-        location="${java.io.tmpdir}">
-        <async
-          enabled="true"
-          flushLockTimeout="15000"
-          threadPoolSize="5" />
-        <singletonStore
-          enabled="true"
-          pushStateWhenCoordinator="true"
-          pushStateTimeout="20000" />
-      </fileStore>
+    <expiration lifespan="-1" />
+    <loaders shared="false">
+      <loader
+          class="org.infinispan.loaders.file.FileCacheStore"
+          fetchPersistentState="true" ignoreModifications="false"
+          purgeOnStartup="false">
+        <properties>
+          <property name="location" value="target/infinispan" />
+        </properties>
+        <async enabled="true" threadPoolSize="10" />
+      </loader>
     </loaders>
   </namedCache>
 </infinispan>
