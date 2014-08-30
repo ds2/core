@@ -51,7 +51,7 @@ import ds2.oss.core.api.es.TypeMapping;
  * @author dstrauss
  * @version 0.2
  */
-@SupportedAnnotationTypes(value = "ds2.oss.core.elasticsearch.api.annotations.TypeMapping")
+@SupportedAnnotationTypes(value = "ds2.oss.core.api.es.TypeMapping")
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class CreateTypeMappingsAP extends AbstractProcessor {
     
