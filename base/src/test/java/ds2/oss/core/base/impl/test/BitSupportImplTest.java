@@ -27,7 +27,7 @@ import ds2.oss.core.api.BitSupport;
  * @author dstrauss
  * @version 0.4
  */
-public class BitSupportImplTest extends WeldWrapper {
+public class BitSupportImplTest extends AbstractWeldWrapper {
     /**
      * The service to test.
      */

@@ -31,15 +31,15 @@ import org.testng.annotations.BeforeSuite;
  * @author dstrauss
  * @version 0.1
  */
-public abstract class WeldWrapper {
+public abstract class AbstractWeldWrapper {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(WeldWrapper.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractWeldWrapper.class);
     /**
      * The lock.
      */
-    private static final Lock lock = new ReentrantLock();
+    private static final Lock LOCK = new ReentrantLock();
     /**
      * The weld system.
      */
@@ -56,7 +56,7 @@ public abstract class WeldWrapper {
     @BeforeSuite(alwaysRun = true)
     public static void onSuiteStart() {
         LOG.debug("Entering Weld Init");
-        lock.lock();
+        LOCK.lock();
         try {
             if (wc != null) {
                 LOG.info("Nothing to do, ignoring");
@@ -65,20 +65,23 @@ public abstract class WeldWrapper {
             LOG.debug("Starting init");
             wc = weld.initialize();
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
         LOG.debug("Done with init");
     }
     
+    /**
+     * Actions to perform at the end of the test suite.
+     */
     @AfterSuite(alwaysRun = true)
     public static void afterSuite() {
-        lock.lock();
+        LOCK.lock();
         try {
             LOG.debug("Shutting down Weld");
             weld.shutdown();
             wc = null;
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
     
@@ -89,13 +92,15 @@ public abstract class WeldWrapper {
      *            the class
      * 
      * @return the instance, if found. Otherwise null.
+     * @param <T>
+     *            the type of the bean
      */
     public static <T> T getInstance(final Class<T> c) {
-        lock.lock();
+        LOCK.lock();
         try {
             return wc.instance().select(c).get();
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
 }

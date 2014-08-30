@@ -37,7 +37,7 @@ import ds2.oss.core.api.ConverterTool;
  * @author dstrauss
  * @version 0.3
  */
-public class ConverterToolTest extends WeldWrapper {
+public class ConverterToolTest extends AbstractWeldWrapper {
     /**
      * The text object.
      */

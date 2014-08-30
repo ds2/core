@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
  * @version 0.3
  */
 @Test(groups = "localeSupport")
-public class LocaleSupportImplTest extends WeldWrapper {
+public class LocaleSupportImplTest extends AbstractWeldWrapper {
     
     /**
      * The provider that contains the injection.

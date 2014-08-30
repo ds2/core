@@ -29,7 +29,7 @@ import ds2.oss.core.api.Base64Codec;
  * @author dstrauss
  * @version 0.4
  */
-public class Base64KonverterTest extends WeldWrapper {
+public class Base64KonverterTest extends AbstractWeldWrapper {
     /**
      * The contract to test.
      */

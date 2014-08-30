@@ -32,7 +32,7 @@ import ds2.oss.core.api.SymmetricKeyService;
  * @author dstrauss
  */
 @Test(groups = "sym")
-public class SymKeyServiceImplTest extends WeldWrapper {
+public class SymKeyServiceImplTest extends AbstractWeldWrapper {
     /**
      * The test object.
      */

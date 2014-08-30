@@ -29,7 +29,7 @@ import ds2.oss.core.api.HexCodec;
  * @author dstrauss
  * @version 0.3
  */
-public class HexKonverterTest extends WeldWrapper {
+public class HexKonverterTest extends AbstractWeldWrapper {
     /**
      * The contract to use.
      */

@@ -105,7 +105,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
      * @see ds2.oss.core.api.options.OptionStorageService#getAllOptions(java.lang.String)
      */
     @Override
-    public List<Option<Long, ?>> getAllOptions(String appName) {
+    public List<Option<Long, ?>> getAllOptions(final String appName) {
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
