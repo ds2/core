@@ -31,10 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.SecurityBaseData;
+import ds2.oss.core.api.annotations.SecureRandomizer;
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
-import ds2.oss.core.api.crypto.SecureRandomizer;
 
 /**
  * The AES key generator service.

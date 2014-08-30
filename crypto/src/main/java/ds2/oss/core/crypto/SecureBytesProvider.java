@@ -21,8 +21,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
+import ds2.oss.core.api.annotations.SecureRandomizer;
 import ds2.oss.core.api.crypto.BytesProvider;
-import ds2.oss.core.api.crypto.SecureRandomizer;
 
 /**
  * Implementation for some random bytes.
