@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.identifiers;
 
-import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.base.impl.AbstractEnumPersistenceSupport;
+import java.net.URL;
+
+import ds2.oss.core.api.options.ValueType;
 
 /**
- * The option stage persistence support.
+ * A url option identifier.
  * 
  * @author dstrauss
  * @version 0.3
  */
-public class OptionStagePersistenceSupport extends AbstractEnumPersistenceSupport<OptionStage> {
-    
+public class UrlOptionIdentifier extends AbstractOptionIdentifier<URL> {
     /**
-     * Inits the support.
+     * The svuid.
      */
-    public OptionStagePersistenceSupport() {
-        super();
-        fillLookup(OptionStage.values());
-    }
+    private static final long serialVersionUID = 5641998855769963068L;
     
+    public UrlOptionIdentifier(final String appName, final String optName) {
+        super(appName, optName, ValueType.URL);
+    }
 }

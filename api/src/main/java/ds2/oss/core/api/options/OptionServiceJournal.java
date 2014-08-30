@@ -26,7 +26,7 @@ public interface OptionServiceJournal {
      * Adds an entry.
      * 
      * @param invoker
-     *            the invoker username
+     *            the invoker username, if available. Otherwise set to null.
      * @param action
      *            the action
      * @param affectedId
@@ -36,7 +36,13 @@ public interface OptionServiceJournal {
      * @param newVal
      *            the new value
      */
-    void addEntry(String invoker, JournalAction action, String affectedId, String oldVal, String newVal);
+    <D, K> void addEntry(String invoker, JournalAction action, K affectedId, D oldVal, D newVal);
     
+    /**
+     * Convenient method to add a journal entry on creating an option.
+     * 
+     * @param option
+     *            the option that has been created
+     */
     void createdOption(Option<?, ?> option);
 }

@@ -27,7 +27,7 @@ import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.api.ValueCodec;
 import ds2.oss.core.options.api.ValueTypeParser;
-import ds2.oss.core.options.impl.dto.OptionEntity;
+import ds2.oss.core.options.impl.entities.OptionEntity;
 
 /**
  * The value type parser impl.

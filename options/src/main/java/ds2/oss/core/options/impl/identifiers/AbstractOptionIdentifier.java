@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.identifiers;
 
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;

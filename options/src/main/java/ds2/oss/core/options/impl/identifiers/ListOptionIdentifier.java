@@ -13,29 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.identifiers;
+
+import java.util.List;
 
 import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.options.api.ValueCodec;
-import ds2.oss.core.options.api.ValueCodecMarker;
 
 /**
- * A string value codec.
+ * A list option identifier.
  * 
  * @author dstrauss
  * @version 0.3
+ * 
  */
-@ValueCodecMarker(ValueType.STRING)
-public class StringValueCodec implements ValueCodec<String> {
+public class ListOptionIdentifier extends AbstractOptionIdentifier<List<String>> {
     
-    @Override
-    public String toString(final String v) {
-        return v;
+    /**
+     * The svuid.
+     */
+    private static final long serialVersionUID = -1571531634480152249L;
+    
+    /**
+     * Inits the option identifier.
+     * 
+     * @param appName
+     *            application name
+     * @param optName
+     *            the option name
+     * 
+     */
+    public ListOptionIdentifier(final String appName, final String optName) {
+        super(appName, optName, ValueType.LIST_OF_STRINGS);
     }
-    
-    @Override
-    public String toValue(final String s) {
-        return s;
-    }
-    
 }

@@ -13,25 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
-
-import java.net.URL;
-
-import ds2.oss.core.api.options.ValueType;
+package ds2.oss.core.options.impl.identifiers;
 
 /**
- * A url option identifier.
+ * A secure string option identifier.
  * 
  * @author dstrauss
  * @version 0.3
  */
-public class UrlOptionIdentifier extends AbstractOptionIdentifier<URL> {
+public class SecureStringOptionIdentifier extends StringOptionIdentifier {
+    
     /**
      * The svuid.
      */
-    private static final long serialVersionUID = 5641998855769963068L;
+    private static final long serialVersionUID = 5223689707309029993L;
     
-    public UrlOptionIdentifier(final String appName, final String optName) {
-        super(appName, optName, ValueType.URL);
+    /**
+     * Inits the option identifier.
+     * 
+     * @param appName
+     *            the app name
+     * @param optName
+     *            the option name
+     */
+    public SecureStringOptionIdentifier(final String appName, final String optName) {
+        super(appName, optName);
+    }
+    
+    @Override
+    public boolean isEncrypted() {
+        return true;
     }
 }

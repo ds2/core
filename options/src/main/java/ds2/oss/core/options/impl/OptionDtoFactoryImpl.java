@@ -23,7 +23,7 @@ import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.OptionFactory;
 
 /**
- * The factory.
+ * The factory to create some option dtos.
  * 
  * @author dstrauss
  * @version 0.3

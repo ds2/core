@@ -32,7 +32,7 @@ import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.base.impl.AbstractPersistenceSupportImpl;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
-import ds2.oss.core.options.impl.dto.OptionEntity;
+import ds2.oss.core.options.impl.entities.OptionEntity;
 
 /**
  * An abstract EJB to be used for database transactional wrapping.
@@ -136,6 +136,7 @@ public abstract class AbstractOptionsPersistenceSupportBean
         q.setParameter("appName", ident.getApplicationName());
         q.setMaxResults(1);
         final OptionEntity foundOption = getSecureSingle(q, OptionEntity.class);
+        final OptionStage oldStage = foundOption.getStage();
         foundOption.setStage(newStage);
         em.merge(foundOption);
         return parser.toDto(foundOption, ident);

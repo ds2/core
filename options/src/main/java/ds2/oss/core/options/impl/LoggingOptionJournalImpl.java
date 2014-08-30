@@ -47,12 +47,18 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
      */
     private ScheduledExecutorService scheduler;
     
+    /**
+     * Actions to perform at start.
+     */
     @PostConstruct
     public void onLoad() {
         LOG.debug("Creating new scheduler");
         scheduler = Executors.newScheduledThreadPool(10);
     }
     
+    /**
+     * Actions to perform before end.
+     */
     @PreDestroy
     public void onExit() {
         LOG.debug("Shutting down scheduler");
@@ -65,14 +71,14 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
      * ds2.oss.core.api.options.JournalAction, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public void addEntry(final String invoker, final JournalAction action, final String affectedId,
-        final String oldVal, final String newVal) {
+    public <D, K> void addEntry(final String invoker, final JournalAction action, final K affectedId,
+        final D oldVal, final D newVal) {
         scheduler.execute(new Runnable() {
             
             @Override
             public void run() {
-                LOG.info("{} has taken action {} on {}, changing {} to {}", new Object[] { invoker, action, affectedId,
-                    oldVal, newVal });
+                LOG.info("{} has taken action {} on id {}, changing {} to {}", new Object[] { invoker, action,
+                    affectedId, oldVal, newVal });
             }
         });
     }

@@ -13,36 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
-
-import java.util.List;
+package ds2.oss.core.options.impl.identifiers;
 
 import ds2.oss.core.api.options.ValueType;
 
 /**
- * A list option identifier.
+ * A string based option identifier.
  * 
  * @author dstrauss
  * @version 0.3
- * 
  */
-public class ListOptionIdentifier extends AbstractOptionIdentifier<List<String>> {
-    
+public class StringOptionIdentifier extends AbstractOptionIdentifier<String> {
     /**
      * The svuid.
      */
-    private static final long serialVersionUID = -1571531634480152249L;
+    private static final long serialVersionUID = -1717288216958232837L;
     
     /**
-     * Inits the option identifier.
+     * Inits the option.
      * 
      * @param appName
-     *            application name
+     *            the application name
      * @param optName
      *            the option name
-     * 
      */
-    public ListOptionIdentifier(final String appName, final String optName) {
-        super(appName, optName, ValueType.LIST_OF_STRINGS);
+    public StringOptionIdentifier(final String appName, final String optName) {
+        super(appName, optName, ValueType.STRING);
     }
 }

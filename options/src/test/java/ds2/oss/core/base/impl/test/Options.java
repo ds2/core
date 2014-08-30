@@ -18,8 +18,8 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import ds2.oss.core.options.impl.SecureStringOptionIdentifier;
-import ds2.oss.core.options.impl.StringOptionIdentifier;
+import ds2.oss.core.options.impl.identifiers.SecureStringOptionIdentifier;
+import ds2.oss.core.options.impl.identifiers.StringOptionIdentifier;
 
 /**
  * The known options for this test app.

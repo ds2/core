@@ -45,5 +45,9 @@ public enum JournalAction {
     /**
      * Deletes an option value.
      */
-    DELETE_OPTION_VALUE;
+    DELETE_OPTION_VALUE,
+    /**
+     * On updating an option stage.
+     */
+    UPDATE_OPTION_STAGE;
 }

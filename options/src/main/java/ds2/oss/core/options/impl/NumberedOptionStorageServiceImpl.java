@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionDto;
+import ds2.oss.core.api.options.JournalAction;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
@@ -126,8 +127,10 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     }
     
     @Override
-    public <V> Option<Long, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage deleted) {
-        return numberedPersistenceSupport.setOptionStage(endpoint, deleted);
+    public <V> Option<Long, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage newVal) {
+        final OptionDto<Long, V> rc = numberedPersistenceSupport.setOptionStage(endpoint, newVal);
+        journal.addEntry(null, JournalAction.UPDATE_OPTION_STAGE, rc.getId(), null, newVal);
+        return rc;
     }
     
 }

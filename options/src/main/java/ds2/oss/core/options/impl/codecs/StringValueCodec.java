@@ -13,35 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.codecs;
+
+import ds2.oss.core.api.options.ValueType;
+import ds2.oss.core.options.api.ValueCodec;
+import ds2.oss.core.options.api.ValueCodecMarker;
 
 /**
- * A secure string option identifier.
+ * A string value codec.
  * 
  * @author dstrauss
  * @version 0.3
  */
-public class SecureStringOptionIdentifier extends StringOptionIdentifier {
+@ValueCodecMarker(ValueType.STRING)
+public class StringValueCodec implements ValueCodec<String> {
     
-    /**
-     * The svuid.
-     */
-    private static final long serialVersionUID = 5223689707309029993L;
-    
-    /**
-     * Inits the option identifier.
-     * 
-     * @param appName
-     *            the app name
-     * @param optName
-     *            the option name
-     */
-    public SecureStringOptionIdentifier(final String appName, final String optName) {
-        super(appName, optName);
+    @Override
+    public String toString(final String v) {
+        return v;
     }
     
     @Override
-    public boolean isEncrypted() {
-        return true;
+    public String toValue(final String s) {
+        return s;
     }
+    
 }
