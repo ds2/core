@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.elasticsearch.ap;
+package ds2.oss.core.elasticsearch.apt;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -40,10 +40,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import ds2.oss.core.elasticsearch.api.FieldTypes;
-import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.annotations.TimestampPath;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
+import ds2.oss.core.api.es.FieldTypes;
+import ds2.oss.core.api.es.PropertyMapping;
+import ds2.oss.core.api.es.TimestampPath;
+import ds2.oss.core.api.es.TypeMapping;
 
 /**
  * The type mapping annotation processor.

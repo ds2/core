@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.elasticsearch.api;
+package ds2.oss.core.api.es;
 
 /**
  * The known data types for fields.

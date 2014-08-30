@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.InfinispanStore;
 import ds2.oss.core.api.Persistable;
-import ds2.oss.core.api.es.InfinispanConfig;
+import ds2.oss.core.api.cache.InfinispanConfig;
 
 /**
  * Created by dstrauss on 20.08.13.

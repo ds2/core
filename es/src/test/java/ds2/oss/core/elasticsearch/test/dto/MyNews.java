@@ -17,10 +17,10 @@ package ds2.oss.core.elasticsearch.test.dto;
 
 import java.util.Date;
 
-import ds2.oss.core.elasticsearch.api.FieldTypes;
-import ds2.oss.core.elasticsearch.api.IndexTypes;
-import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
+import ds2.oss.core.api.es.FieldTypes;
+import ds2.oss.core.api.es.IndexTypes;
+import ds2.oss.core.api.es.PropertyMapping;
+import ds2.oss.core.api.es.TypeMapping;
 
 /**
  * The Dto to persist.

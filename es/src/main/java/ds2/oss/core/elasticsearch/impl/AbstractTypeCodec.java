@@ -18,9 +18,9 @@ package ds2.oss.core.elasticsearch.impl;
 import javax.inject.Inject;
 
 import ds2.oss.core.api.IoService;
+import ds2.oss.core.api.es.TypeMapping;
 import ds2.oss.core.elasticsearch.api.GsonCodec;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
 
 /**
  * An abstract class defining some common methods for type codecs.

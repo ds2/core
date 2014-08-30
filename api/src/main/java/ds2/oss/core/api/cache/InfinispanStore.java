@@ -13,38 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api.es;
+/**
+ * 
+ */
+package ds2.oss.core.api.cache;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.enterprise.context.Dependent;
-import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
- * Injection qualifier.
+ * Marks an {@link ds2.oss.core.api.InfinispanStore} interface to be a store.
  * 
- * @version 0.3
  * @author dstrauss
+ * @version 0.3
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.METHOD })
 @Qualifier
-@Dependent
-public @interface InfinispanConfig {
-    /**
-     * The name of the xml file that contains the cache config. Default is infinispan.xml.
-     */
-    @Nonbinding
-    String xmlFile() default "infinispan.xml";
-    
-    /**
-     * The name of the cache to use. Empty string means default cache.
-     */
-    @Nonbinding
-    String cacheName() default "";
+@Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface InfinispanStore {
     
 }
