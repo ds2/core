@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionDto;
+import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.JournalAction;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
@@ -35,8 +36,11 @@ import ds2.oss.core.api.options.OptionServiceJournal;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
+import ds2.oss.core.options.api.OptionValueEncrypter;
+import ds2.oss.core.options.api.OptionValueFactory;
 
 /**
  * The implementation for numbered options.
@@ -59,10 +63,20 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Inject
     private NumberedOptionsPersistenceSupport numberedPersistenceSupport;
     /**
+     * The numbered option value db.
+     */
+    @Inject
+    private NumberedOptionValuePersistenceSupport numOptionValDb;
+    /**
      * The option factory.
      */
     @Inject
     private OptionFactory optionFac;
+    /**
+     * The option value factory.
+     */
+    @Inject
+    private OptionValueFactory optionValFac;
     /**
      * The journal.
      */
@@ -92,7 +106,8 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Override
     public <V> OptionValue<Long, V> createOptionValue(final OptionIdentifier<V> optionIdent,
         final OptionValueContext ctx, final Date scheduleDate, final V value) {
-        // TODO Auto-generated method stub
+        final OptionValueDto<Long, V> option = optionValFac.createOptionValueDto(optionIdent, null, ctx, value);
+        numOptionValDb.persist(option);
         return null;
     }
     
@@ -120,9 +135,18 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     
     @Override
     public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) {
-        final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, val);
+        String encStr = null;
+        V newVal = val;
+        if (ident.isEncrypted()) {
+            OptionValueEncrypter<V> encSvc = null;
+            encStr = encSvc.encrypt(val);
+            newVal = null;
+        }
+        final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, newVal);
         numberedPersistenceSupport.persist(option);
         journal.createdOption(option);
+        if (ident.isEncrypted()) {
+        }
         return option;
     }
     

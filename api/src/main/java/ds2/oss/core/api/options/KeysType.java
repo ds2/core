@@ -50,6 +50,13 @@ public @interface KeysType {
      *
      */
     enum TYPE {
-        LONG, STRING;
+        /**
+         * For LONG values.
+         */
+        LONG,
+        /**
+         * For string values.
+         */
+        STRING;
     }
 }

@@ -15,6 +15,9 @@
  */
 package ds2.oss.core.api.options;
 
+import java.net.URL;
+import java.util.List;
+
 import ds2.oss.core.api.NumericEnumValue;
 
 /**
@@ -27,37 +30,52 @@ public enum ValueType implements NumericEnumValue {
     /**
      * Option value is a string.
      */
-    STRING(1),
+    STRING(1, String.class),
     /**
      * Option value is a url.
      */
-    URL(2),
+    URL(2, URL.class),
     /**
      * Option value is a boolean value.
      */
-    BOOLEAN(3),
+    BOOLEAN(3, Boolean.class),
     /**
      * Option value is a list.
      */
-    LIST_OF_STRINGS(10);
+    LIST_OF_STRINGS(10, List.class);
     /**
      * The id.
      */
     private int id;
+    /**
+     * The matching class.
+     */
+    private Class<?> matchingClass;
     
     /**
      * Inits the enum value.
      * 
      * @param id1
      *            the id of the entry
+     * @param c
+     *            the matching class
      */
-    private ValueType(final int id1) {
+    private ValueType(final int id1, Class<?> c) {
         id = id1;
     }
     
     @Override
     public int getNumericalValue() {
         return id;
+    }
+    
+    /**
+     * Returns the matching class for this value type.
+     * 
+     * @return the matching class
+     */
+    public Class<?> getMatchingClass() {
+        return matchingClass;
     }
     
     /**

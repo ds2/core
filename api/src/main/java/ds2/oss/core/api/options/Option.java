@@ -30,7 +30,8 @@ import ds2.oss.core.api.Persistable;
  */
 public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, CreatedModifiedAware {
     /**
-     * Returns the default value of the option.
+     * Returns the default value of the option. If the option is usually encrypted, this will return
+     * the encrypted value.
      * 
      * @return the default value
      */
@@ -49,4 +50,14 @@ public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, Creat
      * @return the stage of the opion
      */
     OptionStage getStage();
+    
+    /**
+     * Returns the decrypted value of the option if this option is encrypted. It is required that
+     * implementations of this method must not ship this field value except the internal
+     * application. That means that this value must not be serializable or transmittable in any kind
+     * (xml, json, ...).
+     * 
+     * @return the decrypted value
+     */
+    V getDecryptedValue();
 }

@@ -28,7 +28,7 @@ import ds2.oss.core.api.options.OptionStage;
  * @param <K>
  *            the primary key type
  */
-public interface AdditionalOptionsPersistenceSupport<K> extends PersistenceSupport<OptionDto<K, ?>, K> {
+public interface OptionPersistenceSupport<K> extends PersistenceSupport<OptionDto<K, ?>, K> {
     // nothing special to do
     /**
      * Finds an option with the given data.

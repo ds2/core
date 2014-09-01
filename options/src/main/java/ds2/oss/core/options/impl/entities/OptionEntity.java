@@ -314,4 +314,9 @@ public class OptionEntity implements Option<Long, Object> {
         this.description = description;
     }
     
+    @Override
+    public Object getDecryptedValue() {
+        return null;
+    }
+    
 }

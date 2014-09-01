@@ -63,7 +63,8 @@ public interface OptionStorageService<E> {
      * @param ident
      *            the option identifier
      * @param val
-     *            the value for the option
+     *            the value for the option. If the option is encrypted, this value must be the
+     *            original value. Implementations must encrypt this value before persisting.
      * @param <V>
      *            the value type
      * @return the created option

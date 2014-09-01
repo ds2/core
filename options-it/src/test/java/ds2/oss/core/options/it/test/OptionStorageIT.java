@@ -31,9 +31,12 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.api.options.ForValueType;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
+import ds2.oss.core.api.options.ValueType;
+import ds2.oss.core.options.api.OptionValueEncrypter;
 import ds2.oss.core.options.it.MyOptions;
 
 /**
@@ -50,6 +53,12 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
      */
     @Inject
     private NumberedOptionStorageService to;
+    /**
+     * The option value encrypter.
+     */
+    @Inject
+    @ForValueType(ValueType.STRING)
+    private OptionValueEncrypter<String> encSvc;
     
     /**
      * Creates the archive to deploy into the glassfish container.
@@ -76,30 +85,32 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     }
     
     @Test
-    public void testPersist2() {
+    public void testSecurePersist1() {
+        String pwEnc = encSvc.encrypt("secret");
         Option<Long, String> option = to.createOption(PW, "secret");
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);
         Assert.assertNotNull(option.getId());
-        // Assert.assertNotEquals(option.getDefaultValue(), "secret");
+        Assert.assertEquals(option.getDefaultValue(), pwEnc);
+        Assert.assertEquals(option.getDecryptedValue(), "secret");
     }
     
     @Test
-    public void testPersist3() throws MalformedURLException {
+    public void testUrlPersist() throws MalformedURLException {
         Option<Long, URL> option = to.createOption(ENDPOINT, new URL("https://my.test.url/endpoint"));
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);
         Assert.assertNotNull(option.getId());
     }
     
-    @Test(dependsOnMethods = "testPersist3")
+    @Test(dependsOnMethods = "testUrlPersist")
     public void testFindOption1() throws MalformedURLException {
         Option<Long, URL> option = to.getOptionByIdentifier(ENDPOINT);
         Assert.assertNotNull(option);
         Assert.assertEquals(option.getDefaultValue(), new URL("https://my.test.url/endpoint"));
     }
     
-    @Test(dependsOnMethods = "testPersist3")
+    @Test(dependsOnMethods = "testUrlPersist")
     public void testDeleteOption() {
         Option<Long, URL> foundOption = to.getOptionByIdentifier(ENDPOINT);
         Assert.assertEquals(foundOption.getStage(), OptionStage.Online);

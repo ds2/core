@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.noop;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.options.KeyedOptionStorageService;
+import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
@@ -33,27 +33,22 @@ import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 
 /**
- * The default keyed option storage service which will not work by default.
+ * A default noop storage service.
  * 
  * @author dstrauss
  * @version 0.3
  *
  */
 @ApplicationScoped
-public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServiceImpl<String>
-    implements
-    KeyedOptionStorageService {
+public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStorageService {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
-    /**
-     * Actions to perform at startup.
-     */
     @PostConstruct
     public void onClass() {
-        LOG.info("Using the non-operational KeyedOptionStorageService. Please reconfigure an alternative!");
+        LOG.info("Using the non-operational NumberedOptionStorageService! Please choose an alternative.");
     }
     
     /*
@@ -63,8 +58,8 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
      * .OptionIdentifier)
      */
     @Override
-    public <V> Option<String, V> getOptionByIdentifier(final OptionIdentifier<V> ident) {
-        LOG.info("Using non-operational method. Returning dummy value!");
+    public <V> Option<Long, V> getOptionByIdentifier(OptionIdentifier<V> ident) {
+        LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
     
@@ -76,10 +71,9 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
      * java.lang.Object)
      */
     @Override
-    public <V> OptionValue<String, V> createOptionValue(final OptionIdentifier<V> optionIdent,
-        final OptionValueContext ctx,
-        final Date scheduleDate, final V value) {
-        LOG.info("Using non-operational method. Returning dummy value!");
+    public <V> OptionValue<Long, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx,
+        Date scheduleDate, V value) {
+        LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
     
@@ -89,8 +83,8 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
      * OptionIdentifier, java.lang.Object)
      */
     @Override
-    public <V> Option<String, V> createOption(final OptionIdentifier<V> ident, final V val) {
-        LOG.info("Using non-operational method. Returning dummy value!");
+    public <V> Option<Long, V> createOption(OptionIdentifier<V> ident, V val) {
+        LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
     
@@ -101,9 +95,8 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
      * .options.OptionIdentifier, ds2.oss.core.api.options.OptionValueContext)
      */
     @Override
-    public <V> OptionValue<String, V> findBestOptionValueByContext(final OptionIdentifier<V> ident,
-        final OptionValueContext ctx) {
-        LOG.info("Using non-operational method. Returning dummy value!");
+    public <V> OptionValue<Long, V> findBestOptionValueByContext(OptionIdentifier<V> ident, OptionValueContext ctx) {
+        LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
     
@@ -112,8 +105,8 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
      * @see ds2.oss.core.api.options.OptionStorageService#getAllOptions(java.lang.String)
      */
     @Override
-    public List<Option<String, ?>> getAllOptions(final String appName) {
-        LOG.info("Using non-operational method. Returning dummy value!");
+    public List<Option<Long, ?>> getAllOptions(final String appName) {
+        LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
     
@@ -123,8 +116,8 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
      * OptionIdentifier, ds2.oss.core.api.options.OptionStage)
      */
     @Override
-    public <V> Option<String, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage deleted) {
-        LOG.info("Using non-operational method. Returning dummy value!");
+    public <V> Option<Long, V> setOptionStage(OptionIdentifier<V> endpoint, OptionStage deleted) {
+        LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
     

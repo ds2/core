@@ -21,7 +21,7 @@ package ds2.oss.core.options.api;
  * @author dstrauss
  * @version 0.3
  */
-public interface NumberedOptionsPersistenceSupport extends AdditionalOptionsPersistenceSupport<Long> {
+public interface NumberedOptionsPersistenceSupport extends OptionPersistenceSupport<Long> {
     // nothing special yet
     /**
      * The query name for an option identifier search.

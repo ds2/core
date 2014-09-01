@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.encryption;
 
 import java.nio.charset.Charset;
 
@@ -9,6 +9,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import ds2.oss.core.api.Base64Codec;
+import ds2.oss.core.api.options.ForValueType;
+import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.api.OptionValueEncrypter;
 
 /**
@@ -19,7 +21,8 @@ import ds2.oss.core.options.api.OptionValueEncrypter;
  *
  */
 @ApplicationScoped
-public class SimpleBase64Codec implements OptionValueEncrypter {
+@ForValueType(ValueType.STRING)
+public class DummyStringOptionValueEncrypter implements OptionValueEncrypter<String> {
     /**
      * The charset to encode and decode.
      */
@@ -35,7 +38,7 @@ public class SimpleBase64Codec implements OptionValueEncrypter {
      * @see ds2.oss.core.options.api.OptionValueEncrypter#encrypt(java.lang.String)
      */
     @Override
-    public String encrypt(String s) {
+    public String encrypt(final String s) {
         return codec.encode(s.getBytes(UTF8CS));
     }
     
@@ -44,7 +47,7 @@ public class SimpleBase64Codec implements OptionValueEncrypter {
      * @see ds2.oss.core.options.api.OptionValueEncrypter#decrypt(java.lang.String)
      */
     @Override
-    public String decrypt(String s) {
+    public String decrypt(final String s) {
         final String rc = new String(codec.decode(s.toCharArray()), UTF8CS);
         return rc;
     }

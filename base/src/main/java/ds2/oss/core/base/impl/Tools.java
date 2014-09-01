@@ -16,6 +16,8 @@
 package ds2.oss.core.base.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +79,23 @@ public final class Tools {
             } catch (final NumberFormatException e) {
                 LOG.debug("Error when converting the given object to int!", e);
             }
+        }
+        return rc;
+    }
+    
+    /**
+     * Converts a given string into a url.
+     * 
+     * @param urlStr
+     *            the url string
+     * @return the url object, or null if an error occurred
+     */
+    public static URL toUrl(final String urlStr) {
+        URL rc = null;
+        try {
+            rc = new URL(urlStr);
+        } catch (final MalformedURLException e) {
+            LOG.debug("Error when converting the given string into a url!", e);
         }
         return rc;
     }

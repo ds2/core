@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import ds2.oss.core.api.options.Option;
@@ -95,6 +96,11 @@ public class OptionDto<E, V> implements Option<E, V> {
      * The description.
      */
     private String description;
+    /**
+     * The decrypted value.
+     */
+    @XmlTransient
+    private transient V decryptedValue;
     
     /**
      * Inits the option with dummy default values.
@@ -110,6 +116,7 @@ public class OptionDto<E, V> implements Option<E, V> {
      * Inits the option with a default id.
      * 
      * @param id1
+     *            the primary key of this option
      */
     public OptionDto(final E id1) {
         this();
@@ -302,8 +309,29 @@ public class OptionDto<E, V> implements Option<E, V> {
         return description;
     }
     
-    public void setDescription(String description) {
+    /**
+     * Sets a description for the option.
+     * 
+     * @param description
+     *            the description
+     */
+    public void setDescription(final String description) {
         this.description = description;
+    }
+    
+    @Override
+    public V getDecryptedValue() {
+        return decryptedValue;
+    }
+    
+    /**
+     * Sets the decrypted value.
+     * 
+     * @param decryptedValue
+     *            the decryptedValue to set
+     */
+    public void setDecryptedValue(V decryptedValue) {
+        this.decryptedValue = decryptedValue;
     }
     
 }

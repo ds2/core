@@ -24,7 +24,21 @@ package ds2.oss.core.options.api;
  *            the value type
  */
 public interface ValueCodec<V> {
+    /**
+     * Converts the given object into a string representation.
+     * 
+     * @param v
+     *            the value object
+     * @return the string value
+     */
     String toString(V v);
     
+    /**
+     * Converts a given string into a value object.
+     * 
+     * @param s
+     *            the string
+     * @return the value object
+     */
     V toValue(String s);
 }
