@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.SecurityBaseData;
 import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.crypto.Ciphers;
+import ds2.oss.core.api.crypto.JavaRuntimeData;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
 
@@ -43,7 +43,7 @@ import ds2.oss.core.api.crypto.KeyGeneratorService;
  * @author dstrauss
  */
 public class KeyGeneratorServiceImpl implements KeyGeneratorService {
-
+    
     /**
      * A logger.
      */
@@ -60,11 +60,16 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     @SecureRandomizer
     private SecureRandom random;
     /**
+     * The AES runtime data.
+     */
+    @Inject
+    private JavaRuntimeData runtimeData;
+    /**
      * The security instance provider.
      */
     @Inject
     private SecurityInstanceProvider secProv;
-
+    
     @Override
     public SecretKey generate(final int length, final KeyGeneratorNames name) {
         SecretKey rc;
@@ -73,7 +78,7 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         rc = kgInstance.generateKey();
         return rc;
     }
-
+    
     @Override
     public SecretKey generate(final String pw, final KeyGeneratorNames name) {
         SecretKey rc = null;
@@ -85,22 +90,23 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         }
         return rc;
     }
-
+    
     @Override
     public SecretKey generateSecureAesKey(final String pw) {
-        return generateSecureAesKey(pw, Ciphers.AES.getSuggestedKeyLength());
+        return generateSecureAesKey(pw, runtimeData.getAesMaxKeysize());
     }
-
+    
     @Override
     public SecretKey generateAesKey() {
-        return this.generate(256, KeyGeneratorNames.AES);
+        int keySize = runtimeData.getAesMaxKeysize();
+        return this.generate(keySize, KeyGeneratorNames.AES);
     }
-
+    
     @Override
     public SecretKey generateAesFromBytes(final byte[] encodedBytes) {
         return new SecretKeySpec(encodedBytes, "AES");
     }
-
+    
     @Override
     public SecretKey generateSecureAesKey(String pw, int keyLength) {
         if (pw == null) {
@@ -109,9 +115,8 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         SecretKey rc = null;
         try {
             final SecretKeyFactory factory = secProv.createSecretKeyFactoryInstance("PBKDF2WithHmacSHA1");
-            final KeySpec keySpec
-                    = new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(),
-                            keyLength);
+            final KeySpec keySpec = new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(),
+                keyLength);
             final SecretKey sk1 = factory.generateSecret(keySpec);
             rc = new SecretKeySpec(sk1.getEncoded(), "AES");
         } catch (final InvalidKeySpecException e) {
