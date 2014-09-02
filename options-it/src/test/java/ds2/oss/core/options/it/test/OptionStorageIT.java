@@ -35,6 +35,7 @@ import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.ForValueType;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionException;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.api.OptionValueEncrypter;
@@ -115,6 +116,21 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     }
     
     /**
+     * Test to check if we can recover an encryption option.
+     * 
+     * @throws OptionException
+     *             if an error occurred
+     * 
+     */
+    @Test(dependsOnMethods = "testSecurePersist1")
+    public void testFindSecureOption1() throws OptionException {
+        Option<Long, String> option = to.getOptionByIdentifier(PW);
+        Assert.assertNotNull(option);
+        Assert.assertNull(option.getDefaultValue());
+        Assert.assertEquals(option.getDecryptedValue(), "secret");
+    }
+    
+    /**
      * Test for a url option.
      * 
      * @throws MalformedURLException
@@ -131,14 +147,14 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     }
     
     @Test(dependsOnMethods = "testUrlPersist")
-    public void testFindOption1() throws MalformedURLException {
+    public void testFindOption1() throws MalformedURLException, OptionException {
         Option<Long, URL> option = to.getOptionByIdentifier(ENDPOINT);
         Assert.assertNotNull(option);
         Assert.assertEquals(option.getDefaultValue(), new URL("https://my.test.url/endpoint"));
     }
     
     @Test(dependsOnMethods = "testUrlPersist")
-    public void testDeleteOption() {
+    public void testDeleteOption() throws OptionException {
         Option<Long, URL> foundOption = to.getOptionByIdentifier(ENDPOINT);
         Assert.assertEquals(foundOption.getStage(), OptionStage.Online);
         to.setOptionStage(ENDPOINT, OptionStage.Deleted);

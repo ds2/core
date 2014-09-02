@@ -36,8 +36,10 @@ public interface OptionStorageService<E> {
      * @param <V>
      *            the value type of the option
      * @return the option, or null if not found
+     * @throws OptionException
+     *             if a technical error occurred
      */
-    <V> Option<E, V> getOptionByIdentifier(OptionIdentifier<V> ident);
+    <V> Option<E, V> getOptionByIdentifier(OptionIdentifier<V> ident) throws OptionException;
     
     /**
      * Creates a new option value.

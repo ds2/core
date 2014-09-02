@@ -16,11 +16,15 @@
 package ds2.oss.core.options.impl;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandles;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
@@ -37,6 +41,10 @@ import ds2.oss.core.options.impl.entities.OptionEntity;
  */
 @ApplicationScoped
 public class ValueTypeParserImpl implements ValueTypeParser {
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The codecs.
      */
@@ -70,6 +78,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         if (e == null) {
             return null;
         }
+        LOG.debug("Entity to convert is {}", e);
         final OptionDto<Long, V> rc = new OptionDto<>(e.getId());
         rc.setApplicationName(e.getApplicationName());
         rc.setCreated(e.getCreated());
@@ -79,6 +88,9 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setOptionName(e.getOptionName());
         rc.setStage(e.getStage());
         rc.setValueType(e.getValueType());
+        rc.setDescription(e.getDescription());
+        rc.setEncoded(e.getEncoded());
+        rc.setInitVector(e.getInitVector());
         final Annotation a = new ValueCodecMarkerLiteral(ident.getValueType());
         final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
         rc.setDefaultValue(codec.toValue((String) e.getDefaultValue()));

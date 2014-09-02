@@ -338,11 +338,17 @@ public class OptionEntity implements Option<Long, Object> {
     
     @Override
     public byte[] getInitVector() {
+        if (ecm == null) {
+            ecm = new IvEncodedContentModule();
+        }
         return ecm.getInitVector();
     }
     
     @Override
     public byte[] getEncoded() {
+        if (ecm == null) {
+            ecm = new IvEncodedContentModule();
+        }
         return ecm.getEncoded();
     }
     

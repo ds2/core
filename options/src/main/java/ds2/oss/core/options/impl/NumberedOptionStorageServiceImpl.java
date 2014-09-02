@@ -35,6 +35,7 @@ import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.JournalAction;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionException;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionServiceJournal;
 import ds2.oss.core.api.options.OptionStage;
@@ -100,8 +101,16 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      * .OptionIdentifier)
      */
     @Override
-    public <V> Option<Long, V> getOptionByIdentifier(final OptionIdentifier<V> ident) {
+    public <V> Option<Long, V> getOptionByIdentifier(final OptionIdentifier<V> ident) throws OptionException {
         final OptionDto<Long, V> foundOption = numberedPersistenceSupport.findOptionByIdentifier(ident);
+        if (foundOption.isEncrypted()) {
+            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType(), null);
+            if (ove == null) {
+                throw new OptionException(CoreErrors.NoEncryptionForType);
+            }
+            final V val = ove.decrypt(foundOption);
+            foundOption.setDecryptedValue(val);
+        }
         LOG.debug("Found this option: {}", foundOption);
         return foundOption;
     }
