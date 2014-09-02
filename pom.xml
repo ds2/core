@@ -69,6 +69,7 @@
     <module>xmpp-gcm</module>
     <module>test-ear</module>
     <module>es-apt</module>
+    <module>testutils</module>
   </modules>
   <profiles>
     <profile>

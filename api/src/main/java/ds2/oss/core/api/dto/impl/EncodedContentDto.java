@@ -13,46 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.crypto;
+package ds2.oss.core.api.dto.impl;
 
 import java.util.Arrays;
 
-import ds2.oss.core.api.crypto.IvEncodedContent;
+import ds2.oss.core.api.crypto.EncodedContent;
 
 /**
- * The Iv based encoded content.
+ * A simple dto.
  * 
  * @author dstrauss
  * @version 0.3
  */
-public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedContent {
+public class EncodedContentDto implements EncodedContent {
     
     /**
      * The svuid.
      */
-    private static final long serialVersionUID = -2257161303770878885L;
+    private static final long serialVersionUID = 8010600132495793892L;
     /**
-     * The init vector.
+     * The encoded bytes.
      */
-    private byte[] initVector;
+    private byte[] encoded;
     
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.crypto.IvEncodedContent#getInitVector()
-     */
     @Override
-    public byte[] getInitVector() {
-        return initVector;
+    public byte[] getEncoded() {
+        return encoded;
     }
     
     /**
-     * Sets the init vector.
+     * Sets the encoded bytes.
      * 
-     * @param iv
-     *            the initVector to set
+     * @param enc
+     *            the encoded to set
      */
-    public void setInitVector(final byte[] iv) {
-        initVector = iv;
+    public void setEncoded(final byte[] enc) {
+        encoded = enc;
     }
     
     /*
@@ -61,13 +57,11 @@ public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedC
      */
     @Override
     public String toString() {
-        final int maxLen = 16;
+        final int maxLen = 256;
         final StringBuilder builder = new StringBuilder();
-        builder.append("IvEncodedContentDto (initVector=");
-        builder.append(initVector != null ? Arrays.toString(Arrays.copyOf(initVector,
-            Math.min(initVector.length, maxLen))) : null);
-        builder.append(", toString()=");
-        builder.append(super.toString());
+        builder.append("EncodedContentDto (encoded=");
+        builder.append(encoded != null ? Arrays.toString(Arrays.copyOf(encoded, Math.min(encoded.length, maxLen)))
+            : null);
         builder.append(")");
         return builder.toString();
     }

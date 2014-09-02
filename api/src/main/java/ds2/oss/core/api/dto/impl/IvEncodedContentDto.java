@@ -13,42 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.crypto;
+package ds2.oss.core.api.dto.impl;
 
 import java.util.Arrays;
 
-import ds2.oss.core.api.crypto.EncodedContent;
+import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
- * A simple dto.
+ * The Iv based encoded content.
  * 
  * @author dstrauss
  * @version 0.3
  */
-public class EncodedContentDto implements EncodedContent {
+public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedContent {
     
     /**
      * The svuid.
      */
-    private static final long serialVersionUID = 8010600132495793892L;
+    private static final long serialVersionUID = -2257161303770878885L;
     /**
-     * The encoded bytes.
+     * The init vector.
      */
-    private byte[] encoded;
+    private byte[] initVector;
     
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.api.crypto.IvEncodedContent#getInitVector()
+     */
     @Override
-    public byte[] getEncoded() {
-        return encoded;
+    public byte[] getInitVector() {
+        return initVector;
     }
     
     /**
-     * Sets the encoded bytes.
+     * Sets the init vector.
      * 
-     * @param enc
-     *            the encoded to set
+     * @param iv
+     *            the initVector to set
      */
-    public void setEncoded(final byte[] enc) {
-        encoded = enc;
+    public void setInitVector(final byte[] iv) {
+        initVector = iv;
     }
     
     /*
@@ -57,11 +61,13 @@ public class EncodedContentDto implements EncodedContent {
      */
     @Override
     public String toString() {
-        final int maxLen = 256;
+        final int maxLen = 16;
         final StringBuilder builder = new StringBuilder();
-        builder.append("EncodedContentDto (encoded=");
-        builder.append(encoded != null ? Arrays.toString(Arrays.copyOf(encoded, Math.min(encoded.length, maxLen)))
-            : null);
+        builder.append("IvEncodedContentDto (initVector=");
+        builder.append(initVector != null ? Arrays.toString(Arrays.copyOf(initVector,
+            Math.min(initVector.length, maxLen))) : null);
+        builder.append(", toString()=");
+        builder.append(super.toString());
         builder.append(")");
         return builder.toString();
     }

@@ -17,6 +17,7 @@ package ds2.oss.core.api.options;
 
 import ds2.oss.core.api.CreatedModifiedAware;
 import ds2.oss.core.api.Persistable;
+import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
  * The definition of a single option.
@@ -28,7 +29,7 @@ import ds2.oss.core.api.Persistable;
  * @param <V>
  *            the value type of the option
  */
-public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, CreatedModifiedAware {
+public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, CreatedModifiedAware, IvEncodedContent {
     /**
      * Returns the default value of the option. If the option is usually encrypted, this will return
      * the encrypted value.
@@ -60,4 +61,5 @@ public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, Creat
      * @return the decrypted value
      */
     V getDecryptedValue();
+    
 }

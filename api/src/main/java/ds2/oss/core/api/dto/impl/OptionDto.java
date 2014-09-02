@@ -40,7 +40,7 @@ import ds2.oss.core.api.options.ValueType;
  */
 @XmlType(name = "optionType")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OptionDto<E, V> implements Option<E, V> {
+public class OptionDto<E, V> extends IvEncodedContentDto implements Option<E, V> {
     
     /**
      * The svuid.
