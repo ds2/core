@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.HexCodec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Testcase for the hex converter.
@@ -29,7 +30,7 @@ import ds2.oss.core.api.HexCodec;
  * @author dstrauss
  * @version 0.3
  */
-public class HexKonverterTest extends AbstractWeldWrapper {
+public class HexKonverterTest extends AbstractInjectionEnvironment {
     /**
      * The contract to use.
      */

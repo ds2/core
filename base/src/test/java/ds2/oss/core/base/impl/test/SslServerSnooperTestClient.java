@@ -18,6 +18,7 @@ package ds2.oss.core.base.impl.test;
 import java.security.cert.X509Certificate;
 
 import ds2.oss.core.api.SslServerSnooper;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * A small test client.
@@ -41,12 +42,12 @@ public final class SslServerSnooperTestClient {
      *            the server hostname
      */
     public static void main(final String[] args) {
-        AbstractWeldWrapper.onSuiteStart();
+        AbstractInjectionEnvironment.onSuiteStart();
         final SslServerSnooper to =
-            AbstractWeldWrapper.getInstance(SslServerSnooper.class);
+            AbstractInjectionEnvironment.getInstance(SslServerSnooper.class);
         final String hostname = args.length > 0 ? args[0] : "jiri.jamba.net";
         final X509Certificate[] certs = to.getServerCertificates(hostname, 443);
         System.out.println(certs);
-        AbstractWeldWrapper.afterSuite();
+        AbstractInjectionEnvironment.onSuiteEnd();
     }
 }

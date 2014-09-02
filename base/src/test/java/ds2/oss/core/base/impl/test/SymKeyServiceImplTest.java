@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.SymmetricKeyNames;
 import ds2.oss.core.api.SymmetricKeyService;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Tests.
@@ -32,7 +33,7 @@ import ds2.oss.core.api.SymmetricKeyService;
  * @author dstrauss
  */
 @Test(groups = "sym")
-public class SymKeyServiceImplTest extends AbstractWeldWrapper {
+public class SymKeyServiceImplTest extends AbstractInjectionEnvironment {
     /**
      * The test object.
      */

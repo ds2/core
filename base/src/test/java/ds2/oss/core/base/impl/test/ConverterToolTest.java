@@ -30,6 +30,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.ConverterTool;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Tests for the converter.
@@ -37,7 +38,7 @@ import ds2.oss.core.api.ConverterTool;
  * @author dstrauss
  * @version 0.3
  */
-public class ConverterToolTest extends AbstractWeldWrapper {
+public class ConverterToolTest extends AbstractInjectionEnvironment {
     /**
      * The text object.
      */

@@ -20,6 +20,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.BitSupport;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * A testcase for the bit support.
@@ -27,7 +28,7 @@ import ds2.oss.core.api.BitSupport;
  * @author dstrauss
  * @version 0.4
  */
-public class BitSupportImplTest extends AbstractWeldWrapper {
+public class BitSupportImplTest extends AbstractInjectionEnvironment {
     /**
      * The service to test.
      */

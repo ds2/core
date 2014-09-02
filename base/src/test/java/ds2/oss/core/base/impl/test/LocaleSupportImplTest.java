@@ -24,6 +24,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+
 /**
  * The test for the LocaleSupport.
  * 
@@ -31,7 +33,7 @@ import org.testng.annotations.Test;
  * @version 0.3
  */
 @Test(groups = "localeSupport")
-public class LocaleSupportImplTest extends AbstractWeldWrapper {
+public class LocaleSupportImplTest extends AbstractInjectionEnvironment {
     
     /**
      * The provider that contains the injection.

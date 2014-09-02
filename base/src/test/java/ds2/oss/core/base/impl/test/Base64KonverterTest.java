@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.Base64Codec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * The base64 test.
@@ -29,7 +30,7 @@ import ds2.oss.core.api.Base64Codec;
  * @author dstrauss
  * @version 0.4
  */
-public class Base64KonverterTest extends AbstractWeldWrapper {
+public class Base64KonverterTest extends AbstractInjectionEnvironment {
     /**
      * The contract to test.
      */

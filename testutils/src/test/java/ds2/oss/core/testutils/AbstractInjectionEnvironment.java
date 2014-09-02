@@ -78,7 +78,7 @@ public abstract class AbstractInjectionEnvironment {
      * Actions to perform at the end of the test suite.
      */
     @AfterSuite(alwaysRun = true)
-    public void onSuiteEnd() {
+    public static void onSuiteEnd() {
         LOCK.lock();
         try {
             LOG.debug("Shutting down Weld");
