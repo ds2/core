@@ -26,6 +26,7 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Testcases for the AES keygen.

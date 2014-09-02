@@ -27,6 +27,7 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.crypto.BytesProvider;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Simple test for the secure bytes provider.

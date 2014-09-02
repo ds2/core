@@ -15,33 +15,36 @@
  */
 package ds2.oss.core.codec.jackson2;
 
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.api.JsonCodec;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  *
  * @author dstrauss
  */
 public class JacksonJsonCodecTest extends AbstractInjectionEnvironment {
-
+    
     private JsonCodec to;
-
+    
     @BeforeClass
     public void onClass() {
         to = getInstance(JsonCodec.class);
     }
-
+    
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testEncodeNull() throws CoreException {
         to.encode(null);
     }
-
+    
     @Test
     public void testEncode1() throws MalformedURLException, CoreException {
         Complex1 c = new Complex1();
@@ -51,6 +54,9 @@ public class JacksonJsonCodecTest extends AbstractInjectionEnvironment {
         c.setNumber(123);
         c.setState(MyEnum.VAL2);
         String json = to.encode(c);
-        Assert.assertEquals(json, "{\"msg\":\"Hello, world\",\"homepage\":\"http://www.bla.test\",\"created\":12345,\"childs\":null,\"num\":123,\"this_state_is\":\"VAL2\"}");
+        Assert
+            .assertEquals(
+                json,
+                "{\"msg\":\"Hello, world\",\"homepage\":\"http://www.bla.test\",\"created\":12345,\"childs\":null,\"num\":123,\"this_state_is\":\"VAL2\"}");
     }
 }

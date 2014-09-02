@@ -18,6 +18,7 @@ package ds2.oss.core.elasticsearch.tests;
 import org.testng.annotations.BeforeClass;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * The integration test.

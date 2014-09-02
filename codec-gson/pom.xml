@@ -41,5 +41,12 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+        <dependency>
+          <groupId>ds2.oss.core</groupId>
+          <artifactId>ds2-oss-core-testutils</artifactId>
+          <version>0.3-SNAPSHOT</version>
+          <scope>test</scope>
+          <classifier>tests</classifier>
+        </dependency>
     </dependencies>
 </project>

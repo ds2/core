@@ -20,25 +20,27 @@
  */
 package ds2.oss.core.xmpp.tests;
 
-import ds2.oss.core.api.xmpp.IXmppSupport;
 import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.xmpp.IXmppSupport;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+
 /**
- * This client here tests the connection to another xmpp server on localhost,
- * checking if it works.
+ * This client here tests the connection to another xmpp server on localhost, checking if it works.
  *
  * @author dstrauss
  * @version 0.3
  */
 public class LocalhostTestClient extends AbstractInjectionEnvironment {
-
+    
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
+    
     public static void main(String... params) {
         LocalhostTestClient t = new LocalhostTestClient();
-        t.onSuite();
+        t.onSuiteStart();
         LOG.info("Getting xmpp");
         IXmppSupport xmpp = LocalhostTestClient.getInstance(IXmppSupport.class);
         LOG.info("Is connected: {}", xmpp.isConnected());

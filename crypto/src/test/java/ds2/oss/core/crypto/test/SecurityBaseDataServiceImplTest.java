@@ -25,6 +25,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.SecurityBaseDataService;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Testcases for the security base data service.

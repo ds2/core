@@ -27,6 +27,7 @@ import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.EncodedContent;
 import ds2.oss.core.api.crypto.EncryptionService;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * The encryption service test.
