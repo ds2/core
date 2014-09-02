@@ -37,6 +37,7 @@ import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
+import ds2.oss.core.base.impl.db.IvEncodedContentModule;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.internal.OptionStageConverter;
 import ds2.oss.core.options.internal.ValueTypeConverter;
@@ -85,6 +86,11 @@ public class OptionEntity implements Option<Long, Object> {
     @Embedded
     private CreatedModifiedAwareModule cma;
     /**
+     * The EC module.
+     */
+    @Embedded
+    private IvEncodedContentModule ecm;
+    /**
      * The option name.
      */
     @Column(name = "name", nullable = false)
@@ -127,6 +133,7 @@ public class OptionEntity implements Option<Long, Object> {
      */
     public OptionEntity() {
         cma = new CreatedModifiedAwareModule();
+        ecm = new IvEncodedContentModule();
     }
     
     @Override
@@ -310,6 +317,12 @@ public class OptionEntity implements Option<Long, Object> {
         return description;
     }
     
+    /**
+     * Sets a description.
+     * 
+     * @param description
+     *            a description.
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -317,6 +330,16 @@ public class OptionEntity implements Option<Long, Object> {
     @Override
     public Object getDecryptedValue() {
         return null;
+    }
+    
+    @Override
+    public byte[] getInitVector() {
+        return ecm.getInitVector();
+    }
+    
+    @Override
+    public byte[] getEncoded() {
+        return ecm.getEncoded();
     }
     
 }

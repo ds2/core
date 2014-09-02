@@ -34,6 +34,7 @@ import ds2.oss.core.elasticsearch.impl.UseCases;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import ds2.oss.core.elasticsearch.test.support.CountryCodec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Check write read behaviour.

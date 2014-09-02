@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.impl.UseCases;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Simple usecase test.

@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.elasticsearch.api.GsonCodec;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * The gson codec tests.

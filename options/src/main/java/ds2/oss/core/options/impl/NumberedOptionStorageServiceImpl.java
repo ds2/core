@@ -39,7 +39,6 @@ import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
-import ds2.oss.core.options.api.OptionValueEncrypter;
 import ds2.oss.core.options.api.OptionValueFactory;
 
 /**
@@ -138,8 +137,6 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         String encStr = null;
         V newVal = val;
         if (ident.isEncrypted()) {
-            OptionValueEncrypter<V> encSvc = null;
-            encStr = encSvc.encrypt(val);
             newVal = null;
         }
         final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, newVal);

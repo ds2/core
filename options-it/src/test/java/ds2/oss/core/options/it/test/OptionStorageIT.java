@@ -84,7 +84,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertNotNull(option.getId());
     }
     
-    @Test
+    @Test(enabled = false)
     public void testSecurePersist1() {
         String pwEnc = encSvc.encrypt("secret");
         Option<Long, String> option = to.createOption(PW, "secret");

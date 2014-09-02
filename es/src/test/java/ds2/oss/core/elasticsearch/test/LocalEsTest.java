@@ -30,6 +30,7 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Tests for the ES service.

@@ -28,6 +28,7 @@ import org.testng.annotations.Test;
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 import ds2.oss.core.elasticsearch.test.support.EsNodeGetter;
 import ds2.oss.core.elasticsearch.test.support.EsNodeSetter;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Test for the concurrency system.

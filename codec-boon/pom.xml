@@ -46,6 +46,8 @@
           <groupId>ds2.oss.core</groupId>
           <artifactId>ds2-oss-core-testutils</artifactId>
           <version>0.3-SNAPSHOT</version>
+          <classifier>tests</classifier>
+          <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

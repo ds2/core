@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.elasticsearch.api.CodecProvider;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * A test for the provider.

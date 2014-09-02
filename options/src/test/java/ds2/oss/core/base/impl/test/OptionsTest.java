@@ -18,6 +18,8 @@ package ds2.oss.core.base.impl.test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+
 /**
  * Some options test.
  * 

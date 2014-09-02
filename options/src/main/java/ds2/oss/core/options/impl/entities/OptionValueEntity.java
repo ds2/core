@@ -41,6 +41,7 @@ import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
+import ds2.oss.core.base.impl.db.IvEncodedContentModule;
 import ds2.oss.core.base.impl.db.LifeCycleAwareModule;
 import ds2.oss.core.options.internal.OptionValueContextModule;
 import ds2.oss.core.options.internal.OptionValueStageConverter;
@@ -124,6 +125,11 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
      */
     @Column(name = "value", nullable = false)
     private String value;
+    /**
+     * The EC module.
+     */
+    @Embedded
+    private IvEncodedContentModule ecm;
     
     /**
      * Inits the entity.
@@ -132,6 +138,7 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         cma = new CreatedModifiedAwareModule();
         ctx = new OptionValueContextModule();
         lca = new LifeCycleAwareModule();
+        ecm = new IvEncodedContentModule();
     }
     
     @Override
@@ -207,6 +214,16 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     @Override
     public Object getUnencryptedValue() {
         return unencryptedValue;
+    }
+    
+    @Override
+    public byte[] getInitVector() {
+        return ecm.getInitVector();
+    }
+    
+    @Override
+    public byte[] getEncoded() {
+        return ecm.getEncoded();
     }
     
 }
