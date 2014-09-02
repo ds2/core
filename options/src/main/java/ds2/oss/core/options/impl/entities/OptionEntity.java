@@ -78,7 +78,7 @@ public class OptionEntity implements Option<Long, Object> {
     /**
      * The application name.
      */
-    @Column(name = "app_name")
+    @Column(name = "app_name", nullable = false)
     private String applicationName;
     /**
      * The CMA module.

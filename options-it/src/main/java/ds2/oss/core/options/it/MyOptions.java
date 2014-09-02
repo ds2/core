@@ -32,10 +32,14 @@ public interface MyOptions {
     /**
      * The username option identifier.
      */
-    StringOptionIdentifier USERNAME = new StringOptionIdentifier("testApp", "username");
+    StringOptionIdentifier USERNAME = new StringOptionIdentifier("testApp", "username", "the test username");
+    /**
+     * The url endpoint.
+     */
     UrlOptionIdentifier ENDPOINT = new UrlOptionIdentifier("testApp", "googleEndpoint");
     /**
      * The client secret.
      */
-    SecureStringOptionIdentifier PW = new SecureStringOptionIdentifier("testApp", "clientSecret");
+    SecureStringOptionIdentifier PW = new SecureStringOptionIdentifier("testApp", "clientSecret",
+        "the super secret password");
 }

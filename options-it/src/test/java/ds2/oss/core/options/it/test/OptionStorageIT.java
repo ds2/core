@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.crypto.EncodedContent;
 import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.ForValueType;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
@@ -78,6 +77,12 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         return jar;
     }
     
+    /**
+     * Test for single string persistence.
+     * 
+     * @throws CreateOptionException
+     *             if an error occurred
+     */
     @Test
     public void testPersist() throws CreateOptionException {
         Option<Long, String> option = to.createOption(USERNAME, "googleUsername");
@@ -86,20 +91,37 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertNotNull(option.getId());
     }
     
+    /**
+     * Test for the secure string option.
+     * 
+     * @throws CreateOptionException
+     *             if an error occurred
+     */
     @Test
     public void testSecurePersist1() throws CreateOptionException {
-        EncodedContent pwEnc = encSvc.encrypt("secret");
         Option<Long, String> option = to.createOption(PW, "secret");
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);
         Assert.assertNotNull(option.getId());
+        // encrypted options do not have a default value
         Assert.assertNull(option.getDefaultValue());
+        // the original value must be here
         Assert.assertEquals(option.getDecryptedValue(), "secret");
+        // there must be some encoded stuff
         Assert.assertNotNull(option.getEncoded());
         Assert.assertNotNull(option.getInitVector());
+        // using toString(), no password must be printed
         Assert.assertFalse(option.toString().contains("secret"));
     }
     
+    /**
+     * Test for a url option.
+     * 
+     * @throws MalformedURLException
+     *             on url error
+     * @throws CreateOptionException
+     *             on option create error
+     */
     @Test
     public void testUrlPersist() throws MalformedURLException, CreateOptionException {
         Option<Long, URL> option = to.createOption(ENDPOINT, new URL("https://my.test.url/endpoint"));

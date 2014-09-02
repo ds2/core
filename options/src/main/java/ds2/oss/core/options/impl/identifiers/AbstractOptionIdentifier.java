@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.options.impl.identifiers;
 
+import javax.validation.constraints.NotNull;
+
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
 
@@ -34,14 +36,17 @@ public abstract class AbstractOptionIdentifier<V> implements OptionIdentifier<V>
     /**
      * The option name.
      */
+    @NotNull
     private String optionName;
     /**
      * The application name.
      */
+    @NotNull
     private String applicationName;
     /**
      * the value type.
      */
+    @NotNull
     private ValueType valueType;
     /**
      * A description of the option.
@@ -64,6 +69,46 @@ public abstract class AbstractOptionIdentifier<V> implements OptionIdentifier<V>
         applicationName = appName;
         optionName = optName;
         valueType = typeClass;
+    }
+    
+    /**
+     * Sets the option name.
+     * 
+     * @param optionName
+     *            the optionName to set
+     */
+    public void setOptionName(String optionName) {
+        this.optionName = optionName;
+    }
+    
+    /**
+     * Sets the application name.
+     * 
+     * @param applicationName
+     *            the applicationName to set
+     */
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+    
+    /**
+     * Sets the value type.
+     * 
+     * @param valueType
+     *            the valueType to set
+     */
+    public void setValueType(ValueType valueType) {
+        this.valueType = valueType;
+    }
+    
+    /**
+     * Sets a description for this option identifier.
+     * 
+     * @param description
+     *            the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     @Override

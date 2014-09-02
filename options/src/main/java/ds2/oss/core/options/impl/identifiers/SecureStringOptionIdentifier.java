@@ -40,6 +40,20 @@ public class SecureStringOptionIdentifier extends StringOptionIdentifier {
         super(appName, optName);
     }
     
+    /**
+     * Inits the option identifier.
+     * 
+     * @param appName
+     *            the app name
+     * @param optName
+     *            the option name
+     * @param descr
+     *            a description of the option
+     */
+    public SecureStringOptionIdentifier(final String appName, final String optName, final String descr) {
+        super(appName, optName, descr);
+    }
+    
     @Override
     public boolean isEncrypted() {
         return true;

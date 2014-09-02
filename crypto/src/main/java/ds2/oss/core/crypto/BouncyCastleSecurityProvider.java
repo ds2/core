@@ -54,16 +54,13 @@ public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
      */
     private static final String ID = BouncyCastleProvider.PROVIDER_NAME;
     
-    static {
-        Security.insertProviderAt(new BouncyCastleProvider(), 1);
-    }
-    
     /**
      * Actions to perform at startup.
      */
     @PostConstruct
     public void onLoad() {
         LOG.debug("Loading BC Provider");
+        Security.insertProviderAt(new BouncyCastleProvider(), 1);
     }
     
     /*

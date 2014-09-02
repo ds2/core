@@ -40,4 +40,19 @@ public class StringOptionIdentifier extends AbstractOptionIdentifier<String> {
     public StringOptionIdentifier(final String appName, final String optName) {
         super(appName, optName, ValueType.STRING);
     }
+    
+    /**
+     * Inits the option.
+     * 
+     * @param appName
+     *            the application name
+     * @param optName
+     *            the option name
+     * @param descr
+     *            the description of this option
+     */
+    public StringOptionIdentifier(final String appName, final String optName, final String descr) {
+        this(appName, optName);
+        setDescription(descr);
+    }
 }

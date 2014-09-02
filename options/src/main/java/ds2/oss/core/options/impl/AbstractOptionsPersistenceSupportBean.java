@@ -88,6 +88,8 @@ public abstract class AbstractOptionsPersistenceSupportBean
         ent.setValueType(t.getValueType());
         ent.setStage(t.getStage());
         ent.setDescription(t.getDescription());
+        ent.setEncoded(t.getEncoded());
+        ent.setInitVector(t.getInitVector());
         em.persist(ent);
         LOG.debug("Persisted option is {}", ent);
         t.setId(ent.getId());
