@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.crypto.test;
+package ds2.oss.core.testutils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +28,12 @@ import ds2.oss.core.api.annotations.PathLocation;
  * @author dstrauss
  * @version 0.3
  */
-public class PathLocationProvider {
+public class TestPathLocationProvider {
+    /**
+     * Produces a path to the maven target directory.
+     * 
+     * @return the test path to use in test cases
+     */
     @Produces
     @PathLocation
     public Path createPath() {

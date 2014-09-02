@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.api.crypto.EncodedContent;
 import ds2.oss.core.api.options.ForValueType;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
@@ -86,7 +87,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     
     @Test(enabled = false)
     public void testSecurePersist1() {
-        String pwEnc = encSvc.encrypt("secret");
+        EncodedContent pwEnc = encSvc.encrypt("secret");
         Option<Long, String> option = to.createOption(PW, "secret");
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);

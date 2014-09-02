@@ -24,7 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.SecurityBaseDataService;
+import ds2.oss.core.api.AppServerSecurityBaseDataService;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
@@ -37,11 +37,11 @@ public class SecurityBaseDataServiceImplTest extends AbstractInjectionEnvironmen
     /**
      * The test object.
      */
-    private SecurityBaseDataService to;
+    private AppServerSecurityBaseDataService to;
     
     @BeforeClass
     public void onClass() {
-        to = getInstance(SecurityBaseDataService.class);
+        to = getInstance(AppServerSecurityBaseDataService.class);
     }
     
     @Test

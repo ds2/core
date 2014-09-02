@@ -41,21 +41,21 @@ import org.slf4j.LoggerFactory;
 import ds2.oss.core.api.ConverterTool;
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.IoService;
-import ds2.oss.core.api.SecurityBaseDataService;
+import ds2.oss.core.api.AppServerSecurityBaseDataService;
 import ds2.oss.core.api.annotations.PathLocation;
 import ds2.oss.core.api.crypto.BytesProvider;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
 
 /**
- * The impl.
+ * The impl for application servers.
  *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
-public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
-
+public class AppServerSecurityBaseDataServiceImpl implements AppServerSecurityBaseDataService {
+    
     /**
      * A logger.
      */
@@ -71,8 +71,8 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
     /**
      * A simple lock.
      */
-    private static final Lock lock = new ReentrantLock();
-
+    private static final Lock LOCK = new ReentrantLock();
+    
     /**
      * The hex codec.
      */
@@ -120,7 +120,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
      */
     @Inject
     private KeyGeneratorService kg;
-
+    
     /**
      * Actions to perform on load.
      */
@@ -132,7 +132,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         LOG.debug("Location to use is {}", storageLocation);
         final String skContent = io.loadFile(storageLocation.resolve(SK_FILENAME), Charset.defaultCharset());
         final Properties props = io.loadProperties(storageLocation.resolve(PROPS_FILENAME));
-        LOG.debug("Props is {}", new Object[]{props});
+        LOG.debug("Props is {}", new Object[] { props });
         if (props != null) {
             minIteration = conv.toInt(props.getProperty("iterations"), minIteration);
             if (minIteration <= 1000) {
@@ -141,51 +141,51 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
             }
         }
         if ((salt == null) || (initVector == null)) {
-            createData();
+            this.createData();
         }
         if (skContent != null) {
             aesSecretKey = kg.generateAesFromBytes(hex.decode(skContent.toCharArray()));
         }
     }
-
+    
     @Override
     public byte[] getSalt() {
         try {
-            lock.lock();
+            LOCK.lock();
             return salt;
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
-
+    
     @Override
     public int getMinIteration() {
         return minIteration;
     }
-
+    
     @Override
     public byte[] getInitVector() {
         try {
-            lock.lock();
+            LOCK.lock();
             return initVector;
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
-
+    
     @Override
     public void createData() {
         try {
-            lock.lock();
+            LOCK.lock();
             LOG.debug("Creating new salt, init vector etc.");
             salt = bytes.createRandomByteArray(512);
             initVector = bytes.createRandomByteArray(16);
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
         aesSecretKey = kg.generateAesKey();
     }
-
+    
     @Override
     public void storeData(final Charset cs) {
         final Path propsF = storageLocation.resolve(PROPS_FILENAME);
@@ -194,7 +194,7 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         final Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr-x---");
         final FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
         try {
-            lock.lock();
+            LOCK.lock();
             io.createDirectories(storageLocation, attr);
             io.writeFile(hex.encode(aesSecretKey.getEncoded()), Charset.defaultCharset(), aesF, "rw-------");
             final Properties props = new Properties();
@@ -203,15 +203,20 @@ public class SecurityBaseDataServiceImpl implements SecurityBaseDataService {
         } catch (final IOException e) {
             LOG.error("Error when writing the salt file!", e);
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
-
+    
     /**
      * Store the data on exit.
      */
     @PreDestroy
     public void onExit() {
         storeData(Charset.defaultCharset());
+    }
+    
+    @Override
+    public SecretKey getAppserverSecretKey() {
+        return aesSecretKey;
     }
 }

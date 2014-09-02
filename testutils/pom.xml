@@ -24,6 +24,11 @@
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
     </dependency>
+    <dependency>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-api</artifactId>
+      <version>0.3-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

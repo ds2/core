@@ -3,6 +3,8 @@
  */
 package ds2.oss.core.options.api;
 
+import ds2.oss.core.api.crypto.EncodedContent;
+
 /**
  * Support for encrypting or decrypting option values. Use the annotation
  * {@link ds2.oss.core.api.options.ForValueType ForValueType} to address the specific
@@ -22,7 +24,7 @@ public interface OptionValueEncrypter<V> {
      *            the string to encrypt
      * @return the encrypted value, as base64
      */
-    String encrypt(V s);
+    EncodedContent encrypt(V s);
     
     /**
      * Decrypts the base64 string into the real string.
@@ -31,5 +33,5 @@ public interface OptionValueEncrypter<V> {
      *            the base64 encrypted value
      * @return the real string
      */
-    V decrypt(String s);
+    V decrypt(EncodedContent s);
 }
