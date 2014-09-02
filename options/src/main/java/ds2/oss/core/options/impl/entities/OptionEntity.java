@@ -296,6 +296,8 @@ public class OptionEntity implements Option<Long, Object> {
         builder.append(applicationName);
         builder.append(", cma=");
         builder.append(cma);
+        builder.append(", ecm=");
+        builder.append(ecm);
         builder.append(", optionName=");
         builder.append(optionName);
         builder.append(", valueType=");
@@ -304,10 +306,12 @@ public class OptionEntity implements Option<Long, Object> {
         builder.append(encrypted);
         builder.append(", defaultValue=");
         builder.append(defaultValue);
-        builder.append(", stageVal=");
+        builder.append(", stage=");
         builder.append(stage);
         builder.append(", modifierName=");
         builder.append(modifierName);
+        builder.append(", description=");
+        builder.append(description);
         builder.append(")");
         return builder.toString();
     }
@@ -323,7 +327,7 @@ public class OptionEntity implements Option<Long, Object> {
      * @param description
      *            a description.
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
     
@@ -340,6 +344,14 @@ public class OptionEntity implements Option<Long, Object> {
     @Override
     public byte[] getEncoded() {
         return ecm.getEncoded();
+    }
+    
+    public void setEncoded(byte[] b) {
+        ecm.setEncoded(b);
+    }
+    
+    public void setInitVector(byte[] b) {
+        ecm.setInitVector(b);
     }
     
 }

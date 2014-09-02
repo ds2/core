@@ -26,8 +26,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.CoreErrors;
+import ds2.oss.core.api.crypto.EncodedContent;
+import ds2.oss.core.api.crypto.IvEncodedContent;
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
+import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.JournalAction;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
@@ -39,6 +43,8 @@ import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
+import ds2.oss.core.options.api.OptionValueEncrypter;
+import ds2.oss.core.options.api.OptionValueEncrypterProvider;
 import ds2.oss.core.options.api.OptionValueFactory;
 
 /**
@@ -81,6 +87,11 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Inject
     private OptionServiceJournal journal;
+    /**
+     * The encryption provider.
+     */
+    @Inject
+    private OptionValueEncrypterProvider encProvider;
     
     /*
      * (non-Javadoc)
@@ -133,17 +144,30 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     }
     
     @Override
-    public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) {
-        String encStr = null;
+    public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) throws CreateOptionException {
         V newVal = val;
         if (ident.isEncrypted()) {
             newVal = null;
         }
         final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, newVal);
+        if (ident.isEncrypted()) {
+            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType(), null);
+            if (ove == null) {
+                throw new CreateOptionException(CoreErrors.NoEncryptionForType);
+            }
+            final EncodedContent encryptedContent = ove.encrypt(val);
+            if (encryptedContent == null) {
+                throw new CreateOptionException(CoreErrors.EncryptionFailed);
+            }
+            option.setEncoded(encryptedContent.getEncoded());
+            if (encryptedContent instanceof IvEncodedContent) {
+                final IvEncodedContent encIvEncodedContent = (IvEncodedContent) encryptedContent;
+                option.setInitVector(encIvEncodedContent.getInitVector());
+            }
+            option.setDecryptedValue(val);
+        }
         numberedPersistenceSupport.persist(option);
         journal.createdOption(option);
-        if (ident.isEncrypted()) {
-        }
         return option;
     }
     

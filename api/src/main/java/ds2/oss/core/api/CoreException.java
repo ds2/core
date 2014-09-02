@@ -52,7 +52,7 @@ public class CoreException extends Exception {
      *            the error data
      */
     public CoreException(final IErrorData d) {
-        super();
+        super("" + d);
         errorData = d;
     }
     
@@ -65,7 +65,7 @@ public class CoreException extends Exception {
      *            the cause
      */
     public CoreException(final IErrorData d, final Throwable t) {
-        super(t);
+        super("" + d, t);
         errorData = d;
     }
     

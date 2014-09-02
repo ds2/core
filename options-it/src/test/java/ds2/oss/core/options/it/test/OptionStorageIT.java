@@ -32,6 +32,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.crypto.EncodedContent;
+import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.ForValueType;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
@@ -78,26 +79,29 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     }
     
     @Test
-    public void testPersist() {
+    public void testPersist() throws CreateOptionException {
         Option<Long, String> option = to.createOption(USERNAME, "googleUsername");
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);
         Assert.assertNotNull(option.getId());
     }
     
-    @Test(enabled = false)
-    public void testSecurePersist1() {
+    @Test
+    public void testSecurePersist1() throws CreateOptionException {
         EncodedContent pwEnc = encSvc.encrypt("secret");
         Option<Long, String> option = to.createOption(PW, "secret");
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);
         Assert.assertNotNull(option.getId());
-        Assert.assertEquals(option.getDefaultValue(), pwEnc);
+        Assert.assertNull(option.getDefaultValue());
         Assert.assertEquals(option.getDecryptedValue(), "secret");
+        Assert.assertNotNull(option.getEncoded());
+        Assert.assertNotNull(option.getInitVector());
+        Assert.assertFalse(option.toString().contains("secret"));
     }
     
     @Test
-    public void testUrlPersist() throws MalformedURLException {
+    public void testUrlPersist() throws MalformedURLException, CreateOptionException {
         Option<Long, URL> option = to.createOption(ENDPOINT, new URL("https://my.test.url/endpoint"));
         LOG.info("Option is {}", option);
         Assert.assertNotNull(option);

@@ -30,7 +30,15 @@ public enum CoreErrors implements IErrorData {
     /**
      * If json decoding failed.
      */
-    JSON_DECODING_FAILED(2);
+    JSON_DECODING_FAILED(2),
+    /**
+     * If the encryption failed.
+     */
+    EncryptionFailed(3),
+    /**
+     * If we requested a specific encryption system but the lookup failed for the given type.
+     */
+    NoEncryptionForType(4);
     /**
      * The error code.
      */

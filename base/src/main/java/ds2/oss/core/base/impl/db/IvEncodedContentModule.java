@@ -3,6 +3,8 @@
  */
 package ds2.oss.core.base.impl.db;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
@@ -44,6 +46,26 @@ public class IvEncodedContentModule implements IvEncodedContent {
         return encoded;
     }
     
+    /**
+     * Sets the init vector data.
+     * 
+     * @param initVector
+     *            the initVector to set
+     */
+    public void setInitVector(byte[] initVector) {
+        this.initVector = initVector;
+    }
+    
+    /**
+     * Sets the encoded data.
+     * 
+     * @param encoded
+     *            the encoded to set
+     */
+    public void setEncoded(byte[] encoded) {
+        this.encoded = encoded;
+    }
+    
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.crypto.IvEncodedContent#getInitVector()
@@ -51,6 +73,16 @@ public class IvEncodedContentModule implements IvEncodedContent {
     @Override
     public byte[] getInitVector() {
         return initVector;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "IvEncodedContentModule [initVector=" + Arrays.toString(initVector) + ", encoded="
+            + Arrays.toString(encoded) + "]";
     }
     
 }

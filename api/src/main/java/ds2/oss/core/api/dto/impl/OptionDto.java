@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.api.dto.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -279,7 +280,7 @@ public class OptionDto<E, V> extends IvEncodedContentDto implements Option<E, V>
      */
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         builder.append("OptionDto (id=");
         builder.append(id);
         builder.append(", stage=");
@@ -300,6 +301,12 @@ public class OptionDto<E, V> extends IvEncodedContentDto implements Option<E, V>
         builder.append(optionName);
         builder.append(", applicationName=");
         builder.append(applicationName);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", getInitVector()=");
+        builder.append(Arrays.toString(getInitVector()));
+        builder.append(", getEncoded()=");
+        builder.append(Arrays.toString(getEncoded()));
         builder.append(")");
         return builder.toString();
     }
