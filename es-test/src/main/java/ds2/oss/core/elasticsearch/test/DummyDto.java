@@ -17,6 +17,7 @@ package ds2.oss.core.elasticsearch.test;
 
 import java.util.Set;
 
+import ds2.oss.core.api.es.DynamicMapping;
 import ds2.oss.core.api.es.IndexTypes;
 import ds2.oss.core.api.es.PropertyMapping;
 import ds2.oss.core.api.es.TypeMapping;
@@ -27,7 +28,7 @@ import ds2.oss.core.api.es.TypeMapping;
  * @author dstrauss
  * @version 0.21
  */
-@TypeMapping(value = "dummy")
+@TypeMapping(value = "dummy", dynamicMapping = DynamicMapping.STRICT)
 public class DummyDto {
     /**
      * The name.

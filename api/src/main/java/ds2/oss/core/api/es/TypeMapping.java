@@ -58,6 +58,7 @@ public @interface TypeMapping {
      * may be 1d etc.
      */
     String ttl() default "";
+    
     /**
      * Flag to index the _timestamp value.
      */
@@ -72,8 +73,14 @@ public @interface TypeMapping {
      * Flag to indicate if the index should be refreshed on creating a document of this type.
      */
     boolean refreshIndexOnCreate() default false;
+    
     /**
      * Flag to indicate that any dealing with this type requires routing data.
      */
     boolean requiresRouting() default false;
+    
+    /**
+     * The dynamicMapping setting.
+     */
+    DynamicMapping dynamicMapping() default DynamicMapping.TRUE;
 }

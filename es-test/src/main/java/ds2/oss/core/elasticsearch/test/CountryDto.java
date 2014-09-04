@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-
+import ds2.oss.core.api.es.DynamicMapping;
 import ds2.oss.core.api.es.PropertyMapping;
 import ds2.oss.core.api.es.TypeMapping;
 
@@ -25,7 +25,7 @@ import ds2.oss.core.api.es.TypeMapping;
  * @author dstrauss
  * @version 0.2
  */
-@TypeMapping(value = "country")
+@TypeMapping(value = "country", dynamicMapping = DynamicMapping.FALSE)
 public class CountryDto {
     
     /**
