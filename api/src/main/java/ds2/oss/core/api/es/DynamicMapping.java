@@ -13,45 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.api.options;
-
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.api.IErrorData;
+package ds2.oss.core.api.es;
 
 /**
- * Any option related error.
+ * Dynamic mapping settings.
  * 
  * @author dstrauss
  * @version 0.3
- *
  */
-public class OptionException extends CoreException {
-    
+public enum DynamicMapping {
     /**
-     * The svuid.
+     * Add any new mappable fields automatically. Default setting.
      */
-    private static final long serialVersionUID = 4316958170744177786L;
-    
+    TRUE,
     /**
-     * Inits the exception.
-     * 
-     * @param d
-     *            the error data
+     * Silently ignore any new mapping fields.
      */
-    public OptionException(IErrorData d) {
-        super(d);
-    }
-    
+    FALSE,
     /**
-     * Inits the exception.
-     * 
-     * @param d
-     *            the error data
-     * @param t
-     *            the causing error
+     * Crash on not registered mapping fields.
      */
-    public OptionException(IErrorData d, Throwable t) {
-        super(d, t);
-    }
-    
+    STRICT;
 }

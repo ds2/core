@@ -40,6 +40,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import ds2.oss.core.api.es.DynamicMapping;
 import ds2.oss.core.api.es.FieldTypes;
 import ds2.oss.core.api.es.PropertyMapping;
 import ds2.oss.core.api.es.TimestampPath;
@@ -139,7 +140,9 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
         final JsonObject sourceEnabled = new JsonObject();
         sourceEnabled.addProperty("enabled", Boolean.valueOf(tm.storeSource()));
         typeJs.add("_source", sourceEnabled);
-        
+        if (!tm.dynamicMapping().equals(DynamicMapping.TRUE)) {
+            typeJs.addProperty("dynamic", tm.dynamicMapping().name().toLowerCase());
+        }
         if (tm.ttl().length() > 0) {
             final JsonObject ttlEnabled = new JsonObject();
             ttlEnabled.addProperty("enabled", Boolean.TRUE);
