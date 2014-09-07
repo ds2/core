@@ -20,6 +20,7 @@ package ds2.oss.core.api.dto.impl;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -33,6 +34,7 @@ import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueStage;
+import ds2.oss.core.api.options.ValueType;
 
 /**
  * The option value dto.
@@ -68,6 +70,7 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     /**
      * The start date for this value.
      */
+    @NotNull
     private Date validFrom;
     /**
      * The stop date for this value.
@@ -93,14 +96,17 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     /**
      * The author name.
      */
+    @NotNull
     private String authorName;
     /**
      * The id of the referenced option.
      */
+    @NotNull
     private E optionReference;
     /**
      * The stage for this value.
      */
+    @NotNull
     private OptionValueStage stage;
     /**
      * The value.
@@ -115,6 +121,12 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
      */
     @XmlTransient
     private transient V unencryptedValue;
+    /**
+     * the value type.
+     */
+    @XmlElement
+    @NotNull
+    private ValueType valueType;
     
     /**
      * Sets the unencrypted value.
@@ -326,6 +338,11 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
         return requestedDomain;
     }
     
+    /**
+     * Sets the requested domain.
+     * 
+     * @param requestedDomain
+     */
     public void setRequestedDomain(String requestedDomain) {
         this.requestedDomain = requestedDomain;
     }
@@ -333,6 +350,15 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     @Override
     public V getUnencryptedValue() {
         return unencryptedValue;
+    }
+    
+    @Override
+    public ValueType getValueType() {
+        return valueType;
+    }
+    
+    public void setValueType(ValueType valueType2) {
+        valueType = valueType2;
     }
     
 }

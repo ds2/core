@@ -32,6 +32,9 @@ public class RuntimeConfigurationConverter implements AttributeConverter<Runtime
     
     @Override
     public String convertToDatabaseColumn(RuntimeConfiguration attribute) {
+        if (attribute == null) {
+            return null;
+        }
         return attribute.getIdentifier();
     }
     

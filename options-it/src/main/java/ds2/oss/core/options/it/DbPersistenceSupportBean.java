@@ -30,7 +30,7 @@ import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
-import ds2.oss.core.options.impl.AbstractOptionsPersistenceSupportBean;
+import ds2.oss.core.options.impl.ejb.AbstractOptionsPersistenceSupportBean;
 
 /**
  * @author dstrauss

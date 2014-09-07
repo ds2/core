@@ -72,4 +72,34 @@ public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedC
         return builder.toString();
     }
     
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Arrays.hashCode(initVector);
+        return result;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        IvEncodedContentDto other = (IvEncodedContentDto) obj;
+        if (!Arrays.equals(initVector, other.initVector))
+            return false;
+        return true;
+    }
+    
 }

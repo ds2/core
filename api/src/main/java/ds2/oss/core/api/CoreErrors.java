@@ -38,7 +38,11 @@ public enum CoreErrors implements IErrorData {
     /**
      * If we requested a specific encryption system but the lookup failed for the given type.
      */
-    NoEncryptionForType(4);
+    NoEncryptionForType(4),
+    /**
+     * If a specific required option could not be found.
+     */
+    OptionNotFound(5);
     /**
      * The error code.
      */

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.options.impl;
+package ds2.oss.core.options.impl.ejb;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Set;
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.base.impl.AbstractPersistenceSupportImpl;
+import ds2.oss.core.base.impl.db.AbstractPersistenceSupportImpl;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;

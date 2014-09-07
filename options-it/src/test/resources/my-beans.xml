@@ -23,6 +23,7 @@
   <alternatives>
     <class>ds2.oss.core.options.impl.NumberedOptionStorageServiceImpl</class>
     <class>ds2.oss.core.options.it.DbPersistenceSupportBean</class>
+    <class>ds2.oss.core.options.it.DbOptionValuePersistenceBean</class>
     <class>ds2.oss.core.crypto.SecureBytesProvider</class>
     <class>ds2.oss.core.crypto.AppServerSecurityBaseDataServiceImpl</class>
     <class>ds2.oss.core.crypto.BouncyCastleSecurityProvider</class>

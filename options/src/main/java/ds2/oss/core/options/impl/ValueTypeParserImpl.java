@@ -27,11 +27,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionDto;
+import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.api.ValueCodec;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
+import ds2.oss.core.options.impl.entities.OptionValueEntity;
 
 /**
  * The value type parser impl.
@@ -94,6 +96,32 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         final Annotation a = new ValueCodecMarkerLiteral(ident.getValueType());
         final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
         rc.setDefaultValue(codec.toValue((String) e.getDefaultValue()));
+        return rc;
+    }
+    
+    @Override
+    public <V> OptionValueDto<Long, V> toDto(final OptionValueEntity e, final Class<V> valueClass) {
+        if (e == null) {
+            return null;
+        }
+        final OptionValueDto<Long, V> rc = new OptionValueDto<Long, V>();
+        rc.setApproverName(e.getApproverName());
+        rc.setAuthorName(e.getAuthorName());
+        rc.setCluster(e.getCluster());
+        rc.setConfiguration(e.getConfiguration());
+        rc.setCreated(e.getCreated());
+        rc.setEncoded(e.getEncoded());
+        rc.setId(e.getId());
+        rc.setInitVector(e.getInitVector());
+        rc.setModified(e.getModified());
+        rc.setOptionReference(e.getOptionReference());
+        rc.setRequestedDomain(e.getRequestedDomain());
+        rc.setServer(e.getServer());
+        rc.setStage(e.getStage());
+        rc.setValidFrom(e.getValidFrom());
+        rc.setValidTo(e.getValidTo());
+        rc.setValue(parseValue(e.getValueType(), valueClass, e.getValue(), null));
+        rc.setValueType(e.getValueType());
         return rc;
     }
     

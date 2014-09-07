@@ -16,9 +16,11 @@
 package ds2.oss.core.options.api;
 
 import ds2.oss.core.api.dto.impl.OptionDto;
+import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
 import ds2.oss.core.options.impl.entities.OptionEntity;
+import ds2.oss.core.options.impl.entities.OptionValueEntity;
 
 /**
  * A value parser.
@@ -37,9 +39,9 @@ public interface ValueTypeParser {
      * @param thisVal
      *            the object to parse
      * @param onNull
-     *            TODO
+     *            default value to return if the given value is null
      * @param <V>
-     *            the target value
+     *            the target value type
      * @return the value
      */
     <V> V parseValue(ValueType t, Class<V> targetClass, Object thisVal, V onNull);
@@ -55,5 +57,18 @@ public interface ValueTypeParser {
      */
     String toString(ValueType valueType, Object defaultValue);
     
+    /**
+     * Converts an option entity into a dto.
+     * 
+     * @param e
+     *            the entity
+     * @param ident
+     *            the option identifier
+     * @return the dto
+     * @param <V>
+     *            the value type
+     */
     <V> OptionDto<Long, V> toDto(OptionEntity e, OptionIdentifier<V> ident);
+    
+    <V> OptionValueDto<Long, V> toDto(OptionValueEntity foundEntity, Class<V> valueClass);
 }

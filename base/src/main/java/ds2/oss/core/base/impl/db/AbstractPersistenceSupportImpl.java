@@ -16,11 +16,12 @@
 /**
  * 
  */
-package ds2.oss.core.base.impl;
+package ds2.oss.core.base.impl.db;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
@@ -92,6 +93,29 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
         } catch (final NonUniqueResultException e) {
             LOG.warn("Given query does not return one but several results! Returning only first item.", e);
             rc = getSecureList(q, entityClass).get(0);
+        }
+        return rc;
+    }
+    
+    /**
+     * Finds a specific entity.
+     * 
+     * @param em
+     *            the entity manager
+     * @param c
+     *            the target entity class
+     * @param id
+     *            the id of the entity
+     * @return the entity, or null if not found
+     * @param <E>
+     *            the entity type
+     */
+    protected <E> E getSecureFindById(final EntityManager em, final Class<E> c, final PRIMKEY id) {
+        E rc = null;
+        try {
+            rc = em.find(c, id);
+        } catch (final IllegalArgumentException e) {
+            LOG.debug("Error when finding an entity!", e);
         }
         return rc;
     }

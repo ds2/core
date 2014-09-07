@@ -18,6 +18,7 @@ package ds2.oss.core.api.environment;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -43,7 +44,8 @@ public class ClusterDto implements Cluster {
     /**
      * the name of the cluster.
      */
-    @XmlAttribute(name = "name")
+    @XmlAttribute(name = "name", required = true)
+    @NotNull
     private char clusterName;
     
     /**
@@ -122,5 +124,35 @@ public class ClusterDto implements Cluster {
         sb.append("cluster=").append(clusterName);
         sb.append(")");
         return sb.toString();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + clusterName;
+        return result;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ClusterDto other = (ClusterDto) obj;
+        if (clusterName != other.clusterName)
+            return false;
+        return true;
     }
 }

@@ -81,13 +81,6 @@ public class OptionValueContextModule implements OptionValueContext {
     private Cluster cluster;
     
     /**
-     * Inits the module.
-     */
-    public OptionValueContextModule() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    /**
      * Sets the requested domain.
      * 
      * @param requestedDomain

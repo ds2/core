@@ -73,6 +73,13 @@ public interface OptionValue<E, V>
     V getValue();
     
     /**
+     * Returns the value type being used by this option value.
+     * 
+     * @return the value type
+     */
+    ValueType getValueType();
+    
+    /**
      * Returns the value of this option value object in case the option was encrypted.
      * 
      * @return the value

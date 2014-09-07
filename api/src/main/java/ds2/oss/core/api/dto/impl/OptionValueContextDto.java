@@ -140,4 +140,71 @@ public class OptionValueContextDto implements OptionValueContext {
         return requestedDomain;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cluster == null) ? 0 : cluster.hashCode());
+        result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
+        result = prime * result + ((requestedDomain == null) ? 0 : requestedDomain.hashCode());
+        result = prime * result + ((server == null) ? 0 : server.hashCode());
+        return result;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OptionValueContextDto other = (OptionValueContextDto) obj;
+        if (cluster == null) {
+            if (other.cluster != null)
+                return false;
+        } else if (!cluster.equals(other.cluster))
+            return false;
+        if (configuration != other.configuration)
+            return false;
+        if (requestedDomain == null) {
+            if (other.requestedDomain != null)
+                return false;
+        } else if (!requestedDomain.equals(other.requestedDomain))
+            return false;
+        if (server == null) {
+            if (other.server != null)
+                return false;
+        } else if (!server.equals(other.server))
+            return false;
+        return true;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("OptionValueContextDto (requestedDomain=");
+        builder.append(requestedDomain);
+        builder.append(", server=");
+        builder.append(server);
+        builder.append(", configuration=");
+        builder.append(configuration);
+        builder.append(", cluster=");
+        builder.append(cluster);
+        builder.append(")");
+        return builder.toString();
+    }
+    
 }

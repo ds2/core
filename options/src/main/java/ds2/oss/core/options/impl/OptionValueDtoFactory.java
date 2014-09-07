@@ -15,11 +15,14 @@
  */
 package ds2.oss.core.options.impl;
 
+import java.util.Date;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.api.OptionValueFactory;
 
 /**
@@ -43,6 +46,21 @@ public class OptionValueDtoFactory implements OptionValueFactory {
         OptionValueContext ctx, V val) {
         OptionValueDto<K, V> rc = new OptionValueDto<K, V>();
         rc.setId(primaryKey);
+        if (ctx != null) {
+            rc.setCluster(ctx.getCluster());
+            rc.setConfiguration(ctx.getConfiguration());
+            rc.setServer(ctx.getServer());
+            rc.setRequestedDomain(ctx.getRequestedDomain());
+        }
+        rc.setCreated(new Date());
+        rc.setValidFrom(new Date());
+        if (ident.isEncrypted()) {
+            rc.setUnencryptedValue(val);
+        } else {
+            rc.setValue(val);
+        }
+        rc.setValueType(ident.getValueType());
+        rc.setStage(OptionValueStage.Prepared);
         return rc;
     }
     

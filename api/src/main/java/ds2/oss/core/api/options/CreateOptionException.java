@@ -15,7 +15,6 @@
  */
 package ds2.oss.core.api.options;
 
-import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.IErrorData;
 
 /**
@@ -25,7 +24,7 @@ import ds2.oss.core.api.IErrorData;
  * @version 0.3
  *
  */
-public class CreateOptionException extends CoreException {
+public class CreateOptionException extends OptionException {
     
     /**
      * The svuid.

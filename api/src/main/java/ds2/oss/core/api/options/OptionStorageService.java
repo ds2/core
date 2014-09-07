@@ -55,11 +55,11 @@ public interface OptionStorageService<E> {
      * @param <V>
      *            the value type
      * @return the created option value
-     * @throws CreateOptionException
+     * @throws CreateOptionValueException
      *             if an error occurred
      */
     <V> OptionValue<E, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx, Date scheduleDate,
-        V value) throws CreateOptionException;
+        V value) throws CreateOptionValueException;
     
     /**
      * Creates a new option.

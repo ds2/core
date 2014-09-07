@@ -32,6 +32,7 @@ import ds2.oss.core.api.crypto.IvEncodedContent;
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.CreateOptionException;
+import ds2.oss.core.api.options.CreateOptionValueException;
 import ds2.oss.core.api.options.JournalAction;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
@@ -124,10 +125,34 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Override
     public <V> OptionValue<Long, V> createOptionValue(final OptionIdentifier<V> optionIdent,
-        final OptionValueContext ctx, final Date scheduleDate, final V value) {
-        final OptionValueDto<Long, V> option = optionValFac.createOptionValueDto(optionIdent, null, ctx, value);
-        numOptionValDb.persist(option);
-        return null;
+        final OptionValueContext ctx, final Date scheduleDate, final V value) throws CreateOptionValueException {
+        final OptionValueDto<Long, V> optionValue = optionValFac.createOptionValueDto(optionIdent, null, ctx, value);
+        if (optionIdent.isEncrypted()) {
+            final OptionValueEncrypter<V> ove = encProvider.getForValueType(optionIdent.getValueType(), null);
+            if (ove == null) {
+                throw new CreateOptionValueException(CoreErrors.NoEncryptionForType);
+            }
+            final EncodedContent encryptedContent = ove.encrypt(value);
+            if (encryptedContent == null) {
+                throw new CreateOptionValueException(CoreErrors.EncryptionFailed);
+            }
+            optionValue.setEncoded(encryptedContent.getEncoded());
+            if (encryptedContent instanceof IvEncodedContent) {
+                final IvEncodedContent encIvEncodedContent = (IvEncodedContent) encryptedContent;
+                optionValue.setInitVector(encIvEncodedContent.getInitVector());
+            }
+            optionValue.setUnencryptedValue(value);
+            optionValue.setValue(null);
+        }
+        try {
+            final Option<Long, V> foundOption = getOptionByIdentifier(optionIdent);
+            optionValue.setOptionReference(foundOption.getId());
+        } catch (final OptionException e) {
+            throw new CreateOptionValueException(CoreErrors.OptionNotFound, e);
+        }
+        LOG.debug("Trying to persist option value {}", optionValue);
+        numOptionValDb.persist(optionValue);
+        return optionValue;
     }
     
     /*

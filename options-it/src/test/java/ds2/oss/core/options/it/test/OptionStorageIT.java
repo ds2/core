@@ -31,14 +31,16 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.api.dto.impl.OptionValueContextDto;
+import ds2.oss.core.api.environment.Clusters;
 import ds2.oss.core.api.options.CreateOptionException;
-import ds2.oss.core.api.options.ForValueType;
+import ds2.oss.core.api.options.CreateOptionValueException;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionException;
 import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.options.api.OptionValueEncrypter;
+import ds2.oss.core.api.options.OptionValue;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.it.MyOptions;
 
 /**
@@ -55,12 +57,6 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
      */
     @Inject
     private NumberedOptionStorageService to;
-    /**
-     * The option value encrypter.
-     */
-    @Inject
-    @ForValueType(ValueType.STRING)
-    private OptionValueEncrypter<String> encSvc;
     
     /**
      * Creates the archive to deploy into the glassfish container.
@@ -160,6 +156,41 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         to.setOptionStage(ENDPOINT, OptionStage.Deleted);
         foundOption = to.getOptionByIdentifier(ENDPOINT);
         Assert.assertEquals(foundOption.getStage(), OptionStage.Deleted);
+    }
+    
+    /**
+     * Test to create a simple option value.
+     * 
+     * @throws CreateOptionValueException
+     *             if an error occurred
+     */
+    @Test(dependsOnMethods = "testPersist")
+    public void testCreateOptionValue1() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A), null, "pascal");
+        Assert.assertNotNull(optionValue);
+        Assert.assertNotNull(optionValue.getId());
+        Assert.assertEquals(optionValue.getValue(), "pascal");
+        Assert.assertEquals(optionValue.getStage(), OptionValueStage.Prepared);
+    }
+    
+    /**
+     * Test to create a simple option value.
+     * 
+     * @throws CreateOptionValueException
+     *             if an error occurred
+     */
+    @Test(dependsOnMethods = "testSecurePersist1")
+    public void testCreateOptionValueSecure() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue =
+            to.createOptionValue(PW, new OptionValueContextDto(Clusters.A), null, "mysecret");
+        Assert.assertNotNull(optionValue);
+        Assert.assertNotNull(optionValue.getId());
+        Assert.assertNull(optionValue.getValue());
+        Assert.assertNotNull(optionValue.getEncoded());
+        Assert.assertNotNull(optionValue.getInitVector());
+        Assert.assertEquals(optionValue.getStage(), OptionValueStage.Prepared);
+        Assert.assertEquals(optionValue.getUnencryptedValue(), "mysecret");
     }
     
     /*
