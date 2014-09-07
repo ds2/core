@@ -15,7 +15,6 @@
  */
 package ds2.oss.core.api;
 
-
 /**
  * Contract for sec base data.
  * 
@@ -38,7 +37,10 @@ public interface SecurityBaseData {
     int getMinIteration();
     
     /**
-     * Returns the init vector bytes.
+     * Returns the init vector bytes. Implementations of this method must assure that calling this
+     * method should always return a new init vector. In contrast, the {@link #getSalt()} method may
+     * not return a new salt anytime. Regarding the size of the init vector: for AES it should
+     * return 16.
      * 
      * @return the init vector bytes
      */

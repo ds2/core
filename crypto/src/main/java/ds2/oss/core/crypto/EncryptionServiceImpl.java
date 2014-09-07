@@ -83,7 +83,7 @@ public class EncryptionServiceImpl implements EncryptionService {
                     c.init(Cipher.ENCRYPT_MODE, secretKey, random);
                     break;
             }
-            
+            // c.update(src);
             final byte[] enc = c.doFinal(src);
             switch (cipher) {
                 case AES:

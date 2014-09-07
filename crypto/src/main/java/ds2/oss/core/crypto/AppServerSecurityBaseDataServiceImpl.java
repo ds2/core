@@ -38,10 +38,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.AppServerSecurityBaseDataService;
 import ds2.oss.core.api.ConverterTool;
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.IoService;
-import ds2.oss.core.api.AppServerSecurityBaseDataService;
 import ds2.oss.core.api.annotations.PathLocation;
 import ds2.oss.core.api.crypto.BytesProvider;
 import ds2.oss.core.api.crypto.KeyGeneratorService;
@@ -167,7 +167,7 @@ public class AppServerSecurityBaseDataServiceImpl implements AppServerSecurityBa
     public byte[] getInitVector() {
         try {
             LOCK.lock();
-            return initVector;
+            return initVector = bytes.createRandomByteArray(16);
         } finally {
             LOCK.unlock();
         }
