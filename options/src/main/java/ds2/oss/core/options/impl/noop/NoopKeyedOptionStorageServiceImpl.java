@@ -27,10 +27,12 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.options.KeyedOptionStorageService;
 import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionException;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.impl.AbstractOptionStorageServiceImpl;
 
 /**
@@ -127,6 +129,22 @@ public class NoopKeyedOptionStorageServiceImpl extends AbstractOptionStorageServ
     public <V> Option<String, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage deleted) {
         LOG.info("Using non-operational method. Returning dummy value!");
         return null;
+    }
+
+    @Override
+    public <V> OptionValue<String, V> getOptionValueById(String id) throws OptionException {
+        LOG.info("Using non-operational method. Returning dummy value!");
+        return null;
+    }
+
+    @Override
+    public void setOptionValueStage(String id, OptionValueStage newStage) {
+        LOG.info("Using non-operational method.!");
+    }
+
+    @Override
+    public void approveOptionValue(String id) {
+        LOG.info("Using non-operational method.");
     }
     
 }

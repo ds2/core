@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionValueDto;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 
 /**
@@ -55,6 +56,11 @@ public class NoopOptionValuePersistenceSupportImpl implements NumberedOptionValu
     public OptionValueDto<Long, ?> getById(Long e) {
         LOG.info("Using non-operational method. Please reconfigure injection!");
         return null;
+    }
+
+    @Override
+    public void setStage(Long id, OptionValueStage newStage) {
+        LOG.info("Using non-operational method! Please reconfigure injection!");
     }
     
 }

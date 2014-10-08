@@ -17,6 +17,7 @@ package ds2.oss.core.options.api;
 
 import ds2.oss.core.api.PersistenceSupport;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
+import ds2.oss.core.api.options.OptionValueStage;
 
 /**
  * Contract to persist option values.
@@ -28,5 +29,10 @@ import ds2.oss.core.api.dto.impl.OptionValueDto;
  *
  */
 public interface OptionValuePersistenceSupport<K> extends PersistenceSupport<OptionValueDto<K, ?>, K> {
-    
+    /**
+     * Sets a new stage for the given option value.
+     * @param id the id of the option value
+     * @param newStage the new stage value
+     */
+    void setStage(K id, OptionValueStage newStage);
 }

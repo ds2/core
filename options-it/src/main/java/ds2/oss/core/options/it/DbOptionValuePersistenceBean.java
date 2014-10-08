@@ -16,7 +16,12 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import ds2.oss.core.api.dto.impl.OptionValueDto;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.impl.ejb.AbstractOptionValuePersistenceSupportBean;
+import ds2.oss.core.options.impl.entities.OptionValueEntity;
+import java.util.Date;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * @author dstrauss
@@ -56,6 +61,14 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
     @Override
     public OptionValueDto<Long, ?> getById(Long e) {
         return performGetById(em, e, null);
+    }
+
+    @Override
+    public void setStage(Long id, OptionValueStage newStage) {
+        OptionValueEntity entity=getSecureFindById(em, OptionValueEntity.class, id);
+        entity.setStage(newStage);
+        entity.setModified(new Date());
+        entity.setApproverName(ctx.getCallerPrincipal().getName());
     }
     
 }

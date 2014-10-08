@@ -18,6 +18,8 @@
  */
 package ds2.oss.core.options.api;
 
+import ds2.oss.core.api.options.OptionValueStage;
+
 /**
  * Contract that expects the option value persistence to have a Long as primary key.
  * 

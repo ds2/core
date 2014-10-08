@@ -181,7 +181,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
      *             if an error occurred
      */
     @Test(dependsOnMethods = "testSecurePersist1")
-    public void testCreateOptionValueSecure() throws CreateOptionValueException {
+    public void testCreateOptionValueSecure() throws CreateOptionValueException, OptionException {
         OptionValue<Long, String> optionValue =
             to.createOptionValue(PW, new OptionValueContextDto(Clusters.A), null, "mysecret");
         Assert.assertNotNull(optionValue);
@@ -192,6 +192,17 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertNotNull(optionValue.getInitVector());
         Assert.assertEquals(optionValue.getStage(), OptionValueStage.Prepared);
         Assert.assertEquals(optionValue.getUnencryptedValue(), "mysecret");
+        to.approveOptionValue(optionValue.getId());
+        optionValue=to.getOptionValueById(optionValue.getId());
+        Assert.assertNotNull(optionValue);
+        Assert.assertEquals(optionValue.getStage(), OptionValueStage.Live);
+    }
+    @Test(dependsOnMethods = "testCreateOptionValueSecure", enabled = false)
+    public void testSetOptionValueStage() throws CreateOptionValueException{
+        OptionValue<Long, String> optionValue =to.findBestOptionValueByContext(PW, new OptionValueContextDto(Clusters.A));
+        Assert.assertNotNull(optionValue);
+        Assert.assertNotNull(optionValue.getId());
+        to.approveOptionValue(optionValue.getId());
     }
     
     /*

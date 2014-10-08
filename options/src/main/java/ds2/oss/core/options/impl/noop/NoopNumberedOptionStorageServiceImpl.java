@@ -27,10 +27,12 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.options.NumberedOptionStorageService;
 import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionException;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.api.options.OptionValueStage;
 
 /**
  * A default noop storage service.
@@ -119,6 +121,21 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     public <V> Option<Long, V> setOptionStage(OptionIdentifier<V> endpoint, OptionStage deleted) {
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
+    }
+
+    @Override
+    public <V> OptionValue<Long, V> getOptionValueById(Long id) throws OptionException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setOptionValueStage(Long id, OptionValueStage newStage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void approveOptionValue(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

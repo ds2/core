@@ -29,7 +29,7 @@ public enum OptionValueStage {
     /**
      * The value is deleted and cannot be used anymore.
      */
-    Deleted(4),
+    Deleted(5),
     /**
      * The value is live and can be used.
      */
@@ -37,7 +37,11 @@ public enum OptionValueStage {
     /**
      * The value is new and prepared and needs an approver to get approved.
      */
-    Prepared(1);
+    Prepared(1), 
+    /**
+     * The value has expired.
+     */
+    Expired(4);
     /**
      * The numerical value of the stage.
      */

@@ -22,6 +22,5 @@ package ds2.oss.core.api.options;
  * @version 0.3
  */
 public interface NumberedOptionStorageService extends OptionStorageService<Long> {
-    
-    // no special methods needed
+
 }

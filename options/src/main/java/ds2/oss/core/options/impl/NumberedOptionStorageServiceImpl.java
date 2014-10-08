@@ -42,6 +42,7 @@ import ds2.oss.core.api.options.OptionServiceJournal;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.OptionFactory;
@@ -51,15 +52,16 @@ import ds2.oss.core.options.api.OptionValueFactory;
 
 /**
  * The implementation for numbered options.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @Alternative
 @ApplicationScoped
 public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServiceImpl<Long>
-    implements
-    NumberedOptionStorageService {
+        implements
+        NumberedOptionStorageService {
+
     /**
      * A logger.
      */
@@ -94,7 +96,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Inject
     private OptionValueEncrypterProvider encProvider;
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -115,7 +117,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         LOG.debug("Found this option: {}", foundOption);
         return foundOption;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -125,7 +127,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Override
     public <V> OptionValue<Long, V> createOptionValue(final OptionIdentifier<V> optionIdent,
-        final OptionValueContext ctx, final Date scheduleDate, final V value) throws CreateOptionValueException {
+            final OptionValueContext ctx, final Date scheduleDate, final V value) throws CreateOptionValueException {
         final OptionValueDto<Long, V> optionValue = optionValFac.createOptionValueDto(optionIdent, null, ctx, value);
         if (optionIdent.isEncrypted()) {
             final OptionValueEncrypter<V> ove = encProvider.getForValueType(optionIdent.getValueType(), null);
@@ -155,7 +157,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         numOptionValDb.persist(optionValue);
         return optionValue;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -164,11 +166,11 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Override
     public <V> OptionValue<Long, V> findBestOptionValueByContext(final OptionIdentifier<V> ident,
-        final OptionValueContext ctx) {
+            final OptionValueContext ctx) {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#getAllOptions(java.lang.String)
@@ -177,7 +179,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     public List<Option<Long, ?>> getAllOptions(final String appName) {
         return null;
     }
-    
+
     @Override
     public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) throws CreateOptionException {
         V newVal = val;
@@ -205,12 +207,40 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         journal.createdOption(option);
         return option;
     }
-    
+
     @Override
     public <V> Option<Long, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage newVal) {
         final OptionDto<Long, V> rc = numberedPersistenceSupport.setOptionStage(endpoint, newVal);
         journal.addEntry(null, JournalAction.UPDATE_OPTION_STAGE, rc.getId(), null, newVal);
         return rc;
     }
-    
+
+    @Override
+    public <V> OptionValue<Long, V> getOptionValueById(Long id) throws OptionException {
+        OptionValueDto<Long, V> foundVal = (OptionValueDto<Long, V>) numOptionValDb.getById(id);
+        return foundVal;
+    }
+
+    @Override
+    public void setOptionValueStage(Long id, OptionValueStage newStage) {
+        numOptionValDb.setStage(id, newStage);
+    }
+
+    @Override
+    public void approveOptionValue(Long id) {
+        OptionValueStage newStage = OptionValueStage.Approved;
+        OptionValueDto<Long, ?> foundOptionVal = numOptionValDb.getById(id);
+        Date now = new Date();
+        if (foundOptionVal.getValidFrom().before(now)) {
+            newStage = OptionValueStage.Live;
+        }
+        if (foundOptionVal.getValidTo() != null) {
+            if (now.after(foundOptionVal.getValidTo())) {
+                newStage = OptionValueStage.Expired;
+            }
+        }
+
+        setOptionValueStage(id, newStage);
+    }
+
 }
