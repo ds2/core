@@ -186,6 +186,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
             to.createOptionValue(PW, new OptionValueContextDto(Clusters.A), null, "mysecret");
         Assert.assertNotNull(optionValue);
         Assert.assertNotNull(optionValue.getId());
+        Assert.assertTrue(optionValue.isEncrypted());
         Assert.assertNull(optionValue.getValue());
         Assert.assertNotNull(optionValue.getEncoded());
         Assert.assertNotNull(optionValue.getInitVector());

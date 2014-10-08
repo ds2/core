@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api.dto.impl;
 
 import java.util.Date;
@@ -127,6 +124,8 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     @XmlElement
     @NotNull
     private ValueType valueType;
+    @XmlAttribute
+    private boolean encrypted;
     
     /**
      * Sets the unencrypted value.
@@ -359,6 +358,15 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     
     public void setValueType(ValueType valueType2) {
         valueType = valueType2;
+    }
+
+    @Override
+    public boolean isEncrypted() {
+        return encrypted;
+    }
+
+    public void setEncrypted(boolean encrypted) {
+        this.encrypted = encrypted;
     }
     
 }

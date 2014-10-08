@@ -122,6 +122,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setValidTo(e.getValidTo());
         rc.setValue(parseValue(e.getValueType(), valueClass, e.getValue(), null));
         rc.setValueType(e.getValueType());
+        rc.setEncrypted(e.isEncrypted());
         return rc;
     }
     

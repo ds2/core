@@ -143,6 +143,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
             }
             optionValue.setUnencryptedValue(value);
             optionValue.setValue(null);
+            optionValue.setEncrypted(true);
         }
         try {
             final Option<Long, V> foundOption = getOptionByIdentifier(optionIdent);
