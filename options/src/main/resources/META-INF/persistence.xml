@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2012-2014 Dirk Strauss
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="corePU">
+    <class>ds2.oss.core.options.impl.entities.OptionEntity</class>
+    <class>ds2.oss.core.options.impl.entities.OptionValueContextEntity</class>
+    <class>ds2.oss.core.options.impl.entities.OptionValueEntity</class>
+    <class>ds2.oss.core.options.internal.OptionStageConverter</class>
+    <class>ds2.oss.core.options.internal.OptionValueContextModule</class>
+    <class>ds2.oss.core.options.internal.OptionValueStageConverter</class>
+    <class>ds2.oss.core.options.internal.ValueTypeConverter</class>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+  </persistence-unit>
+</persistence>

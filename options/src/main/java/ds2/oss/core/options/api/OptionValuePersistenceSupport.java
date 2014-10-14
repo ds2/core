@@ -17,6 +17,9 @@ package ds2.oss.core.options.api;
 
 import ds2.oss.core.api.PersistenceSupport;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
+import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionValue;
+import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.api.options.OptionValueStage;
 
 /**
@@ -35,4 +38,13 @@ public interface OptionValuePersistenceSupport<K> extends PersistenceSupport<Opt
      * @param newStage the new stage value
      */
     void setStage(K id, OptionValueStage newStage);
+    
+    /**
+     * Finds the best matching live option value for the given context.
+     * @param <V> the value type
+     * @param ident the option identifier
+     * @param ctx the option value context
+     * @return the found option value, or null if not found
+     */
+    <V> OptionValue<K, V> findBestOptionValue(OptionIdentifier<V> ident, OptionValueContext ctx);
 }

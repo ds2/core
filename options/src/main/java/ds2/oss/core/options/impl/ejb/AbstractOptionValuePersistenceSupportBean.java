@@ -1,11 +1,19 @@
 package ds2.oss.core.options.impl.ejb;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
@@ -13,15 +21,21 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionValue;
+import ds2.oss.core.api.options.OptionValueContext;
+import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.base.impl.db.AbstractPersistenceSupportImpl;
+import ds2.oss.core.base.impl.db.LifeCycleAwareModule_;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
 import ds2.oss.core.options.impl.entities.OptionValueEntity;
+import ds2.oss.core.options.impl.entities.OptionValueEntity_;
 
 /**
  * A base class to support some common operations for dealing with option value persistence.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  *
@@ -29,6 +43,7 @@ import ds2.oss.core.options.impl.entities.OptionValueEntity;
 public abstract class AbstractOptionValuePersistenceSupportBean
     extends
     AbstractPersistenceSupportImpl<OptionValueDto<Long, ?>, Long> implements NumberedOptionValuePersistenceSupport {
+    
     /**
      * A logger.
      */
@@ -46,7 +61,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     
     /**
      * Persists the given data.
-     * 
+     *
      * @param em
      *            the entity manager
      * @param t
@@ -85,7 +100,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     
     /**
      * Finds an option.
-     * 
+     *
      * @param em
      *            the entity manager
      * @param optionReference
@@ -99,5 +114,28 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     public <V> OptionValueDto<Long, V> performGetById(EntityManager em, Long id, Class<V> c) {
         final OptionValueEntity foundEntity = getSecureFindById(em, OptionValueEntity.class, id);
         return parser.toDto(foundEntity, c);
+    }
+    
+    public <V> OptionValue<Long, V> findBestOptionValue(EntityManager em, OptionIdentifier<V> ident,
+        OptionValueContext ctx) {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<OptionValueEntity> cq = qb.createQuery(OptionValueEntity.class);
+        Root<OptionValueEntity> optionValueRoot = cq.from(OptionValueEntity.class);
+        Root<OptionEntity> optionRoot = cq.from(OptionEntity.class);
+        ParameterExpression<OptionValueStage> p1 = qb.parameter(OptionValueStage.class);
+        cq.select(optionValueRoot);
+        // setup restrictions
+        List<Predicate> restrictions = new ArrayList<>();
+        restrictions.add(qb.equal(optionValueRoot.get("stage"), OptionValueStage.Live));
+        Predicate predicate2;
+        Date now = new Date();
+        restrictions.add(qb.lessThanOrEqualTo(
+            optionValueRoot.get(OptionValueEntity_.lca).get(LifeCycleAwareModule_.validFrom), now));
+        
+        // perform query to database
+        cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
+        TypedQuery<OptionValueEntity> query = em.createQuery(cq);
+        OptionValueEntity foundOptionValue = getSecureSingle(query);
+        return parser.toDto(foundOptionValue, null);
     }
 }

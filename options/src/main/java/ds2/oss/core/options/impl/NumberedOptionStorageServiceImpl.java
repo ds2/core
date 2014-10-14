@@ -167,8 +167,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Override
     public <V> OptionValue<Long, V> findBestOptionValueByContext(final OptionIdentifier<V> ident,
             final OptionValueContext ctx) {
-        // TODO Auto-generated method stub
-        return null;
+        return numOptionValDb.findBestOptionValue(ident, ctx);
     }
 
     /*
