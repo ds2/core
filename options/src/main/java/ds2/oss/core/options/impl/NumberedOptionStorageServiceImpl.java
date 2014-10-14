@@ -59,9 +59,9 @@ import ds2.oss.core.options.api.OptionValueFactory;
 @Alternative
 @ApplicationScoped
 public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServiceImpl<Long>
-        implements
-        NumberedOptionStorageService {
-
+    implements
+    NumberedOptionStorageService {
+    
     /**
      * A logger.
      */
@@ -96,18 +96,17 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
      */
     @Inject
     private OptionValueEncrypterProvider encProvider;
-
+    
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.api.options.OptionStorageService#getOptionByIdentifier(ds2.oss.core.api.options
+     * @see ds2.oss.core.api.options.OptionStorageService#getOptionByIdentifier(ds2.oss.core.api.options
      * .OptionIdentifier)
      */
     @Override
     public <V> Option<Long, V> getOptionByIdentifier(final OptionIdentifier<V> ident) throws OptionException {
         final OptionDto<Long, V> foundOption = numberedPersistenceSupport.findOptionByIdentifier(ident);
         if (foundOption.isEncrypted()) {
-            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType(), null);
+            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType());
             if (ove == null) {
                 throw new OptionException(CoreErrors.NoEncryptionForType);
             }
@@ -117,20 +116,18 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         LOG.debug("Found this option: {}", foundOption);
         return foundOption;
     }
-
+    
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.api.options.OptionStorageService#createOptionValue(ds2.oss.core.api.options.
-     * OptionIdentifier, ds2.oss.core.api.options.OptionValueContext, java.util.Date,
-     * java.lang.Object)
+     * @see ds2.oss.core.api.options.OptionStorageService#createOptionValue(ds2.oss.core.api.options. OptionIdentifier,
+     * ds2.oss.core.api.options.OptionValueContext, java.util.Date, java.lang.Object)
      */
     @Override
     public <V> OptionValue<Long, V> createOptionValue(final OptionIdentifier<V> optionIdent,
-            final OptionValueContext ctx, final Date scheduleDate, final V value) throws CreateOptionValueException {
+        final OptionValueContext ctx, final Date scheduleDate, final V value) throws CreateOptionValueException {
         final OptionValueDto<Long, V> optionValue = optionValFac.createOptionValueDto(optionIdent, null, ctx, value);
         if (optionIdent.isEncrypted()) {
-            final OptionValueEncrypter<V> ove = encProvider.getForValueType(optionIdent.getValueType(), null);
+            final OptionValueEncrypter<V> ove = encProvider.getForValueType(optionIdent.getValueType());
             if (ove == null) {
                 throw new CreateOptionValueException(CoreErrors.NoEncryptionForType);
             }
@@ -157,19 +154,18 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         numOptionValDb.persist(optionValue);
         return optionValue;
     }
-
+    
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.api.options.OptionStorageService#findBestOptionValueByContext(ds2.oss.core.api
+     * @see ds2.oss.core.api.options.OptionStorageService#findBestOptionValueByContext(ds2.oss.core.api
      * .options.OptionIdentifier, ds2.oss.core.api.options.OptionValueContext)
      */
     @Override
     public <V> OptionValue<Long, V> findBestOptionValueByContext(final OptionIdentifier<V> ident,
-            final OptionValueContext ctx) {
+        final OptionValueContext ctx) {
         return numOptionValDb.findBestOptionValue(ident, ctx);
     }
-
+    
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#getAllOptions(java.lang.String)
@@ -178,7 +174,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     public List<Option<Long, ?>> getAllOptions(final String appName) {
         return null;
     }
-
+    
     @Override
     public <V> Option<Long, V> createOption(final OptionIdentifier<V> ident, final V val) throws CreateOptionException {
         V newVal = val;
@@ -187,7 +183,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         }
         final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, newVal);
         if (ident.isEncrypted()) {
-            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType(), null);
+            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType());
             if (ove == null) {
                 throw new CreateOptionException(CoreErrors.NoEncryptionForType);
             }
@@ -206,25 +202,25 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         journal.createdOption(option);
         return option;
     }
-
+    
     @Override
     public <V> Option<Long, V> setOptionStage(final OptionIdentifier<V> endpoint, final OptionStage newVal) {
         final OptionDto<Long, V> rc = numberedPersistenceSupport.setOptionStage(endpoint, newVal);
         journal.addEntry(null, JournalAction.UPDATE_OPTION_STAGE, rc.getId(), null, newVal);
         return rc;
     }
-
+    
     @Override
     public <V> OptionValue<Long, V> getOptionValueById(Long id) throws OptionException {
         OptionValueDto<Long, V> foundVal = (OptionValueDto<Long, V>) numOptionValDb.getById(id);
         return foundVal;
     }
-
+    
     @Override
     public void setOptionValueStage(Long id, OptionValueStage newStage) {
         numOptionValDb.setStage(id, newStage);
     }
-
+    
     @Override
     public void approveOptionValue(Long id) {
         OptionValueStage newStage = OptionValueStage.Approved;
@@ -238,8 +234,8 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
                 newStage = OptionValueStage.Expired;
             }
         }
-
+        
         setOptionValueStage(id, newStage);
     }
-
+    
 }

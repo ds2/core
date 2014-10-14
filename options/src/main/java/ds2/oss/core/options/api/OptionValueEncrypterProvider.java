@@ -30,11 +30,9 @@ public interface OptionValueEncrypterProvider {
      * 
      * @param t
      *            the value type
-     * @param v
-     *            the target type of the encrypter
      * @return the found encrypter, or null if not found
      * @param <V>
      *            the target type
      */
-    <V> OptionValueEncrypter<V> getForValueType(ValueType t, Class<V> v);
+    <V> OptionValueEncrypter<V> getForValueType(ValueType t);
 }

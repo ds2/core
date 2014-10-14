@@ -30,6 +30,8 @@ import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
+import ds2.oss.core.options.api.OptionValueEncrypter;
+import ds2.oss.core.options.api.OptionValueEncrypterProvider;
 import ds2.oss.core.options.api.ValueCodec;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
@@ -53,6 +55,8 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     @Any
     @Inject
     private Instance<ValueCodec<?>> codecs;
+    @Inject
+    private OptionValueEncrypterProvider encProvider;
     
     @Override
     public <V> V parseValue(final ValueType t, final Class<V> targetClass, final Object thisVal, final V onNull) {
@@ -123,6 +127,11 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setValue(parseValue(e.getValueType(), valueClass, e.getValue(), null));
         rc.setValueType(e.getValueType());
         rc.setEncrypted(e.isEncrypted());
+        if (e.isEncrypted()) {
+            // decrypt it
+            OptionValueEncrypter<V> encrypter = encProvider.getForValueType(rc.getValueType());
+            rc.setUnencryptedValue(encrypter.decrypt(rc));
+        }
         return rc;
     }
     

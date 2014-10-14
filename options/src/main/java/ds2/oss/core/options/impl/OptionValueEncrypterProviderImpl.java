@@ -41,12 +41,11 @@ public class OptionValueEncrypterProviderImpl implements OptionValueEncrypterPro
     
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.options.api.OptionValueEncrypterProvider#getForValueType(ds2.oss.core.api.options
-     * .ValueType, java.lang.Class)
+     * @see ds2.oss.core.options.api.OptionValueEncrypterProvider#getForValueType(ds2.oss.core.api.options .ValueType,
+     * java.lang.Class)
      */
     @Override
-    public <V> OptionValueEncrypter<V> getForValueType(ValueType t, Class<V> v) {
+    public <V> OptionValueEncrypter<V> getForValueType(ValueType t) {
         switch (t) {
             case STRING:
                 return (OptionValueEncrypter<V>) stringEnc;

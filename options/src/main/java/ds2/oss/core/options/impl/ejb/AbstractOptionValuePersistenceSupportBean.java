@@ -116,6 +116,17 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         return parser.toDto(foundEntity, c);
     }
     
+    /**
+     * Finds the best matching option value.
+     * 
+     * @param em
+     *            the entity manager
+     * @param ident
+     *            the option identifier
+     * @param ctx
+     *            the access context
+     * @return the found option value, or null if no value has been found
+     */
     public <V> OptionValue<Long, V> findBestOptionValue(EntityManager em, OptionIdentifier<V> ident,
         OptionValueContext ctx) {
         CriteriaBuilder qb = em.getCriteriaBuilder();
@@ -136,6 +147,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
         TypedQuery<OptionValueEntity> query = em.createQuery(cq);
         OptionValueEntity foundOptionValue = getSecureSingle(query);
-        return parser.toDto(foundOptionValue, null);
+        OptionValue<Long, V> rc = parser.toDto(foundOptionValue, null);
+        return rc;
     }
 }
