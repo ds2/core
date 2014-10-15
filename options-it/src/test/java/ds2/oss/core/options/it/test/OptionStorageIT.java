@@ -18,6 +18,7 @@ package ds2.oss.core.options.it.test;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -206,6 +207,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertNotNull(optionValue.getId());
         Assert.assertNotNull(optionValue.getUnencryptedValue());
         Assert.assertTrue(optionValue.isEncrypted());
+        Assert.assertEquals(optionValue.getUnencryptedValue(), "mysecret");
     }
     
     @Test(dependsOnMethods = "testCreateOptionValueSecure")
@@ -213,6 +215,21 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         OptionValue<Long, String> optionValue =
             to.findBestOptionValueByContext(PW, new OptionValueContextDto(Clusters.B));
         Assert.assertNull(optionValue);
+    }
+    
+    public void testScheduleOptionValue() throws OptionException {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, 1);
+        ;
+        OptionValue<Long, String> generatedOptionValue =
+            to.createOptionValue(USERNAME, null, cal.getTime(), "myFutureUsername");
+        Assert.assertNotNull(generatedOptionValue);
+        Assert.assertNotNull(generatedOptionValue.getId());
+        Assert.assertEquals(generatedOptionValue.getStage(), OptionValueStage.Prepared);
+        to.approveOptionValue(generatedOptionValue.getId());
+        OptionValue<Long, String> ov = to.<String> getOptionValueById(generatedOptionValue.getId());
+        Assert.assertNotNull(ov);
+        Assert.assertEquals(ov.getStage(), OptionValueStage.Prepared);
     }
     
     /*
