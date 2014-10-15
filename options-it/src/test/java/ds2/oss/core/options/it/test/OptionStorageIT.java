@@ -193,14 +193,15 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertEquals(optionValue.getStage(), OptionValueStage.Prepared);
         Assert.assertEquals(optionValue.getUnencryptedValue(), "mysecret");
         to.approveOptionValue(optionValue.getId());
-        optionValue=to.getOptionValueById(optionValue.getId());
+        optionValue = to.getOptionValueById(optionValue.getId());
         Assert.assertNotNull(optionValue);
         Assert.assertEquals(optionValue.getStage(), OptionValueStage.Live);
     }
     
     @Test(dependsOnMethods = "testCreateOptionValueSecure")
-    public void testSetOptionValueStage() throws CreateOptionValueException{
-        OptionValue<Long, String> optionValue =to.findBestOptionValueByContext(PW, new OptionValueContextDto(Clusters.A));
+    public void testSetOptionValueStage() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue =
+            to.findBestOptionValueByContext(PW, new OptionValueContextDto(Clusters.A));
         Assert.assertNotNull(optionValue);
         Assert.assertNotNull(optionValue.getId());
         Assert.assertNotNull(optionValue.getUnencryptedValue());
@@ -208,10 +209,9 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     }
     
     /*
-     * public static void createFileUser(final String userName, final String userPassword, final
-     * String userGroups) throws Exception { Server server =
-     * Server.getServer(Server.getServerNames().get(0)); String command = "create-file-user";
-     * ParameterMap params = new ParameterMap(); params.add("userpassword", userPassword);
+     * public static void createFileUser(final String userName, final String userPassword, final String userGroups)
+     * throws Exception { Server server = Server.getServer(Server.getServerNames().get(0)); String command =
+     * "create-file-user"; ParameterMap params = new ParameterMap(); params.add("userpassword", userPassword);
      * params.add("groups", userGroups); params.add("username", userName); }
      */
 }

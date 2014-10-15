@@ -36,6 +36,7 @@
       <property name="eclipselink.logging.level.sql" value="FINE" />
       <property name="eclipselink.logging.parameters" value="true" />
       <property name="eclipselink.ddl-generation.output-mode" value="both"/>
+      <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>
