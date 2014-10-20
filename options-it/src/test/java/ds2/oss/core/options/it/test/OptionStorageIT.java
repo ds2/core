@@ -220,7 +220,6 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     public void testScheduleOptionValue() throws OptionException {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, 1);
-        ;
         OptionValue<Long, String> generatedOptionValue =
             to.createOptionValue(USERNAME, null, cal.getTime(), "myFutureUsername");
         Assert.assertNotNull(generatedOptionValue);
@@ -230,6 +229,26 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         OptionValue<Long, String> ov = to.<String> getOptionValueById(generatedOptionValue.getId());
         Assert.assertNotNull(ov);
         Assert.assertEquals(ov.getStage(), OptionValueStage.Prepared);
+    }
+    
+    @Test(dependsOnMethods = "testPersist")
+    public void testContextValueCheck() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue1 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(), null, "myUsername1");
+        OptionValue<Long, String> optionValue2 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A), null, "myUsername2");
+        Assert.assertNotNull(optionValue1);
+        Assert.assertNotNull(optionValue2);
+        Assert.assertNotEquals(optionValue1, optionValue2);
+        to.approveOptionValue(optionValue1.getId());
+        to.approveOptionValue(optionValue2.getId());
+        OptionValue<Long, String> ov1 = to.findBestOptionValueByContext(USERNAME, null);
+        Assert.assertNotNull(ov1);
+        Assert.assertEquals(ov1.getValue(), "myUsername1");
+        OptionValue<Long, String> ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsername2");
     }
     
     /*

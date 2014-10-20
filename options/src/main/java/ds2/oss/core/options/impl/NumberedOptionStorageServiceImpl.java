@@ -105,14 +105,17 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Override
     public <V> Option<Long, V> getOptionByIdentifier(final OptionIdentifier<V> ident) throws OptionException {
         final OptionDto<Long, V> foundOption = numberedPersistenceSupport.findOptionByIdentifier(ident);
-        if (foundOption.isEncrypted()) {
-            final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType());
-            if (ove == null) {
-                throw new OptionException(CoreErrors.NoEncryptionForType);
+        if (foundOption != null) {
+            if (foundOption.isEncrypted()) {
+                final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType());
+                if (ove == null) {
+                    throw new OptionException(CoreErrors.NoEncryptionForType);
+                }
+                final V val = ove.decrypt(foundOption);
+                foundOption.setDecryptedValue(val);
             }
-            final V val = ove.decrypt(foundOption);
-            foundOption.setDecryptedValue(val);
         }
+        
         LOG.debug("Found this option: {}", foundOption);
         return foundOption;
     }
@@ -146,6 +149,9 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
         }
         try {
             final Option<Long, V> foundOption = getOptionByIdentifier(optionIdent);
+            if (foundOption == null) {
+                throw new OptionException(CoreErrors.OptionNotFound);
+            }
             optionValue.setOptionReference(foundOption.getId());
         } catch (final OptionException e) {
             throw new CreateOptionValueException(CoreErrors.OptionNotFound, e);

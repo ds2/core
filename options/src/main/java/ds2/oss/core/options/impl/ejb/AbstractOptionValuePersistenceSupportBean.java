@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -20,6 +19,7 @@ import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.RuntimeConfiguration;
@@ -163,8 +163,6 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         CriteriaBuilder qb = em.getCriteriaBuilder();
         CriteriaQuery<OptionValueEntity> cq = qb.createQuery(OptionValueEntity.class);
         Root<OptionValueEntity> optionValueRoot = cq.from(OptionValueEntity.class);
-        Root<OptionEntity> optionRoot = cq.from(OptionEntity.class);
-        ParameterExpression<OptionValueStage> p1 = qb.parameter(OptionValueStage.class);
         cq.select(optionValueRoot);
         // setup restrictions
         List<Predicate> restrictions = new ArrayList<>();
@@ -216,16 +214,25 @@ public abstract class AbstractOptionValuePersistenceSupportBean
      */
     private static void getContextPredicate(List<Predicate> predicates, CriteriaBuilder qb,
         Path<OptionValueContextModule> path, OptionValueContext ctx) {
+        if (ctx == null) {
+            ctx = new OptionValueContextDto();
+        }
         if (ctx.getCluster() != null) {
             predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.cluster), Cluster.class, CLUSTER));
+        } else {
+            predicates.add(qb.isNull(path.get(OptionValueContextModule_.cluster)));
         }
         if (ctx.getConfiguration() != null) {
             predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.configuration),
                 RuntimeConfiguration.class, RT_CONFIG));
+        } else {
+            predicates.add(qb.isNull(path.get(OptionValueContextModule_.configuration)));
         }
         if (ctx.getRequestedDomain() != null) {
             predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.requestedDomain), String.class,
                 REQ_DOMAIN));
+        } else {
+            predicates.add(qb.isNull(path.get(OptionValueContextModule_.requestedDomain)));
         }
         if (ctx.getServer() != null) {
             ServerIdentifier si = ctx.getServer();
@@ -242,6 +249,10 @@ public abstract class AbstractOptionValuePersistenceSupportBean
                     SERVER_IP));
             }
             
+        } else {
+            predicates.add(qb.isNull(path.get(OptionValueContextModule_.serverDomain)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule_.serverHostname)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule_.serverIp)));
         }
     }
     

@@ -55,69 +55,68 @@ import ds2.oss.core.options.internal.ValueTypeConverter;
  *
  */
 @Entity(name = "coreOptionValue")
-@Table(name = "core_optionvalues", uniqueConstraints = {
-    @UniqueConstraint(
-            columnNames = {"ref_option", "ctx_cluster", "ctx_runtime_config", "ctx_req_domain"})})
+@Table(name = "core_optionvalues", uniqueConstraints = { @UniqueConstraint(columnNames = { "ref_option", "ctx_cluster",
+    "ctx_runtime_config", "ctx_req_domain" }) })
 @TableGenerator(
-        name = "tableGen2",
-        initialValue = 1,
-        pkColumnName = "table_name",
-        pkColumnValue = "core_optionvalues",
-        table = "core_id",
-        valueColumnName = "next_id",
-        allocationSize = 1)
+    name = "tableGen2",
+    initialValue = 1,
+    pkColumnName = "table_name",
+    pkColumnValue = "core_optionvalues",
+    table = "core_id",
+    valueColumnName = "next_id",
+    allocationSize = 1)
 @SequenceGenerator(initialValue = 1, name = "seqGen2", sequenceName = "SEQ_CORE_OPTIONVALUES", allocationSize = 1)
 @Access(AccessType.FIELD)
 public class OptionValueEntity implements OptionValue<Long, Object> {
-
+    
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 8443176889297017343L;
-
+    
     /**
      * The approver.
      */
     @Column(name = "approver")
     private String approverName;
-
+    
     /**
      * The author.
      */
     @Column(name = "author", nullable = false, updatable = false)
     private String authorName;
-
+    
     /**
      * The CMA contract.
      */
     @Embedded
     private CreatedModifiedAwareModule cma;
-
+    
     /**
      * The option value ctx.
      */
     @Embedded
-    private OptionValueContextModule ctx;
-
+    private OptionValueContextModule ctx = new OptionValueContextModule();
+    
     /**
      * The EC module.
      */
     @Embedded
-    private IvEncodedContentModule ecm;
-
+    private IvEncodedContentModule ecm = new IvEncodedContentModule();
+    
     /**
      * The id of the entry.
      */
     @Id
     @GeneratedValue(generator = "tableGen2", strategy = GenerationType.TABLE)
     private Long id;
-
+    
     /**
      * The lifecycle module.
      */
     @Embedded
     private LifeCycleAwareModule lca;
-
+    
     /**
      * The ref option.
      */
@@ -141,7 +140,7 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     @Column(name = "value_type", nullable = false)
     @Convert(converter = ValueTypeConverter.class)
     private ValueType valueType;
-
+    
     /**
      * Inits the entity.
      */
@@ -151,57 +150,63 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         lca = new LifeCycleAwareModule();
         ecm = new IvEncodedContentModule();
     }
-
+    
     @Override
     public String getApproverName() {
         return approverName;
     }
-
+    
     @Override
     public String getAuthorName() {
         return authorName;
     }
-
+    
     @Override
     public Cluster getCluster() {
+        if (ctx == null) {
+            ctx = new OptionValueContextModule();
+        }
         return ctx.getCluster();
     }
-
+    
     @Override
     public RuntimeConfiguration getConfiguration() {
         return ctx.getConfiguration();
     }
-
+    
     @Override
     public Date getCreated() {
         return cma.getCreated();
     }
-
+    
     @Override
     public byte[] getEncoded() {
+        if (ecm == null) {
+            ecm = new IvEncodedContentModule();
+        }
         return ecm.getEncoded();
     }
-
+    
     @Override
     public Long getId() {
         return id;
     }
-
+    
     @Override
     public byte[] getInitVector() {
         return ecm.getInitVector();
     }
-
+    
     @Override
     public Date getModified() {
         return cma.getModified();
     }
-
+    
     @Override
     public Long getOptionReference() {
         return refOption.getId();
     }
-
+    
     /**
      * Returns the referenced option.
      *
@@ -210,148 +215,154 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     public Option<Long, ?> getRefOption() {
         return refOption;
     }
-
+    
     @Override
     public String getRequestedDomain() {
         return ctx.getRequestedDomain();
     }
-
+    
     @Override
     public ServerIdentifier getServer() {
         return ctx.getServer();
     }
-
+    
     @Override
     public OptionValueStage getStage() {
         return stage;
     }
-
+    
     @Override
     public Object getUnencryptedValue() {
         return null;
     }
-
+    
     @Override
     public Date getValidFrom() {
         return lca.getValidFrom();
     }
-
+    
     @Override
     public Date getValidTo() {
         return lca.getValidTo();
     }
-
+    
     @Override
     public Object getValue() {
         return value;
     }
-
+    
     /**
      * Sets the approver name.
      *
-     * @param approverName the approverName to set
+     * @param approverName
+     *            the approverName to set
      */
     public void setApproverName(final String approverName) {
         this.approverName = approverName;
     }
-
+    
     /**
      * Sets the author name.
      *
-     * @param authorName the authorName to set
+     * @param authorName
+     *            the authorName to set
      */
     public void setAuthorName(final String authorName) {
         this.authorName = authorName;
     }
-
+    
     /**
      * Sets a new id.
      *
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setId(final Long id) {
         this.id = id;
     }
-
+    
     /**
      * Sets a new referenced option.
      *
-     * @param refOption the refOption to set
+     * @param refOption
+     *            the refOption to set
      */
     public void setRefOption(final Option<Long, ?> refOption) {
         this.refOption = refOption;
     }
-
+    
     /**
      * Sets a new stage value.
      *
-     * @param stage the stage to set
+     * @param stage
+     *            the stage to set
      */
     public void setStage(final OptionValueStage stage) {
         this.stage = stage;
     }
-
+    
     /**
      * Sets a new value.
      *
-     * @param value the value to set
+     * @param value
+     *            the value to set
      */
     public void setValue(final String value) {
         this.value = value;
     }
-
+    
     public void setCreated(Date date) {
         cma.setCreated(date);
     }
-
+    
     public void setModified(Date date) {
         cma.setModified(date);
     }
-
+    
     public void setCluster(Cluster cluster) {
         ctx.setCluster(cluster);
     }
-
+    
     public void setConfiguration(RuntimeConfiguration configuration) {
         ctx.setConfiguration(configuration);
     }
-
+    
     public void setEncoded(byte[] encoded) {
         ecm.setEncoded(encoded);
     }
-
+    
     public void setInitVector(byte[] initVector) {
         ecm.setInitVector(initVector);
     }
-
+    
     public void setRequestedDomain(String requestedDomain) {
         ctx.setRequestedDomain(requestedDomain);
     }
-
+    
     public void setServer(ServerIdentifier server) {
         ctx.setServer(server);
     }
-
+    
     public void setValidFrom(Date validFrom) {
         lca.setValidFrom(validFrom);
     }
-
+    
     public void setValidTo(Date validTo) {
         lca.setValidTo(validTo);
     }
-
+    
     @Override
     public ValueType getValueType() {
         return valueType;
     }
-
+    
     public void setValueType(ValueType t) {
         valueType = t;
     }
-
+    
     @Override
     public boolean isEncrypted() {
         return ecm.getEncoded() != null;
     }
-
+    
 }

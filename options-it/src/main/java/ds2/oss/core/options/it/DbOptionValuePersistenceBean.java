@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValue;
@@ -75,6 +76,9 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
     
     @Override
     public <V> OptionValue<Long, V> findBestOptionValue(OptionIdentifier<V> ident, OptionValueContext ctx) {
+        if (ctx == null) {
+            ctx = new OptionValueContextDto();
+        }
         return findBestOptionValue(em, ident, ctx);
     }
     

@@ -25,12 +25,14 @@ import javax.ejb.TransactionManagementType;
 import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.ejb.AbstractOptionsPersistenceSupportBean;
+
 
 /**
  * @author dstrauss
@@ -39,6 +41,7 @@ import ds2.oss.core.options.impl.ejb.AbstractOptionsPersistenceSupportBean;
 @Stateless(name = "persistenceBean")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @TransactionManagement(TransactionManagementType.CONTAINER)
+@Transactional
 @Alternative
 public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportBean
     implements
