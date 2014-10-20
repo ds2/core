@@ -359,14 +359,158 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     public void setValueType(ValueType valueType2) {
         valueType = valueType2;
     }
-
+    
     @Override
     public boolean isEncrypted() {
         return encrypted;
     }
-
+    
     public void setEncrypted(boolean encrypted) {
         this.encrypted = encrypted;
+    }
+    
+    // TODO hashcode und equals einbauen
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((approverName == null) ? 0 : approverName.hashCode());
+        result = prime * result + ((authorName == null) ? 0 : authorName.hashCode());
+        result = prime * result + ((cluster == null) ? 0 : cluster.hashCode());
+        result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
+        result = prime * result + ((created == null) ? 0 : created.hashCode());
+        result = prime * result + (encrypted ? 1231 : 1237);
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((modified == null) ? 0 : modified.hashCode());
+        result = prime * result + ((optionReference == null) ? 0 : optionReference.hashCode());
+        result = prime * result + ((requestedDomain == null) ? 0 : requestedDomain.hashCode());
+        result = prime * result + ((server == null) ? 0 : server.hashCode());
+        result = prime * result + ((stage == null) ? 0 : stage.hashCode());
+        result = prime * result + ((validFrom == null) ? 0 : validFrom.hashCode());
+        result = prime * result + ((validTo == null) ? 0 : validTo.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + ((valueType == null) ? 0 : valueType.hashCode());
+        return result;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        OptionValueDto other = (OptionValueDto) obj;
+        if (approverName == null) {
+            if (other.approverName != null) {
+                return false;
+            }
+        } else if (!approverName.equals(other.approverName)) {
+            return false;
+        }
+        if (authorName == null) {
+            if (other.authorName != null) {
+                return false;
+            }
+        } else if (!authorName.equals(other.authorName)) {
+            return false;
+        }
+        if (cluster == null) {
+            if (other.cluster != null) {
+                return false;
+            }
+        } else if (!cluster.equals(other.cluster)) {
+            return false;
+        }
+        if (configuration != other.configuration) {
+            return false;
+        }
+        if (created == null) {
+            if (other.created != null) {
+                return false;
+            }
+        } else if (!created.equals(other.created)) {
+            return false;
+        }
+        if (encrypted != other.encrypted) {
+            return false;
+        }
+        if (id == null) {
+            if (other.id != null) {
+                return false;
+            }
+        } else if (!id.equals(other.id)) {
+            return false;
+        }
+        if (modified == null) {
+            if (other.modified != null) {
+                return false;
+            }
+        } else if (!modified.equals(other.modified)) {
+            return false;
+        }
+        if (optionReference == null) {
+            if (other.optionReference != null) {
+                return false;
+            }
+        } else if (!optionReference.equals(other.optionReference)) {
+            return false;
+        }
+        if (requestedDomain == null) {
+            if (other.requestedDomain != null) {
+                return false;
+            }
+        } else if (!requestedDomain.equals(other.requestedDomain)) {
+            return false;
+        }
+        if (server == null) {
+            if (other.server != null) {
+                return false;
+            }
+        } else if (!server.equals(other.server)) {
+            return false;
+        }
+        if (stage != other.stage) {
+            return false;
+        }
+        if (validFrom == null) {
+            if (other.validFrom != null) {
+                return false;
+            }
+        } else if (!validFrom.equals(other.validFrom)) {
+            return false;
+        }
+        if (validTo == null) {
+            if (other.validTo != null) {
+                return false;
+            }
+        } else if (!validTo.equals(other.validTo)) {
+            return false;
+        }
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        } else if (!value.equals(other.value)) {
+            return false;
+        }
+        if (valueType != other.valueType) {
+            return false;
+        }
+        return true;
     }
     
 }

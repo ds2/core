@@ -33,11 +33,17 @@ public class ClusterConverter implements AttributeConverter<Cluster, String> {
     
     @Override
     public String convertToDatabaseColumn(Cluster attribute) {
+        if (attribute == null) {
+            return null;
+        }
         return "" + attribute.getClusterName();
     }
     
     @Override
     public Cluster convertToEntityAttribute(String dbData) {
+        if (dbData == null) {
+            return null;
+        }
         return new ClusterDto(dbData);
     }
     
