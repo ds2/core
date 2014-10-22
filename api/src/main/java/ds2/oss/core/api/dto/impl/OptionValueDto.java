@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.api.dto.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -511,6 +512,105 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
             return false;
         }
         return true;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("OptionValueDto(");
+        if (id != null) {
+            builder.append("id=");
+            builder.append(id);
+            builder.append(", ");
+        }
+        if (created != null) {
+            builder.append("created=");
+            builder.append(created);
+            builder.append(", ");
+        }
+        if (modified != null) {
+            builder.append("modified=");
+            builder.append(modified);
+            builder.append(", ");
+        }
+        if (validFrom != null) {
+            builder.append("validFrom=");
+            builder.append(validFrom);
+            builder.append(", ");
+        }
+        if (validTo != null) {
+            builder.append("validTo=");
+            builder.append(validTo);
+            builder.append(", ");
+        }
+        if (cluster != null) {
+            builder.append("cluster=");
+            builder.append(cluster);
+            builder.append(", ");
+        }
+        if (configuration != null) {
+            builder.append("configuration=");
+            builder.append(configuration);
+            builder.append(", ");
+        }
+        if (server != null) {
+            builder.append("server=");
+            builder.append(server);
+            builder.append(", ");
+        }
+        if (approverName != null) {
+            builder.append("approverName=");
+            builder.append(approverName);
+            builder.append(", ");
+        }
+        if (authorName != null) {
+            builder.append("authorName=");
+            builder.append(authorName);
+            builder.append(", ");
+        }
+        if (optionReference != null) {
+            builder.append("optionReference=");
+            builder.append(optionReference);
+            builder.append(", ");
+        }
+        if (stage != null) {
+            builder.append("stage=");
+            builder.append(stage);
+            builder.append(", ");
+        }
+        if (value != null) {
+            builder.append("value=");
+            builder.append(value);
+            builder.append(", ");
+        }
+        if (requestedDomain != null) {
+            builder.append("requestedDomain=");
+            builder.append(requestedDomain);
+            builder.append(", ");
+        }
+        if (valueType != null) {
+            builder.append("valueType=");
+            builder.append(valueType);
+            builder.append(", ");
+        }
+        builder.append("encrypted=");
+        builder.append(encrypted);
+        builder.append(", ");
+        if (getInitVector() != null) {
+            builder.append("getInitVector()=");
+            builder.append(Arrays.toString(getInitVector()));
+            builder.append(", ");
+        }
+        if (getEncoded() != null) {
+            builder.append("getEncoded()=");
+            builder.append(Arrays.toString(getEncoded()));
+        }
+        builder.append(")");
+        return builder.toString();
     }
     
 }
