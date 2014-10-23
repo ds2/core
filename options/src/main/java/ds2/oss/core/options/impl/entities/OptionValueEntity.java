@@ -311,34 +311,89 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         this.value = value;
     }
     
+    /**
+     * Sets the creation date.
+     * 
+     * @param date
+     *            the creation date
+     */
     public void setCreated(Date date) {
         cma.setCreated(date);
     }
     
+    /**
+     * Sets the modified date.
+     * 
+     * @param date
+     *            the modified date
+     */
     public void setModified(Date date) {
         cma.setModified(date);
     }
     
+    /**
+     * Updates the modified date.
+     */
+    public void touchModified() {
+        cma.touchModified();
+    }
+    
+    /**
+     * Sets the cluster.
+     * 
+     * @param cluster
+     *            the cluster
+     */
     public void setCluster(Cluster cluster) {
         ctx.setCluster(cluster);
     }
     
+    /**
+     * Sets the configuration.
+     * 
+     * @param configuration
+     *            the runtime configuration
+     */
     public void setConfiguration(RuntimeConfiguration configuration) {
         ctx.setConfiguration(configuration);
     }
     
+    /**
+     * Sets the encoded content.
+     * 
+     * @param encoded
+     *            the encoded content
+     */
     public void setEncoded(byte[] encoded) {
         ecm.setEncoded(encoded);
     }
     
+    /**
+     * Sets the init vector.
+     * 
+     * @param initVector
+     *            the init vector
+     */
     public void setInitVector(byte[] initVector) {
         ecm.setInitVector(initVector);
     }
     
+    /**
+     * Sets the requested domain.
+     * 
+     * @param requestedDomain
+     *            the requested domain
+     */
     public void setRequestedDomain(String requestedDomain) {
         ctx.setRequestedDomain(requestedDomain);
     }
     
+    /**
+     * Sets the server identifier.
+     * 
+     * @param server
+     *            the server identifier
+     */
     public void setServer(ServerIdentifier server) {
         ctx.setServer(server);
     }

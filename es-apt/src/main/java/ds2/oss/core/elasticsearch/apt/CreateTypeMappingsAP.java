@@ -56,6 +56,15 @@ import ds2.oss.core.api.es.TypeMapping;
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class CreateTypeMappingsAP extends AbstractProcessor {
     
+    /**
+     * Searches the given annotation class on all given fields.
+     * 
+     * @param aClass
+     *            the annotation class to find
+     * @param fields
+     *            the fields of the class
+     * @return the first field that contains the given annotation, otherwise and by default null.
+     */
     private static Element searchFieldsFor(final Class<? extends Annotation> aClass,
         final List<? extends Element> fields) {
         for (Element el : fields) {

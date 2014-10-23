@@ -352,10 +352,22 @@ public class OptionEntity implements Option<Long, Object> {
         return ecm.getEncoded();
     }
     
+    /**
+     * Sets the encoded bytes.
+     * 
+     * @param b
+     *            the encoded content
+     */
     public void setEncoded(byte[] b) {
         ecm.setEncoded(b);
     }
     
+    /**
+     * Sets the init vector that was used to encrypt the data.
+     * 
+     * @param b
+     *            the init vector
+     */
     public void setInitVector(byte[] b) {
         ecm.setInitVector(b);
     }
