@@ -55,6 +55,9 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     @Any
     @Inject
     private Instance<ValueCodec<?>> codecs;
+    /**
+     * The encryption provider.
+     */
     @Inject
     private OptionValueEncrypterProvider encProvider;
     
@@ -104,7 +107,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     }
     
     @Override
-    public <V> OptionValueDto<Long, V> toDto(final OptionValueEntity e, final Class<V> valueClass) {
+    public <V> OptionValueDto<Long, V> toDto(final OptionValueEntity e) {
         if (e == null) {
             return null;
         }

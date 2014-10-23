@@ -34,8 +34,6 @@ public interface ValueTypeParser {
      * 
      * @param t
      *            the target type
-     * @param targetClass
-     *            the target class
      * @param thisVal
      *            the object to parse
      * @param onNull
@@ -70,5 +68,12 @@ public interface ValueTypeParser {
      */
     <V> OptionDto<Long, V> toDto(OptionEntity e, OptionIdentifier<V> ident);
     
-    <V> OptionValueDto<Long, V> toDto(OptionValueEntity foundEntity, Class<V> valueClass);
+    /**
+     * Converts a given option value entity into a dto.
+     * 
+     * @param foundEntity
+     *            the entity
+     * @return the dto
+     */
+    <V> OptionValueDto<Long, V> toDto(OptionValueEntity foundEntity);
 }

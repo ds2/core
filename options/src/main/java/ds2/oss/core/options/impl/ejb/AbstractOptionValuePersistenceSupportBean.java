@@ -145,9 +145,18 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         return getSecureFindById(em, OptionEntity.class, optionReference);
     }
     
-    public <V> OptionValueDto<Long, V> performGetById(EntityManager em, Long id, Class<V> c) {
+    /**
+     * Returns the option value with the given id.
+     * 
+     * @param em
+     *            the entity manager
+     * @param id
+     *            the id of the option value entity
+     * @return the option value dto
+     */
+    public <V> OptionValueDto<Long, V> performGetById(EntityManager em, Long id) {
         final OptionValueEntity foundEntity = getSecureFindById(em, OptionValueEntity.class, id);
-        return parser.toDto(foundEntity, c);
+        return parser.toDto(foundEntity);
     }
     
     /**
@@ -161,14 +170,13 @@ public abstract class AbstractOptionValuePersistenceSupportBean
      *            the access context
      * @return the found option value, or null if no value has been found
      */
-    public <V> OptionValue<Long, V> findBestOptionValue(EntityManager em, Long optionId, OptionIdentifier<V> ident,
+    public <V> OptionValue<Long, V> findBestOptionValue(EntityManager em, OptionIdentifier<V> ident,
         OptionValueContext ctx) {
         // find option
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<OptionValueEntity> cq = cb.createQuery(OptionValueEntity.class);
         Root<OptionValueEntity> optionValueRoot = cq.from(OptionValueEntity.class);
-        Root<OptionEntity> optionRoot = cq.from(OptionEntity.class);
-        // TODO sub query erstellen, welches die option abfragt!!
+        Root<OptionEntity> optionRoot = null;
         // Join<OptionValueEntity, OptionEntity> optionJoin = optionValueRoot.join(OptionValueEntity_.refOption);
         cq.select(optionValueRoot);
         // setup restrictions
@@ -233,7 +241,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
             }
         }
         OptionValueEntity foundOptionValue = getSecureSingle(query);
-        OptionValue<Long, V> rc = parser.toDto(foundOptionValue, null);
+        OptionValue<Long, V> rc = parser.toDto(foundOptionValue);
         return rc;
     }
     

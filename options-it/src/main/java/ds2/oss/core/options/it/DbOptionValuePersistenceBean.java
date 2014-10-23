@@ -63,7 +63,7 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
      */
     @Override
     public OptionValueDto<Long, ?> getById(Long e) {
-        return performGetById(em, e, null);
+        return performGetById(em, e);
     }
     
     @Override
@@ -80,7 +80,7 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
             ctx = new OptionValueContextDto();
         }
         // find option by ident
-        return findBestOptionValue(em, null, ident, ctx);
+        return findBestOptionValue(em, ident, ctx);
     }
     
 }
