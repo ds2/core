@@ -34,6 +34,8 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.environment.Clusters;
+import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.CreateOptionValueException;
 import ds2.oss.core.api.options.NumberedOptionStorageService;
@@ -249,6 +251,86 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
             to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsername2");
+    }
+    
+    @Test(dependsOnMethods = "testPersist")
+    public void testContextValueCheckLevel2() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue1 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging), null,
+                "myUsernameAStaging");
+        OptionValue<Long, String> optionValue2 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Live), null,
+                "myUsernameALive");
+        Assert.assertNotNull(optionValue1);
+        Assert.assertNotNull(optionValue2);
+        Assert.assertNotEquals(optionValue1, optionValue2);
+        to.approveOptionValue(optionValue1.getId());
+        to.approveOptionValue(optionValue2.getId());
+        OptionValue<Long, String> ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
+                RuntimeConfiguration.Staging));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsernameAStaging");
+        ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Live));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsernameALive");
+    }
+    
+    @Test(dependsOnMethods = "testPersist")
+    public void testContextValueCheckLevel3() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue1 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+                "test.domain"), null, "myUsernameAStagingTestDomain");
+        OptionValue<Long, String> optionValue2 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+                "myflower.domain"), null, "myUsernameAStagingFlowerDomain");
+        Assert.assertNotNull(optionValue1);
+        Assert.assertNotNull(optionValue2);
+        Assert.assertNotEquals(optionValue1, optionValue2);
+        to.approveOptionValue(optionValue1.getId());
+        to.approveOptionValue(optionValue2.getId());
+        OptionValue<Long, String> ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
+                RuntimeConfiguration.Staging, "test.domain"));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsernameAStagingTestDomain");
+        ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
+                RuntimeConfiguration.Staging, "myflower.domain"));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsernameAStagingFlowerDomain");
+    }
+    
+    /**
+     * Tests for level 4 queries on the options framework.
+     * 
+     * @throws CreateOptionValueException
+     *             if an error occurred
+     */
+    @Test(dependsOnMethods = "testPersist")
+    public void testContextValueCheckLevel4() throws CreateOptionValueException {
+        OptionValue<Long, String> optionValue1 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+                "test.domain", new ServerIdentifierDto("localhost")), null, "myUsernameAStagingTestDomainLocalhost");
+        OptionValue<Long, String> optionValue2 =
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+                "test.domain", new ServerIdentifierDto("staging.ds2")), null, "myUsernameAStagingTestDomainStaging");
+        Assert.assertNotNull(optionValue1);
+        Assert.assertNotNull(optionValue2);
+        Assert.assertNotEquals(optionValue1, optionValue2);
+        to.approveOptionValue(optionValue1.getId());
+        to.approveOptionValue(optionValue2.getId());
+        OptionValue<Long, String> ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
+                RuntimeConfiguration.Staging, "test.domain", new ServerIdentifierDto("localhost")));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsernameAStagingTestDomainLocalhost");
+        ov2 =
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
+                RuntimeConfiguration.Staging, "test.domain", new ServerIdentifierDto("staging.ds2")));
+        Assert.assertNotNull(ov2);
+        Assert.assertEquals(ov2.getValue(), "myUsernameAStagingTestDomainStaging");
     }
     
     /*

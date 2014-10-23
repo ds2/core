@@ -56,7 +56,7 @@ import ds2.oss.core.options.internal.ValueTypeConverter;
  */
 @Entity(name = "coreOptionValue")
 @Table(name = "core_optionvalues", uniqueConstraints = { @UniqueConstraint(columnNames = { "ref_option", "ctx_cluster",
-    "ctx_runtime_config", "ctx_req_domain" }) })
+    "ctx_runtime_config", "ctx_req_domain", "ctx_server_hostname", "ctx_server_domain", "ctx_server_address" }) })
 @TableGenerator(
     name = "tableGen2",
     initialValue = 1,
@@ -398,10 +398,22 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         ctx.setServer(server);
     }
     
+    /**
+     * Sets the start date.
+     * 
+     * @param validFrom
+     *            the start date
+     */
     public void setValidFrom(Date validFrom) {
         lca.setValidFrom(validFrom);
     }
     
+    /**
+     * Sets the end date.
+     * 
+     * @param validTo
+     *            the end date
+     */
     public void setValidTo(Date validTo) {
         lca.setValidTo(validTo);
     }
@@ -411,6 +423,12 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         return valueType;
     }
     
+    /**
+     * Sets the value type.
+     * 
+     * @param t
+     *            the value type
+     */
     public void setValueType(ValueType t) {
         valueType = t;
     }

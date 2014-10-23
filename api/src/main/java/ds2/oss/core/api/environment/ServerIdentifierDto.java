@@ -62,6 +62,21 @@ public class ServerIdentifierDto implements ServerIdentifier {
         addresses = new ArrayList<>();
     }
     
+    public ServerIdentifierDto(String hostname) {
+        this();
+        hostName = hostname;
+    }
+    
+    public ServerIdentifierDto(String hostname, String domain) {
+        this(hostname);
+        this.domain = domain;
+    }
+    
+    public ServerIdentifierDto(InetAddress ipAddr) {
+        this();
+        ipAddress = ipAddr.getHostAddress();
+    }
+    
     @Override
     public final List<InetAddress> getAllKnownAddresses() {
         return addresses;
@@ -161,34 +176,77 @@ public class ServerIdentifierDto implements ServerIdentifier {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         ServerIdentifierDto other = (ServerIdentifierDto) obj;
         if (addresses == null) {
-            if (other.addresses != null)
+            if (other.addresses != null) {
                 return false;
-        } else if (!addresses.equals(other.addresses))
+            }
+        } else if (!addresses.equals(other.addresses)) {
             return false;
+        }
         if (domain == null) {
-            if (other.domain != null)
+            if (other.domain != null) {
                 return false;
-        } else if (!domain.equals(other.domain))
+            }
+        } else if (!domain.equals(other.domain)) {
             return false;
+        }
         if (hostName == null) {
-            if (other.hostName != null)
+            if (other.hostName != null) {
                 return false;
-        } else if (!hostName.equals(other.hostName))
+            }
+        } else if (!hostName.equals(other.hostName)) {
             return false;
+        }
         if (ipAddress == null) {
-            if (other.ipAddress != null)
+            if (other.ipAddress != null) {
                 return false;
-        } else if (!ipAddress.equals(other.ipAddress))
+            }
+        } else if (!ipAddress.equals(other.ipAddress)) {
             return false;
+        }
         return true;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final int maxLen = 10;
+        StringBuilder builder = new StringBuilder();
+        builder.append("ServerIdentifierDto(");
+        if (addresses != null) {
+            builder.append("addresses=");
+            builder.append(addresses.subList(0, Math.min(addresses.size(), maxLen)));
+            builder.append(", ");
+        }
+        if (ipAddress != null) {
+            builder.append("ipAddress=");
+            builder.append(ipAddress);
+            builder.append(", ");
+        }
+        if (hostName != null) {
+            builder.append("hostName=");
+            builder.append(hostName);
+            builder.append(", ");
+        }
+        if (domain != null) {
+            builder.append("domain=");
+            builder.append(domain);
+        }
+        builder.append(")");
+        return builder.toString();
     }
     
 }

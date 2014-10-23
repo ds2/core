@@ -42,6 +42,9 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
+    /**
+     * Actions to perform at startup.
+     */
     @PostConstruct
     public void onClass() {
         LOG.info("Using a non-operational NumberedOptionsPersistenceSupport. Please reconfigure an alternative.");
@@ -49,8 +52,7 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
     
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.options.api.AdditionalOptionsPersistenceSupport#findOptionByIdentifier(ds2.oss
+     * @see ds2.oss.core.options.api.AdditionalOptionsPersistenceSupport#findOptionByIdentifier(ds2.oss
      * .core.api.options.OptionIdentifier)
      */
     @Override
@@ -61,8 +63,7 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
     
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.options.api.AdditionalOptionsPersistenceSupport#setOptionStage(ds2.oss.core.
+     * @see ds2.oss.core.options.api.AdditionalOptionsPersistenceSupport#setOptionStage(ds2.oss.core.
      * api.options.OptionIdentifier, ds2.oss.core.api.options.OptionStage)
      */
     @Override

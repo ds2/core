@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -226,9 +227,17 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         Date now = new Date();
         restrictions.add(getLcaPredicate(cb, optionValueRoot.get(OptionValueEntity_.lca), "date"));
         getContextPredicate(restrictions, cb, optionValueRoot.get(OptionValueEntity_.ctx), ctx);
-        // perform query to database
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
-        cq.orderBy(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.cluster)));
+        List<Order> orderByList = new ArrayList<Order>(4);
+        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.cluster)));
+        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx)
+            .get(OptionValueContextModule_.configuration)));
+        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(
+            OptionValueContextModule_.requestedDomain)));
+        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(
+            OptionValueContextModule_.serverHostname)));
+        cq.orderBy(orderByList.toArray(new Order[orderByList.size()]));
+        // perform query to database
         TypedQuery<OptionValueEntity> query = em.createQuery(cq);
         // query.setParameter("optionId", optionId);
         query.setParameter("applicationName", ident.getApplicationName());

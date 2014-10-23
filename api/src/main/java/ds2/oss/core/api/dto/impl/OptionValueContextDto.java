@@ -80,6 +80,53 @@ public class OptionValueContextDto implements OptionValueContext {
     }
     
     /**
+     * Inits the dto.
+     * 
+     * @param c
+     *            the cluster
+     * @param config
+     *            the runtime configuration
+     */
+    public OptionValueContextDto(final Cluster c, RuntimeConfiguration config) {
+        this(c);
+        configuration = config;
+    }
+    
+    /**
+     * Inits the dto.
+     * 
+     * @param c
+     *            the cluster
+     * @param config
+     *            the runtime configuration
+     * @param reqDomain
+     *            the requested domain
+     */
+    public OptionValueContextDto(final Cluster c, RuntimeConfiguration config, String reqDomain) {
+        this(c, config);
+        requestedDomain = reqDomain;
+    }
+    
+    /**
+     * 
+     * Inits the dto.
+     * 
+     * @param c
+     *            the cluster
+     * @param config
+     *            the runtime configuration
+     * @param reqDomain
+     *            the requested domain
+     * @param serverIdentifier
+     *            the server identifier
+     */
+    public OptionValueContextDto(final Cluster c, RuntimeConfiguration config, String reqDomain,
+        ServerIdentifier serverIdentifier) {
+        this(c, config, reqDomain);
+        server = serverIdentifier;
+    }
+    
+    /**
      * Sets the requested domain.
      * 
      * @param requestedDomain
@@ -176,30 +223,40 @@ public class OptionValueContextDto implements OptionValueContext {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         OptionValueContextDto other = (OptionValueContextDto) obj;
         if (cluster == null) {
-            if (other.cluster != null)
+            if (other.cluster != null) {
                 return false;
-        } else if (!cluster.equals(other.cluster))
+            }
+        } else if (!cluster.equals(other.cluster)) {
             return false;
-        if (configuration != other.configuration)
+        }
+        if (configuration != other.configuration) {
             return false;
+        }
         if (requestedDomain == null) {
-            if (other.requestedDomain != null)
+            if (other.requestedDomain != null) {
                 return false;
-        } else if (!requestedDomain.equals(other.requestedDomain))
+            }
+        } else if (!requestedDomain.equals(other.requestedDomain)) {
             return false;
+        }
         if (server == null) {
-            if (other.server != null)
+            if (other.server != null) {
                 return false;
-        } else if (!server.equals(other.server))
+            }
+        } else if (!server.equals(other.server)) {
             return false;
+        }
         return true;
     }
     
@@ -210,7 +267,7 @@ public class OptionValueContextDto implements OptionValueContext {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("OptionValueContextDto (requestedDomain=");
+        builder.append("OptionValueContextDto(requestedDomain=");
         builder.append(requestedDomain);
         builder.append(", server=");
         builder.append(server);

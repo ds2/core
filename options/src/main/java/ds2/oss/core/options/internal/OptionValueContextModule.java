@@ -140,6 +140,11 @@ public class OptionValueContextModule implements OptionValueContext {
         return toServerIdentifier();
     }
     
+    /**
+     * Returns the server identifier based on this given context.
+     * 
+     * @return the server identifier
+     */
     private ServerIdentifier toServerIdentifier() {
         ServerIdentifierDto rc = new ServerIdentifierDto();
         rc.setDomain(serverDomain);

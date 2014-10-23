@@ -48,6 +48,9 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
+    /**
+     * Actions to perform at startup.
+     */
     @PostConstruct
     public void onClass() {
         LOG.info("Using the non-operational NumberedOptionStorageService! Please choose an alternative.");
@@ -55,8 +58,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.api.options.OptionStorageService#getOptionByIdentifier(ds2.oss.core.api.options
+     * @see ds2.oss.core.api.options.OptionStorageService#getOptionByIdentifier(ds2.oss.core.api.options
      * .OptionIdentifier)
      */
     @Override
@@ -67,10 +69,8 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.api.options.OptionStorageService#createOptionValue(ds2.oss.core.api.options.
-     * OptionIdentifier, ds2.oss.core.api.options.OptionValueContext, java.util.Date,
-     * java.lang.Object)
+     * @see ds2.oss.core.api.options.OptionStorageService#createOptionValue(ds2.oss.core.api.options. OptionIdentifier,
+     * ds2.oss.core.api.options.OptionValueContext, java.util.Date, java.lang.Object)
      */
     @Override
     public <V> OptionValue<Long, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx,
@@ -81,8 +81,8 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     
     /*
      * (non-Javadoc)
-     * @see ds2.oss.core.api.options.OptionStorageService#createOption(ds2.oss.core.api.options.
-     * OptionIdentifier, java.lang.Object)
+     * @see ds2.oss.core.api.options.OptionStorageService#createOption(ds2.oss.core.api.options. OptionIdentifier,
+     * java.lang.Object)
      */
     @Override
     public <V> Option<Long, V> createOption(OptionIdentifier<V> ident, V val) {
@@ -92,8 +92,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     
     /*
      * (non-Javadoc)
-     * @see
-     * ds2.oss.core.api.options.OptionStorageService#findBestOptionValueByContext(ds2.oss.core.api
+     * @see ds2.oss.core.api.options.OptionStorageService#findBestOptionValueByContext(ds2.oss.core.api
      * .options.OptionIdentifier, ds2.oss.core.api.options.OptionValueContext)
      */
     @Override
@@ -114,28 +113,31 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     
     /*
      * (non-Javadoc)
-     * @see ds2.oss.core.api.options.OptionStorageService#setOptionStage(ds2.oss.core.api.options.
-     * OptionIdentifier, ds2.oss.core.api.options.OptionStage)
+     * @see ds2.oss.core.api.options.OptionStorageService#setOptionStage(ds2.oss.core.api.options. OptionIdentifier,
+     * ds2.oss.core.api.options.OptionStage)
      */
     @Override
     public <V> Option<Long, V> setOptionStage(OptionIdentifier<V> endpoint, OptionStage deleted) {
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-
+    
     @Override
     public <V> OptionValue<Long, V> getOptionValueById(Long id) throws OptionException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+                                                                       // Tools | Templates.
     }
-
+    
     @Override
     public void setOptionValueStage(Long id, OptionValueStage newStage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+                                                                       // Tools | Templates.
     }
-
+    
     @Override
     public void approveOptionValue(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+                                                                       // Tools | Templates.
     }
     
 }
