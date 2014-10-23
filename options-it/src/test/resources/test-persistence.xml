@@ -38,6 +38,7 @@
       <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
       <property name="eclipselink.logging.level" value="FINEST"/>
       <property name="eclipselink.logging.logger" value="ServerLogger"/>
+      <property name="eclipselink.application-location" value="target"/>
     </properties>
   </persistence-unit>
 </persistence>
