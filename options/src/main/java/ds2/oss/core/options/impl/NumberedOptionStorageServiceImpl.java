@@ -169,6 +169,10 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     @Override
     public <V> OptionValue<Long, V> findBestOptionValueByContext(final OptionIdentifier<V> ident,
         final OptionValueContext ctx) {
+        OptionDto<Long, V> foundOption = numberedPersistenceSupport.findOptionByIdentifier(ident);
+        if (foundOption == null) {
+            return null;
+        }
         return numOptionValDb.findBestOptionValue(ident, ctx);
     }
     

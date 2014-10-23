@@ -44,7 +44,7 @@ public interface ValueTypeParser {
      *            the target value type
      * @return the value
      */
-    <V> V parseValue(ValueType t, Class<V> targetClass, Object thisVal, V onNull);
+    <V> V parseValue(ValueType t, Object thisVal, V onNull);
     
     /**
      * Parses a given object into a string.

@@ -28,6 +28,11 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
     <class>ds2.oss.core.options.internal.OptionValueContextModule</class>
     <class>ds2.oss.core.options.internal.OptionValueStageConverter</class>
     <class>ds2.oss.core.options.internal.ValueTypeConverter</class>
+    <class>ds2.oss.core.base.impl.db.CreatedModifiedAwareModule</class>
+    <class>ds2.oss.core.base.impl.db.IvEncodedContentModule</class>
+    <class>ds2.oss.core.base.impl.db.LifeCycleAwareModule</class>
+    <class>ds2.oss.core.base.impl.db.ClusterConverter</class>
+    <class>ds2.oss.core.base.impl.db.RuntimeConfigurationConverter</class>
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
   </persistence-unit>
 </persistence>

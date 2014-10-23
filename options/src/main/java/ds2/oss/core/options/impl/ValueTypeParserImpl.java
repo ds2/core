@@ -59,7 +59,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     private OptionValueEncrypterProvider encProvider;
     
     @Override
-    public <V> V parseValue(final ValueType t, final Class<V> targetClass, final Object thisVal, final V onNull) {
+    public <V> V parseValue(final ValueType t, final Object thisVal, final V onNull) {
         if (thisVal == null) {
             return onNull;
         }
@@ -108,6 +108,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         if (e == null) {
             return null;
         }
+        LOG.debug("Converting given entity {}", e);
         final OptionValueDto<Long, V> rc = new OptionValueDto<Long, V>();
         rc.setApproverName(e.getApproverName());
         rc.setAuthorName(e.getAuthorName());
@@ -124,7 +125,8 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setStage(e.getStage());
         rc.setValidFrom(e.getValidFrom());
         rc.setValidTo(e.getValidTo());
-        rc.setValue(parseValue(e.getValueType(), valueClass, e.getValue(), null));
+        V value = parseValue(e.getValueType(), e.getValue(), null);
+        rc.setValue(value);
         rc.setValueType(e.getValueType());
         rc.setEncrypted(e.isEncrypted());
         if (e.isEncrypted()) {
@@ -132,7 +134,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
             OptionValueEncrypter<V> encrypter = encProvider.getForValueType(rc.getValueType());
             rc.setUnencryptedValue(encrypter.decrypt(rc));
         }
+        LOG.debug("value dto will be {}", rc);
         return rc;
     }
-    
 }

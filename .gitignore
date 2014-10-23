@@ -9,3 +9,8 @@ out
 *.orig
 *.log
 /xmpp/src/test/resources/google-authdata.properties
+login.properties
+options/src/main/java/ds2/oss/core/base/*
+options-it/src/main/java/ds2/oss/core/base/*
+options-it/src/main/java/ds2/oss/core/options/impl/entities/*
+options-it/src/main/java/ds2/oss/core/options/internal/*

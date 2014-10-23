@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
+import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.api.options.OptionValueStage;
@@ -35,6 +37,7 @@ import ds2.oss.core.base.impl.db.LifeCycleAwareModule_;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
+import ds2.oss.core.options.impl.entities.OptionEntity_;
 import ds2.oss.core.options.impl.entities.OptionValueEntity;
 import ds2.oss.core.options.impl.entities.OptionValueEntity_;
 import ds2.oss.core.options.internal.OptionValueContextModule;
@@ -158,21 +161,55 @@ public abstract class AbstractOptionValuePersistenceSupportBean
      *            the access context
      * @return the found option value, or null if no value has been found
      */
-    public <V> OptionValue<Long, V> findBestOptionValue(EntityManager em, OptionIdentifier<V> ident,
+    public <V> OptionValue<Long, V> findBestOptionValue(EntityManager em, Long optionId, OptionIdentifier<V> ident,
         OptionValueContext ctx) {
-        CriteriaBuilder qb = em.getCriteriaBuilder();
-        CriteriaQuery<OptionValueEntity> cq = qb.createQuery(OptionValueEntity.class);
+        // find option
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<OptionValueEntity> cq = cb.createQuery(OptionValueEntity.class);
         Root<OptionValueEntity> optionValueRoot = cq.from(OptionValueEntity.class);
+        Root<OptionEntity> optionRoot = cq.from(OptionEntity.class);
+        // TODO sub query erstellen, welches die option abfragt!!
+        // Join<OptionValueEntity, OptionEntity> optionJoin = optionValueRoot.join(OptionValueEntity_.refOption);
         cq.select(optionValueRoot);
         // setup restrictions
         List<Predicate> restrictions = new ArrayList<>();
-        restrictions.add(qb.equal(optionValueRoot.get("stage"), OptionValueStage.Live));
+        // restrictions.add(qb.equal(optionJoin.get(OptionEntity_.stage), OptionStage.Online));
+        // restrictions.add(qb.equal(optionJoin.get(OptionEntity_.optionName), qb.parameter(String.class,
+        // "optionName")));
+        // restrictions.add(qb.equal(optionJoin.get(OptionEntity_.applicationName),qb.parameter(String.class,
+        // "applicationName")));
+        
+        Subquery<OptionEntity> optionQuery = cq.subquery(OptionEntity.class);
+        optionRoot = optionQuery.from(OptionEntity.class);
+        optionQuery.select(optionRoot);
+        
+        List<Predicate> optionPredicates = new ArrayList<Predicate>();
+        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.applicationName),
+            cb.parameter(String.class, "applicationName")));
+        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.optionName),
+            cb.parameter(String.class, "optionName")));
+        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.stage), OptionStage.Online));
+        optionQuery.where(optionPredicates.toArray(new Predicate[optionPredicates.size()]));
+        /*
+         * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get(OptionEntity_.id),
+         * qb.parameter(Long.class, "optionId")));
+         */
+        /*
+         * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get("id"),
+         * qb.parameter(Long.class, "optionId")));
+         */
+        restrictions.add(cb.equal(optionValueRoot.get(OptionValueEntity_.refOption), optionQuery));
+        restrictions.add(cb.equal(optionValueRoot.get("stage"), OptionValueStage.Live));
         Date now = new Date();
-        restrictions.add(getLcaPredicate(qb, optionValueRoot.get(OptionValueEntity_.lca), "date"));
-        getContextPredicate(restrictions, qb, optionValueRoot.get(OptionValueEntity_.ctx), ctx);
+        restrictions.add(getLcaPredicate(cb, optionValueRoot.get(OptionValueEntity_.lca), "date"));
+        getContextPredicate(restrictions, cb, optionValueRoot.get(OptionValueEntity_.ctx), ctx);
         // perform query to database
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
+        cq.orderBy(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.cluster)));
         TypedQuery<OptionValueEntity> query = em.createQuery(cq);
+        // query.setParameter("optionId", optionId);
+        query.setParameter("applicationName", ident.getApplicationName());
+        query.setParameter("optionName", ident.getOptionName());
         query.setParameter("date", now);
         if (ctx.getCluster() != null) {
             query.setParameter(CLUSTER, ctx.getCluster());
@@ -272,7 +309,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     private static <V> Predicate getIsNullOrValue(CriteriaBuilder cb, Path<V> p, Class<V> c, String paramName) {
         Predicate isNull = cb.isNull(p);
         Predicate isValue = cb.equal(p, cb.parameter(c, paramName));
-        return cb.or(isNull, isValue);
+        return cb.or(isValue, isNull);
     }
     
     /**

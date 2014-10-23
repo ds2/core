@@ -79,7 +79,8 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
         if (ctx == null) {
             ctx = new OptionValueContextDto();
         }
-        return findBestOptionValue(em, ident, ctx);
+        // find option by ident
+        return findBestOptionValue(em, null, ident, ctx);
     }
     
 }

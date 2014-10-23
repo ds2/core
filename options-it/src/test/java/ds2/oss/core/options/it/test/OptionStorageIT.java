@@ -173,6 +173,7 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         Assert.assertNotNull(optionValue.getId());
         Assert.assertEquals(optionValue.getValue(), "pascal");
         Assert.assertEquals(optionValue.getStage(), OptionValueStage.Prepared);
+        LOG.info("OV is {}", optionValue);
     }
     
     /**
@@ -205,7 +206,6 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
             to.findBestOptionValueByContext(PW, new OptionValueContextDto(Clusters.A));
         Assert.assertNotNull(optionValue);
         Assert.assertNotNull(optionValue.getId());
-        Assert.assertNotNull(optionValue.getUnencryptedValue());
         Assert.assertTrue(optionValue.isEncrypted());
         Assert.assertEquals(optionValue.getUnencryptedValue(), "mysecret");
     }

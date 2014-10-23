@@ -45,7 +45,7 @@ public class IvEncodedContentModule implements IvEncodedContent {
     /**
      * The encoded data.
      */
-    @Column(name = "enc_data", columnDefinition = "BLOB")
+    @Column(name = "enc_data")
     @Lob
     private byte[] encoded;
     
