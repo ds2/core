@@ -19,6 +19,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.RuntimeConfiguration;
@@ -33,8 +34,9 @@ import ds2.oss.core.options.internal.OptionValueContextModule;
  * @version 0.3
  *
  */
-@Table(name = "core_ctx")
-@Entity
+@Table(name = "core_ctx", uniqueConstraints = { @UniqueConstraint(columnNames = { "ctx_cluster", "ctx_runtime_config",
+    "ctx_req_domain", "ctx_server_hostname" }) })
+@Entity(name = "coreOptionValueContext")
 public class OptionValueContextEntity implements OptionValueContext {
     /**
      * The svuid.
