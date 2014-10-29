@@ -31,6 +31,14 @@ public class UrlOptionIdentifier extends AbstractOptionIdentifier<URL> {
      */
     private static final long serialVersionUID = 5641998855769963068L;
     
+    /**
+     * Inits the class.
+     * 
+     * @param appName
+     *            the application name
+     * @param optName
+     *            the option name
+     */
     public UrlOptionIdentifier(final String appName, final String optName) {
         super(appName, optName, ValueType.URL);
     }
