@@ -16,8 +16,10 @@
 package ds2.oss.core.base.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,6 +98,23 @@ public final class Tools {
             rc = new URL(urlStr);
         } catch (final MalformedURLException e) {
             LOG.debug("Error when converting the given string into a url!", e);
+        }
+        return rc;
+    }
+    
+    /**
+     * To convert a given string into an inet address.
+     * 
+     * @param s
+     *            the host name or ip address
+     * @return the inet address, or null if an error occurred
+     */
+    public static InetAddress toInetAddress(String s) {
+        InetAddress rc = null;
+        try {
+            rc = InetAddress.getByName(s);
+        } catch (UnknownHostException e) {
+            LOG.debug("Unknown host: " + s, e);
         }
         return rc;
     }

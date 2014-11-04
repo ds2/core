@@ -60,7 +60,7 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
         LOG.debug("Starting local node.");
         n.start();
         client = n.client();
-        client.admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+        client.admin().cluster().prepareHealth().setWaitForYellowStatus().get();
         LOG.debug("Local index node is up");
     }
     
