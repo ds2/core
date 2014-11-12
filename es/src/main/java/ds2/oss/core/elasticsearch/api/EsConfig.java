@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.elasticsearch.api;
 
+import java.util.Properties;
+
 /**
  * Alternate way to provide a config to the ES node.
  * 
@@ -28,4 +30,11 @@ public interface EsConfig {
      * @return the cluster name
      */
     String getClusterName();
+    
+    /**
+     * This method may return additional configuration parameters for ES. Default is null.
+     * 
+     * @return any additional properties, or null by default.
+     */
+    Properties getProperties();
 }

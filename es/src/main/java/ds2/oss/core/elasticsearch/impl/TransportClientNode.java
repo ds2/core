@@ -44,19 +44,6 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
     @Inject
     private EsConfig config;
     
-    /**
-     * Actions to perform on init.
-     */
-    @PostConstruct
-    public void onInit() {
-        final ImmutableSettings.Builder sb =
-            ImmutableSettings.settingsBuilder().loadFromClasspath("/transportClientNode.yml");
-        sb.put("cluster.name", config.getClusterName());
-        sb.put("client", true);
-        final Settings setts = sb.build();
-        client = new TransportClient(setts).addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
-    }
-    
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -70,6 +57,22 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             lock.unlock();
             needsLock = false;
         }
+    }
+    
+    /**
+     * Actions to perform on init.
+     */
+    @PostConstruct
+    public void onInit() {
+        final ImmutableSettings.Builder sb =
+            ImmutableSettings.settingsBuilder().loadFromClasspath("/transportClientNode.yml");
+        sb.put("cluster.name", config.getClusterName());
+        sb.put("client", true);
+        if (config.getProperties() != null) {
+            sb.put(config.getProperties());
+        }
+        final Settings setts = sb.build();
+        client = new TransportClient(setts).addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
     }
     
     @Override

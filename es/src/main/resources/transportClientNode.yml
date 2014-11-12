@@ -2,3 +2,4 @@ cluster.name=elasticsearch
 client=true
 client.transport.sniff=true
 timeout=2m
+node.data=false

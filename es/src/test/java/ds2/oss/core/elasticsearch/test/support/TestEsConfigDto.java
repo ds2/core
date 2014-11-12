@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.elasticsearch.test.support;
 
+import java.util.Properties;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.elasticsearch.api.EsConfig;
@@ -31,5 +33,10 @@ public class TestEsConfigDto implements EsConfig {
     @Override
     public String getClusterName() {
         return "localCluster";
+    }
+    
+    @Override
+    public Properties getProperties() {
+        return null;
     }
 }
