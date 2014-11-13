@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.base.impl.db;
+package ds2.oss.core.dbtools.modules;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.StateAware;
-import ds2.oss.core.base.impl.NumericalEnumConverter;
+import ds2.oss.core.dbtools.converters.EntryStatesConverter;
 
 /**
  * Module for a state entry.
@@ -37,22 +37,17 @@ public class StateAwareModule implements StateAware {
      */
     private static final long serialVersionUID = 8358311170080845039L;
     /**
-     * The converter.
-     */
-    @Transient
-    private final NumericalEnumConverter<EntryStates> c;
-    /**
      * The state id.
      */
     @Column(name = "state_id", nullable = false, updatable = true)
-    private int stateId;
+    @Convert(converter = EntryStatesConverter.class)
+    private EntryStates entryState = EntryStates.PREPARED;
     
     /**
      * Inits the module.
      */
     public StateAwareModule() {
-        c = new NumericalEnumConverter<>(EntryStates.class);
-        stateId = EntryStates.PREPARED.getNumericalValue();
+        // stateId = EntryStates.PREPARED.getNumericalValue();
     }
     
     /*
@@ -61,7 +56,7 @@ public class StateAwareModule implements StateAware {
      */
     @Override
     public EntryStates getEntryState() {
-        return c.getEnumByReflection(stateId, "getById");
+        return entryState;
     }
     
     /**
@@ -74,7 +69,7 @@ public class StateAwareModule implements StateAware {
         if (s == null) {
             throw new IllegalArgumentException("Bad state value!");
         }
-        stateId = c.getValue(s);
+        entryState = s;
     }
     
 }

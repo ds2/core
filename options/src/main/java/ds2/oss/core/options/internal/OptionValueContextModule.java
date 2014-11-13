@@ -25,8 +25,8 @@ import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.options.OptionValueContext;
-import ds2.oss.core.base.impl.db.ClusterConverter;
-import ds2.oss.core.base.impl.db.RuntimeConfigurationConverter;
+import ds2.oss.core.dbtools.converters.ClusterConverter;
+import ds2.oss.core.dbtools.converters.RuntimeConfigurationConverter;
 
 /**
  * A module to support the context of an option value.
@@ -80,6 +80,46 @@ public class OptionValueContextModule implements OptionValueContext {
     @Convert(converter = ClusterConverter.class)
     private Cluster cluster;
     
+    @Override
+    public Cluster getCluster() {
+        return cluster;
+    }
+    
+    @Override
+    public RuntimeConfiguration getConfiguration() {
+        return configuration;
+    }
+    
+    @Override
+    public String getRequestedDomain() {
+        return requestedDomain;
+    }
+    
+    @Override
+    public ServerIdentifier getServer() {
+        return toServerIdentifier();
+    }
+    
+    /**
+     * Sets the cluster.
+     * 
+     * @param cluster
+     *            the cluster to set
+     */
+    public void setCluster(Cluster cluster) {
+        this.cluster = cluster;
+    }
+    
+    /**
+     * Sets the runtime config.
+     * 
+     * @param configuration
+     *            the configuration to set
+     */
+    public void setConfiguration(RuntimeConfiguration configuration) {
+        this.configuration = configuration;
+    }
+    
     /**
      * Sets the requested domain.
      * 
@@ -106,41 +146,6 @@ public class OptionValueContextModule implements OptionValueContext {
     }
     
     /**
-     * Sets the runtime config.
-     * 
-     * @param configuration
-     *            the configuration to set
-     */
-    public void setConfiguration(RuntimeConfiguration configuration) {
-        this.configuration = configuration;
-    }
-    
-    /**
-     * Sets the cluster.
-     * 
-     * @param cluster
-     *            the cluster to set
-     */
-    public void setCluster(Cluster cluster) {
-        this.cluster = cluster;
-    }
-    
-    @Override
-    public Cluster getCluster() {
-        return cluster;
-    }
-    
-    @Override
-    public RuntimeConfiguration getConfiguration() {
-        return configuration;
-    }
-    
-    @Override
-    public ServerIdentifier getServer() {
-        return toServerIdentifier();
-    }
-    
-    /**
      * Returns the server identifier based on this given context.
      * 
      * @return the server identifier
@@ -154,11 +159,6 @@ public class OptionValueContextModule implements OptionValueContext {
             return null;
         }
         return null;
-    }
-    
-    @Override
-    public String getRequestedDomain() {
-        return requestedDomain;
     }
     
 }

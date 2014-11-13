@@ -30,8 +30,8 @@ import ds2.oss.core.api.CreatedModifiedAware;
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.Persistable;
 import ds2.oss.core.api.StateAware;
-import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
-import ds2.oss.core.base.impl.db.StateAwareModule;
+import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
+import ds2.oss.core.dbtools.modules.StateAwareModule;
 
 /**
  * Dummy entity.
@@ -41,11 +41,7 @@ import ds2.oss.core.base.impl.db.StateAwareModule;
  */
 @Entity
 @Table(name = "core_dummy")
-public class DummyEntity
-    implements
-    Persistable<Long>,
-    StateAware,
-    CreatedModifiedAware {
+public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifiedAware {
     /**
      * The svuid.
      */
@@ -76,8 +72,8 @@ public class DummyEntity
     }
     
     @Override
-    public Long getId() {
-        return id;
+    public Date getCreated() {
+        return times.getCreated();
     }
     
     @Override
@@ -86,8 +82,8 @@ public class DummyEntity
     }
     
     @Override
-    public Date getCreated() {
-        return times.getCreated();
+    public Long getId() {
+        return id;
     }
     
     @Override

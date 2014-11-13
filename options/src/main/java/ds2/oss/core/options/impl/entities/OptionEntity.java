@@ -36,8 +36,8 @@ import javax.persistence.UniqueConstraint;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
-import ds2.oss.core.base.impl.db.IvEncodedContentModule;
+import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
+import ds2.oss.core.dbtools.modules.IvEncodedContentModule;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.internal.OptionStageConverter;
 import ds2.oss.core.options.internal.ValueTypeConverter;
@@ -137,18 +137,69 @@ public class OptionEntity implements Option<Long, Object> {
     }
     
     @Override
-    public Long getId() {
-        return id;
-    }
-    
-    @Override
     public String getApplicationName() {
         return applicationName;
     }
     
     @Override
+    public Date getCreated() {
+        return cma.getCreated();
+    }
+    
+    @Override
+    public Object getDecryptedValue() {
+        return null;
+    }
+    
+    @Override
+    public Object getDefaultValue() {
+        return defaultValue;
+    }
+    
+    @Override
+    public String getDescription() {
+        return description;
+    }
+    
+    @Override
+    public byte[] getEncoded() {
+        if (ecm == null) {
+            ecm = new IvEncodedContentModule();
+        }
+        return ecm.getEncoded();
+    }
+    
+    @Override
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public byte[] getInitVector() {
+        if (ecm == null) {
+            ecm = new IvEncodedContentModule();
+        }
+        return ecm.getInitVector();
+    }
+    
+    @Override
+    public Date getModified() {
+        return cma.getModified();
+    }
+    
+    @Override
+    public String getModifierName() {
+        return modifierName;
+    }
+    
+    @Override
     public String getOptionName() {
         return optionName;
+    }
+    
+    @Override
+    public OptionStage getStage() {
+        return stage;
     }
     
     @Override
@@ -159,41 +210,6 @@ public class OptionEntity implements Option<Long, Object> {
     @Override
     public boolean isEncrypted() {
         return encrypted;
-    }
-    
-    @Override
-    public Date getCreated() {
-        return cma.getCreated();
-    }
-    
-    @Override
-    public Date getModified() {
-        return cma.getModified();
-    }
-    
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
-    }
-    
-    @Override
-    public String getModifierName() {
-        return modifierName;
-    }
-    
-    @Override
-    public OptionStage getStage() {
-        return stage;
-    }
-    
-    /**
-     * Sets the stage value.
-     * 
-     * @param s
-     *            the stage value
-     */
-    public void setStage(final OptionStage s) {
-        stage = s;
     }
     
     /**
@@ -207,33 +223,13 @@ public class OptionEntity implements Option<Long, Object> {
     }
     
     /**
-     * Sets the option name.
+     * Sets another creation date.
      * 
-     * @param optionName1
-     *            the optionName to set
+     * @param created
+     *            the creation date.
      */
-    public void setOptionName(final String optionName1) {
-        optionName = optionName1;
-    }
-    
-    /**
-     * Sets the value type.
-     * 
-     * @param valueType1
-     *            the valueType to set
-     */
-    public void setValueType(final ValueType valueType1) {
-        valueType = valueType1;
-    }
-    
-    /**
-     * Sets the encrypted flag.
-     * 
-     * @param encrypted1
-     *            the encrypted to set
-     */
-    public void setEncrypted(final boolean encrypted1) {
-        encrypted = encrypted1;
+    public void setCreated(final Date created) {
+        cma.setCreated(created);
     }
     
     /**
@@ -247,23 +243,43 @@ public class OptionEntity implements Option<Long, Object> {
     }
     
     /**
-     * Sets the modifier.
+     * Sets a description.
      * 
-     * @param modifierName
-     *            the modifierName to set
+     * @param description
+     *            a description.
      */
-    public void setModifierName(final String modifierName) {
-        this.modifierName = modifierName;
+    public void setDescription(final String description) {
+        this.description = description;
     }
     
     /**
-     * Sets another creation date.
+     * Sets the encoded bytes.
      * 
-     * @param created
-     *            the creation date.
+     * @param b
+     *            the encoded content
      */
-    public void setCreated(final Date created) {
-        cma.setCreated(created);
+    public void setEncoded(byte[] b) {
+        ecm.setEncoded(b);
+    }
+    
+    /**
+     * Sets the encrypted flag.
+     * 
+     * @param encrypted1
+     *            the encrypted to set
+     */
+    public void setEncrypted(final boolean encrypted1) {
+        encrypted = encrypted1;
+    }
+    
+    /**
+     * Sets the init vector that was used to encrypt the data.
+     * 
+     * @param b
+     *            the init vector
+     */
+    public void setInitVector(byte[] b) {
+        ecm.setInitVector(b);
     }
     
     /**
@@ -277,10 +293,43 @@ public class OptionEntity implements Option<Long, Object> {
     }
     
     /**
-     * Updates the modified date.
+     * Sets the modifier.
+     * 
+     * @param modifierName
+     *            the modifierName to set
      */
-    public void touchModified() {
-        cma.touchModified();
+    public void setModifierName(final String modifierName) {
+        this.modifierName = modifierName;
+    }
+    
+    /**
+     * Sets the option name.
+     * 
+     * @param optionName1
+     *            the optionName to set
+     */
+    public void setOptionName(final String optionName1) {
+        optionName = optionName1;
+    }
+    
+    /**
+     * Sets the stage value.
+     * 
+     * @param s
+     *            the stage value
+     */
+    public void setStage(final OptionStage s) {
+        stage = s;
+    }
+    
+    /**
+     * Sets the value type.
+     * 
+     * @param valueType1
+     *            the valueType to set
+     */
+    public void setValueType(final ValueType valueType1) {
+        valueType = valueType1;
     }
     
     /*
@@ -316,60 +365,11 @@ public class OptionEntity implements Option<Long, Object> {
         return builder.toString();
     }
     
-    @Override
-    public String getDescription() {
-        return description;
-    }
-    
     /**
-     * Sets a description.
-     * 
-     * @param description
-     *            a description.
+     * Updates the modified date.
      */
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-    
-    @Override
-    public Object getDecryptedValue() {
-        return null;
-    }
-    
-    @Override
-    public byte[] getInitVector() {
-        if (ecm == null) {
-            ecm = new IvEncodedContentModule();
-        }
-        return ecm.getInitVector();
-    }
-    
-    @Override
-    public byte[] getEncoded() {
-        if (ecm == null) {
-            ecm = new IvEncodedContentModule();
-        }
-        return ecm.getEncoded();
-    }
-    
-    /**
-     * Sets the encoded bytes.
-     * 
-     * @param b
-     *            the encoded content
-     */
-    public void setEncoded(byte[] b) {
-        ecm.setEncoded(b);
-    }
-    
-    /**
-     * Sets the init vector that was used to encrypt the data.
-     * 
-     * @param b
-     *            the init vector
-     */
-    public void setInitVector(byte[] b) {
-        ecm.setInitVector(b);
+    public void touchModified() {
+        cma.touchModified();
     }
     
 }

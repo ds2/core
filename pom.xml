@@ -70,6 +70,7 @@
     <module>test-ear</module>
     <module>es-apt</module>
     <module>testutils</module>
+    <module>ds2-oss-core-dbtools</module>
   </modules>
   <profiles>
     <profile>

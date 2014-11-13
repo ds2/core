@@ -86,6 +86,11 @@
       <version>4.3.6.Final</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-dbtools</artifactId>
+      <version>0.3-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

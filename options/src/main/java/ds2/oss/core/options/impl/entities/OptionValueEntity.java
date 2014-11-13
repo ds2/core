@@ -40,9 +40,9 @@ import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.api.options.ValueType;
-import ds2.oss.core.base.impl.db.CreatedModifiedAwareModule;
-import ds2.oss.core.base.impl.db.IvEncodedContentModule;
-import ds2.oss.core.base.impl.db.LifeCycleAwareModule;
+import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
+import ds2.oss.core.dbtools.modules.IvEncodedContentModule;
+import ds2.oss.core.dbtools.modules.LifeCycleAwareModule;
 import ds2.oss.core.options.internal.OptionValueContextModule;
 import ds2.oss.core.options.internal.OptionValueStageConverter;
 import ds2.oss.core.options.internal.ValueTypeConverter;
@@ -251,6 +251,16 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         return value;
     }
     
+    @Override
+    public ValueType getValueType() {
+        return valueType;
+    }
+    
+    @Override
+    public boolean isEncrypted() {
+        return ecm.getEncoded() != null;
+    }
+    
     /**
      * Sets the approver name.
      *
@@ -269,73 +279,6 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
      */
     public void setAuthorName(final String authorName) {
         this.authorName = authorName;
-    }
-    
-    /**
-     * Sets a new id.
-     *
-     * @param id
-     *            the id to set
-     */
-    public void setId(final Long id) {
-        this.id = id;
-    }
-    
-    /**
-     * Sets a new referenced option.
-     *
-     * @param refOption
-     *            the refOption to set
-     */
-    public void setRefOption(final Option<Long, ?> refOption) {
-        this.refOption = refOption;
-    }
-    
-    /**
-     * Sets a new stage value.
-     *
-     * @param stage
-     *            the stage to set
-     */
-    public void setStage(final OptionValueStage stage) {
-        this.stage = stage;
-    }
-    
-    /**
-     * Sets a new value.
-     *
-     * @param value
-     *            the value to set
-     */
-    public void setValue(final String value) {
-        this.value = value;
-    }
-    
-    /**
-     * Sets the creation date.
-     * 
-     * @param date
-     *            the creation date
-     */
-    public void setCreated(Date date) {
-        cma.setCreated(date);
-    }
-    
-    /**
-     * Sets the modified date.
-     * 
-     * @param date
-     *            the modified date
-     */
-    public void setModified(Date date) {
-        cma.setModified(date);
-    }
-    
-    /**
-     * Updates the modified date.
-     */
-    public void touchModified() {
-        cma.touchModified();
     }
     
     /**
@@ -359,6 +302,16 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     }
     
     /**
+     * Sets the creation date.
+     * 
+     * @param date
+     *            the creation date
+     */
+    public void setCreated(Date date) {
+        cma.setCreated(date);
+    }
+    
+    /**
      * Sets the encoded content.
      * 
      * @param encoded
@@ -369,6 +322,16 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     }
     
     /**
+     * Sets a new id.
+     *
+     * @param id
+     *            the id to set
+     */
+    public void setId(final Long id) {
+        this.id = id;
+    }
+    
+    /**
      * Sets the init vector.
      * 
      * @param initVector
@@ -376,6 +339,26 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
      */
     public void setInitVector(byte[] initVector) {
         ecm.setInitVector(initVector);
+    }
+    
+    /**
+     * Sets the modified date.
+     * 
+     * @param date
+     *            the modified date
+     */
+    public void setModified(Date date) {
+        cma.setModified(date);
+    }
+    
+    /**
+     * Sets a new referenced option.
+     *
+     * @param refOption
+     *            the refOption to set
+     */
+    public void setRefOption(final Option<Long, ?> refOption) {
+        this.refOption = refOption;
     }
     
     /**
@@ -399,6 +382,16 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     }
     
     /**
+     * Sets a new stage value.
+     *
+     * @param stage
+     *            the stage to set
+     */
+    public void setStage(final OptionValueStage stage) {
+        this.stage = stage;
+    }
+    
+    /**
      * Sets the start date.
      * 
      * @param validFrom
@@ -418,9 +411,14 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         lca.setValidTo(validTo);
     }
     
-    @Override
-    public ValueType getValueType() {
-        return valueType;
+    /**
+     * Sets a new value.
+     *
+     * @param value
+     *            the value to set
+     */
+    public void setValue(final String value) {
+        this.value = value;
     }
     
     /**
@@ -433,9 +431,11 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
         valueType = t;
     }
     
-    @Override
-    public boolean isEncrypted() {
-        return ecm.getEncoded() != null;
+    /**
+     * Updates the modified date.
+     */
+    public void touchModified() {
+        cma.touchModified();
     }
     
 }

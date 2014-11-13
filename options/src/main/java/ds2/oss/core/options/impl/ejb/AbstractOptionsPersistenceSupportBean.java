@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.base.impl.db.AbstractPersistenceSupportImpl;
+import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
