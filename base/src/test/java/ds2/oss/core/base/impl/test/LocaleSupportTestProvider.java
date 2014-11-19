@@ -17,12 +17,13 @@ package ds2.oss.core.base.impl.test;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import ds2.oss.core.api.LocaleSupport;
 import ds2.oss.core.api.annotations.LocaleData;
-import java.util.TimeZone;
 
 /**
  * A dummy provider.
@@ -30,42 +31,45 @@ import java.util.TimeZone;
  * @version 0.3
  * @author dstrauss
  */
+@ApplicationScoped
 public class LocaleSupportTestProvider {
-
+    
     /**
      * The injection.
      */
     @Inject
     @LocaleData(baseName = "ds2/oss/core/base/impl/test/LocTest")
     private LocaleSupport localeSupport;
-
+    
+    public String formatCurrency(final Locale locale, final double val) {
+        return localeSupport.formatCurrency(locale, val);
+    }
+    
+    public String formatCurrencyNumber(final Locale locale, final double val) {
+        return localeSupport.formatCurrencyNumber(locale, val);
+    }
+    
+    public String formatDate(final Date date, final Locale locale, TimeZone tz, final int dateStyle) {
+        return localeSupport.formatDate(date, locale, tz, dateStyle);
+    }
+    
+    public String formatDateTime(final Date date, final Locale locale, TimeZone tz, final int dateStyle,
+        final int timeStyle) {
+        return localeSupport.formatDateTime(date, locale, tz, dateStyle, timeStyle);
+    }
+    
     /**
      * The hello method.
      *
-     * @param locale the locale
+     * @param locale
+     *            the locale
      * @return the resolved i18n string.
      */
     public String getHello(final Locale locale) {
         return localeSupport.resolve("hello", locale);
     }
-
+    
     public String getHelloParam(final Locale locale, final String name) {
         return localeSupport.resolve("helloParam", locale, name);
-    }
-
-    public String formatCurrency(final Locale locale, final double val) {
-        return localeSupport.formatCurrency(locale, val);
-    }
-
-    public String formatCurrencyNumber(final Locale locale, final double val) {
-        return localeSupport.formatCurrencyNumber(locale, val);
-    }
-
-    public String formatDate(final Date date, final Locale locale, TimeZone tz, final int dateStyle) {
-        return localeSupport.formatDate(date, locale, tz, dateStyle);
-    }
-
-    public String formatDateTime(final Date date, final Locale locale, TimeZone tz, final int dateStyle, final int timeStyle) {
-        return localeSupport.formatDateTime(date, locale, tz, dateStyle, timeStyle);
     }
 }

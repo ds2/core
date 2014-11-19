@@ -31,35 +31,20 @@ import org.slf4j.LoggerFactory;
  * @version 0.3
  */
 public final class Tools {
-    /**
-     * A logger.
-     */
-    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     /**
-     * May create an instance of the class.
-     */
-    private Tools() {
-        // nothing special to do
-    }
-    
-    /**
-     * Converts a given object to long.
+     * To convert a given string into an inet address.
      * 
-     * @param o
-     *            the object
-     * @param def
-     *            the default value, of object is null
-     * @return the default value, or the converted value
+     * @param s
+     *            the host name or ip address
+     * @return the inet address, or null if an error occurred
      */
-    public static long toLong(final Object o, final long def) {
-        long rc = def;
-        if (o != null) {
-            try {
-                rc = Long.parseLong(o.toString());
-            } catch (final NumberFormatException e) {
-                LOG.debug("Error when converting the given object to long!", e);
-            }
+    public static InetAddress toInetAddress(String s) {
+        InetAddress rc = null;
+        try {
+            rc = InetAddress.getByName(s);
+        } catch (UnknownHostException e) {
+            LOG.debug("Unknown host: " + s, e);
         }
         return rc;
     }
@@ -86,6 +71,27 @@ public final class Tools {
     }
     
     /**
+     * Converts a given object to long.
+     * 
+     * @param o
+     *            the object
+     * @param def
+     *            the default value, of object is null
+     * @return the default value, or the converted value
+     */
+    public static long toLong(final Object o, final long def) {
+        long rc = def;
+        if (o != null) {
+            try {
+                rc = Long.parseLong(o.toString());
+            } catch (final NumberFormatException e) {
+                LOG.debug("Error when converting the given object to long!", e);
+            }
+        }
+        return rc;
+    }
+    
+    /**
      * Converts a given string into a url.
      * 
      * @param urlStr
@@ -103,19 +109,14 @@ public final class Tools {
     }
     
     /**
-     * To convert a given string into an inet address.
-     * 
-     * @param s
-     *            the host name or ip address
-     * @return the inet address, or null if an error occurred
+     * A logger.
      */
-    public static InetAddress toInetAddress(String s) {
-        InetAddress rc = null;
-        try {
-            rc = InetAddress.getByName(s);
-        } catch (UnknownHostException e) {
-            LOG.debug("Unknown host: " + s, e);
-        }
-        return rc;
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
+    /**
+     * May create an instance of the class.
+     */
+    private Tools() {
+        // nothing special to do
     }
 }

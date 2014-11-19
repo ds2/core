@@ -16,6 +16,9 @@
 package ds2.oss.core.elasticsearch.api;
 
 import java.util.Properties;
+import java.util.Set;
+
+import org.elasticsearch.common.transport.TransportAddress;
 
 /**
  * Alternate way to provide a config to the ES node.
@@ -37,4 +40,11 @@ public interface EsConfig {
      * @return any additional properties, or null by default.
      */
     Properties getProperties();
+    
+    /**
+     * Returns the transport addresses to connect to.
+     * 
+     * @return the transport addresses
+     */
+    Set<TransportAddress> getTransportAddresses();
 }

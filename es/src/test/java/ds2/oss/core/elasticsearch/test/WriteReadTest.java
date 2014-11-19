@@ -79,6 +79,11 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         uc.addMapping(INDEXNAME, newsCodec.getIndexTypeName(), newsCodec.getMapping());
     }
     
+    @AfterClass
+    public void onEndClass() {
+        esSvc.deleteIndexes(INDEXNAME);
+    }
+    
     @Test
     public void rwTest1() {
         final MyNews news1 = new MyNews();
@@ -90,7 +95,7 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         final SearchRequestBuilder searchQuery =
             esNode.get().prepareSearch(INDEXNAME).setTypes(newsCodec.getIndexTypeName())
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
-                .setFilter(FilterBuilders.termFilter("author", "baumkuchen"));
+                .setPostFilter(FilterBuilders.termFilter("author", "baumkuchen"));
         final SearchResponse resp = searchQuery.execute().actionGet();
         final long count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
@@ -105,7 +110,7 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         final SearchRequestBuilder searchQuery =
             esNode.get().prepareSearch(INDEXNAME).setTypes(countryCodec.getIndexTypeName())
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
-                .setFilter(FilterBuilders.termFilter("name", "germany"));
+                .setPostFilter(FilterBuilders.termFilter("name", "germany"));
         SearchResponse resp = searchQuery.execute().actionGet();
         long count = resp.getHits().totalHits();
         // is async -> will not be available NOW
@@ -114,10 +119,5 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         resp = searchQuery.execute().actionGet();
         count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
-    }
-    
-    @AfterClass
-    public void onEndClass() {
-        esSvc.deleteIndexes(INDEXNAME);
     }
 }

@@ -15,14 +15,13 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
-import java.util.Map;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.action.deletebyquery.DeleteByQueryResponse;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
+import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,19 +48,25 @@ public class UseCases {
     private ElasticSearchNode esNode;
     
     /**
-     * Deletes a type from the index.
+     * Adds a mapping for a given type.
      * 
-     * @param index
+     * @param indexName
      *            the index name
-     * @param type
+     * @param typeName
      *            the type name
+     * @param json
+     *            the json containing the mapping data
      */
-    public void deleteEntriesOfType(final String index, final String type) {
-        final DeleteByQueryResponse response =
-            esNode.get().prepareDeleteByQuery(index)
-                .setQuery(QueryBuilders.termQuery("_type", type)).execute()
+    public void addMapping(final String indexName, final String typeName, final String json) {
+        LOG.info("Checking mappings");
+        final ClusterStateResponse resp =
+            esNode.get().admin().cluster().prepareState().setIndices(indexName).execute().actionGet();
+        final ImmutableOpenMap<String, MappingMetaData> mappings =
+            resp.getState().getMetaData().index(indexName).mappings();
+        if (!mappings.containsKey(typeName)) {
+            esNode.get().admin().indices().preparePutMapping(indexName).setType(typeName).setSource(json).execute()
                 .actionGet();
-        LOG.info("Result: {}", response);
+        }
         esNode.waitForClusterYellowState();
     }
     
@@ -75,11 +80,9 @@ public class UseCases {
      */
     public boolean createIndex(final String indexName) {
         final boolean indexExists =
-            esNode.get().admin().indices().prepareExists(indexName).execute()
-                .actionGet().isExists();
+            esNode.get().admin().indices().prepareExists(indexName).execute().actionGet().isExists();
         if (!indexExists) {
-            esNode.get().admin().indices().prepareCreate(indexName).execute()
-                .actionGet();
+            esNode.get().admin().indices().prepareCreate(indexName).execute().actionGet();
             esNode.waitForClusterYellowState();
             return true;
         }
@@ -88,27 +91,18 @@ public class UseCases {
     }
     
     /**
-     * Adds a mapping for a given type.
+     * Deletes a type from the index.
      * 
-     * @param indexName
+     * @param index
      *            the index name
-     * @param typeName
+     * @param type
      *            the type name
-     * @param json
-     *            the json containing the mapping data
      */
-    public void addMapping(final String indexName, final String typeName,
-        final String json) {
-        LOG.info("Checking mappings");
-        final ClusterStateResponse resp =
-            esNode.get().admin().cluster().prepareState()
-                .setFilterIndices(indexName).execute().actionGet();
-        final Map<String, MappingMetaData> mappings =
-            resp.getState().getMetaData().index(indexName).mappings();
-        if (!mappings.containsKey(typeName)) {
-            esNode.get().admin().indices().preparePutMapping(indexName)
-                .setType(typeName).setSource(json).execute().actionGet();
-        }
+    public void deleteEntriesOfType(final String index, final String type) {
+        final DeleteByQueryResponse response =
+            esNode.get().prepareDeleteByQuery(index).setQuery(QueryBuilders.termQuery("_type", type)).execute()
+                .actionGet();
+        LOG.info("Result: {}", response);
         esNode.waitForClusterYellowState();
     }
 }

@@ -16,7 +16,7 @@
 package ds2.oss.core.elasticsearch.impl;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
 
 import org.elasticsearch.client.Client;
@@ -33,20 +33,13 @@ import org.slf4j.LoggerFactory;
  * @author dstrauss
  * @version 0.2
  */
-@ApplicationScoped
+@Dependent
 @Alternative
 public class LocalNodeImpl extends AbstractNodeImpl<Client> {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(LocalNodeImpl.class);
-    
-    /**
-     * Nothing to do.
-     */
-    public LocalNodeImpl() {
-        // nothing special to do
-    }
     
     /**
      * Actions to perform at start.

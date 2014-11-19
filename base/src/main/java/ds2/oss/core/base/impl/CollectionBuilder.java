@@ -16,6 +16,7 @@
 package ds2.oss.core.base.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,18 +35,64 @@ import org.slf4j.LoggerFactory;
  */
 public final class CollectionBuilder<E extends Collection<Z>, Z> implements CollectionBuilderContract<E, Z> {
     /**
+     * Creates a new collection builder, using the given collection class as reference.
+     * 
+     * @param c
+     *            the collection class to use
+     * @return the collection builder
+     */
+    @Deprecated
+    public static <E extends Collection<Z>, Z> CollectionBuilderContract<E, Z> create(final Class<E> c) {
+        CollectionBuilder<E, Z> rc = new CollectionBuilder<>(c);
+        return rc;
+    }
+    
+    /**
+     * Creates a new collection builder, using the given collection implementation as backing
+     * collection.
+     * 
+     * @param c
+     *            the backing collection to use
+     * @return the collection builder
+     */
+    public static <E extends Collection<Z>, Z> CollectionBuilderContract<E, Z> create(final E c) {
+        CollectionBuilder<E, Z> rc = new CollectionBuilder<>(c);
+        return rc;
+    }
+    
+    /**
+     * Returns a new collection builder, using an array list as backing collection.
+     * 
+     * @param c
+     *            the item class type
+     * @return the collection builder
+     */
+    public static <Z> CollectionBuilderContract<List<Z>, Z> newList(Class<Z> c) {
+        CollectionBuilder<List<Z>, Z> rc = new CollectionBuilder<>(new ArrayList<Z>());
+        return rc;
+    }
+    
+    /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
     /**
      * The collection impl.
      */
     private E collection;
+    
     /**
      * Flag to indicate to allow adding null values.
      */
     private boolean allowNull = true;
     
+    /**
+     * Inits the collection builder.
+     * 
+     * @param colClass
+     *            the collection class to use
+     */
     private CollectionBuilder(final Class<E> colClass) {
         try {
             collection = colClass.newInstance();
@@ -56,29 +103,23 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
         }
     }
     
+    /**
+     * Inits the collection builder, using the given collection implementation as backing
+     * collection.
+     * 
+     * @param col
+     *            the backing collection to use
+     */
     private CollectionBuilder(final E col) {
+        if (col == null) {
+            throw new IllegalArgumentException("No collection implementation given to use!");
+        }
         collection = col;
-    }
-    
-    public static <E extends Collection<Z>, Z> CollectionBuilderContract<E, Z> create(final Class<E> c) {
-        CollectionBuilder rc = new CollectionBuilder(c);
-        return rc;
-    }
-    
-    public static <E extends Collection<Z>, Z> CollectionBuilderContract<E, Z> create(final E c) {
-        CollectionBuilder rc = new CollectionBuilder(c);
-        return rc;
-    }
-    
-    @Override
-    public CollectionBuilderContract<E, Z> allowNull(final boolean b) {
-        this.allowNull = b;
-        return this;
     }
     
     @Override
     public CollectionBuilderContract<E, Z> add(final Z z) {
-        if (allowNull || (z != null)) {
+        if (allowNull || z != null) {
             collection.add(z);
         }
         return this;
@@ -97,13 +138,19 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
     }
     
     @Override
-    public CollectionBuilderContract<E, Z> remove(final Z z) {
-        collection.remove(z);
+    public CollectionBuilderContract<E, Z> allowNull(final boolean b) {
+        this.allowNull = b;
         return this;
     }
     
     @Override
     public E build() {
         return collection;
+    }
+    
+    @Override
+    public CollectionBuilderContract<E, Z> remove(final Z z) {
+        collection.remove(z);
+        return this;
     }
 }

@@ -65,6 +65,12 @@
       <scope>test</scope>
       <classifier>tests</classifier>
     </dependency>
+    <dependency>
+        <groupId>org.jboss</groupId>
+        <artifactId>jandex</artifactId>
+        <version>1.2.2.Final</version>
+        <scope>test</scope>
+      </dependency>
   </dependencies>
   <description>The ElasticSearch implementations to deal with ES and core.</description>
   <!-- 

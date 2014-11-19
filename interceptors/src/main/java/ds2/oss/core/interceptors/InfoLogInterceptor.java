@@ -35,50 +35,61 @@ import org.slf4j.LoggerFactory;
 @LogCallings
 public class InfoLogInterceptor {
     /**
-     * A logger.
+     * Creates an exit message.
+     * 
+     * @param ic
+     *            the invocation context
+     * @param rc
+     *            the result object
+     * @return an exit message
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(InfoLogInterceptor.class);
-    /**
-     * A map with loggers.
-     */
-    private static Map<String, Logger> loggerMap = new HashMap<>();
-    
-    /**
-     * Inits the interceptor.
-     */
-    public InfoLogInterceptor() {
+    private static String createExitHeader(final InvocationContext ic, final Object rc) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("exiting method ");
+        sb.append(ic.getTarget().getClass().getName());
+        sb.append(".");
+        sb.append(ic.getMethod().getName());
+        sb.append("() with rc=");
+        sb.append(rc);
+        return sb.toString();
     }
     
     /**
-     * Logs a given call to/from a method.
+     * Returns the header string containing the ic target, method name and parameter values.
      * 
      * @param ic
-     *            the invocation context.
-     * @return the result of the invocation context.
-     * @throws Exception
-     *             the exception that is possibly thrown by the invocation
-     *             context.
+     *            the invocation context
+     * @return a header string
      */
-    @SuppressWarnings("static-method")
-    @AroundInvoke
-    public final Object intercept(final InvocationContext ic) throws Exception {
-        final Logger log = getLoggerForTarget(ic);
-        if (log.isInfoEnabled()) {
-            log.info(createMethodHeader(ic));
+    private static String createMethodHeader(final InvocationContext ic) {
+        if (ic == null) {
+            return "";
         }
-        Object rc = null;
-        try {
-            rc = ic.proceed();
-        } catch (final Exception e) {
-            log.info("An error occurred: {}", e.getLocalizedMessage());
-            throw e;
-        } finally {
-            if (log.isInfoEnabled()) {
-                log.info(createExitHeader(ic, rc));
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Entering method ");
+        sb.append(ic.getTarget().getClass().getName());
+        sb.append(".");
+        sb.append(ic.getMethod().getName());
+        sb.append("(");
+        final Object[] params = ic.getParameters();
+        boolean isFirst = true;
+        if (params != null && params.length > 0) {
+            
+            for (Object param : params) {
+                if (!isFirst) {
+                    sb.append(", ");
+                }
+                sb.append(param);
+                if (param != null) {
+                    sb.append(" [");
+                    sb.append(param.getClass().getName());
+                    sb.append("]");
+                }
+                isFirst = false;
             }
         }
-        return rc;
+        sb.append(")");
+        return sb.toString();
     }
     
     /**
@@ -102,62 +113,42 @@ public class InfoLogInterceptor {
     }
     
     /**
-     * Creates an exit message.
-     * 
-     * @param ic
-     *            the invocation context
-     * @param rc
-     *            the result object
-     * @return an exit message
+     * A logger.
      */
-    private static String createExitHeader(final InvocationContext ic,
-        final Object rc) {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("exiting method ");
-        sb.append(ic.getTarget().getClass().getName());
-        sb.append(".");
-        sb.append(ic.getMethod().getName());
-        sb.append("() with rc=");
-        sb.append(rc);
-        return sb.toString();
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(InfoLogInterceptor.class);
     
     /**
-     * Returns the header string containing the ic target, method name and
-     * parameter values.
+     * A map with loggers.
+     */
+    private static Map<String, Logger> loggerMap = new HashMap<>();
+    
+    /**
+     * Logs a given call to/from a method.
      * 
      * @param ic
-     *            the invocation context
-     * @return a header string
+     *            the invocation context.
+     * @return the result of the invocation context.
+     * @throws Exception
+     *             the exception that is possibly thrown by the invocation context.
      */
-    private static String createMethodHeader(final InvocationContext ic) {
-        if (ic == null) {
-            return "";
+    @SuppressWarnings("static-method")
+    @AroundInvoke
+    public Object intercept(final InvocationContext ic) throws Exception {
+        final Logger log = getLoggerForTarget(ic);
+        if (log.isInfoEnabled()) {
+            log.info(createMethodHeader(ic));
         }
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Entering method ");
-        sb.append(ic.getTarget().getClass().getName());
-        sb.append(".");
-        sb.append(ic.getMethod().getName());
-        sb.append("(");
-        final Object[] params = ic.getParameters();
-        boolean isFirst = true;
-        if ((params != null) && (params.length > 0)) {
-            
-            for (Object param : params) {
-                if (!isFirst) {
-                    sb.append(", ");
-                }
-                sb.append(param);
-                if (param != null) {
-                    sb.append(" [");
-                    sb.append(param.getClass().getName());
-                    sb.append("]");
-                }
-                isFirst = false;
+        Object rc = null;
+        try {
+            rc = ic.proceed();
+        } catch (final Exception e) {
+            log.info("An error occurred: {}", e.getLocalizedMessage());
+            throw e;
+        } finally {
+            if (log.isInfoEnabled()) {
+                log.info(createExitHeader(ic, rc));
             }
         }
-        sb.append(")");
-        return sb.toString();
+        return rc;
     }
 }

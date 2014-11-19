@@ -33,7 +33,7 @@ import ds2.oss.core.base.impl.CollectionBuilderContract;
 public class CollectionBuilderTest {
     @Test
     public void test1() {
-        CollectionBuilderContract<List<String>, String> cb = CollectionBuilder.create(ArrayList.class);
+        CollectionBuilderContract<List<String>, String> cb = CollectionBuilder.newList(String.class);
         List<String> l = cb.build();
         Assert.assertNotNull(l);
     }

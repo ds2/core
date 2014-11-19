@@ -19,6 +19,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import ds2.oss.core.api.HexCodec;
 
 /**
@@ -27,13 +29,8 @@ import ds2.oss.core.api.HexCodec;
  * @author dstrauss
  * @version 0.4
  */
+@ApplicationScoped
 public class HexKonverter implements HexCodec {
-    /**
-     * The list of hex chars.
-     */
-    private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
-        'f', };
-    
     /**
      * Returns the pairs of the given char sequence.
      * 
@@ -76,12 +73,18 @@ public class HexKonverter implements HexCodec {
         return -1;
     }
     
+    /**
+     * The list of hex chars.
+     */
+    private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+        'f', };
+    
     /*
      * (non-Javadoc)
      * @see ds2.core.api.svc.HexCodec#decode(char[])
      */
     @Override
-    public final byte[] decode(final char[] s) {
+    public byte[] decode(final char[] s) {
         if (s == null) {
             return null;
         }
@@ -105,7 +108,7 @@ public class HexKonverter implements HexCodec {
      * @see ds2.core.api.svc.HexCodec#encode(byte[])
      */
     @Override
-    public final String encode(final byte[] b) {
+    public String encode(final byte[] b) {
         if (b == null) {
             return null;
         }

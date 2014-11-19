@@ -59,40 +59,6 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
      */
     protected T client;
     
-    /**
-     * Sets up the node impl.
-     */
-    public AbstractNodeImpl() {
-        // nothing special to do
-    }
-    
-    /**
-     * Actions to perform on shutdown.
-     */
-    @PreDestroy
-    public void onShutdown() {
-        lock.lock();
-        try {
-        LOG.debug("Shutting down node...");
-        client.close();
-        } finally {
-            lock.unlock();
-        }
-    }
-    
-    @Override
-    public Client get() {
-        if (!needsLock) {
-            return client;
-        }
-        lock.lock();
-        try {
-            return client;
-        } finally {
-            lock.unlock();
-        }
-    }
-    
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -117,16 +83,35 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
     }
     
     @Override
-    public void removeTransport(final InetSocketAddress... isa) {
-        LOG.info("Ignoring");
+    public Client get() {
+        if (!needsLock) {
+            return client;
+        }
+        lock.lock();
+        try {
+            return client;
+        } finally {
+            lock.unlock();
+        }
     }
     
     /**
-     * Waits for the yellow status.
+     * Actions to perform on shutdown.
      */
+    @PreDestroy
+    public void onShutdown() {
+        lock.lock();
+        try {
+            LOG.debug("Shutting down node...");
+            client.close();
+        } finally {
+            lock.unlock();
+        }
+    }
+    
     @Override
-    public void waitForClusterYellowState() {
-        get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
+    public void removeTransport(final InetSocketAddress... isa) {
+        LOG.info("Ignoring");
     }
     
     /**
@@ -135,5 +120,13 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
     @Override
     public void waitForClusterGreenState() {
         get().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+    }
+    
+    /**
+     * Waits for the yellow status.
+     */
+    @Override
+    public void waitForClusterYellowState() {
+        get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
     }
 }

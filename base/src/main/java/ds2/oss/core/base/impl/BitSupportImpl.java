@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.base.impl;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import ds2.oss.core.api.BitSupport;
 
 /**
@@ -23,6 +25,7 @@ import ds2.oss.core.api.BitSupport;
  * @author dstrauss
  * @version 0.1
  */
+@ApplicationScoped
 public class BitSupportImpl implements BitSupport {
     /**
      * Constant for the number 8.
@@ -41,7 +44,7 @@ public class BitSupportImpl implements BitSupport {
     }
     
     @Override
-    public final int createInt(final byte... b) {
+    public int createInt(final byte... b) {
         int rc = 0;
         if (b == null) {
             return rc;
@@ -54,7 +57,7 @@ public class BitSupportImpl implements BitSupport {
     }
     
     @Override
-    public final long createLong(final byte... b) {
+    public long createLong(final byte... b) {
         long rc = 0;
         if (b == null) {
             return rc;
@@ -67,7 +70,7 @@ public class BitSupportImpl implements BitSupport {
     }
     
     @Override
-    public final byte[] getBytesFrom(final long l, final int offset, final int length) {
+    public byte[] getBytesFrom(final long l, final int offset, final int length) {
         // TBD
         return null;
     }

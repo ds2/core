@@ -17,6 +17,7 @@ package ds2.oss.core.base.impl;
 
 import java.lang.annotation.Annotation;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
@@ -38,6 +39,7 @@ public class LocaleSupportProducer {
      * @return the locale support.
      */
     @Produces
+    @Dependent
     public LocaleSupport createLocaleSupport(final InjectionPoint p) {
         String rb = null;
         for (Annotation a : p.getAnnotated().getAnnotations()) {

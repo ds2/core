@@ -16,6 +16,8 @@
 package ds2.oss.core.elasticsearch.impl;
 
 import java.net.InetSocketAddress;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +28,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.transport.TransportAddress;
 
 import ds2.oss.core.elasticsearch.api.EsConfig;
 
@@ -62,6 +65,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
     /**
      * Actions to perform on init.
      */
+    @SuppressWarnings("resource")
     @PostConstruct
     public void onInit() {
         final ImmutableSettings.Builder sb =
@@ -72,7 +76,14 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             sb.put(config.getProperties());
         }
         final Settings setts = sb.build();
-        client = new TransportClient(setts).addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+        Set<TransportAddress> serverAddresses = new HashSet<TransportAddress>();
+        serverAddresses.addAll(config.getTransportAddresses());
+        if (serverAddresses.size() <= 0) {
+            serverAddresses.add(new InetSocketTransportAddress("localhost", 9300));
+        }
+        client =
+            new TransportClient(setts).addTransportAddresses(serverAddresses
+                .toArray(new TransportAddress[serverAddresses.size()]));
     }
     
     @Override
