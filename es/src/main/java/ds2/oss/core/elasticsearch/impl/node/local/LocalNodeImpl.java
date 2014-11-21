@@ -39,7 +39,7 @@ import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
  */
 @Dependent
 @Alternative
-@Priority(Interceptor.Priority.LIBRARY_BEFORE + 20)
+@Priority(Interceptor.Priority.LIBRARY_BEFORE + 15)
 public class LocalNodeImpl extends AbstractNodeImpl<Client> {
     /**
      * A logger.
