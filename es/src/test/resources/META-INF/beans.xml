@@ -21,8 +21,9 @@
   bean-discovery-mode="annotated">
   <scan>
     <exclude name="com.google.common.util.concurrent.ServiceManager" />
+    <exclude name="ds2.oss.core.elasticsearch.impl.node.ext.*"/>
    </scan>
    <alternatives>
-    <class>ds2.oss.core.elasticsearch.impl.LocalNodeImpl</class>
+    <class>ds2.oss.core.elasticsearch.impl.node.local.LocalNodeImpl</class>
   </alternatives>
 </beans>

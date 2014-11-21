@@ -38,58 +38,6 @@ import org.testng.annotations.BeforeSuite;
  */
 public abstract class AbstractInjectionEnvironment {
     /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    /**
-     * The classpath scanner.
-     */
-    private static Weld weld = new Weld();
-    /**
-     * The container.
-     */
-    private static WeldContainer wc;
-    /**
-     * A lock.
-     */
-    private static final Lock LOCK = new ReentrantLock();
-    
-    /**
-     * Actions to perform at test suite start.
-     */
-    @BeforeSuite(alwaysRun = true)
-    public static void onSuiteStart() {
-        LOG.debug("Entering Weld Init");
-        LOCK.lock();
-        try {
-            if (wc != null) {
-                LOG.info("Nothing to do, ignoring");
-                return;
-            }
-            LOG.debug("Starting init");
-            wc = weld.initialize();
-        } finally {
-            LOCK.unlock();
-        }
-        LOG.debug("Done with init");
-    }
-    
-    /**
-     * Actions to perform at the end of the test suite.
-     */
-    @AfterSuite(alwaysRun = true)
-    public static void onSuiteEnd() {
-        LOCK.lock();
-        try {
-            LOG.debug("Shutting down Weld");
-            weld.shutdown();
-            wc = null;
-        } finally {
-            LOCK.unlock();
-        }
-    }
-    
-    /**
      * Returns an instance of the given class.
      * 
      * @param c
@@ -121,7 +69,7 @@ public abstract class AbstractInjectionEnvironment {
         try {
             LOCK.lock();
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
-            if ((beans != null) && !beans.isEmpty()) {
+            if (beans != null && !beans.isEmpty()) {
                 for (Bean b : beans) {
                     LOG.debug("Bean is {}", b);
                 }
@@ -131,4 +79,59 @@ public abstract class AbstractInjectionEnvironment {
             LOCK.unlock();
         }
     }
+    
+    /**
+     * Actions to perform at the end of the test suite.
+     */
+    @AfterSuite(alwaysRun = true)
+    public static void onSuiteEnd() {
+        LOCK.lock();
+        try {
+            LOG.debug("Shutting down Weld");
+            weld.shutdown();
+            wc = null;
+        } finally {
+            LOCK.unlock();
+        }
+    }
+    
+    /**
+     * Actions to perform at test suite start.
+     */
+    @BeforeSuite(alwaysRun = true)
+    public static void onSuiteStart() {
+        LOG.debug("Entering Weld Init");
+        LOCK.lock();
+        try {
+            if (wc != null) {
+                LOG.info("Nothing to do, ignoring");
+                return;
+            }
+            LOG.debug("Starting init");
+            wc = weld.initialize();
+        } finally {
+            LOCK.unlock();
+        }
+        LOG.debug("Done with init");
+    }
+    
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    
+    /**
+     * The classpath scanner.
+     */
+    private static Weld weld = new Weld();
+    
+    /**
+     * The container.
+     */
+    private static WeldContainer wc;
+    
+    /**
+     * A lock.
+     */
+    private static final Lock LOCK = new ReentrantLock();
 }

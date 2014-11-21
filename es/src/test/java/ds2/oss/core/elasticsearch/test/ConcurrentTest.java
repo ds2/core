@@ -26,6 +26,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import ds2.oss.core.elasticsearch.api.annotations.TransportTypes;
+import ds2.oss.core.elasticsearch.impl.literals.TransportLiteral;
 import ds2.oss.core.elasticsearch.test.support.EsNodeGetter;
 import ds2.oss.core.elasticsearch.test.support.EsNodeSetter;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
@@ -42,8 +44,7 @@ public class ConcurrentTest extends AbstractInjectionEnvironment {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(ConcurrentTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConcurrentTest.class);
     /**
      * The ES node.
      */
@@ -51,7 +52,7 @@ public class ConcurrentTest extends AbstractInjectionEnvironment {
     
     @BeforeClass
     public void onClass() {
-        esNode = getInstance(ElasticSearchNode.class);
+        esNode = getInstance(ElasticSearchNode.class, new TransportLiteral(TransportTypes.LOCAL));
     }
     
     @Test

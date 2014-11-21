@@ -22,6 +22,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Stereotype;
 import javax.inject.Qualifier;
 
 /**
@@ -33,8 +35,9 @@ import javax.inject.Qualifier;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
-@ApplicationScoped
+@Dependent
 @Documented
+@Stereotype
 @Qualifier
 public @interface EsCodec {
     /**

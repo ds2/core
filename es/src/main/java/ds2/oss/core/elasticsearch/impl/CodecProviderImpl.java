@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.elasticsearch.api.CodecProvider;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
 
 /**
  * A provider for any found ES codec.

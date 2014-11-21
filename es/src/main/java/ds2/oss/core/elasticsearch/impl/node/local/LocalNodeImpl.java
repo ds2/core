@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.elasticsearch.impl;
+package ds2.oss.core.elasticsearch.impl.node.local;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
+import javax.interceptor.Interceptor;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
@@ -27,6 +29,8 @@ import org.elasticsearch.node.NodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
+
 /**
  * A local node generator.
  * 
@@ -35,6 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 @Dependent
 @Alternative
+@Priority(Interceptor.Priority.LIBRARY_BEFORE + 20)
 public class LocalNodeImpl extends AbstractNodeImpl<Client> {
     /**
      * A logger.
