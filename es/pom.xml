@@ -14,10 +14,6 @@
       <artifactId>testng</artifactId>
     </dependency>
     <dependency>
-      <groupId>javax.enterprise</groupId>
-      <artifactId>cdi-api</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <scope>provided</scope>
@@ -68,9 +64,12 @@
     <dependency>
         <groupId>org.jboss</groupId>
         <artifactId>jandex</artifactId>
-        <version>1.2.2.Final</version>
         <scope>test</scope>
       </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+    </dependency>
   </dependencies>
   <description>The ElasticSearch implementations to deal with ES and core.</description>
   <!-- 
