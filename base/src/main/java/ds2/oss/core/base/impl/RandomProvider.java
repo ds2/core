@@ -13,8 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.crypto;
+package ds2.oss.core.base.impl;
 
+import ds2.oss.core.api.annotations.SecureRandomizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
@@ -23,20 +30,13 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Set;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.annotations.SecureRandomizer;
-
 /**
  * Simple provider for Random instances.
  * 
  * @author dstrauss
  * @version 0.3
  */
+@Dependent
 public final class RandomProvider {
     /**
      * A logger.
@@ -90,7 +90,7 @@ public final class RandomProvider {
      * Creates a simple randomizer.
      * 
      * @return a simple randomizer
-     * @throws NoSuchAlgorithmException
+     * @throws java.security.NoSuchAlgorithmException
      *             if an error occurred
      */
     @Produces

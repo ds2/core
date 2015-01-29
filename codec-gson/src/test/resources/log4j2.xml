@@ -26,10 +26,10 @@
         <logger name="ds2.oss.core.codec" level="debug">
             <appender-ref ref="Console" />
         </logger>
-        <logger name="org.jboss.weld" level="info">
+        <logger name="org.jboss.weld" level="debug">
             <appender-ref ref="Console" />
         </logger>
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="Console" />
         </root>
     </loggers>

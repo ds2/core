@@ -17,7 +17,9 @@ package ds2.oss.core.crypto;
 
 import java.util.Random;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
@@ -32,6 +34,7 @@ import ds2.oss.core.api.crypto.BytesProvider;
  */
 @Alternative
 @ApplicationScoped
+@Priority(100)
 public class SecureBytesProvider implements BytesProvider {
     /**
      * The randomizer.

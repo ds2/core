@@ -71,6 +71,7 @@
     <module>es-apt</module>
     <module>testutils</module>
     <module>ds2-oss-core-dbtools</module>
+    <module>crypto-bc</module>
   </modules>
   <profiles>
     <profile>

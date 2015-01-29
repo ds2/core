@@ -15,14 +15,17 @@
  */
 package ds2.oss.core.codec.boon;
 
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.api.JsonCodec;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+
 import org.boon.json.JsonParserFactory;
 import org.boon.json.JsonSerializerFactory;
 import org.boon.json.ObjectMapper;
 import org.boon.json.implementation.ObjectMapperImpl;
+
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.api.JsonCodecException;
 
 /**
  * A json codec, using the boon json parser.
@@ -32,9 +35,26 @@ import org.boon.json.implementation.ObjectMapperImpl;
  */
 @ApplicationScoped
 public class BoonJsonCodec implements JsonCodec {
-
+    
     private ObjectMapper om;
-
+    
+    @Override
+    public Object decode(String a) throws CodecException {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+    
+    @Override
+    public <E> E decode(String z, Class<E> c) throws JsonCodecException {
+        E rc = om.readValue(z, c);
+        return rc;
+    }
+    
+    @Override
+    public String encode(Object z) throws CodecException {
+        String rc = om.writeValueAsString(z);
+        return rc;
+    }
+    
     @PostConstruct
     public void onLoad() {
         JsonParserFactory parser = new JsonParserFactory();
@@ -42,22 +62,5 @@ public class BoonJsonCodec implements JsonCodec {
         serializer.useFieldsOnly();
         om = new ObjectMapperImpl(parser, serializer);
     }
-
-    @Override
-    public String encode(Object z) throws CoreException {
-        String rc = om.writeValueAsString(z);
-        return rc;
-    }
-
-    @Override
-    public Object decode(String a) throws CoreException {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public <E> E decode(String z, Class<E> c) throws CoreException {
-        E rc = om.readValue(z, c);
-        return rc;
-    }
-
+    
 }

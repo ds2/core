@@ -31,10 +31,6 @@
             <artifactId>testng</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
         </dependency>
@@ -56,7 +52,7 @@
             <groupId>ds2.oss.core</groupId>
             <artifactId>ds2-oss-core-base</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>
@@ -70,6 +66,15 @@
           <version>0.3-SNAPSHOT</version>
           <scope>test</scope>
           <classifier>tests</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jandex</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
         </dependency>
     </dependencies>
 </project>

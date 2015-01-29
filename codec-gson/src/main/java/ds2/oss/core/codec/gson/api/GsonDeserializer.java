@@ -20,7 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
@@ -30,12 +31,13 @@ import javax.inject.Qualifier;
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
+@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD })
 @Qualifier
-@ApplicationScoped
+@Dependent
 public @interface GsonDeserializer {
     /**
      * The dto class for this deserializer.
      */
+    @Nonbinding
     Class<?> value();
 }

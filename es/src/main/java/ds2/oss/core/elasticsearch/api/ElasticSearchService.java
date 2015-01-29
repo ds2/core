@@ -17,6 +17,9 @@ package ds2.oss.core.elasticsearch.api;
 
 import java.util.List;
 
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.api.JsonCodecException;
+
 /**
  * Contract to access an elastic search node.
  * 
@@ -25,20 +28,12 @@ import java.util.List;
  */
 public interface ElasticSearchService {
     /**
-     * Puts an object into the index.
+     * Deletes all given indexes.
      * 
-     * @param index
-     *            The index name to put the object into
-     * @param t
-     *            the object to put
-     * @param codec
-     *            the codec to use
-     * @param <T>
-     *            the type to put
-     * 
-     * @return the id of the document
+     * @param indexes
+     *            the indexes to delete
      */
-    <T> String put(String index, T t, TypeCodec<T> codec);
+    void deleteIndexes(String... indexes);
     
     /**
      * Loads a dto by the given id. It is assumed that there is a known codec for this type.
@@ -57,23 +52,6 @@ public interface ElasticSearchService {
     <T> T get(String index, Class<T> c, String id);
     
     /**
-     * Refreshes the given indexes.
-     * 
-     * @param indexes
-     *            the index names
-     * @return TRUE if successful, otherwise FALSE
-     */
-    boolean refreshIndexes(String... indexes);
-    
-    /**
-     * Deletes all given indexes.
-     * 
-     * @param indexes
-     *            the indexes to delete
-     */
-    void deleteIndexes(String... indexes);
-    
-    /**
      * This will load any JSON files from the given class type and return a list of it. This relies
      * on JSON files being in the package folder, having the syntax
      * <i>CLASSNAME-elasticsearch.insert.KEY.json</i>.
@@ -84,8 +62,10 @@ public interface ElasticSearchService {
      *            the type of the dto
      * 
      * @return the data
+     * @throws JsonCodecException
+     *             if an error occurred
      */
-    <T> List<T> getDefaultData(Class<T> c);
+    <T> List<T> getDefaultData(Class<T> c) throws JsonCodecException;
     
     /**
      * This will load any known JSON files for the given class type into the index. It is expected
@@ -104,6 +84,47 @@ public interface ElasticSearchService {
     <T> boolean insertDefaultData(String index, Class<T> c);
     
     /**
+     * Installs or updates the mappings on a given index for some given class types. This method
+     * will not install any prepared data. See {@link #insertDefaultData(String, Class)} for this.
+     * 
+     * @param indexname
+     *            the index name to create. If the index exists, it will not be deleted
+     * @param dtoClasses
+     *            the classes to get the codecs for, and install mappings.
+     * @return TRUE if successful, otherwise FALSE
+     */
+    boolean installOrUpdateIndex(String indexname, Class<?>... dtoClasses);
+    
+    /**
+     * Puts an object into the index.
+     * 
+     * @param index
+     *            The index name to put the object into
+     * @param t
+     *            the object to put
+     * @param codec
+     *            the codec to use
+     * @param <T>
+     *            the type to put
+     * 
+     * @return the id of the document
+     * @throws ElasticSearchException
+     *             if an error occurred
+     * @throws CodecException
+     *             if an error occured on json generation
+     */
+    <T> String put(String index, T t, TypeCodec<T> codec) throws ElasticSearchException, CodecException;
+    
+    /**
+     * Refreshes the given indexes.
+     * 
+     * @param indexes
+     *            the index names
+     * @return TRUE if successful, otherwise FALSE
+     */
+    boolean refreshIndexes(String... indexes);
+    
+    /**
      * Finds any dto within the given index.
      * 
      * @param indexname
@@ -115,16 +136,4 @@ public interface ElasticSearchService {
      * @return the found items
      */
     <T> List<T> searchAny(String indexname, Class<T> dtoClass);
-    
-    /**
-     * Installs or updates the mappings on a given index for some given class types. This method
-     * will not install any prepared data. See {@link #insertDefaultData(String, Class)} for this.
-     * 
-     * @param indexname
-     *            the index name to create. If the index exists, it will not be deleted
-     * @param dtoClasses
-     *            the classes to get the codecs for, and install mappings.
-     * @return TRUE if successful, otherwise FALSE
-     */
-    boolean installOrUpdateIndex(String indexname, Class<?>... dtoClasses);
 }

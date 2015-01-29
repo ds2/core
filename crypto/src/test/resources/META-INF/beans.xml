@@ -21,8 +21,6 @@
   bean-discovery-mode="annotated">
     <alternatives>
         <class>ds2.oss.core.crypto.SecureBytesProvider</class>
-        <class>ds2.oss.core.crypto.AppServerSecurityBaseDataServiceImpl</class>
-        <class>ds2.oss.core.crypto.BouncyCastleSecurityProvider</class>
     </alternatives>
     <scan>
     <exclude name="com.google.common.util.concurrent.ServiceManager" />

@@ -17,9 +17,11 @@ package ds2.oss.core.elasticsearch.impl;
 
 import javax.inject.Inject;
 
+import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.IoService;
+import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.api.JsonCodecException;
 import ds2.oss.core.api.es.TypeMapping;
-import ds2.oss.core.elasticsearch.api.GsonCodec;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 
 /**
@@ -45,7 +47,7 @@ public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements 
      * The gson codec.
      */
     @Inject
-    private GsonCodec gson;
+    private JsonCodec json;
     
     /**
      * Constructs an empty codec base.
@@ -63,6 +65,27 @@ public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements 
     protected AbstractTypeCodec(final Class<T> base) {
         this();
         baseClass = base;
+    }
+    
+    @Override
+    public String getIndexTypeName() {
+        final TypeMapping tm = baseClass.getAnnotation(TypeMapping.class);
+        if (tm != null) {
+            return tm.value();
+        }
+        throw new UnsupportedOperationException("Cannot determine the index type name!");
+    }
+    
+    @Override
+    public String getMapping() {
+        String rc = null;
+        if (baseClass != null) {
+            rc = this.loadMappingFromJson(baseClass);
+        }
+        if (rc == null) {
+            throw new UnsupportedOperationException("No mapping data have been defined!");
+        }
+        return rc;
     }
     
     /**
@@ -83,45 +106,11 @@ public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements 
     }
     
     @Override
-    public String getMapping() {
-        String rc = null;
-        if (baseClass != null) {
-            rc = this.loadMappingFromJson(baseClass);
-        }
-        if (rc == null) {
-            throw new UnsupportedOperationException("No mapping data have been defined!");
-        }
-        return rc;
-    }
-    
-    @Override
     public boolean matches(final Class<?> c) {
         if (baseClass != null) {
             return baseClass.isAssignableFrom(c);
         }
         return false;
-    }
-    
-    @Override
-    public T toDto(final String jsonContent) {
-        if (baseClass != null) {
-            return gson.decode(baseClass, jsonContent);
-        }
-        throw new UnsupportedOperationException("Cannot decode the given json string!");
-    }
-    
-    @Override
-    public String toJson(final T t) {
-        return gson.encode(t);
-    }
-    
-    @Override
-    public String getIndexTypeName() {
-        final TypeMapping tm = baseClass.getAnnotation(TypeMapping.class);
-        if (tm != null) {
-            return tm.value();
-        }
-        throw new UnsupportedOperationException("Cannot determine the index type name!");
     }
     
     /*
@@ -140,5 +129,22 @@ public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements 
     @Override
     public boolean replicateOnIndexing() {
         return false;
+    }
+    
+    @Override
+    public T toDto(final String jsonContent) throws JsonCodecException {
+        if (baseClass != null) {
+            return json.decode(jsonContent, baseClass);
+        }
+        throw new UnsupportedOperationException("Cannot decode the given json string!");
+    }
+    
+    @Override
+    public String toJson(final T t) throws JsonCodecException {
+        try {
+            return json.encode(t);
+        } catch (CodecException e) {
+            throw new JsonCodecException(null, e);
+        }
     }
 }

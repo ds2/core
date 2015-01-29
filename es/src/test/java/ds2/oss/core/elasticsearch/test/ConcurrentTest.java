@@ -52,7 +52,7 @@ public class ConcurrentTest extends AbstractInjectionEnvironment {
     
     @BeforeClass
     public void onClass() {
-        esNode = getInstance(ElasticSearchNode.class, new TransportLiteral(TransportTypes.LOCAL));
+        esNode = getInstance(ElasticSearchNode.class);
     }
     
     @Test

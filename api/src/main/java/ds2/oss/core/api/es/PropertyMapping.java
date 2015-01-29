@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The field mapping annotation.
+ * The field mapping annotation to mark a field being a part of a json document for elasticsearch.
  * 
  * @author dstrauss
  * @version 0.2
@@ -32,14 +32,25 @@ import java.lang.annotation.Target;
 @Documented
 public @interface PropertyMapping {
     /**
-     * The field name.
+     * Dummy text to set null.
      */
-    String name() default "";
+    String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
     
     /**
-     * The data type.
+     * The default boost value.
      */
-    FieldTypes type() default FieldTypes.STRING;
+    float DEF_BOOST = 1.0f;
+    
+    /**
+     * The boost value.
+     */
+    float boost() default DEF_BOOST;
+    
+    /**
+     * The date format. See <a href=
+     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/" >here</a>.
+     */
+    String dateFormat() default NULL;
     
     /**
      * The analyzer type.
@@ -52,9 +63,9 @@ public @interface PropertyMapping {
     String indexName() default "";
     
     /**
-     * Flag to indicate to store the field value's JSON directly.
+     * The field name.
      */
-    boolean store() default false;
+    String name() default "";
     
     /**
      * What to store if this field is null.
@@ -62,22 +73,12 @@ public @interface PropertyMapping {
     String onNull() default NULL;
     
     /**
-     * The date format. See <a href=
-     * "http://www.elasticsearch.org/guide/reference/mapping/date-format/" >here</a>.
+     * Flag to indicate to store the field value's JSON directly.
      */
-    String dateFormat() default NULL;
+    boolean store() default false;
     
     /**
-     * The boost value.
+     * The data type.
      */
-    float boost() default DEF_BOOST;
-    
-    /**
-     * Dummy text to set null.
-     */
-    String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
-    /**
-     * The default boost value.
-     */
-    float DEF_BOOST = 1.0f;
+    FieldTypes type() default FieldTypes.STRING;
 }

@@ -66,19 +66,14 @@
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-testutils</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>
     </dependency>
     <dependency>
       <groupId>ds2.oss.core</groupId>
-      <artifactId>ds2-oss-core-crypto</artifactId>
-      <version>0.3-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
-      <scope>test</scope>
+      <artifactId>ds2-oss-core-crypto-bouncycastle</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -90,6 +85,15 @@
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-dbtools</artifactId>
       <version>0.3-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>jandex</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
     </dependency>
   </dependencies>
   <build>

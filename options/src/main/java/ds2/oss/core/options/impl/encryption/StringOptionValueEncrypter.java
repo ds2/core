@@ -17,6 +17,7 @@ package ds2.oss.core.options.impl.encryption;
 
 import java.nio.charset.Charset;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
@@ -39,6 +40,7 @@ import ds2.oss.core.options.api.OptionValueEncrypter;
 @ForValueType(ValueType.STRING)
 @ApplicationScoped
 @Alternative
+@Priority(100)
 public class StringOptionValueEncrypter implements OptionValueEncrypter<String> {
     /**
      * The utf8 charset.

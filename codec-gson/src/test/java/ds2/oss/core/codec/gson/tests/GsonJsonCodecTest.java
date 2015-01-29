@@ -56,6 +56,6 @@ public class GsonJsonCodecTest extends AbstractInjectionEnvironment {
         Assert
             .assertEquals(
                 to.encode(c),
-                "{\"number\":23,\"msg\":\"Hello, World\",\"homepage\":\"http://www.bla.test\",\"created\":\"Jan 1, 1970 1:00:00 AM\",\"state\":\"VAL1\"}");
+                "{\"number\":23,\"msg\":\"Hello, World\",\"homepage\":\"http://www.bla.test\",\"created\":\"datum\",\"state\":\"VAL1\"}");
     }
 }

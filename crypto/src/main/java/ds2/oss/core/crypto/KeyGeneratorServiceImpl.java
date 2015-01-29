@@ -25,6 +25,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ import ds2.oss.core.api.crypto.KeyGeneratorService;
  * @version 0.3
  * @author dstrauss
  */
+@Dependent
 public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     
     /**

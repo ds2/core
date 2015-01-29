@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
@@ -45,6 +46,7 @@ import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.indices.IndexMissingException;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
@@ -54,8 +56,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ResourceInfo;
 
+import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.IoService;
+import ds2.oss.core.api.JsonCodecException;
 import ds2.oss.core.elasticsearch.api.CodecProvider;
+import ds2.oss.core.elasticsearch.api.ElasticSearchErrors;
+import ds2.oss.core.elasticsearch.api.ElasticSearchException;
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
@@ -144,13 +150,18 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     
     @Override
     public void deleteIndexes(final String... indexes) {
-        final DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-            esNode.get().admin().indices().prepareDelete(indexes);
-        final DeleteIndexResponse resp = deleteIndexRequestBuilder.execute().actionGet();
-        if (!resp.isAcknowledged()) {
-            LOG.warn("Delete is not acknowledged!");
-        } else {
-            LOG.debug("Deleting indexes {} done.", new Object[] { indexes });
+        try {
+            final DeleteIndexRequestBuilder deleteIndexRequestBuilder =
+                    esNode.get().admin().indices().prepareDelete(indexes);
+            final DeleteIndexResponse resp = deleteIndexRequestBuilder.get();
+            if (!resp.isAcknowledged()) {
+                LOG.warn("Delete is not acknowledged!");
+            } else {
+                LOG.debug("Deleting indexes {} done.", new Object[]{indexes});
+            }
+        } catch (IndexMissingException e){
+            LOG.debug("Given index did not exist!", e);
+            LOG.info("The index(es) {} were not existing! Ignoring delete request.", indexes);
         }
     }
     
@@ -164,21 +175,26 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         final GetRequestBuilder getRequestBuilder = esNode.get().prepareGet();
         getRequestBuilder.setId(id).setIndex(index).setType(codec.getIndexTypeName());
-        final GetResponse result = getRequestBuilder.execute().actionGet();
         T rc = null;
-        if (result.isExists()) {
-            LOG.debug("Result from ES is {}", result);
-            rc = codec.toDto(result.getSource());
-            // rc = codec.toDto(result.getSourceAsString());
-        } else {
-            LOG.debug("Could not find document with id {} in {}", new Object[] { id, index });
+        try {
+            GetResponse result = getRequestBuilder.execute().actionGet();
+            if (result.isExists()) {
+                LOG.debug("Result from ES is {}", result);
+                rc = codec.toDto(result.getSource());
+                // rc = codec.toDto(result.getSourceAsString());
+            } else {
+                LOG.debug("Could not find document with id {} in {}", new Object[] { id, index });
+            }
+        } catch (ElasticsearchException e) {
+            LOG.warn("Error when performing the query!", e);
         }
+        
         LOG.debug("Result is {}", rc);
         return rc;
     }
     
     @Override
-    public <T> List<T> getDefaultData(final Class<T> c) {
+    public <T> List<T> getDefaultData(final Class<T> c) throws JsonCodecException {
         if (c == null) {
             throw new IllegalArgumentException("No class given to check for default data!");
         }
@@ -332,7 +348,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
     
     @Override
-    public <T> String put(final String index, final T t, final TypeCodec<T> codec) {
+    public <T> String put(final String index, final T t, final TypeCodec<T> codec) throws CodecException,
+        ElasticSearchException {
         if (t == null) {
             throw new IllegalArgumentException("You must give a dto to put into the index!");
         }
@@ -345,10 +362,21 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
         }
         final IndexRequestBuilder req = prepareIndexing(index, typeCodec);
-        req.setSource(typeCodec.toJson(t));
-        final IndexResponse response = req.execute().actionGet();
-        final String id = response.getId();
-        LOG.debug("Response is {}, id will be {}", new Object[] { response, id });
+        String source = typeCodec.toJson(t);
+        LOG.debug("Json to store is {}", source);
+        req.setSource(source);
+        String id = null;
+        try {
+            final IndexResponse response = req.get();
+            if (response.isCreated()) {
+                id = response.getId();
+            } else {
+                LOG.debug("No creation done!");
+            }
+            LOG.debug("Response is {}, id will be {}", new Object[] { response, id });
+        } catch (ElasticsearchException e) {
+            throw new ElasticSearchException(ElasticSearchErrors.PutFailed, e);
+        }
         return id;
     }
     
@@ -388,7 +416,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 if (hit.isSourceEmpty()) {
                     LOG.warn("Source is empty!");
                 }
-                final T t = codec.toDto(hit.getSourceAsString());
+                T t = null;
+                try {
+                    t = codec.toDto(hit.getSourceAsString());
+                } catch (JsonCodecException e) {
+                    LOG.warn("Error when decoding a json document!", e);
+                }
                 if (t == null) {
                     continue;
                 }

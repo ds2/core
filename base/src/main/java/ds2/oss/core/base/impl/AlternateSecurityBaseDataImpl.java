@@ -19,11 +19,16 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
+import javax.interceptor.Interceptor;
 
 import ds2.oss.core.api.SecurityBaseData;
 import java.lang.invoke.MethodHandles;
+import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +48,8 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
     /**
      * A randomizer.
      */
-    private SecureRandom random;
+    @Inject
+    private Random random;
     /**
      * A randomly generated salt value. On every restart of the component, a new
      * salt value will be generated!
@@ -53,17 +59,6 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
      * The init vector.
      */
     private byte[] initVector;
-
-    /**
-     * Inits the impl.
-     */
-    public AlternateSecurityBaseDataImpl() {
-        try {
-            random = SecureRandom.getInstance("SHA1PRNG");
-        } catch (NoSuchAlgorithmException e) {
-            LOG.error("Error when setting up the randomizer!", e);
-        }
-    }
 
     @Override
     public int getMinIteration() {
@@ -85,6 +80,8 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
      */
     @PostConstruct
     public void onClass() {
-        salt = random.generateSeed(512);
+        byte[] buffer=new byte[512];
+        random.nextBytes(buffer);
+        salt = buffer;
     }
 }

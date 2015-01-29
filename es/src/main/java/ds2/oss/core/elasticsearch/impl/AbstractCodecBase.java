@@ -24,9 +24,6 @@ import java.util.TimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 /**
  * A small code base to support date formatting.
  * 
@@ -52,6 +49,22 @@ public abstract class AbstractCodecBase {
     }
     
     /**
+     * Parses a date into a string.
+     * 
+     * @param d
+     *            the date to format
+     * @return the string
+     */
+    public String fromDate(final Date d) {
+        if (d == null) {
+            return null;
+        }
+        String rc = null;
+        rc = sdf.format(d);
+        return rc;
+    }
+    
+    /**
      * Parses a given string into a date object.
      * 
      * @param esDate
@@ -72,34 +85,4 @@ public abstract class AbstractCodecBase {
         return rc;
     }
     
-    /**
-     * Parses a date into a string.
-     * 
-     * @param d
-     *            the date to format
-     * @return the string
-     */
-    public String fromDate(final Date d) {
-        if (d == null) {
-            return null;
-        }
-        String rc = null;
-        rc = sdf.format(d);
-        return rc;
-    }
-    
-    protected static String getAsString(final JsonObject obj, final String fieldName) {
-        JsonElement s = obj.get(fieldName);
-        if ((s == null) || s.isJsonNull()) {
-            return null;
-        }
-        return s.getAsString();
-    }
-    
-    protected static void addIfNotNull(final JsonObject obj, final String prop, final String val) {
-        if (val == null) {
-            return;
-        }
-        obj.addProperty(prop, val);
-    }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.crypto;
+package ds2.oss.core.crypto.bc;
 
 import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
@@ -28,6 +28,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 
+import ds2.oss.core.crypto.SecurityInstanceProvider;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,6 @@ import ds2.oss.core.api.crypto.KeyGeneratorNames;
  * @version 0.3
  */
 @ApplicationScoped
-@Alternative
 public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
     
     /**

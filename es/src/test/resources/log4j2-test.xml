@@ -26,6 +26,9 @@
     <logger name="ds2.oss.core.elasticsearch" level="debug">
       <appender-ref ref="Console" />
     </logger>
+    <logger name="ds2.oss.core.codec.gson" level="debug">
+      <appender-ref ref="Console" />
+    </logger>
       <logger name="org.jboss.weld" level="debug">
           <appender-ref ref="Console" />
       </logger>

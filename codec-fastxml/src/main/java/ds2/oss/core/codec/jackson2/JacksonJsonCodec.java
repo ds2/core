@@ -21,15 +21,12 @@ import java.lang.invoke.MethodHandles;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
+import ds2.oss.core.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ds2.oss.core.api.CoreErrors;
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.api.JsonCodec;
 
 /**
  *
@@ -57,7 +54,7 @@ public class JacksonJsonCodec implements JsonCodec {
     }
     
     @Override
-    public String encode(Object z) throws CoreException {
+    public String encode(Object z) throws JsonCodecException {
         String rc = null;
         if (z == null) {
             throw new IllegalArgumentException("No object given to transform!");
@@ -65,24 +62,24 @@ public class JacksonJsonCodec implements JsonCodec {
         try {
             rc = om.writeValueAsString(z);
         } catch (JsonProcessingException ex) {
-            throw new CoreException(CoreErrors.JSON_ENCODING_FAILED, ex);
+            throw new JsonCodecException(CoreErrors.JSON_ENCODING_FAILED, ex);
         }
         LOG.debug("Result is {}", rc);
         return rc;
     }
     
     @Override
-    public Object decode(String a) throws CoreException {
+    public Object decode(String a) throws CodecException {
         throw new UnsupportedOperationException("Please use the other decode method for better type handling!");
     }
     
     @Override
-    public <E> E decode(String z, Class<E> c) throws CoreException {
+    public <E> E decode(String z, Class<E> c) throws JsonCodecException {
         E rc = null;
         try {
             rc = om.readValue(z, c);
         } catch (IOException ex) {
-            throw new CoreException(CoreErrors.JSON_DECODING_FAILED, ex);
+            throw new JsonCodecException(CoreErrors.JSON_DECODING_FAILED, ex);
         }
         return rc;
     }

@@ -19,6 +19,7 @@ import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.Dependent;
 
 import org.infinispan.Cache;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ import ds2.oss.core.api.Persistable;
  * @param <V>
  *            the value type
  */
+@Dependent
 public class InfinispanStoreBean<K, V extends Persistable<K>> implements InfinispanStore<K, V> {
     /**
      * A logger.

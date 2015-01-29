@@ -40,7 +40,6 @@ import javax.annotation.PostConstruct;
  * @version 0.3
  */
 @ApplicationScoped
-@Alternative
 public class DefaultSecurityProvider implements SecurityInstanceProvider {
 
     /**

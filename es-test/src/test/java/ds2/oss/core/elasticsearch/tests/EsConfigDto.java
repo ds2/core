@@ -16,10 +16,12 @@
 package ds2.oss.core.elasticsearch.tests;
 
 import java.util.Properties;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.elasticsearch.api.EsConfig;
+import org.elasticsearch.common.transport.TransportAddress;
 
 /**
  * Dummy dto.
@@ -37,6 +39,11 @@ public class EsConfigDto implements EsConfig {
     
     @Override
     public Properties getProperties() {
+        return null;
+    }
+
+    @Override
+    public Set<TransportAddress> getTransportAddresses() {
         return null;
     }
 }

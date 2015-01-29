@@ -24,6 +24,9 @@ import java.io.Serializable;
  * @version 0.3
  */
 public interface IErrorData extends Serializable {
+    int BACKEND_ERROR = 1000;
+    int SERVICE_ERROR = BACKEND_ERROR + 10000;
+    int APPLICATION_ERROR = SERVICE_ERROR + 100000;
     
     /**
      * Returns the error id.

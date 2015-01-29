@@ -15,19 +15,26 @@
  */
 package ds2.oss.core.codec.gson;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;
-import ds2.oss.core.api.CoreException;
+
+import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.api.JsonCodecException;
 import ds2.oss.core.codec.gson.api.GsonDeserializer;
 import ds2.oss.core.codec.gson.api.GsonSerializer;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
 
 /**
  * The GSON implementation for a json codec.
@@ -35,9 +42,13 @@ import javax.inject.Inject;
  * @author dstrauss
  * @version 0.3
  */
-@ApplicationScoped
+@Dependent
 public class GsonCodec implements JsonCodec {
-
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(GsonCodec.class);
+    
     /**
      * The serializers.
      */
@@ -50,53 +61,60 @@ public class GsonCodec implements JsonCodec {
     @Inject
     @Any
     private Instance<JsonDeserializer<?>> deserializers;
-
+    
     /**
      * The gson main object.
      */
     private Gson gson;
-
-    /**
-     * Actions to perform after construction, after CDI.
-     */
-    @PostConstruct
-    public void onLoad() {
-        final GsonBuilder gb = new GsonBuilder();
-        for (JsonSerializer<?> serializer : serializers) {
-            final GsonSerializer gsa = serializer.getClass().getAnnotation(GsonSerializer.class);
-            if (gsa != null) {
-                final Class<?> c = gsa.value();
-                gb.registerTypeAdapter(c, serializer);
-            }
-        }
-        for (JsonDeserializer<?> deserializer : deserializers) {
-            final GsonDeserializer gsa = deserializer.getClass().getAnnotation(GsonDeserializer.class);
-            if (gsa != null) {
-                final Class<?> c = gsa.value();
-                gb.registerTypeAdapter(c, deserializer);
-            }
-        }
-        gson = gb.create();
-    }
-
+    
     @Override
-    public <E> E decode(String z, Class<E> c) throws CoreException {
+    public Object decode(String a) throws CodecException {
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of
+                                                                       // generated methods, choose
+                                                                       // Tools | Templates.
+    }
+    
+    @Override
+    public <E> E decode(String z, Class<E> c) throws JsonCodecException {
         final E rc = gson.fromJson(z, c);
         return rc;
     }
-
+    
     @Override
-    public String encode(Object t) throws CoreException {
+    public String encode(Object t) throws CodecException {
         if (t == null) {
             throw new IllegalArgumentException("No type given to encode!");
         }
         final String rc = gson.toJson(t);
         return rc;
     }
-
-    @Override
-    public Object decode(String a) throws CoreException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    /**
+     * Actions to perform after construction, after CDI.
+     */
+    @PostConstruct
+    public void onLoad() {
+        LOG.debug("Starting codec init..");
+        final GsonBuilder gb = new GsonBuilder();
+        LOG.debug("Checking for serializers..");
+        for (JsonSerializer<?> serializer : serializers) {
+            final GsonSerializer gsa = serializer.getClass().getAnnotation(GsonSerializer.class);
+            if (gsa != null) {
+                final Class<?> c = gsa.value();
+                LOG.debug("registering serializer for type {}: {}", new Object[] { c, serializer });
+                gb.registerTypeAdapter(c, serializer);
+            }
+        }
+        LOG.debug("Checking for deserializers..");
+        for (JsonDeserializer<?> deserializer : deserializers) {
+            final GsonDeserializer gsa = deserializer.getClass().getAnnotation(GsonDeserializer.class);
+            if (gsa != null) {
+                final Class<?> c = gsa.value();
+                LOG.debug("registering deserializer for type {}: {}", new Object[] { c, deserializer });
+                gb.registerTypeAdapter(c, deserializer);
+            }
+        }
+        LOG.debug("done. Creating final gson builder");
+        gson = gb.create();
     }
-
 }

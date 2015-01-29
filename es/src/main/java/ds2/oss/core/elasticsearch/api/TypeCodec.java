@@ -17,6 +17,8 @@ package ds2.oss.core.elasticsearch.api;
 
 import java.util.Map;
 
+import ds2.oss.core.api.JsonCodecException;
+
 /**
  * A contract for a codec.
  * 
@@ -27,16 +29,6 @@ import java.util.Map;
  * @version 0.2
  */
 public interface TypeCodec<T> {
-    /**
-     * Converts a given dto into a JSON variant.
-     * 
-     * @param t
-     *            the dto to convert
-     * 
-     * @return the JSON string to use for indexing
-     */
-    String toJson(T t);
-    
     /**
      * Returns the type name to use for this type of DTO.
      * 
@@ -50,6 +42,16 @@ public interface TypeCodec<T> {
      * @return the JSON mapping, or null if not set
      */
     String getMapping();
+    
+    /**
+     * A simple check if instances of the given class can be used with this codec.
+     * 
+     * @param c
+     *            the class. Usually a dto that this codec can deal with.
+     * @return TRUE if this codec can deal with instances of this class, otherwise and by default:
+     *         FALSE.
+     */
+    boolean matches(Class<?> c);
     
     /**
      * Should a refresh operation be done on inserting?
@@ -67,25 +69,6 @@ public interface TypeCodec<T> {
     boolean replicateOnIndexing();
     
     /**
-     * A simple check if instances of the given class can be used with this codec.
-     * 
-     * @param c
-     *            the class. Usually a dto that this codec can deal with.
-     * @return TRUE if this codec can deal with instances of this class, otherwise and by default:
-     *         FALSE.
-     */
-    boolean matches(Class<?> c);
-    
-    /**
-     * Converts a given json content into a dto.
-     * 
-     * @param jsonContent
-     *            the json content
-     * @return the dto
-     */
-    T toDto(String jsonContent);
-    
-    /**
      * An alternate way to create a dto based on some fields.
      * 
      * @param fields
@@ -93,4 +76,27 @@ public interface TypeCodec<T> {
      * @return the dto
      */
     T toDto(Map<String, Object> fields);
+    
+    /**
+     * Converts a given json content into a dto.
+     * 
+     * @param jsonContent
+     *            the json content
+     * @return the dto
+     * @throws JsonCodecException
+     *             if an error occurred
+     */
+    T toDto(String jsonContent) throws JsonCodecException;
+    
+    /**
+     * Converts a given dto into a JSON variant.
+     * 
+     * @param t
+     *            the dto to convert
+     * 
+     * @return the JSON string to use for indexing
+     * @throws JsonCodecException
+     *             if an error occurred
+     */
+    String toJson(T t) throws JsonCodecException;
 }

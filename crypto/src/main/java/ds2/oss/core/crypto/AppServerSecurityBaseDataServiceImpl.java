@@ -30,11 +30,15 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Priority;
 import javax.crypto.SecretKey;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
+import javax.interceptor.Interceptor;
 
+import ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,8 +57,8 @@ import ds2.oss.core.api.crypto.KeyGeneratorService;
  * @version 0.3
  */
 @ApplicationScoped
-@Alternative
-public class AppServerSecurityBaseDataServiceImpl implements AppServerSecurityBaseDataService {
+@Specializes
+public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseDataImpl implements AppServerSecurityBaseDataService {
     
     /**
      * A logger.
