@@ -18,8 +18,8 @@
 -->
 <infinispan
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="urn:infinispan:config:5.3 http://www.infinispan.org/schemas/infinispan-config-5.3.xsd"
-  xmlns="urn:infinispan:config:5.3">
+  xsi:schemaLocation="urn:infinispan:config:6.0 http://www.infinispan.org/schemas/infinispan-config-6.0.xsd"
+  xmlns="urn:infinispan:config:6.0">
   <namedCache name="xml-configured-cache">
     <eviction
       strategy="LIRS"
@@ -35,6 +35,12 @@
       maxEntries="100"
       strategy="LRU" />
     <expiration lifespan="-1" />
+      <persistence>
+          <singleFile location="target/infinispan" purgeOnStartup="false" fetchPersistentState="true" ignoreModifications="false">
+              <async enabled="true" threadPoolSize="10" flushLockTimeout="5000" shutdownTimeout="25000"/>
+          </singleFile>
+      </persistence>
+      <!--
     <loaders shared="false">
       <loader
           class="org.infinispan.loaders.file.FileCacheStore"
@@ -46,5 +52,6 @@
         <async enabled="true" threadPoolSize="10" />
       </loader>
     </loaders>
+      -->
   </namedCache>
 </infinispan>

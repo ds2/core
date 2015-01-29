@@ -40,7 +40,7 @@ import ds2.oss.core.api.cache.InfinispanConfig;
 /**
  * Created by dstrauss on 20.08.13.
  */
-@Dependent
+@ApplicationScoped
 public class CacheControllerProvider {
     /**
      * A logger.
@@ -75,11 +75,7 @@ public class CacheControllerProvider {
     /**
      * Dummy generator for any @{link InfinispanStore}.
      */
-    @Produces
-    @InfinispanConfig
-    @Dependent
-    @Any
-    public <K, V extends Persistable<K>> InfinispanStore<K,V> createInjection(final InjectionPoint p) {
+    private <K, V extends Persistable<K>> InfinispanStore<K,V> createInjection(final InjectionPoint p) {
         LOG.debug("Checking cut point..");
         InfinispanConfig config = p.getAnnotated().getAnnotation(InfinispanConfig.class);
         if (config == null) {
@@ -92,7 +88,7 @@ public class CacheControllerProvider {
         LOG.debug("Getting new instance of store bean");
         InfinispanStoreBean<K, V> rc = (InfinispanStoreBean<K, V>) stores.get();
         rc.setCache(foundCache);
-        LOG.debug("Done, returning new impl");
+        LOG.debug("Done, returning new impl {}", rc);
         return rc;
     }
 
@@ -105,7 +101,6 @@ public class CacheControllerProvider {
     @Produces
     @InfinispanConfig
     @Dependent
-    @Any
     public <V extends Persistable<String>> InfinispanStore<String,V> createStringInjection(final InjectionPoint p) {
         return createInjection(p);
     }

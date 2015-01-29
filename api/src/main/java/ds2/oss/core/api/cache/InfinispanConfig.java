@@ -33,7 +33,6 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD })
 @Qualifier
-@Dependent
 public @interface InfinispanConfig {
     /**
      * The name of the xml file that contains the cache config. Default is infinispan.xml.
