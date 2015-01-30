@@ -69,8 +69,9 @@
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-crypto-bouncycastle</artifactId>
+      <version>0.3-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>

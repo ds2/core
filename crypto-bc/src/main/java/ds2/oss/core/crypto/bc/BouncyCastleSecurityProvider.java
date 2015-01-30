@@ -27,7 +27,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Specializes;
 
+import ds2.oss.core.crypto.DefaultSecurityProvider;
 import ds2.oss.core.crypto.SecurityInstanceProvider;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
@@ -43,7 +45,8 @@ import ds2.oss.core.api.crypto.KeyGeneratorNames;
  * @version 0.3
  */
 @ApplicationScoped
-public class BouncyCastleSecurityProvider implements SecurityInstanceProvider {
+@Specializes
+public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implements SecurityInstanceProvider {
     
     /**
      * A logger.
