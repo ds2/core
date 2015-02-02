@@ -152,14 +152,14 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public void deleteIndexes(final String... indexes) {
         try {
             final DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-                    esNode.get().admin().indices().prepareDelete(indexes);
+                esNode.get().admin().indices().prepareDelete(indexes);
             final DeleteIndexResponse resp = deleteIndexRequestBuilder.get();
             if (!resp.isAcknowledged()) {
                 LOG.warn("Delete is not acknowledged!");
             } else {
-                LOG.debug("Deleting indexes {} done.", new Object[]{indexes});
+                LOG.debug("Deleting indexes {} done.", new Object[] { indexes });
             }
-        } catch (IndexMissingException e){
+        } catch (IndexMissingException e) {
             LOG.debug("Given index did not exist!", e);
             LOG.info("The index(es) {} were not existing! Ignoring delete request.", indexes);
         }
@@ -180,13 +180,21 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             GetResponse result = getRequestBuilder.execute().actionGet();
             if (result.isExists()) {
                 LOG.debug("Result from ES is {}", result);
-                rc = codec.toDto(result.getSource());
-                // rc = codec.toDto(result.getSourceAsString());
+                String json = result.getSourceAsString();
+                if (json != null) {
+                    LOG.debug("using json to decode: {}", json);
+                    rc = codec.toDto(json);
+                } else {
+                    LOG.debug("Using field-based decoding of result!");
+                    rc = codec.toDto(result.getSource());
+                }
             } else {
                 LOG.debug("Could not find document with id {} in {}", new Object[] { id, index });
             }
         } catch (ElasticsearchException e) {
             LOG.warn("Error when performing the query!", e);
+        } catch (JsonCodecException e) {
+            LOG.warn("Error when decoding the result source!", e);
         }
         
         LOG.debug("Result is {}", rc);
