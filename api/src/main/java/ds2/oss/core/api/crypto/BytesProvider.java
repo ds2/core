@@ -17,14 +17,14 @@ package ds2.oss.core.api.crypto;
 
 /**
  * A bytes provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface BytesProvider {
     /**
      * Creates some random bytes.
-     * 
+     *
      * @param size
      *            the count of bytes to return
      * @return the bytes

@@ -22,7 +22,7 @@ package ds2.oss.core.api.xmpp;
 
 /**
  * A setting to connect to an xmpp server only if some security is available.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */

@@ -22,19 +22,11 @@ import ds2.oss.core.api.NumericEnumValue;
 
 /**
  * A list of known and supported value types for options.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public enum ValueType implements NumericEnumValue {
-    /**
-     * Option value is a string.
-     */
-    STRING(1, String.class),
-    /**
-     * Option value is a url.
-     */
-    URL(2, URL.class),
     /**
      * Option value is a boolean value.
      */
@@ -42,45 +34,18 @@ public enum ValueType implements NumericEnumValue {
     /**
      * Option value is a list.
      */
-    LIST_OF_STRINGS(10, List.class);
+    LIST_OF_STRINGS(10, List.class),
     /**
-     * The id.
+     * Option value is a string.
      */
-    private int id;
+    STRING(1, String.class),
     /**
-     * The matching class.
+     * Option value is a url.
      */
-    private Class<?> matchingClass;
-    
-    /**
-     * Inits the enum value.
-     * 
-     * @param id1
-     *            the id of the entry
-     * @param c
-     *            the matching class
-     */
-    private ValueType(final int id1, Class<?> c) {
-        id = id1;
-    }
-    
-    @Override
-    public int getNumericalValue() {
-        return id;
-    }
-    
-    /**
-     * Returns the matching class for this value type.
-     * 
-     * @return the matching class
-     */
-    public Class<?> getMatchingClass() {
-        return matchingClass;
-    }
-    
+    URL(2, URL.class);
     /**
      * id lookup.
-     * 
+     *
      * @param i
      *            the int id
      * @return the value type, or null
@@ -92,5 +57,41 @@ public enum ValueType implements NumericEnumValue {
             }
         }
         return null;
+    }
+    
+    /**
+     * The id.
+     */
+    private int id;
+
+    /**
+     * The matching class.
+     */
+    private Class<?> matchingClass;
+
+    /**
+     * Inits the enum value.
+     *
+     * @param id1
+     *            the id of the entry
+     * @param c
+     *            the matching class
+     */
+    private ValueType(final int id1, final Class<?> c) {
+        id = id1;
+    }
+
+    /**
+     * Returns the matching class for this value type.
+     *
+     * @return the matching class
+     */
+    public Class<?> getMatchingClass() {
+        return matchingClass;
+    }
+
+    @Override
+    public int getNumericalValue() {
+        return id;
     }
 }

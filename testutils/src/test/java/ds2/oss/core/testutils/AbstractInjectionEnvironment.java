@@ -32,17 +32,37 @@ import org.testng.annotations.BeforeSuite;
 
 /**
  * The injection env. Basically the same as the WeldWrapper.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public abstract class AbstractInjectionEnvironment {
     /**
+     * A lock.
+     */
+    private static final Lock LOCK = new ReentrantLock();
+
+    /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    /**
+     * The container.
+     */
+    private static WeldContainer wc;
+
+    /**
+     * The classpath scanner.
+     */
+    private static Weld weld = new Weld();
+
+    /**
      * Returns an instance of the given class.
-     * 
+     *
      * @param c
      *            the class
-     * 
+     *
      * @return the instance, if found. Otherwise null.
      * @param <T>
      *            the type of the bean
@@ -55,10 +75,10 @@ public abstract class AbstractInjectionEnvironment {
             LOCK.unlock();
         }
     }
-    
+
     /**
      * Returns an instance with the given annotation data.
-     * 
+     *
      * @param c
      *            the target class to search for
      * @param annotations
@@ -70,7 +90,7 @@ public abstract class AbstractInjectionEnvironment {
             LOCK.lock();
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
             if (beans != null && !beans.isEmpty()) {
-                for (Bean b : beans) {
+                for (Bean<?> b : beans) {
                     LOG.debug("Bean is {}", b);
                 }
             }
@@ -79,7 +99,7 @@ public abstract class AbstractInjectionEnvironment {
             LOCK.unlock();
         }
     }
-    
+
     /**
      * Actions to perform at the end of the test suite.
      */
@@ -94,7 +114,7 @@ public abstract class AbstractInjectionEnvironment {
             LOCK.unlock();
         }
     }
-    
+
     /**
      * Actions to perform at test suite start.
      */
@@ -114,24 +134,4 @@ public abstract class AbstractInjectionEnvironment {
         }
         LOG.debug("Done with init");
     }
-    
-    /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
-    /**
-     * The classpath scanner.
-     */
-    private static Weld weld = new Weld();
-    
-    /**
-     * The container.
-     */
-    private static WeldContainer wc;
-    
-    /**
-     * A lock.
-     */
-    private static final Lock LOCK = new ReentrantLock();
 }

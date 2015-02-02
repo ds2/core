@@ -17,32 +17,32 @@ package ds2.oss.core.api;
 
 /**
  * Contract for sec base data.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public interface SecurityBaseData {
     /**
-     * Returns the salt to use.
-     * 
-     * @return the salt value
-     */
-    byte[] getSalt();
-    
-    /**
-     * Returns the minimum number of iterations to use to create a hash value.
-     * 
-     * @return the iteration count
-     */
-    int getMinIteration();
-    
-    /**
      * Returns the init vector bytes. Implementations of this method must assure that calling this
      * method should always return a new init vector. In contrast, the {@link #getSalt()} method may
      * not return a new salt anytime. Regarding the size of the init vector: for AES it should
      * return 16.
-     * 
+     *
      * @return the init vector bytes
      */
     byte[] getInitVector();
+
+    /**
+     * Returns the minimum number of iterations to use to create a hash value.
+     *
+     * @return the iteration count
+     */
+    int getMinIteration();
+
+    /**
+     * Returns the salt to use.
+     *
+     * @return the salt value
+     */
+    byte[] getSalt();
 }

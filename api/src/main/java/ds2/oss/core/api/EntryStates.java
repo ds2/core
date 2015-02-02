@@ -20,15 +20,11 @@ import java.util.Map;
 
 /**
  * The states of persistable entries.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
 public enum EntryStates implements NumericEnumValue {
-    /**
-     * The entry is new, in draft.
-     */
-    PREPARED(0),
     /**
      * The entry is active.
      */
@@ -40,8 +36,12 @@ public enum EntryStates implements NumericEnumValue {
     /**
      * The entry is locked and must not be modified.
      */
-    LOCKED(2);
-    
+    LOCKED(2),
+    /**
+     * The entry is new, in draft.
+     */
+    PREPARED(0);
+
     /**
      * A cache map.
      */
@@ -52,34 +52,35 @@ public enum EntryStates implements NumericEnumValue {
         cacheMap.put(LOCKED.getNumericalValue(), LOCKED);
         cacheMap.put(DELETED.getNumericalValue(), DELETED);
     }
-    /**
-     * The numerical value.
-     */
-    private final int numericalValue;
-    
-    /**
-     * Inits the enum value.
-     * 
-     * @param i
-     *            the numerical value
-     */
-    private EntryStates(final int i) {
-        numericalValue = i;
-    }
-    
-    @Override
-    public int getNumericalValue() {
-        return numericalValue;
-    }
     
     /**
      * Returns the entry state for the given id.
-     * 
+     *
      * @param i
      *            the id of the enum value
      * @return the enum value, or null if not found
      */
     public static EntryStates getById(final int i) {
         return cacheMap.get(i);
+    }
+
+    /**
+     * The numerical value.
+     */
+    private final int numericalValue;
+
+    /**
+     * Inits the enum value.
+     *
+     * @param i
+     *            the numerical value
+     */
+    private EntryStates(final int i) {
+        numericalValue = i;
+    }
+
+    @Override
+    public int getNumericalValue() {
+        return numericalValue;
     }
 }

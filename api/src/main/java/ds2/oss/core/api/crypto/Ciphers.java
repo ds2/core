@@ -23,7 +23,7 @@ import javax.crypto.NoSuchPaddingException;
 
 /**
  * All supported ciphers.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -48,10 +48,10 @@ public enum Ciphers {
      * The suggested key length.
      */
     private final int suggestedKeyLength;
-    
+
     /**
      * Inits the cipher enum value.
-     * 
+     *
      * @param name
      *            the instance name
      * @param suggestedKeyLength
@@ -61,10 +61,10 @@ public enum Ciphers {
         instanceName = name;
         this.suggestedKeyLength = suggestedKeyLength;
     }
-    
+
     /**
      * Returns an instance of this enum cipher value.
-     * 
+     *
      * @return an instance
      * @throws NoSuchPaddingException
      *             if the padding used is unknown
@@ -76,10 +76,10 @@ public enum Ciphers {
     public Cipher getCipherInstance() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
         return Cipher.getInstance(instanceName);
     }
-    
+
     /**
      * Returns the cipher instance using the given provider.
-     * 
+     *
      * @param providerName
      *            the provider name
      * @return the cipher instance
@@ -91,13 +91,13 @@ public enum Ciphers {
      *             if the provider is unknown
      */
     public Cipher getCipherInstance(final String providerName) throws NoSuchPaddingException, NoSuchAlgorithmException,
-        NoSuchProviderException {
+    NoSuchProviderException {
         return Cipher.getInstance(instanceName, providerName);
     }
-    
+
     /**
      * Returns the suggested key length for this cipher.
-     * 
+     *
      * @return the suggested key length
      */
     public int getSuggestedKeyLength() {

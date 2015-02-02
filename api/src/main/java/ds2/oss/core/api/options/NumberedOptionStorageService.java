@@ -17,10 +17,10 @@ package ds2.oss.core.api.options;
 
 /**
  * The option storage, using numerical keys.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface NumberedOptionStorageService extends OptionStorageService<Long> {
-
+    
 }

@@ -15,10 +15,11 @@
  */
 package ds2.oss.core.base.impl;
 
+import java.util.Date;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.ConverterTool;
-import java.util.Date;
 
 /**
  * Implemenation of the converter.
@@ -28,7 +29,20 @@ import java.util.Date;
  */
 @ApplicationScoped
 public class ConverterToolImpl implements ConverterTool {
-
+    
+    @Override
+    public long getDateMillis(final Date d) {
+        if (d == null) {
+            throw new IllegalArgumentException("You must give a date to convert!");
+        }
+        return d.getTime();
+    }
+    
+    @Override
+    public Date toDate(final long ms) {
+        return new Date(ms);
+    }
+    
     @Override
     public int toInt(final Object o, final int defValue) {
         int rc = defValue;
@@ -41,18 +55,5 @@ public class ConverterToolImpl implements ConverterTool {
             }
         }
         return rc;
-    }
-
-    @Override
-    public long getDateMillis(Date d) {
-        if (d == null) {
-            throw new IllegalArgumentException("You must give a date to convert!");
-        }
-        return d.getTime();
-    }
-
-    @Override
-    public Date toDate(long ms) {
-        return new Date(ms);
     }
 }

@@ -17,12 +17,12 @@ package ds2.oss.core.api;
 
 /**
  * Abstract definition for any checked core exceptions.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public class CoreException extends Exception {
-    
+
     /**
      * The svuid.
      */
@@ -31,23 +31,10 @@ public class CoreException extends Exception {
      * The error data.
      */
     private final IErrorData errorData;
-    
-    /**
-     * Inits a simple exception.
-     * 
-     * @param msg
-     *            the error message
-     * @deprecated Please use another constructor. This one here is for backward compatibility.
-     */
-    @Deprecated
-    public CoreException(final String msg) {
-        super(msg);
-        errorData = null;
-    }
-    
+
     /**
      * Inits the exception with the given error data.
-     * 
+     *
      * @param d
      *            the error data
      */
@@ -55,10 +42,10 @@ public class CoreException extends Exception {
         super("" + d);
         errorData = d;
     }
-    
+
     /**
      * Inits the exception with the given error data and cause.
-     * 
+     *
      * @param d
      *            the error data
      * @param t
@@ -68,10 +55,23 @@ public class CoreException extends Exception {
         super("" + d, t);
         errorData = d;
     }
-    
+
+    /**
+     * Inits a simple exception.
+     *
+     * @param msg
+     *            the error message
+     * @deprecated Please use another constructor. This one here is for backward compatibility.
+     */
+    @Deprecated
+    public CoreException(final String msg) {
+        super(msg);
+        errorData = null;
+    }
+
     /**
      * Returns the error data.
-     * 
+     *
      * @return the error data
      */
     public IErrorData getErrorData() {

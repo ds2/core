@@ -28,21 +28,29 @@ import ds2.oss.core.api.environment.ServerIdentifier;
  * @version 0.3
  */
 public interface OptionValueContext extends Serializable {
-    
+
     /**
      * Returns the cluster of the option value.
      *
      * @return the cluster
      */
     Cluster getCluster();
-    
+
     /**
      * Returns the configuration this value is meant for.
      *
      * @return the runtime configuration
      */
     RuntimeConfiguration getConfiguration();
-    
+
+    /**
+     * Returns the domain name that is being used on the client side to access the server. This is
+     * if there is a cluster which serves multiple domains, and you need domain-specific values.
+     *
+     * @return the requested domain name
+     */
+    String getRequestedDomain();
+
     /**
      * Returns the server this value is meant for. Usually, this is blank because
      * {@link #getCluster()} and {@link #getConfiguration()} are sufficient. This is if one server
@@ -51,12 +59,4 @@ public interface OptionValueContext extends Serializable {
      * @return the server. Null indicates all servers, no specific one.
      */
     ServerIdentifier getServer();
-    
-    /**
-     * Returns the domain name that is being used on the client side to access the server. This is
-     * if there is a cluster which serves multiple domains, and you need domain-specific values.
-     *
-     * @return the requested domain name
-     */
-    String getRequestedDomain();
 }

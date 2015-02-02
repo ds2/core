@@ -21,7 +21,7 @@ import ds2.oss.core.api.BitSupport;
 
 /**
  * The impl for the bit support contract.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
@@ -35,14 +35,14 @@ public class BitSupportImpl implements BitSupport {
      * Constant for 0xff byte sequence.
      */
     private static final int XFF = 0xff;
-    
+
     /**
      * Inits the bean.
      */
     public BitSupportImpl() {
         // nothing special to do
     }
-    
+
     @Override
     public int createInt(final byte... b) {
         int rc = 0;
@@ -55,7 +55,7 @@ public class BitSupportImpl implements BitSupport {
         }
         return rc;
     }
-    
+
     @Override
     public long createLong(final byte... b) {
         long rc = 0;
@@ -68,11 +68,11 @@ public class BitSupportImpl implements BitSupport {
         }
         return rc;
     }
-    
+
     @Override
     public byte[] getBytesFrom(final long l, final int offset, final int length) {
         // TBD
         return null;
     }
-    
+
 }

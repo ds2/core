@@ -26,7 +26,7 @@ package ds2.oss.core.api;
  *            the streaming type
  */
 public interface Codec<A, Z> {
-    
+
     /**
      * Decodes a given object.
      *
@@ -37,7 +37,7 @@ public interface Codec<A, Z> {
      *             if an error occurred
      */
     A decode(Z a) throws CodecException;
-    
+
     /**
      * Encodes a given object into another one.
      *
@@ -48,5 +48,5 @@ public interface Codec<A, Z> {
      *             if an error occurred
      */
     Z encode(A z) throws CodecException;
-    
+
 }

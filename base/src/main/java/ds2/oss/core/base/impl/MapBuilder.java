@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * A dummy map builder.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  * @param <K>
@@ -35,28 +35,8 @@ import java.util.Map;
  */
 public final class MapBuilder<K, V> {
     /**
-     * The backing map.
-     */
-    private Map<K, V> map;
-    
-    /**
-     * Inits the hash map with the given size.
-     * 
-     * @param initSize
-     *            the size. If less than 0, initSize will be ignored
-     */
-    private MapBuilder(final int initSize) {
-        if (initSize > 0) {
-            map = new HashMap<>(initSize);
-        } else {
-            map = new HashMap<>();
-        }
-        
-    }
-    
-    /**
      * Creates the map builder with the given key class and value class.
-     * 
+     *
      * @param kClass
      *            the key class
      * @param vClass
@@ -66,10 +46,10 @@ public final class MapBuilder<K, V> {
     public static <K, V> MapBuilder<K, V> createWith(final Class<K> kClass, final Class<V> vClass) {
         return createWith(kClass, vClass, 0);
     }
-    
+
     /**
      * Creates the map builder with the given key class, value class and init size.
-     * 
+     *
      * @param kClass
      *            the key class
      * @param vClass
@@ -81,10 +61,39 @@ public final class MapBuilder<K, V> {
     public static <K, V> MapBuilder<K, V> createWith(final Class<K> kClass, final Class<V> vClass, final int initSize) {
         return new MapBuilder<>(initSize);
     }
-    
+
+    /**
+     * The backing map.
+     */
+    private Map<K, V> map;
+
+    /**
+     * Inits the hash map with the given size.
+     *
+     * @param initSize
+     *            the size. If less than 0, initSize will be ignored
+     */
+    private MapBuilder(final int initSize) {
+        if (initSize > 0) {
+            map = new HashMap<>(initSize);
+        } else {
+            map = new HashMap<>();
+        }
+
+    }
+
+    /**
+     * Returns the backing map.
+     *
+     * @return the backing map
+     */
+    public Map<K, V> build() {
+        return map;
+    }
+
     /**
      * Puts an element into the map.
-     * 
+     *
      * @param k
      *            the key
      * @param v
@@ -95,14 +104,5 @@ public final class MapBuilder<K, V> {
         map.put(k, v);
         return this;
     }
-    
-    /**
-     * Returns the backing map.
-     * 
-     * @return the backing map
-     */
-    public Map<K, V> build() {
-        return map;
-    }
-    
+
 }

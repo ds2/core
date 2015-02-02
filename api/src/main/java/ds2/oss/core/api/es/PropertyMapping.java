@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * The field mapping annotation to mark a field being a part of a json document for elasticsearch.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -32,51 +32,51 @@ import java.lang.annotation.Target;
 @Documented
 public @interface PropertyMapping {
     /**
-     * Dummy text to set null.
-     */
-    String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
-    
-    /**
      * The default boost value.
      */
     float DEF_BOOST = 1.0f;
-    
+
+    /**
+     * Dummy text to set null.
+     */
+    String NULL = "THIS IS A SPECIAL NULL VALUE - DO NOT USE";
+
     /**
      * The boost value.
      */
     float boost() default DEF_BOOST;
-    
+
     /**
      * The date format. See <a href=
      * "http://www.elasticsearch.org/guide/reference/mapping/date-format/" >here</a>.
      */
     String dateFormat() default NULL;
-    
+
     /**
      * The analyzer type.
      */
     IndexTypes index() default IndexTypes.ANALYZED;
-    
+
     /**
      * The name of the field to store in the index.
      */
     String indexName() default "";
-    
+
     /**
      * The field name.
      */
     String name() default "";
-    
+
     /**
      * What to store if this field is null.
      */
     String onNull() default NULL;
-    
+
     /**
      * Flag to indicate to store the field value's JSON directly.
      */
     boolean store() default false;
-    
+
     /**
      * The data type.
      */

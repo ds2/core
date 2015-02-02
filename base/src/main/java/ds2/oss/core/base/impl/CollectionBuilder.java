@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Idea for a collection builder.
- * 
+ *
  * @version 0.3
  * @author dstrauss
  * @param <E>
@@ -35,8 +35,13 @@ import org.slf4j.LoggerFactory;
  */
 public final class CollectionBuilder<E extends Collection<Z>, Z> implements CollectionBuilderContract<E, Z> {
     /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    /**
      * Creates a new collection builder, using the given collection class as reference.
-     * 
+     *
      * @param c
      *            the collection class to use
      * @return the collection builder
@@ -46,11 +51,11 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
         CollectionBuilder<E, Z> rc = new CollectionBuilder<>(c);
         return rc;
     }
-    
+
     /**
      * Creates a new collection builder, using the given collection implementation as backing
      * collection.
-     * 
+     *
      * @param c
      *            the backing collection to use
      * @return the collection builder
@@ -59,37 +64,32 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
         CollectionBuilder<E, Z> rc = new CollectionBuilder<>(c);
         return rc;
     }
-    
+
     /**
      * Returns a new collection builder, using an array list as backing collection.
-     * 
+     *
      * @param c
      *            the item class type
      * @return the collection builder
      */
-    public static <Z> CollectionBuilderContract<List<Z>, Z> newList(Class<Z> c) {
+    public static <Z> CollectionBuilderContract<List<Z>, Z> newList(final Class<Z> c) {
         CollectionBuilder<List<Z>, Z> rc = new CollectionBuilder<>(new ArrayList<Z>());
         return rc;
     }
-    
-    /**
-     * A logger.
-     */
-    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
-    /**
-     * The collection impl.
-     */
-    private E collection;
-    
+
     /**
      * Flag to indicate to allow adding null values.
      */
     private boolean allowNull = true;
-    
+
+    /**
+     * The collection impl.
+     */
+    private E collection;
+
     /**
      * Inits the collection builder.
-     * 
+     *
      * @param colClass
      *            the collection class to use
      */
@@ -102,11 +102,11 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
             LOG.error("Cannot access the default constructor of the given collection class!", e);
         }
     }
-    
+
     /**
      * Inits the collection builder, using the given collection implementation as backing
      * collection.
-     * 
+     *
      * @param col
      *            the backing collection to use
      */
@@ -116,7 +116,7 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
         }
         collection = col;
     }
-    
+
     @Override
     public CollectionBuilderContract<E, Z> add(final Z z) {
         if (allowNull || z != null) {
@@ -124,7 +124,7 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
         }
         return this;
     }
-    
+
     @Override
     public CollectionBuilderContract<E, Z> addAt(final int index, final Z z) {
         if (collection instanceof List) {
@@ -136,18 +136,18 @@ public final class CollectionBuilder<E extends Collection<Z>, Z> implements Coll
         }
         return this;
     }
-    
+
     @Override
     public CollectionBuilderContract<E, Z> allowNull(final boolean b) {
         this.allowNull = b;
         return this;
     }
-    
+
     @Override
     public E build() {
         return collection;
     }
-    
+
     @Override
     public CollectionBuilderContract<E, Z> remove(final Z z) {
         collection.remove(z);

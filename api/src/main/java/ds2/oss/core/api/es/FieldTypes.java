@@ -17,65 +17,65 @@ package ds2.oss.core.api.es;
 
 /**
  * The known data types for fields.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public enum FieldTypes {
     /**
-     * A string.
+     * A base64 encoded string.
      */
-    STRING("string"),
+    BINARY("binary"),
     /**
      * A boolean value.
      */
     BOOLEAN("boolean"),
     /**
-     * A long number.
+     * A date. In UTC.
      */
-    LONG("long"),
-    /**
-     * An integer number.
-     */
-    INTEGER("integer"),
-    /**
-     * A float value.
-     */
-    FLOAT("float"),
+    DATE("date"),
     /**
      * A double value.
      */
     DOUBLE("double"),
     /**
-     * A date. In UTC.
+     * A float value.
      */
-    DATE("date"),
+    FLOAT("float"),
     /**
-     * A base64 encoded string.
+     * An integer number.
      */
-    BINARY("binary"),
+    INTEGER("integer"),
+    /**
+     * A long number.
+     */
+    LONG("long"),
     /**
      * No idea.
      */
-    NULL("null");
+    NULL("null"),
+    /**
+     * A string.
+     */
+    STRING("string");
     /**
      * The type name.
      */
     private String typeName;
-    
+
     /**
      * INits the enum value.
-     * 
+     *
      * @param s
      *            the ES data type name
      */
     private FieldTypes(final String s) {
         typeName = s;
     }
-    
+
     /**
      * Returns the ES data type name.
-     * 
+     *
      * @return the data type name
      */
     public String getTypeName() {

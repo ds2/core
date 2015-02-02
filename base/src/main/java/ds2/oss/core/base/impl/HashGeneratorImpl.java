@@ -26,24 +26,24 @@ import ds2.oss.core.api.HashGenerator;
 
 /**
  * Basic implementation.
- * 
+ *
  * @author dstrauss
  * @version 0.4
- * 
+ *
  */
 public class HashGeneratorImpl implements HashGenerator {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(HashGeneratorImpl.class);
-    
+
     /**
      * Inits the implementation.
      */
     public HashGeneratorImpl() {
         // nothing special to do
     }
-    
+
     @Override
     public final byte[] getHashValue(final byte[] b, final HashAlgorithm g) {
         byte[] rc = null;
@@ -63,5 +63,5 @@ public class HashGeneratorImpl implements HashGenerator {
         }
         return rc;
     }
-    
+
 }

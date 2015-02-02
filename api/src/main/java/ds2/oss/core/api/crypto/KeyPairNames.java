@@ -17,7 +17,7 @@ package ds2.oss.core.api.crypto;
 
 /**
  * The PKI names.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */

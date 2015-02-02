@@ -17,7 +17,7 @@ package ds2.oss.core.api;
 
 /**
  * The known hash algorithms for the MessageDigest.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -42,20 +42,20 @@ public enum HashAlgorithm {
      * The algorithm id.
      */
     private String alg;
-    
+
     /**
      * Inits the enum value.
-     * 
+     *
      * @param s
      *            the algorithm id
      */
     private HashAlgorithm(final String s) {
         alg = s;
     }
-    
+
     /**
      * Returns the algorithm id for this hash type.
-     * 
+     *
      * @return the algorithm id
      */
     public String getAlgorithm() {

@@ -27,31 +27,31 @@ import java.util.List;
  *            the type of the primary key
  */
 public interface OptionStorageService<E> {
-    
+
     /**
-     * Returns the option with the given identifier.
+     * Approves an option value in stage Prepated.
      *
-     * @param ident
-     *            the identifier
-     * @param <V>
-     *            the value type of the option
-     * @return the option, or null if not found
-     * @throws OptionException
-     *             if a technical error occurred
-     */
-    <V> Option<E, V> getOptionByIdentifier(OptionIdentifier<V> ident) throws OptionException;
-    
-    /**
-     * Gets the option value with the given id.
-     * 
      * @param id
      *            the id of the option value
-     * @return the found option value
-     * @throws OptionException
-     *             if an error occurred
      */
-    <V> OptionValue<E, V> getOptionValueById(E id) throws OptionException;
-    
+    void approveOptionValue(E id);
+
+    /**
+     * Creates a new option.
+     *
+     * @param ident
+     *            the option identifier
+     * @param val
+     *            the value for the option. If the option is encrypted, this value must be the
+     *            original value. Implementations must encrypt this value before persisting.
+     * @param <V>
+     *            the value type
+     * @return the created option
+     * @throws CreateOptionException
+     *             if creation failed for some reason
+     */
+    <V> Option<E, V> createOption(OptionIdentifier<V> ident, V val) throws CreateOptionException;
+
     /**
      * Creates a new option value.
      *
@@ -60,8 +60,8 @@ public interface OptionStorageService<E> {
      * @param ctx
      *            the option value context
      * @param scheduleDate
-     *            the schedule date for this value. If null, then the option value is scheduled immediately. Still it
-     *            needs approval.
+     *            the schedule date for this value. If null, then the option value is scheduled
+     *            immediately. Still it needs approval.
      * @param value
      *            the value of the option value
      * @param <V>
@@ -72,23 +72,7 @@ public interface OptionStorageService<E> {
      */
     <V> OptionValue<E, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx, Date scheduleDate,
         V value) throws CreateOptionValueException;
-    
-    /**
-     * Creates a new option.
-     *
-     * @param ident
-     *            the option identifier
-     * @param val
-     *            the value for the option. If the option is encrypted, this value must be the original value.
-     *            Implementations must encrypt this value before persisting.
-     * @param <V>
-     *            the value type
-     * @return the created option
-     * @throws CreateOptionException
-     *             if creation failed for some reason
-     */
-    <V> Option<E, V> createOption(OptionIdentifier<V> ident, V val) throws CreateOptionException;
-    
+
     /**
      * Finds the best option value for the given context.
      *
@@ -101,7 +85,7 @@ public interface OptionStorageService<E> {
      * @return the option value to use. This MAY return a virtual option value with the option.
      */
     <V> OptionValue<E, V> findBestOptionValueByContext(OptionIdentifier<V> ident, OptionValueContext ctx);
-    
+
     /**
      * Returns all known options for the given application name.
      *
@@ -110,7 +94,31 @@ public interface OptionStorageService<E> {
      * @return A list of all known options.
      */
     List<Option<E, ?>> getAllOptions(String appName);
-    
+
+    /**
+     * Returns the option with the given identifier.
+     *
+     * @param ident
+     *            the identifier
+     * @param <V>
+     *            the value type of the option
+     * @return the option, or null if not found
+     * @throws OptionException
+     *             if a technical error occurred
+     */
+    <V> Option<E, V> getOptionByIdentifier(OptionIdentifier<V> ident) throws OptionException;
+
+    /**
+     * Gets the option value with the given id.
+     *
+     * @param id
+     *            the id of the option value
+     * @return the found option value
+     * @throws OptionException
+     *             if an error occurred
+     */
+    <V> OptionValue<E, V> getOptionValueById(E id) throws OptionException;
+
     /**
      * Sets the stage of an option.
      *
@@ -123,22 +131,14 @@ public interface OptionStorageService<E> {
      * @return the updated option
      */
     <V> Option<E, V> setOptionStage(OptionIdentifier<V> endpoint, OptionStage deleted);
-    
+
     /**
      * Sets a new stage value for a given option value.
-     * 
+     *
      * @param id
      *            the id of the option value
      * @param newStage
      *            the new stage
      */
     void setOptionValueStage(E id, OptionValueStage newStage);
-    
-    /**
-     * Approves an option value in stage Prepated.
-     *
-     * @param id
-     *            the id of the option value
-     */
-    void approveOptionValue(E id);
 }

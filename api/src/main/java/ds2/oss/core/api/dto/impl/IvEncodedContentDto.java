@@ -21,12 +21,12 @@ import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
  * The Iv based encoded content.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedContent {
-    
+
     /**
      * The svuid.
      */
@@ -35,7 +35,29 @@ public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedC
      * The init vector.
      */
     private byte[] initVector;
-    
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        IvEncodedContentDto other = (IvEncodedContentDto) obj;
+        if (!Arrays.equals(initVector, other.initVector)) {
+            return false;
+        }
+        return true;
+    }
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.crypto.IvEncodedContent#getInitVector()
@@ -44,17 +66,29 @@ public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedC
     public byte[] getInitVector() {
         return initVector;
     }
-    
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + Arrays.hashCode(initVector);
+        return result;
+    }
+
     /**
      * Sets the init vector.
-     * 
+     *
      * @param iv
      *            the initVector to set
      */
     public void setInitVector(final byte[] iv) {
         initVector = iv;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -71,35 +105,5 @@ public class IvEncodedContentDto extends EncodedContentDto implements IvEncodedC
         builder.append(")");
         return builder.toString();
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Arrays.hashCode(initVector);
-        return result;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        IvEncodedContentDto other = (IvEncodedContentDto) obj;
-        if (!Arrays.equals(initVector, other.initVector))
-            return false;
-        return true;
-    }
-    
+
 }

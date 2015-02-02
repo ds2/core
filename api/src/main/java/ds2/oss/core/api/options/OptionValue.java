@@ -25,68 +25,68 @@ import ds2.oss.core.api.crypto.IvEncodedContent;
  *
  * @author dstrauss
  * @version 0.3
- * @param <E> the persistence type
- * @param <V> the value type of this value
+ * @param <E>
+ *            the persistence type
+ * @param <V>
+ *            the value type of this value
  */
 public interface OptionValue<E, V>
-        extends
-        Persistable<E>,
-        CreatedModifiedAware,
-        LifeCycleAware,
-        OptionValueContext,
-        IvEncodedContent {
-
+    extends
+    Persistable<E>,
+    CreatedModifiedAware,
+    LifeCycleAware,
+    OptionValueContext,
+    IvEncodedContent {
+    
     /**
      * Returns the name or identifier of the approver of this option value.
      *
-     * @return the identifier of the approver. May return null if not yet
-     * approved
+     * @return the identifier of the approver. May return null if not yet approved
      */
     String getApproverName();
-
+    
     /**
      * Returns the name or identifier of the author of this option value.
      *
      * @return the identifier
      */
     String getAuthorName();
-
+    
     /**
      * Returns the referenced option id.
      *
      * @return the referenced option id
      */
     E getOptionReference();
-
+    
     /**
      * Returns the current stage of this value.
      *
      * @return the stage of this value
      */
     OptionValueStage getStage();
-
+    
+    /**
+     * Returns the value of this option value object in case the option was encrypted.
+     *
+     * @return the value
+     */
+    V getUnencryptedValue();
+    
     /**
      * Returns the value of this option value object.
      *
      * @return the value
      */
     V getValue();
-
+    
     /**
      * Returns the value type being used by this option value.
      *
      * @return the value type
      */
     ValueType getValueType();
-
-    /**
-     * Returns the value of this option value object in case the option was
-     * encrypted.
-     *
-     * @return the value
-     */
-    V getUnencryptedValue();
-
+    
     /**
      * A dummy method to check if this value is encoded.
      *

@@ -27,17 +27,24 @@ import javax.crypto.SecretKey;
  * @version 0.3
  */
 public interface AppServerSecurityBaseDataService extends SecurityBaseData {
-    
+
     /**
      * The system property name.
      */
     String SYS_PROPERTY = "ds2.app.sec.home";
-    
+
     /**
      * Creates new salt value, new init vector, resets iteration count, creates new AES key.
      */
     void createData();
-    
+
+    /**
+     * Returns the appserver's current secret key.
+     *
+     * @return the secret key
+     */
+    SecretKey getAppserverSecretKey();
+
     /**
      * Stores the current value of the salt and init vector.
      *
@@ -45,11 +52,4 @@ public interface AppServerSecurityBaseDataService extends SecurityBaseData {
      *            the charset to use
      */
     void storeData(Charset cs);
-    
-    /**
-     * Returns the appserver's current secret key.
-     * 
-     * @return the secret key
-     */
-    SecretKey getAppserverSecretKey();
 }

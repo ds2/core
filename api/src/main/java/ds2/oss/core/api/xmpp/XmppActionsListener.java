@@ -22,27 +22,27 @@ package ds2.oss.core.api.xmpp;
 
 /**
  * The actions listener. This contract deals with incoming XMPP messages.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface XmppActionsListener {
-    
-    /**
-     * Called when a given user requests a subscribe.
-     * 
-     * @param jid
-     *            the user who wants to subscribe to you
-     */
-    void onSubscribe(String jid);
-    
+
     /**
      * When a message has been received.
-     * 
+     *
      * @param from
      *            the jid from the sender
      * @param msg
      *            the textual message content
      */
     void onMessageReceived(String from, String msg);
+
+    /**
+     * Called when a given user requests a subscribe.
+     *
+     * @param jid
+     *            the user who wants to subscribe to you
+     */
+    void onSubscribe(String jid);
 }

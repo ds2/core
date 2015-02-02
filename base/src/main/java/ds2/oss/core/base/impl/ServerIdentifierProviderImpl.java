@@ -33,7 +33,7 @@ import ds2.oss.core.api.environment.ServerIdentifierProvider;
 
 /**
  * A server snooper.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -43,7 +43,7 @@ public class ServerIdentifierProviderImpl implements ServerIdentifierProvider {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(ServerIdentifierProviderImpl.class);
-    
+
     /**
      * {@inheritDoc}
      */
@@ -66,7 +66,7 @@ public class ServerIdentifierProviderImpl implements ServerIdentifierProvider {
                         continue;
                     }
                     LOG.info("IA for {} is {}", ni.getName(), ip);
-                    if (!ip.isLoopbackAddress() && (ip.getHostAddress().indexOf(":") == -1)) {
+                    if (!ip.isLoopbackAddress() && ip.getHostAddress().indexOf(":") == -1) {
                         LOG.debug("Interface {} seems to be InternetInterface. I'll take it...", ni.getName());
                         rc.addAddress(ip);
                         break;

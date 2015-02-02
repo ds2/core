@@ -25,7 +25,7 @@ import javax.inject.Qualifier;
 
 /**
  * Injection qualifier.
- * 
+ *
  * @version 0.3
  * @author dstrauss
  */
@@ -34,15 +34,15 @@ import javax.inject.Qualifier;
 @Qualifier
 public @interface InfinispanConfig {
     /**
-     * The name of the xml file that contains the cache config. Default is infinispan.xml.
-     */
-    @Nonbinding
-    String xmlFile() default "infinispan.xml";
-    
-    /**
      * The name of the cache to use. Empty string means default cache.
      */
     @Nonbinding
     String cacheName() default "";
-    
+
+    /**
+     * The name of the xml file that contains the cache config. Default is infinispan.xml.
+     */
+    @Nonbinding
+    String xmlFile() default "infinispan.xml";
+
 }

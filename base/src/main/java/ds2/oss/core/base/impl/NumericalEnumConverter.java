@@ -26,7 +26,7 @@ import ds2.oss.core.api.NumericEnumValue;
 
 /**
  * A basic converter.
- * 
+ *
  * @author dstrauss
  * @param <E>
  *            The enum
@@ -43,22 +43,22 @@ public class NumericalEnumConverter<E extends Enum<E>> {
      * The enum class.
      */
     private final Class<E> c;
-    
+
     /**
      * Inits the converter.
-     * 
+     *
      * @param c1
      *            The enum class
-     * 
-     * 
+     *
+     *
      */
     public NumericalEnumConverter(final Class<E> c1) {
         this.c = c1;
     }
-    
+
     /**
      * Performs an enum lookup with specific reflection parameters.
-     * 
+     *
      * @param methodName
      *            the method name
      * @param cT
@@ -80,10 +80,10 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         }
         return null;
     }
-    
+
     /**
      * Returns the enum value for a given numerical value.
-     * 
+     *
      * @param i
      *            the numerical value
      * @param methodName
@@ -106,10 +106,10 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         }
         return rc;
     }
-    
+
     /**
      * Parses a given int value into an enum value via a reflection lookup.
-     * 
+     *
      * @param i
      *            the id of the enum value
      * @param methodName
@@ -125,10 +125,10 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         }
         return rc;
     }
-    
+
     /**
      * Performs a lookup.
-     * 
+     *
      * @param methodName
      *            the method name
      * @param type
@@ -146,10 +146,10 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         }
         return rc;
     }
-    
+
     /**
      * Returns the numerical value for the given enum.
-     * 
+     *
      * @param e
      *            the enum value
      * @return the numerical value to use
@@ -167,7 +167,7 @@ public class NumericalEnumConverter<E extends Enum<E>> {
         }
         return rc;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()

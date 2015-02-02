@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.dbtools.converters;
 
@@ -29,21 +29,21 @@ import ds2.oss.core.api.EntryStates;
  */
 @Converter
 public class EntryStatesConverter implements AttributeConverter<EntryStates, Integer> {
-    
+
     @Override
-    public Integer convertToDatabaseColumn(EntryStates attribute) {
+    public Integer convertToDatabaseColumn(final EntryStates attribute) {
         if (attribute == null) {
             return null;
         }
         return attribute.getNumericalValue();
     }
-    
+
     @Override
-    public EntryStates convertToEntityAttribute(Integer dbData) {
+    public EntryStates convertToEntityAttribute(final Integer dbData) {
         if (dbData == null) {
             return null;
         }
         return EntryStates.getById(dbData.intValue());
     }
-    
+
 }

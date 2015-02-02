@@ -29,7 +29,7 @@ import ds2.oss.core.api.xmpp.PacketTypes;
 
 /**
  * Marks a smack packet listener.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -37,10 +37,10 @@ import ds2.oss.core.api.xmpp.PacketTypes;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
 public @interface SmackPacketListener {
-    
+
     /**
      * The type to filter.
-     * 
+     *
      */
     @Nonbinding
     PacketTypes type() default Message;

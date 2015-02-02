@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 /**
  * Contract for a persistable object, having a unique id.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  * @param <E>
@@ -28,7 +28,7 @@ import java.io.Serializable;
 public interface Persistable<E> extends Serializable {
     /**
      * Returns the primary key of this persistable object.
-     * 
+     *
      * @return the id
      */
     E getId();

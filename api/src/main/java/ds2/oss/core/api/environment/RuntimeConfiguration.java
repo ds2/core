@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Typical runtime configurations.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -64,23 +64,8 @@ public enum RuntimeConfiguration {
     @XmlEnumValue("staging")
     Staging("stg");
     /**
-     * A short identifier for the configuration.
-     */
-    private String ident;
-    
-    /**
-     * Inits the enum.
-     * 
-     * @param id
-     *            a short identifier string for this runtime name
-     */
-    private RuntimeConfiguration(final String id) {
-        ident = id;
-    }
-    
-    /**
      * Parses the given config name to be one of the known configurations.
-     * 
+     *
      * @param configName
      *            the config name. This can be the name of the enum, or the shortcode.
      * @return the configuration. In case nothing has been found with the given name,
@@ -98,10 +83,25 @@ public enum RuntimeConfiguration {
         }
         return rc;
     }
-    
+
+    /**
+     * A short identifier for the configuration.
+     */
+    private String ident;
+
+    /**
+     * Inits the enum.
+     *
+     * @param id
+     *            a short identifier string for this runtime name
+     */
+    private RuntimeConfiguration(final String id) {
+        ident = id;
+    }
+
     /**
      * Returns the short identifier for this runtime configuration.
-     * 
+     *
      * @return a short identifier
      */
     public String getIdentifier() {

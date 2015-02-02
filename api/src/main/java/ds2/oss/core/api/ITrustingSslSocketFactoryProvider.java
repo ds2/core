@@ -19,14 +19,14 @@ import javax.net.ssl.SSLSocketFactory;
 
 /**
  * Contract to get an ssl socket factory.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface ITrustingSslSocketFactoryProvider {
     /**
      * Returns the ssl socket factory touse.
-     * 
+     *
      * @param ignoreFailedServerTrusts
      *            whether to crash on invalid certificates, or to ignore them
      * @return the socket factory

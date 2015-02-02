@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * The routing path marker.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */

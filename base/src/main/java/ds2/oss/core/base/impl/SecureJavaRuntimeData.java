@@ -22,14 +22,14 @@ import ds2.oss.core.api.crypto.JavaRuntimeData;
 
 /**
  * Strong java runtime data.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Alternative
 public class SecureJavaRuntimeData implements JavaRuntimeData {
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.crypto.JavaRuntimeData#getAesMaxKeysize()
@@ -38,5 +38,5 @@ public class SecureJavaRuntimeData implements JavaRuntimeData {
     public int getAesMaxKeysize() {
         return 256;
     }
-    
+
 }

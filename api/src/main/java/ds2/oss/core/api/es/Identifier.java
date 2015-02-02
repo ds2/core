@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marks a field to be the identifier of a dto object.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */

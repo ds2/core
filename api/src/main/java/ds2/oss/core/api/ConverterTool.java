@@ -24,29 +24,33 @@ import java.util.Date;
  * @version 0.3
  */
 public interface ConverterTool {
-
-    /**
-     * Converts a given object into int.
-     *
-     * @param o the object
-     * @param defValue the default value, if the conversion failed
-     * @return the found value, or the default value
-     */
-    int toInt(Object o, int defValue);
-
+    
     /**
      * Converts a given date into the milliseconds starting from Jan 1 1970 GMT.
      *
-     * @param d the date
+     * @param d
+     *            the date
      * @return the milliseconds
      */
     long getDateMillis(Date d);
-
+    
     /**
      * Converts a given milliseconds timestamp into a date object.
      *
-     * @param ms the milliseconds from Jan 1 1970 GMT
+     * @param ms
+     *            the milliseconds from Jan 1 1970 GMT
      * @return the date object
      */
     Date toDate(long ms);
+    
+    /**
+     * Converts a given object into int.
+     *
+     * @param o
+     *            the object
+     * @param defValue
+     *            the default value, if the conversion failed
+     * @return the found value, or the default value
+     */
+    int toInt(Object o, int defValue);
 }

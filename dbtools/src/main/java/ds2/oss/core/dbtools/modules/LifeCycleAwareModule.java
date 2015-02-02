@@ -26,14 +26,14 @@ import ds2.oss.core.api.LifeCycleAware;
 
 /**
  * A life cycle aware db module.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  *
  */
 @Embeddable
 public class LifeCycleAwareModule implements LifeCycleAware {
-    
+
     /**
      * The svuid.
      */
@@ -50,22 +50,14 @@ public class LifeCycleAwareModule implements LifeCycleAware {
     @Column(name = "valid_to")
     @Temporal(TemporalType.TIMESTAMP)
     private Date validTo;
-    
+
     /**
      * Inits the module.
      */
     public LifeCycleAwareModule() {
         // TODO Auto-generated constructor stub
     }
-    
-    public void setValidFrom(Date validFrom) {
-        this.validFrom = validFrom;
-    }
-    
-    public void setValidTo(Date validTo) {
-        this.validTo = validTo;
-    }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.LifeCycleAware#getValidFrom()
@@ -74,7 +66,7 @@ public class LifeCycleAwareModule implements LifeCycleAware {
     public Date getValidFrom() {
         return validFrom;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.LifeCycleAware#getValidTo()
@@ -83,5 +75,13 @@ public class LifeCycleAwareModule implements LifeCycleAware {
     public Date getValidTo() {
         return validTo;
     }
-    
+
+    public void setValidFrom(final Date validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public void setValidTo(final Date validTo) {
+        this.validTo = validTo;
+    }
+
 }

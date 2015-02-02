@@ -38,53 +38,26 @@ import org.slf4j.LoggerFactory;
  * @version 0.3
  */
 public final class UriTool {
-    
+
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    /**
-     * The port.
-     */
-    private int port;
-    /**
-     * The path.
-     */
-    private String path;
-    /**
-     * The host.
-     */
-    private String host;
-    /**
-     * The fragment.
-     */
-    private String fragment;
-    /**
-     * The authority.
-     */
-    private String authority;
-    /**
-     * The query string.
-     */
-    private String query;
-    /**
-     * The scheme.
-     */
-    private String scheme;
-    /**
-     * The user info.
-     */
-    private String userInfo;
-    /**
-     * The query params map.
-     */
-    private Map<String, List<String>> queryParams;
     
     /**
-     * Dummy constructor.
+     * Creates a tool from a given string that is considered to be a uri string.
+     *
+     * @param string
+     *            the string considered to be a uri
+     * @return the uri tool
      */
-    private UriTool() {
-        queryParams = new HashMap<>();
+    public static UriTool createFrom(final String string) {
+        try {
+            return UriTool.createFrom(new URI(string));
+        } catch (final URISyntaxException e) {
+            LOG.warn("Error when creating the URI!", e);
+        }
+        return null;
     }
     
     /**
@@ -120,7 +93,7 @@ public final class UriTool {
      */
     private static Map<String, List<String>> fillQueryParamsFromQuery(final String query2) {
         final Map<String, List<String>> rc = new HashMap<>();
-        if ((query2 == null) || (query2.length() <= 0)) {
+        if (query2 == null || query2.length() <= 0) {
             return rc;
         }
         try (Scanner scanner = new Scanner(query2);) {
@@ -139,124 +112,6 @@ public final class UriTool {
             }
         }
         return rc;
-    }
-    
-    /**
-     * Sets a new host name.
-     *
-     * @param hostname
-     *            the new host name
-     * @return this tool
-     */
-    public UriTool setHost(final String hostname) {
-        host = hostname;
-        return this;
-    }
-    
-    /**
-     * Sets a new value for a query param.
-     *
-     * @param name
-     *            the query parameter name
-     * @param val
-     *            the new values
-     * @return this tool
-     */
-    public UriTool setQueryParam(final String name, final String... val) {
-        List<String> valList = getQueryParameter(name);
-        valList.clear();
-        valList.addAll(Arrays.asList(val));
-        return this;
-    }
-    
-    private List<String> getQueryParameter(String n) {
-        List<String> rc = queryParams.get(n);
-        if (rc == null) {
-            rc = new ArrayList<>();
-            queryParams.put(n, rc);
-        }
-        return rc;
-    }
-    
-    /**
-     * Adds a path segment to the current path.
-     *
-     * @param pathSegment
-     *            the path segment to add
-     * @return this tool
-     */
-    public UriTool path(final String pathSegment) {
-        if (path == null) {
-            path = "";
-        }
-        try {
-            path += "/" + URLEncoder.encode(pathSegment, "utf-8");
-        } catch (final UnsupportedEncodingException e) {
-            LOG.debug("Error when adding a path segment!", e);
-        }
-        return this;
-    }
-    
-    /**
-     * Adds the values to a query parameter.
-     *
-     * @param name
-     *            the query parameter
-     * @param val
-     *            the new values
-     * @return this tool
-     */
-    public UriTool addQueryParam(final String name, final String... val) {
-        List<String> valList = getQueryParameter(name);
-        valList.addAll(Arrays.asList(val));
-        return this;
-    }
-    
-    /**
-     * Sets the path.
-     *
-     * @param p
-     *            the path
-     * @return this tool
-     */
-    public UriTool setPath(final String p) {
-        path = p;
-        return this;
-    }
-    
-    /**
-     * Builds the final uri.
-     *
-     * @return the uri
-     * @throws URISyntaxException
-     *             in case of a syntax exception
-     * @throws UnsupportedEncodingException
-     *             in case of an unsupported encoding exception
-     */
-    public URI build() throws URISyntaxException, UnsupportedEncodingException {
-        query = setQueryString(queryParams);
-        URI rc;
-        if (authority != null) {
-            rc = new URI(scheme, authority, path, query, fragment);
-        } else {
-            rc = new URI(scheme, userInfo, host, port, path, query, fragment);
-        }
-        return rc;
-    }
-    
-    /**
-     * Builds the final uri. Besides {@link #build()}, this method will not throw an exception if an
-     * error occurred but will return null.
-     *
-     * @return the uri
-     */
-    public URI buildFinally() {
-        try {
-            return build();
-        } catch (final UnsupportedEncodingException | URISyntaxException e) {
-            LOG.debug("Error when creating the URI!", e);
-        }
-        return null;
     }
     
     /**
@@ -293,18 +148,168 @@ public final class UriTool {
     }
     
     /**
-     * Creates a tool from a given string that is considered to be a uri string.
-     *
-     * @param string
-     *            the string considered to be a uri
-     * @return the uri tool
+     * The authority.
      */
-    public static UriTool createFrom(final String string) {
+    private String authority;
+    /**
+     * The fragment.
+     */
+    private String fragment;
+    /**
+     * The host.
+     */
+    private String host;
+    /**
+     * The path.
+     */
+    private String path;
+    /**
+     * The port.
+     */
+    private int port;
+
+    /**
+     * The query string.
+     */
+    private String query;
+
+    /**
+     * The query params map.
+     */
+    private Map<String, List<String>> queryParams;
+
+    /**
+     * The scheme.
+     */
+    private String scheme;
+
+    /**
+     * The user info.
+     */
+    private String userInfo;
+
+    /**
+     * Dummy constructor.
+     */
+    private UriTool() {
+        queryParams = new HashMap<>();
+    }
+
+    /**
+     * Adds the values to a query parameter.
+     *
+     * @param name
+     *            the query parameter
+     * @param val
+     *            the new values
+     * @return this tool
+     */
+    public UriTool addQueryParam(final String name, final String... val) {
+        List<String> valList = getQueryParameter(name);
+        valList.addAll(Arrays.asList(val));
+        return this;
+    }
+
+    /**
+     * Builds the final uri.
+     *
+     * @return the uri
+     * @throws URISyntaxException
+     *             in case of a syntax exception
+     * @throws UnsupportedEncodingException
+     *             in case of an unsupported encoding exception
+     */
+    public URI build() throws URISyntaxException, UnsupportedEncodingException {
+        query = setQueryString(queryParams);
+        URI rc;
+        if (authority != null) {
+            rc = new URI(scheme, authority, path, query, fragment);
+        } else {
+            rc = new URI(scheme, userInfo, host, port, path, query, fragment);
+        }
+        return rc;
+    }
+
+    /**
+     * Builds the final uri. Besides {@link #build()}, this method will not throw an exception if an
+     * error occurred but will return null.
+     *
+     * @return the uri
+     */
+    public URI buildFinally() {
         try {
-            return UriTool.createFrom(new URI(string));
-        } catch (final URISyntaxException e) {
-            LOG.warn("Error when creating the URI!", e);
+            return build();
+        } catch (final UnsupportedEncodingException | URISyntaxException e) {
+            LOG.debug("Error when creating the URI!", e);
         }
         return null;
+    }
+
+    private List<String> getQueryParameter(final String n) {
+        List<String> rc = queryParams.get(n);
+        if (rc == null) {
+            rc = new ArrayList<>();
+            queryParams.put(n, rc);
+        }
+        return rc;
+    }
+
+    /**
+     * Adds a path segment to the current path.
+     *
+     * @param pathSegment
+     *            the path segment to add
+     * @return this tool
+     */
+    public UriTool path(final String pathSegment) {
+        if (path == null) {
+            path = "";
+        }
+        try {
+            path += "/" + URLEncoder.encode(pathSegment, "utf-8");
+        } catch (final UnsupportedEncodingException e) {
+            LOG.debug("Error when adding a path segment!", e);
+        }
+        return this;
+    }
+
+    /**
+     * Sets a new host name.
+     *
+     * @param hostname
+     *            the new host name
+     * @return this tool
+     */
+    public UriTool setHost(final String hostname) {
+        host = hostname;
+        return this;
+    }
+
+    /**
+     * Sets the path.
+     *
+     * @param p
+     *            the path
+     * @return this tool
+     */
+    public UriTool setPath(final String p) {
+        path = p;
+        return this;
+    }
+
+    /**
+     * Sets a new value for a query param.
+     *
+     * @param name
+     *            the query parameter name
+     * @param val
+     *            the new values
+     * @return this tool
+     */
+    public UriTool setQueryParam(final String name, final String... val) {
+        List<String> valList = getQueryParameter(name);
+        valList.clear();
+        valList.addAll(Arrays.asList(val));
+        return this;
     }
 }

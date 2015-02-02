@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * The mappings for types.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -32,55 +32,55 @@ import java.lang.annotation.Target;
 @Documented
 public @interface TypeMapping {
     /**
-     * The index type name.
-     */
-    String value();
-    
-    /**
-     * The name of the index to use. Usually, this can be set to a specific index, default is to let
-     * the ES service handle it for you.
-     */
-    String useIndex() default "";
-    
-    /**
      * The compress threshold. Documents bigger than the given size are compressed. Otherwise not.
      * Some values are 10kb, 100b etc. If this field is set, compress is enabled.
      */
     String compressThreshold() default "";
-    
+
+    /**
+     * The dynamicMapping setting.
+     */
+    DynamicMapping dynamicMapping() default DynamicMapping.TRUE;
+
+    /**
+     * Flag to index the _timestamp value.
+     */
+    boolean indexTimestamp() default false;
+
+    /**
+     * The _parent declaration.
+     */
+    String parentType() default "";
+
+    /**
+     * Flag to indicate if the index should be refreshed on creating a document of this type.
+     */
+    boolean refreshIndexOnCreate() default false;
+
+    /**
+     * Flag to indicate that any dealing with this type requires routing data.
+     */
+    boolean requiresRouting() default false;
+
     /**
      * The _source.enabled flag.
      */
     boolean storeSource() default true;
-    
+
     /**
      * The time to live value. Default is empty string to store the document forever. Valid values
      * may be 1d etc.
      */
     String ttl() default "";
-    
+
     /**
-     * Flag to index the _timestamp value.
+     * The name of the index to use. Usually, this can be set to a specific index, default is to let
+     * the ES service handle it for you.
      */
-    boolean indexTimestamp() default false;
-    
+    String useIndex() default "";
+
     /**
-     * The _parent declaration.
+     * The index type name.
      */
-    String parentType() default "";
-    
-    /**
-     * Flag to indicate if the index should be refreshed on creating a document of this type.
-     */
-    boolean refreshIndexOnCreate() default false;
-    
-    /**
-     * Flag to indicate that any dealing with this type requires routing data.
-     */
-    boolean requiresRouting() default false;
-    
-    /**
-     * The dynamicMapping setting.
-     */
-    DynamicMapping dynamicMapping() default DynamicMapping.TRUE;
+    String value();
 }

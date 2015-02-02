@@ -22,20 +22,22 @@ package ds2.oss.core.api;
  * @version 0.1
  */
 public interface ByteCodec {
-
-    /**
-     * Verschluesselt die angegebenen Bytes nach Base64.
-     *
-     * @param s die Bytes, die umgewandelt werden sollen.
-     * @return eine Zeichenkette zum Drucken in eine HTML-Datei usw.
-     */
-    String encode(final byte[] s);
-
+    
     /**
      * Dekodiert alle uebergebenen Bytes und liefert eine Anzahl Bytes zurueck.
      *
-     * @param s the base64 chars.
+     * @param s
+     *            the base64 chars.
      * @return die dekodierten Bytes
      */
     byte[] decode(char[] s);
+    
+    /**
+     * Verschluesselt die angegebenen Bytes nach Base64.
+     *
+     * @param s
+     *            die Bytes, die umgewandelt werden sollen.
+     * @return eine Zeichenkette zum Drucken in eine HTML-Datei usw.
+     */
+    String encode(final byte[] s);
 }

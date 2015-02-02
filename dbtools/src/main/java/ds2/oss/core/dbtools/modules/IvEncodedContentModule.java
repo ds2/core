@@ -25,30 +25,30 @@ import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
  * A db module for iv encoded content.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @Embeddable
 public class IvEncodedContentModule implements IvEncodedContent {
-    
+
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 4906950450524305880L;
-    /**
-     * The init vector.
-     */
-    @Column(name = "enc_iv")
-    @Lob
-    private byte[] initVector;
     /**
      * The encoded data.
      */
     @Column(name = "enc_data")
     @Lob
     private byte[] encoded;
-    
+    /**
+     * The init vector.
+     */
+    @Column(name = "enc_iv")
+    @Lob
+    private byte[] initVector;
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.crypto.EncodedContent#getEncoded()
@@ -57,27 +57,7 @@ public class IvEncodedContentModule implements IvEncodedContent {
     public byte[] getEncoded() {
         return encoded;
     }
-    
-    /**
-     * Sets the init vector data.
-     * 
-     * @param initVector
-     *            the initVector to set
-     */
-    public void setInitVector(byte[] initVector) {
-        this.initVector = initVector;
-    }
-    
-    /**
-     * Sets the encoded data.
-     * 
-     * @param encoded
-     *            the encoded to set
-     */
-    public void setEncoded(byte[] encoded) {
-        this.encoded = encoded;
-    }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.crypto.IvEncodedContent#getInitVector()
@@ -86,7 +66,27 @@ public class IvEncodedContentModule implements IvEncodedContent {
     public byte[] getInitVector() {
         return initVector;
     }
-    
+
+    /**
+     * Sets the encoded data.
+     *
+     * @param encoded
+     *            the encoded to set
+     */
+    public void setEncoded(final byte[] encoded) {
+        this.encoded = encoded;
+    }
+
+    /**
+     * Sets the init vector data.
+     *
+     * @param initVector
+     *            the initVector to set
+     */
+    public void setInitVector(final byte[] initVector) {
+        this.initVector = initVector;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -96,5 +96,5 @@ public class IvEncodedContentModule implements IvEncodedContent {
         return "IvEncodedContentModule [initVector=" + Arrays.toString(initVector) + ", encoded="
             + Arrays.toString(encoded) + "]";
     }
-    
+
 }

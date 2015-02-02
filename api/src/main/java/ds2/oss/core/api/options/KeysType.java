@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.api.options;
 
@@ -28,7 +28,7 @@ import javax.inject.Qualifier;
 
 /**
  * Marker for types, fields etc. to indicate which key type to use.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -38,13 +38,8 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KeysType {
     /**
-     * the type of the keys to use.
-     */
-    TYPE value();
-    
-    /**
      * The known key types.
-     * 
+     *
      * @author dstrauss
      * @version 0.3
      *
@@ -59,4 +54,9 @@ public @interface KeysType {
          */
         STRING;
     }
+
+    /**
+     * the type of the keys to use.
+     */
+    TYPE value();
 }

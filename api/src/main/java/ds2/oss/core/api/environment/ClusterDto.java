@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Simple dto.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -34,60 +34,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ClusterDto implements Cluster {
     /**
-     * The svuid.
-     */
-    private static final long serialVersionUID = -1435290906373276784L;
-    /**
      * The regex pattern for getting the cluster name.
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("[A-Za-z]");
     /**
-     * the name of the cluster.
+     * The svuid.
      */
-    @XmlAttribute(name = "name", required = true)
-    @NotNull
-    private char clusterName;
-    
-    /**
-     * Inits an empty cluster dto.
-     */
-    public ClusterDto() {
-        // nothing special to do
-    }
-    
-    /**
-     * Constructs the cluster name from the given string.
-     * 
-     * @param clusterEnvStr
-     *            the string to analyse. The first letter is taken to be the cluster config name.
-     */
-    public ClusterDto(final String clusterEnvStr) {
-        this();
-        clusterName = parseFromString(clusterEnvStr);
-    }
-    
-    /**
-     * Inits the dto from the given values.
-     * 
-     * @param cluster
-     *            the cluster to copy
-     */
-    public ClusterDto(final Cluster cluster) {
-        this();
-        clusterName = cluster.getClusterName();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final synchronized char getClusterName() {
-        return clusterName;
-    }
+    private static final long serialVersionUID = -1435290906373276784L;
     
     /**
      * Parses the given string for containing a cluster name.
-     * 
+     *
      * @param s
      *            the possible name of the cluster
      * @return the cluster character name
@@ -105,27 +62,73 @@ public class ClusterDto implements Cluster {
         final char rc = g.charAt(0);
         return rc;
     }
-    
+
     /**
-     * Sets the cluster name.
-     * 
-     * @param cc
-     *            the clusterName to set
+     * the name of the cluster.
      */
-    public final synchronized void setClusterName(final char cc) {
-        clusterName = cc;
+    @XmlAttribute(name = "name", required = true)
+    @NotNull
+    private char clusterName;
+
+    /**
+     * Inits an empty cluster dto.
+     */
+    public ClusterDto() {
+        // nothing special to do
     }
-    
+
+    /**
+     * Inits the dto from the given values.
+     *
+     * @param cluster
+     *            the cluster to copy
+     */
+    public ClusterDto(final Cluster cluster) {
+        this();
+        clusterName = cluster.getClusterName();
+    }
+
+    /**
+     * Constructs the cluster name from the given string.
+     *
+     * @param clusterEnvStr
+     *            the string to analyse. The first letter is taken to be the cluster config name.
+     */
+    public ClusterDto(final String clusterEnvStr) {
+        this();
+        clusterName = parseFromString(clusterEnvStr);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
-    public final String toString() {
-        final StringBuffer sb = new StringBuffer();
-        sb.append(ClusterDto.class.getName());
-        sb.append("(");
-        sb.append("cluster=").append(clusterName);
-        sb.append(")");
-        return sb.toString();
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ClusterDto other = (ClusterDto) obj;
+        if (clusterName != other.clusterName) {
+            return false;
+        }
+        return true;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final synchronized char getClusterName() {
+        return clusterName;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -137,22 +140,24 @@ public class ClusterDto implements Cluster {
         result = prime * result + clusterName;
         return result;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
+
+    /**
+     * Sets the cluster name.
+     *
+     * @param cc
+     *            the clusterName to set
      */
+    public final synchronized void setClusterName(final char cc) {
+        clusterName = cc;
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ClusterDto other = (ClusterDto) obj;
-        if (clusterName != other.clusterName)
-            return false;
-        return true;
+    public final String toString() {
+        final StringBuffer sb = new StringBuffer();
+        sb.append(ClusterDto.class.getName());
+        sb.append("(");
+        sb.append("cluster=").append(clusterName);
+        sb.append(")");
+        return sb.toString();
     }
 }

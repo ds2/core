@@ -22,7 +22,7 @@ import ds2.oss.core.api.NumericEnumValue;
 
 /**
  * Any stage an option can have.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -38,28 +38,8 @@ public enum OptionStage implements NumericEnumValue {
      */
     Online(1);
     /**
-     * The stage id.
-     */
-    private int stageId;
-    
-    /**
-     * Creates the stage with the given id.
-     * 
-     * @param i
-     *            the numeric id of the stage.
-     */
-    private OptionStage(final int i) {
-        stageId = i;
-    }
-    
-    @Override
-    public int getNumericalValue() {
-        return stageId;
-    }
-    
-    /**
      * Id lookup.
-     * 
+     *
      * @param id
      *            the id of the stage
      * @return the stage, or null
@@ -71,5 +51,25 @@ public enum OptionStage implements NumericEnumValue {
             }
         }
         return null;
+    }
+
+    /**
+     * The stage id.
+     */
+    private int stageId;
+
+    /**
+     * Creates the stage with the given id.
+     *
+     * @param i
+     *            the numeric id of the stage.
+     */
+    private OptionStage(final int i) {
+        stageId = i;
+    }
+
+    @Override
+    public int getNumericalValue() {
+        return stageId;
     }
 }

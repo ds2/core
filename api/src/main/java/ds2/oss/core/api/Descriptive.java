@@ -17,14 +17,14 @@ package ds2.oss.core.api;
 
 /**
  * A descriptive object.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface Descriptive {
     /**
      * Returns the description.
-     * 
+     *
      * @return the description
      */
     String getDescription();

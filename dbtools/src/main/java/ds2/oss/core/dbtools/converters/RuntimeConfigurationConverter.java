@@ -22,25 +22,25 @@ import ds2.oss.core.api.environment.RuntimeConfiguration;
 
 /**
  * To convert between runtimeConfig and db data.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  *
  */
 @Converter
 public class RuntimeConfigurationConverter implements AttributeConverter<RuntimeConfiguration, String> {
-    
+
     @Override
-    public String convertToDatabaseColumn(RuntimeConfiguration attribute) {
+    public String convertToDatabaseColumn(final RuntimeConfiguration attribute) {
         if (attribute == null) {
             return null;
         }
         return attribute.getIdentifier();
     }
-    
+
     @Override
-    public RuntimeConfiguration convertToEntityAttribute(String dbData) {
+    public RuntimeConfiguration convertToEntityAttribute(final String dbData) {
         return RuntimeConfiguration.parseConfig(dbData);
     }
-    
+
 }

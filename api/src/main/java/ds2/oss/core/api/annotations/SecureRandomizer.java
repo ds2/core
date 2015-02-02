@@ -26,7 +26,7 @@ import javax.inject.Qualifier;
 /**
  * Qualifier for a secure randomizer. Put this on fields to have a SecureRandom object being
  * injected.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -35,14 +35,14 @@ import javax.inject.Qualifier;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SecureRandomizer {
     /**
-     * The provider name. If empty, then the platform default will be used.
-     */
-    @Nonbinding
-    String providerName() default "";
-    
-    /**
      * The algorithm to use for randomizing.
      */
     @Nonbinding
     String algorithm() default "SHA1PRNG";
+
+    /**
+     * The provider name. If empty, then the platform default will be used.
+     */
+    @Nonbinding
+    String providerName() default "";
 }

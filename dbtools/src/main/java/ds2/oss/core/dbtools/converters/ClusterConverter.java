@@ -23,28 +23,28 @@ import ds2.oss.core.api.environment.ClusterDto;
 
 /**
  * To convert between cluster contract and db data.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  *
  */
 @Converter
 public class ClusterConverter implements AttributeConverter<Cluster, String> {
-    
+
     @Override
-    public String convertToDatabaseColumn(Cluster attribute) {
+    public String convertToDatabaseColumn(final Cluster attribute) {
         if (attribute == null) {
             return null;
         }
         return "" + attribute.getClusterName();
     }
-    
+
     @Override
-    public Cluster convertToEntityAttribute(String dbData) {
+    public Cluster convertToEntityAttribute(final String dbData) {
         if (dbData == null) {
             return null;
         }
         return new ClusterDto(dbData);
     }
-    
+
 }

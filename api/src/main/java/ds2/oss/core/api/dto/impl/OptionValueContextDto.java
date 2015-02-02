@@ -28,18 +28,28 @@ import ds2.oss.core.api.options.OptionValueContext;
 
 /**
  * A simple option value context dto.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @XmlType(name = "optionValueType")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OptionValueContextDto implements OptionValueContext {
-    
+
     /**
      * The svuid.
      */
     private static final long serialVersionUID = -805647699277313685L;
+    /**
+     * The cluster.
+     */
+    @XmlElement
+    private Cluster cluster;
+    /**
+     * The runtime configuration.
+     */
+    @XmlElement
+    private RuntimeConfiguration configuration;
     /**
      * The requested domain.
      */
@@ -50,27 +60,17 @@ public class OptionValueContextDto implements OptionValueContext {
      */
     @XmlElement
     private ServerIdentifier server;
-    /**
-     * The runtime configuration.
-     */
-    @XmlElement
-    private RuntimeConfiguration configuration;
-    /**
-     * The cluster.
-     */
-    @XmlElement
-    private Cluster cluster;
-    
+
     /**
      * Inits the dto with empty values.
      */
     public OptionValueContextDto() {
         // nothing to do
     }
-    
+
     /**
      * Inits the dto with empty values.
-     * 
+     *
      * @param c
      *            the target cluster
      */
@@ -78,23 +78,23 @@ public class OptionValueContextDto implements OptionValueContext {
         this();
         cluster = c;
     }
-    
+
     /**
      * Inits the dto.
-     * 
+     *
      * @param c
      *            the cluster
      * @param config
      *            the runtime configuration
      */
-    public OptionValueContextDto(final Cluster c, RuntimeConfiguration config) {
+    public OptionValueContextDto(final Cluster c, final RuntimeConfiguration config) {
         this(c);
         configuration = config;
     }
-    
+
     /**
      * Inits the dto.
-     * 
+     *
      * @param c
      *            the cluster
      * @param config
@@ -102,15 +102,15 @@ public class OptionValueContextDto implements OptionValueContext {
      * @param reqDomain
      *            the requested domain
      */
-    public OptionValueContextDto(final Cluster c, RuntimeConfiguration config, String reqDomain) {
+    public OptionValueContextDto(final Cluster c, final RuntimeConfiguration config, final String reqDomain) {
         this(c, config);
         requestedDomain = reqDomain;
     }
-    
+
     /**
-     * 
+     *
      * Inits the dto.
-     * 
+     *
      * @param c
      *            the cluster
      * @param config
@@ -120,109 +120,18 @@ public class OptionValueContextDto implements OptionValueContext {
      * @param serverIdentifier
      *            the server identifier
      */
-    public OptionValueContextDto(final Cluster c, RuntimeConfiguration config, String reqDomain,
-        ServerIdentifier serverIdentifier) {
+    public OptionValueContextDto(final Cluster c, final RuntimeConfiguration config, final String reqDomain,
+        final ServerIdentifier serverIdentifier) {
         this(c, config, reqDomain);
         server = serverIdentifier;
     }
-    
-    /**
-     * Sets the requested domain.
-     * 
-     * @param requestedDomain
-     *            the requestedDomain to set
-     */
-    public void setRequestedDomain(String requestedDomain) {
-        this.requestedDomain = requestedDomain;
-    }
-    
-    /**
-     * Sets the server id.
-     * 
-     * @param server
-     *            the server to set
-     */
-    public void setServer(ServerIdentifier server) {
-        this.server = server;
-    }
-    
-    /**
-     * The runtime config.
-     * 
-     * @param configuration
-     *            the configuration to set
-     */
-    public void setConfiguration(RuntimeConfiguration configuration) {
-        this.configuration = configuration;
-    }
-    
-    /**
-     * Sets the cluster.
-     * 
-     * @param cluster
-     *            the cluster to set
-     */
-    public void setCluster(Cluster cluster) {
-        this.cluster = cluster;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.options.OptionValueContext#getCluster()
-     */
-    @Override
-    public Cluster getCluster() {
-        return cluster;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.options.OptionValueContext#getConfiguration()
-     */
-    @Override
-    public RuntimeConfiguration getConfiguration() {
-        return configuration;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.options.OptionValueContext#getServer()
-     */
-    @Override
-    public ServerIdentifier getServer() {
-        return server;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.options.OptionValueContext#getRequestedDomain()
-     */
-    @Override
-    public String getRequestedDomain() {
-        return requestedDomain;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((cluster == null) ? 0 : cluster.hashCode());
-        result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
-        result = prime * result + ((requestedDomain == null) ? 0 : requestedDomain.hashCode());
-        result = prime * result + ((server == null) ? 0 : server.hashCode());
-        return result;
-    }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -259,7 +168,98 @@ public class OptionValueContextDto implements OptionValueContext {
         }
         return true;
     }
-    
+
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.api.options.OptionValueContext#getCluster()
+     */
+    @Override
+    public Cluster getCluster() {
+        return cluster;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.api.options.OptionValueContext#getConfiguration()
+     */
+    @Override
+    public RuntimeConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.api.options.OptionValueContext#getRequestedDomain()
+     */
+    @Override
+    public String getRequestedDomain() {
+        return requestedDomain;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.api.options.OptionValueContext#getServer()
+     */
+    @Override
+    public ServerIdentifier getServer() {
+        return server;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (cluster == null ? 0 : cluster.hashCode());
+        result = prime * result + (configuration == null ? 0 : configuration.hashCode());
+        result = prime * result + (requestedDomain == null ? 0 : requestedDomain.hashCode());
+        result = prime * result + (server == null ? 0 : server.hashCode());
+        return result;
+    }
+
+    /**
+     * Sets the cluster.
+     *
+     * @param cluster
+     *            the cluster to set
+     */
+    public void setCluster(final Cluster cluster) {
+        this.cluster = cluster;
+    }
+
+    /**
+     * The runtime config.
+     *
+     * @param configuration
+     *            the configuration to set
+     */
+    public void setConfiguration(final RuntimeConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
+    /**
+     * Sets the requested domain.
+     *
+     * @param requestedDomain
+     *            the requestedDomain to set
+     */
+    public void setRequestedDomain(final String requestedDomain) {
+        this.requestedDomain = requestedDomain;
+    }
+
+    /**
+     * Sets the server id.
+     *
+     * @param server
+     *            the server to set
+     */
+    public void setServer(final ServerIdentifier server) {
+        this.server = server;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -278,5 +278,5 @@ public class OptionValueContextDto implements OptionValueContext {
         builder.append(")");
         return builder.toString();
     }
-    
+
 }

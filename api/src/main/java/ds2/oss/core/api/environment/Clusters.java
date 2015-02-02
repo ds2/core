@@ -17,7 +17,7 @@ package ds2.oss.core.api.environment;
 
 /**
  * The most familiar cluster names.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  *
@@ -127,10 +127,10 @@ public enum Clusters implements Cluster {
      * Cluster Z.
      */
     Z;
-    
+
     @Override
     public char getClusterName() {
         return toString().charAt(0);
     }
-    
+
 }

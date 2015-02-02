@@ -26,20 +26,25 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Some direct help methods, ready to use.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public final class Tools {
-    
+
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     /**
      * To convert a given string into an inet address.
-     * 
+     *
      * @param s
      *            the host name or ip address
      * @return the inet address, or null if an error occurred
      */
-    public static InetAddress toInetAddress(String s) {
+    public static InetAddress toInetAddress(final String s) {
         InetAddress rc = null;
         try {
             rc = InetAddress.getByName(s);
@@ -48,10 +53,10 @@ public final class Tools {
         }
         return rc;
     }
-    
+
     /**
      * Converts a given object into an int value.
-     * 
+     *
      * @param o
      *            the object. Possibly a string
      * @param def
@@ -69,10 +74,10 @@ public final class Tools {
         }
         return rc;
     }
-    
+
     /**
      * Converts a given object to long.
-     * 
+     *
      * @param o
      *            the object
      * @param def
@@ -90,10 +95,10 @@ public final class Tools {
         }
         return rc;
     }
-    
+
     /**
      * Converts a given string into a url.
-     * 
+     *
      * @param urlStr
      *            the url string
      * @return the url object, or null if an error occurred
@@ -107,12 +112,7 @@ public final class Tools {
         }
         return rc;
     }
-    
-    /**
-     * A logger.
-     */
-    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /**
      * May create an instance of the class.
      */

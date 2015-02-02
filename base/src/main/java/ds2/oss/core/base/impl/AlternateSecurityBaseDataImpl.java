@@ -31,43 +31,43 @@ import ds2.oss.core.api.SecurityBaseData;
  */
 @ApplicationScoped
 public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
-
+    
+    /**
+     * The init vector.
+     */
+    private byte[] initVector;
     /**
      * A randomizer.
      */
     @Inject
     private Random random;
     /**
-     * A randomly generated salt value. On every restart of the component, a new
-     * salt value will be generated!
+     * A randomly generated salt value. On every restart of the component, a new salt value will be
+     * generated!
      */
     private byte[] salt;
-    /**
-     * The init vector.
-     */
-    private byte[] initVector;
-
-    @Override
-    public int getMinIteration() {
-        return 1000;
-    }
-
+    
     @Override
     public byte[] getInitVector() {
         return initVector;
     }
-
+    
+    @Override
+    public int getMinIteration() {
+        return 1000;
+    }
+    
     @Override
     public byte[] getSalt() {
         return salt;
     }
-
+    
     /**
      * Actions to perform after init, after CDI injections.
      */
     @PostConstruct
     public void onClass() {
-        byte[] buffer=new byte[512];
+        byte[] buffer = new byte[512];
         random.nextBytes(buffer);
         salt = buffer;
     }

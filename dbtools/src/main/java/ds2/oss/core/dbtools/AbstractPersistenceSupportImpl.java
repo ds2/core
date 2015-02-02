@@ -42,9 +42,14 @@ import ds2.oss.core.api.PersistenceSupport;
  *            the primary key type
  */
 public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRIMKEY>, PRIMKEY>
-    implements
-    PersistenceSupport<DTO, PRIMKEY> {
-    
+implements
+PersistenceSupport<DTO, PRIMKEY> {
+
+    /**
+     * A logger.
+     */
+    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     /**
      * Returns a list of a given query.
      *
@@ -68,7 +73,7 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
         }
         return rc;
     }
-    
+
     protected static <E> List<E> getSecureList(final TypedQuery<E> q) {
         List<E> rc = null;
         try {
@@ -81,7 +86,7 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
         }
         return rc;
     }
-    
+
     /**
      * Returns a single item from a given query.
      *
@@ -107,8 +112,8 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
         }
         return rc;
     }
-    
-    protected static <E> E getSecureSingle(TypedQuery<E> q) {
+
+    protected static <E> E getSecureSingle(final TypedQuery<E> q) {
         E rc = null;
         try {
             rc = q.getSingleResult();
@@ -122,12 +127,7 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
         }
         return rc;
     }
-    
-    /**
-     * A logger.
-     */
-    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /**
      * Finds a specific entity.
      *

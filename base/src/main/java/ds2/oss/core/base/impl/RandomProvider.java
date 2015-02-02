@@ -15,13 +15,6 @@
  */
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.annotations.SecureRandomizer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
@@ -30,9 +23,18 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Set;
 
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ds2.oss.core.api.annotations.SecureRandomizer;
+
 /**
  * Simple provider for Random instances.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -42,17 +44,10 @@ public final class RandomProvider {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
-    /**
-     * Hide constructor.
-     */
-    private RandomProvider() {
-        // nothing to do
-    }
-    
+
     /**
      * Creates a secure randomizer.
-     * 
+     *
      * @param p
      *            the injection point
      * @return a secure randomizer. Or null if an error occurred.
@@ -77,7 +72,7 @@ public final class RandomProvider {
                 } catch (final NoSuchProviderException e) {
                     LOG.error("Unknown provider!", e);
                 }
-                
+
             }
         }
         if (rc == null) {
@@ -85,10 +80,10 @@ public final class RandomProvider {
         }
         return rc;
     }
-    
+
     /**
      * Creates a simple randomizer.
-     * 
+     *
      * @return a simple randomizer
      * @throws java.security.NoSuchAlgorithmException
      *             if an error occurred
@@ -98,5 +93,12 @@ public final class RandomProvider {
         final Random rc = new Random(System.currentTimeMillis());
         return rc;
     }
-    
+
+    /**
+     * Hide constructor.
+     */
+    private RandomProvider() {
+        // nothing to do
+    }
+
 }

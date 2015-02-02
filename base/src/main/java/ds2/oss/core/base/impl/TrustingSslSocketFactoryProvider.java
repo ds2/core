@@ -33,7 +33,7 @@ import ds2.oss.core.api.ITrustingSslSocketFactoryProvider;
 
 /**
  * The trusting ssl socket factory provider implementation.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -42,7 +42,7 @@ public class TrustingSslSocketFactoryProvider implements ITrustingSslSocketFacto
      * a logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(TrustingSslSocketFactoryProvider.class);
-    
+
     @Override
     public SSLSocketFactory getTrustingFactory(final boolean ignoreSslErrors) {
         SSLSocketFactory rc = null;
@@ -62,5 +62,5 @@ public class TrustingSslSocketFactoryProvider implements ITrustingSslSocketFacto
         }
         return rc;
     }
-    
+
 }

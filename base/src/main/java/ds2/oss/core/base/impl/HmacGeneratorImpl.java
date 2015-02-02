@@ -31,7 +31,7 @@ import ds2.oss.core.api.HmacGenerator;
 
 /**
  * The hmac version.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -40,17 +40,10 @@ public class HmacGeneratorImpl implements HmacGenerator {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(HmacGeneratorImpl.class);
-    
-    /**
-     * Inits the implementation.
-     */
-    public HmacGeneratorImpl() {
-        // nothing special to do
-    }
-    
+
     /**
      * Generates the hmac id.
-     * 
+     *
      * @param g
      *            the hash algorithm to use for the mac hashing.
      * @return the id, or null if not found
@@ -70,10 +63,10 @@ public class HmacGeneratorImpl implements HmacGenerator {
         }
         return hmacId;
     }
-    
+
     /**
      * Generates the mac hash.
-     * 
+     *
      * @param sk
      *            the secret key to use
      * @param hmacId
@@ -96,7 +89,14 @@ public class HmacGeneratorImpl implements HmacGenerator {
         }
         return null;
     }
-    
+
+    /**
+     * Inits the implementation.
+     */
+    public HmacGeneratorImpl() {
+        // nothing special to do
+    }
+
     @Override
     public final byte[] generate(final byte[] key, final byte[] b, final HashAlgorithm g) {
         byte[] rc = null;
@@ -113,7 +113,7 @@ public class HmacGeneratorImpl implements HmacGenerator {
         }
         return rc;
     }
-    
+
     @Override
     public final byte[] generate(final byte[] b, final HashAlgorithm g) {
         byte[] rc = null;
@@ -134,7 +134,7 @@ public class HmacGeneratorImpl implements HmacGenerator {
         }
         return rc;
     }
-    
+
     @Override
     public SecretKey generateKey(final int bitsize, final HashAlgorithm g) {
         KeyGenerator gen;
@@ -148,5 +148,5 @@ public class HmacGeneratorImpl implements HmacGenerator {
         }
         return rc;
     }
-    
+
 }

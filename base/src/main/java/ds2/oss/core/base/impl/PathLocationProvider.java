@@ -32,7 +32,7 @@ import ds2.oss.core.api.annotations.PathLocation;
 
 /**
  * The path location provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -42,10 +42,10 @@ public class PathLocationProvider {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /**
      * Produces the path object.
-     * 
+     *
      * @param p
      *            the injection point
      * @return the path, or null if not found

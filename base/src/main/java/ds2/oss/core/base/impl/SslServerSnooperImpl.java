@@ -50,7 +50,7 @@ import ds2.oss.core.api.annotations.SecureRandomizer;
  */
 @ApplicationScoped
 public class SslServerSnooperImpl implements SslServerSnooper {
-    
+
     /**
      * A logger.
      */
@@ -59,11 +59,6 @@ public class SslServerSnooperImpl implements SslServerSnooper {
      * The path separator char to use to setup the file path.
      */
     private static final char PATHSEP = File.separatorChar;
-    /**
-     * Secure Randomizer.
-     */
-    @SecureRandomizer
-    private SecureRandom secRandom;
     
     /**
      * Returns an empty keystore, or the platform keystore (aka trust store).
@@ -90,7 +85,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         }
         return rc;
     }
-    
+
     /**
      * Loads keystore data.
      *
@@ -113,7 +108,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
             LOG.error("An IO error occurred on reading the keystore!", e);
         }
     }
-    
+
     /**
      * Prints some data about the given certificate.
      *
@@ -127,7 +122,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         sb.append("\n").append("Issuer: ").append(cert.getIssuerDN());
         return sb.toString();
     }
-    
+
     /**
      * Writes the received server certificates into a temporary file.
      *
@@ -172,9 +167,15 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final CertificateException e1) {
             LOG.warn("Cert error occurred!", e1);
         }
-        
+
     }
-    
+
+    /**
+     * Secure Randomizer.
+     */
+    @SecureRandomizer
+    private SecureRandom secRandom;
+
     @Override
     public X509Certificate[] getServerCertificates(final String hostname, final int port) {
         final KeyStore platformKeystore = getCurrentKeystore();
@@ -207,7 +208,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final IOException e) {
             LOG.error("Error when reading the SSL sockets.", e);
         }
-        
+
         return rc;
     }
 }

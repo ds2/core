@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * Attach this annotation to a property field of a java class to use it as _timestamp path field.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */

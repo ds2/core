@@ -35,7 +35,7 @@ import javax.inject.Qualifier;
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SmackPEProvider {
-    
+
     /**
      * The element name.
      *
@@ -43,7 +43,7 @@ public @interface SmackPEProvider {
      */
     @Nonbinding
     String elementName() default "";
-    
+
     /**
      * The namespace to watch for.
      *

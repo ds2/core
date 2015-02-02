@@ -17,7 +17,7 @@ package ds2.oss.core.api;
 
 /**
  * Contract for a hex encoder.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */

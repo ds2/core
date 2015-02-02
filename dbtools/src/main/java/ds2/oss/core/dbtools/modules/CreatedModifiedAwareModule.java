@@ -26,13 +26,13 @@ import ds2.oss.core.api.CreatedModifiedAware;
 
 /**
  * Embeddable module for the createdModified system.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
 @Embeddable
 public class CreatedModifiedAwareModule implements CreatedModifiedAware {
-    
+
     /**
      * The svuid.
      */
@@ -49,7 +49,7 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
     @Column(name = "modified", nullable = false, updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
-    
+
     /**
      * Inits the module.
      */
@@ -57,44 +57,37 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
         created = new Date();
         modified = new Date();
     }
-    
+
     @Override
     public Date getCreated() {
         return created;
     }
-    
+
     @Override
     public Date getModified() {
         return modified;
     }
-    
+
     /**
      * Sets the creation date.
-     * 
+     *
      * @param c
      *            the created to set
      */
     public void setCreated(final Date c) {
         created = c;
     }
-    
+
     /**
      * Sets the modification date.
-     * 
+     *
      * @param m
      *            the modified to set
      */
     public void setModified(final Date m) {
         modified = m;
     }
-    
-    /**
-     * Updates the modified date.
-     */
-    public final void touchModified() {
-        modified = new Date();
-    }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -109,5 +102,12 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
         builder.append(")");
         return builder.toString();
     }
-    
+
+    /**
+     * Updates the modified date.
+     */
+    public final void touchModified() {
+        modified = new Date();
+    }
+
 }

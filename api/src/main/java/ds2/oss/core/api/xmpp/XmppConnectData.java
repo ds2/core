@@ -22,139 +22,139 @@ package ds2.oss.core.api.xmpp;
 
 /**
  * The dto implementation from the config contract.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public class XmppConnectData implements IXmppConnectionData {
-    
+
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 2352803105230195555L;
     /**
-     * load roster at login.
+     * Whether to debug this connection.
      */
-    private boolean rosterLoadedAtLogin;
-    /**
-     * Send presence.
-     */
-    private boolean sendPresence;
-    /**
-     * The user password.
-     */
-    private String password;
-    /**
-     * the username, or user jid.
-     */
-    private String username;
-    /**
-     * the server port to connect to.
-     */
-    private int serverPort = 5223;
-    /**
-     * The server host name to connect to.
-     */
-    private String serverHostname = "localhost";
+    private boolean debuggerEnabled;
     /**
      * whether to ignore strange ssl certificates, or crash.
      */
     private boolean ignoreSslTrustErrors;
     /**
-     * Whether to debug this connection.
+     * The user password.
      */
-    private boolean debuggerEnabled;
+    private String password;
+    /**
+     * load roster at login.
+     */
+    private boolean rosterLoadedAtLogin;
     /**
      * The expected security level.
      */
     private RequireSecurity securityLevel = RequireSecurity.optional;
-    
-    public void setIgnoreSslTrustErrors(final boolean ignoreSslTrustErrors) {
-        this.ignoreSslTrustErrors = ignoreSslTrustErrors;
-    }
-    
-    public void setRosterLoadedAtLogin(final boolean rosterLoadedAtLogin) {
-        this.rosterLoadedAtLogin = rosterLoadedAtLogin;
-    }
-    
-    public void setSendPresence(final boolean sendPresence) {
-        this.sendPresence = sendPresence;
-    }
-    
-    public void setPassword(final String password) {
-        this.password = password;
-    }
-    
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-    
-    public void setServerPort(final int serverPort) {
-        this.serverPort = serverPort;
-    }
-    
-    public void setServerHostname(final String serverHostname) {
-        this.serverHostname = serverHostname;
-    }
-    
-    @Override
-    public String getServerHostname() {
-        return serverHostname;
-    }
-    
-    @Override
-    public int getServerPort() {
-        return serverPort;
-    }
-    
-    @Override
-    public String getUsername() {
-        return username;
-    }
-    
+    /**
+     * Send presence.
+     */
+    private boolean sendPresence;
+    /**
+     * The server host name to connect to.
+     */
+    private String serverHostname = "localhost";
+    /**
+     * the server port to connect to.
+     */
+    private int serverPort = 5223;
+    /**
+     * the username, or user jid.
+     */
+    private String username;
+
     @Override
     public String getPassword() {
         return password;
     }
-    
+
     @Override
-    public boolean isSendPresence() {
-        return sendPresence;
+    public RequireSecurity getSecurityLevel() {
+        return securityLevel;
     }
-    
+
+    @Override
+    public String getServerHostname() {
+        return serverHostname;
+    }
+
+    @Override
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isDebuggerEnabled() {
+        return debuggerEnabled;
+    }
+
+    @Override
+    public boolean isIgnoreSslTrustErrors() {
+        return ignoreSslTrustErrors;
+    }
+
     @Override
     public boolean isRosterLoadedAtLogin() {
         return rosterLoadedAtLogin;
     }
-    
+
+    @Override
+    public boolean isSendPresence() {
+        return sendPresence;
+    }
+
+    public void setDebuggerEnabled(final boolean debuggerEnabled) {
+        this.debuggerEnabled = debuggerEnabled;
+    }
+
+    public void setIgnoreSslTrustErrors(final boolean ignoreSslTrustErrors) {
+        this.ignoreSslTrustErrors = ignoreSslTrustErrors;
+    }
+
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+    public void setRosterLoadedAtLogin(final boolean rosterLoadedAtLogin) {
+        this.rosterLoadedAtLogin = rosterLoadedAtLogin;
+    }
+
+    public void setSecurityLevel(final RequireSecurity securityLevel) {
+        this.securityLevel = securityLevel;
+    }
+
+    public void setSendPresence(final boolean sendPresence) {
+        this.sendPresence = sendPresence;
+    }
+
+    public void setServerHostname(final String serverHostname) {
+        this.serverHostname = serverHostname;
+    }
+
+    public void setServerPort(final int serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "XmppConnectData{" + "rosterLoadedAtLogin=" + rosterLoadedAtLogin + ", sendPresence=" + sendPresence
             + ", password=" + "***" + ", username=" + username + ", serverPort=" + serverPort + ", serverHostname="
             + serverHostname + '}';
     }
-    
-    @Override
-    public boolean isIgnoreSslTrustErrors() {
-        return ignoreSslTrustErrors;
-    }
-    
-    @Override
-    public boolean isDebuggerEnabled() {
-        return debuggerEnabled;
-    }
-    
-    public void setDebuggerEnabled(final boolean debuggerEnabled) {
-        this.debuggerEnabled = debuggerEnabled;
-    }
-    
-    @Override
-    public RequireSecurity getSecurityLevel() {
-        return securityLevel;
-    }
-    
-    public void setSecurityLevel(final RequireSecurity securityLevel) {
-        this.securityLevel = securityLevel;
-    }
-    
+
 }

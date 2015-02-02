@@ -17,14 +17,14 @@ package ds2.oss.core.api.options;
 
 /**
  * A journal service to tell when something has changed.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface OptionServiceJournal {
     /**
      * Adds an entry.
-     * 
+     *
      * @param invoker
      *            the invoker username, if available. Otherwise set to null.
      * @param action
@@ -37,10 +37,10 @@ public interface OptionServiceJournal {
      *            the new value
      */
     <D, K> void addEntry(String invoker, JournalAction action, K affectedId, D oldVal, D newVal);
-    
+
     /**
      * Convenient method to add a journal entry on creating an option.
-     * 
+     *
      * @param option
      *            the option that has been created
      */

@@ -26,7 +26,7 @@ import javax.inject.Qualifier;
 /**
  * Marker annotation for any implementations and field injections to address a specific value type
  * behaviour.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */

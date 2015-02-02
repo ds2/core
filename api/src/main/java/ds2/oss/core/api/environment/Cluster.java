@@ -19,14 +19,14 @@ import java.io.Serializable;
 
 /**
  * A runtime cluster.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public interface Cluster extends Serializable {
     /**
      * Returns the name of the cluster.
-     * 
+     *
      * @return the name of the cluster
      */
     char getClusterName();

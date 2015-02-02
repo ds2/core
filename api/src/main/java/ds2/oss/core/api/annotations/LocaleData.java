@@ -24,7 +24,7 @@ import javax.enterprise.util.Nonbinding;
 
 /**
  * Marks a field to contain some i18n data.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -35,6 +35,6 @@ public @interface LocaleData {
     /**
      * The base name to the properties file.
      */
-	@Nonbinding
+    @Nonbinding
     String baseName();
 }

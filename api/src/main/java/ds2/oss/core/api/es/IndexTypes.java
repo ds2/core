@@ -17,11 +17,15 @@ package ds2.oss.core.api.es;
 
 /**
  * The index types.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public enum IndexTypes {
+    /**
+     * Perform a full analyze on field value. Given field is broken into tokens and analyzed.
+     */
+    ANALYZED("analyzed"),
     /**
      * Do not analyze this field. The field will not be searchable.
      */
@@ -29,30 +33,26 @@ public enum IndexTypes {
     /**
      * Use full match index for the field values. Field is searchable but not tokenized.
      */
-    NOT_ANALYZED("not_analyzed"),
-    /**
-     * Perform a full analyze on field value. Given field is broken into tokens and analyzed.
-     */
-    ANALYZED("analyzed");
-    
+    NOT_ANALYZED("not_analyzed");
+
     /**
      * The type name.
      */
     private String typeName;
-    
+
     /**
      * Inits the enum value.
-     * 
+     *
      * @param s
      *            the ES string for this index type
      */
     private IndexTypes(final String s) {
         typeName = s;
     }
-    
+
     /**
      * Returns the ES index type name.
-     * 
+     *
      * @return the index type name from ES
      */
     public String getTypeName() {

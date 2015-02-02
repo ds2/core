@@ -17,10 +17,10 @@ package ds2.oss.core.api;
 
 /**
  * A simple base64 codec.
- * 
+ *
  * @author dstrauss
  * @version 0.1
- * 
+ *
  */
 public interface Base64Codec extends ByteCodec {
     // no special methods needed

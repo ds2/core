@@ -26,20 +26,20 @@ import ds2.oss.core.api.annotations.LocaleData;
 
 /**
  * A producer for LocaleSupport instances.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public class LocaleSupportProducer {
     /**
      * Produces a locale support instance.
-     * 
+     *
      * @param p
      *            the injection point
      * @return the locale support.
      */
     @Produces
-    @LocaleData(baseName="")
+    @LocaleData(baseName = "")
     @Dependent
     public LocaleSupport createLocaleSupport(final InjectionPoint p) {
         String rb = null;

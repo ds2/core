@@ -21,13 +21,13 @@ import ds2.oss.core.api.crypto.JavaRuntimeData;
 
 /**
  * The default java runtime data.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 public class DefaultJavaRuntimeData implements JavaRuntimeData {
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.crypto.JavaRuntimeData#getAesMaxKeysize()
@@ -36,5 +36,5 @@ public class DefaultJavaRuntimeData implements JavaRuntimeData {
     public int getAesMaxKeysize() {
         return 128;
     }
-    
+
 }

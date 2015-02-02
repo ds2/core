@@ -17,7 +17,7 @@ package ds2.oss.core.api.options;
 
 /**
  * The several stages of an option value.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -31,47 +31,47 @@ public enum OptionValueStage {
      */
     Deleted(5),
     /**
+     * The value has expired.
+     */
+    Expired(4),
+    /**
      * The value is live and can be used.
      */
     Live(3),
     /**
      * The value is new and prepared and needs an approver to get approved.
      */
-    Prepared(1), 
-    /**
-     * The value has expired.
-     */
-    Expired(4);
-    /**
-     * The numerical value of the stage.
-     */
-    private final int stageId;
-    
-    /**
-     * Creates the option value stage.
-     * 
-     * @param stgId
-     *            the id of this stage
-     */
-    private OptionValueStage(final int stgId) {
-        stageId = stgId;
-    }
-    
-    /**
-     * Returns the numerical id of this stage.
-     * 
-     * @return the numerical id of this stage
-     */
-    public int getStageId() {
-        return stageId;
-    }
-    
-    public static OptionValueStage getById(int i) {
+    Prepared(1);
+    public static OptionValueStage getById(final int i) {
         for (OptionValueStage s : values()) {
             if (s.stageId == i) {
                 return s;
             }
         }
         return null;
+    }
+
+    /**
+     * The numerical value of the stage.
+     */
+    private final int stageId;
+
+    /**
+     * Creates the option value stage.
+     *
+     * @param stgId
+     *            the id of this stage
+     */
+    private OptionValueStage(final int stgId) {
+        stageId = stgId;
+    }
+
+    /**
+     * Returns the numerical id of this stage.
+     *
+     * @return the numerical id of this stage
+     */
+    public int getStageId() {
+        return stageId;
     }
 }

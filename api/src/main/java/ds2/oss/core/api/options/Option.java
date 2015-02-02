@@ -21,7 +21,7 @@ import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
  * The definition of a single option.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  * @param <E>
@@ -31,35 +31,35 @@ import ds2.oss.core.api.crypto.IvEncodedContent;
  */
 public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, CreatedModifiedAware, IvEncodedContent {
     /**
-     * Returns the default value of the option. If the option is usually encrypted, this will return
-     * the encrypted value.
-     * 
-     * @return the default value
-     */
-    V getDefaultValue();
-    
-    /**
-     * Returns the name or identifier of the option.
-     * 
-     * @return the identifier of the author/modifier
-     */
-    String getModifierName();
-    
-    /**
-     * Returns the stage of the option.
-     * 
-     * @return the stage of the opion
-     */
-    OptionStage getStage();
-    
-    /**
      * Returns the decrypted value of the option if this option is encrypted. It is required that
      * implementations of this method must not ship this field value except the internal
      * application. That means that this value must not be serializable or transmittable in any kind
      * (xml, json, ...).
-     * 
+     *
      * @return the decrypted value
      */
     V getDecryptedValue();
-    
+
+    /**
+     * Returns the default value of the option. If the option is usually encrypted, this will return
+     * the encrypted value.
+     *
+     * @return the default value
+     */
+    V getDefaultValue();
+
+    /**
+     * Returns the name or identifier of the option.
+     *
+     * @return the identifier of the author/modifier
+     */
+    String getModifierName();
+
+    /**
+     * Returns the stage of the option.
+     *
+     * @return the stage of the opion
+     */
+    OptionStage getStage();
+
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.api;
 
@@ -23,27 +23,27 @@ package ds2.oss.core.api;
  *
  */
 public class JsonCodecException extends CodecException {
-    
+
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 7047560345247655308L;
-    
+
     /**
      * @param d
      */
-    public JsonCodecException(IErrorData d) {
+    public JsonCodecException(final IErrorData d) {
         super(d);
         // TODO Auto-generated constructor stub
     }
-    
+
     /**
      * @param d
      * @param t
      */
-    public JsonCodecException(IErrorData d, Throwable t) {
+    public JsonCodecException(final IErrorData d, final Throwable t) {
         super(d, t);
         // TODO Auto-generated constructor stub
     }
-    
+
 }

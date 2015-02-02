@@ -30,21 +30,30 @@ import ds2.oss.core.api.Version;
 
 /**
  * The implementation for a semantic version.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public final class SemanticVersion implements ISemanticVersion {
-    
+
+    /**
+     * An alphanumeric sequence.
+     */
+    private static final Pattern ALPHANUMERIC = Pattern.compile("[A-Za-z0-9\\-]+");
+
+    /**
+     * Extension for a build header.
+     */
+    private static final Pattern EXT_BUILD = Pattern.compile("\\+[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*");
+    /**
+     * Extension for a prerelease header.
+     */
+    private static final Pattern EXT_PREREL = Pattern.compile("\\-" + ALPHANUMERIC.pattern() + "(\\."
+        + ALPHANUMERIC.pattern() + ")*");
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
-    /**
-     * The svuid.
-     */
-    private static final long serialVersionUID = 6788282684302911892L;
     /**
      * Numeric pattern.
      */
@@ -55,100 +64,40 @@ public final class SemanticVersion implements ISemanticVersion {
     private static final Pattern TRIPLE = Pattern
         .compile(NUMPATTERN.pattern() + "(\\." + NUMPATTERN.pattern() + "){2}");
     /**
-     * An alphanumeric sequence.
-     */
-    private static final Pattern ALPHANUMERIC = Pattern.compile("[A-Za-z0-9\\-]+");
-    /**
-     * Extension for a prerelease header.
-     */
-    private static final Pattern EXT_PREREL = Pattern.compile("\\-" + ALPHANUMERIC.pattern() + "(\\."
-        + ALPHANUMERIC.pattern() + ")*");
-    /**
-     * Extension for a build header.
-     */
-    private static final Pattern EXT_BUILD = Pattern.compile("\\+[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*");
-    /**
      * Regular pattern for a semantic version.
      */
     private static final Pattern PATTERN_SEMVER = Pattern.compile(TRIPLE.pattern() + "(" + EXT_PREREL.pattern() + ")?("
         + EXT_BUILD + ")?");
     /**
-     * The major number.
+     * The svuid.
      */
-    private int majorNumber;
-    /**
-     * The minor number.
-     */
-    private int minorNumber;
-    /**
-     * The patch number.
-     */
-    private int patchNumber;
-    /**
-     * The prerelease data.
-     */
-    private List<String> preReleaseData;
-    /**
-     * The builds data.
-     */
-    private List<String> buildData;
+    private static final long serialVersionUID = 6788282684302911892L;
+
     
     /**
-     * Inits the object.
+     * Compares two int values, returns the compare decision. By definition, this method must return
+     * negative values, too.
+     *
+     * @param a
+     *            int 1
+     * @param b
+     *            int 2
+     * @return the compare decision
      */
-    private SemanticVersion() {
-        preReleaseData = new ArrayList<>();
-        buildData = new ArrayList<>();
-    }
-    
-    /**
-     * Internal initialisation for the semantic version.
-     * 
-     * @param major
-     *            the major number
-     * @param minor
-     *            the minor number
-     * @param patch
-     *            the patch number
-     * @param preRelData
-     *            the prerelease data
-     * @param buildDataList
-     *            the build data
-     */
-    private SemanticVersion(final long major, final long minor, final long patch, final List<String> preRelData,
-        final List<String> buildDataList) {
-        this();
-        majorNumber = (int) major;
-        minorNumber = (int) minor;
-        patchNumber = (int) patch;
-        if (preRelData != null) {
-            preReleaseData.addAll(preRelData);
-        }
-        if (buildDataList != null) {
-            buildData.addAll(buildDataList);
-        }
-    }
-    
-    @Override
-    public int compareTo(final Version o) {
+    private static int compareInt(final int a, final int b) {
         int rc = 0;
-        if (!(o instanceof ISemanticVersion)) {
-            throw new IllegalArgumentException("Given version to compare with is not a semantic version!");
+        // a-b
+        if (a > b) {
+            rc = 1;
+        } else if (a < b) {
+            rc = -1;
         }
-        final ISemanticVersion v2 = (SemanticVersion) o;
-        rc =
-            compareThree(majorNumber, v2.getMajorNumber(), minorNumber, v2.getMinorNumber(), patchNumber,
-                v2.getPatchNumber());
-        if (rc == 0) {
-            rc = compareLists(buildData, v2.getBuildDataList());
-        }
-        LOG.debug("This version {} vs. other version {} results into {}", new Object[] { this, o, rc });
         return rc;
     }
     
     /**
      * Compares two lists.
-     * 
+     *
      * @param list1
      *            the first list
      * @param list2
@@ -156,7 +105,7 @@ public final class SemanticVersion implements ISemanticVersion {
      * @return the result
      */
     private static int compareLists(final List<String> list1, final List<String> list2) {
-        if ((list1 == null) && (list2 == null)) {
+        if (list1 == null && list2 == null) {
             return 0;
         }
         if (list1 == null) {
@@ -186,27 +135,6 @@ public final class SemanticVersion implements ISemanticVersion {
         return rc;
     }
     
-    /**
-     * Compares two int values, returns the compare decision. By definition, this method must return
-     * negative values, too.
-     * 
-     * @param a
-     *            int 1
-     * @param b
-     *            int 2
-     * @return the compare decision
-     */
-    private static int compareInt(final int a, final int b) {
-        int rc = 0;
-        // a-b
-        if (a > b) {
-            rc = 1;
-        } else if (a < b) {
-            rc = -1;
-        }
-        return rc;
-    }
-    
     private static int compareThree(final int m1, final int m2, final int min1, final int min2, final int p1,
         final int p2) {
         int rc = compareInt(m1, m2);
@@ -222,7 +150,7 @@ public final class SemanticVersion implements ISemanticVersion {
     }
     
     private static boolean isNumeric(final String s) {
-        if ((s != null) && (s.length() > 0)) {
+        if (s != null && s.length() > 0) {
             try {
                 Long.parseLong(s);
             } catch (final NumberFormatException e) {
@@ -235,7 +163,7 @@ public final class SemanticVersion implements ISemanticVersion {
     
     /**
      * Parses a given string into a semantic version object.
-     * 
+     *
      * @param s
      *            the string to parse
      * @return the version object
@@ -269,25 +197,7 @@ public final class SemanticVersion implements ISemanticVersion {
         }
         return rc;
     }
-    
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(majorNumber).append(".").append(minorNumber).append(".").append(patchNumber);
-        if (!preReleaseData.isEmpty()) {
-            sb.append("-");
-            boolean isFirst = true;
-            for (String preItem : preReleaseData) {
-                if (!isFirst) {
-                    sb.append(".");
-                }
-                sb.append(preItem);
-                isFirst = false;
-            }
-        }
-        return sb.toString();
-    }
-    
+
     private static String parseFromString(final Pattern triple2, final String foundPart) {
         final Matcher m = triple2.matcher(foundPart);
         if (m.find()) {
@@ -295,23 +205,85 @@ public final class SemanticVersion implements ISemanticVersion {
         }
         return null;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+
+    /**
+     * The builds data.
      */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((buildData == null) ? 0 : buildData.hashCode());
-        result = (prime * result) + majorNumber;
-        result = (prime * result) + minorNumber;
-        result = (prime * result) + patchNumber;
-        result = (prime * result) + ((preReleaseData == null) ? 0 : preReleaseData.hashCode());
-        return result;
+    private List<String> buildData;
+
+    /**
+     * The major number.
+     */
+    private int majorNumber;
+
+    /**
+     * The minor number.
+     */
+    private int minorNumber;
+
+    /**
+     * The patch number.
+     */
+    private int patchNumber;
+
+    /**
+     * The prerelease data.
+     */
+    private List<String> preReleaseData;
+
+    /**
+     * Inits the object.
+     */
+    private SemanticVersion() {
+        preReleaseData = new ArrayList<>();
+        buildData = new ArrayList<>();
     }
-    
+
+    /**
+     * Internal initialisation for the semantic version.
+     *
+     * @param major
+     *            the major number
+     * @param minor
+     *            the minor number
+     * @param patch
+     *            the patch number
+     * @param preRelData
+     *            the prerelease data
+     * @param buildDataList
+     *            the build data
+     */
+    private SemanticVersion(final long major, final long minor, final long patch, final List<String> preRelData,
+        final List<String> buildDataList) {
+        this();
+        majorNumber = (int) major;
+        minorNumber = (int) minor;
+        patchNumber = (int) patch;
+        if (preRelData != null) {
+            preReleaseData.addAll(preRelData);
+        }
+        if (buildDataList != null) {
+            buildData.addAll(buildDataList);
+        }
+    }
+
+    @Override
+    public int compareTo(final Version o) {
+        int rc = 0;
+        if (!(o instanceof ISemanticVersion)) {
+            throw new IllegalArgumentException("Given version to compare with is not a semantic version!");
+        }
+        final ISemanticVersion v2 = (SemanticVersion) o;
+        rc =
+            compareThree(majorNumber, v2.getMajorNumber(), minorNumber, v2.getMinorNumber(), patchNumber,
+                v2.getPatchNumber());
+        if (rc == 0) {
+            rc = compareLists(buildData, v2.getBuildDataList());
+        }
+        LOG.debug("This version {} vs. other version {} results into {}", new Object[] { this, o, rc });
+        return rc;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
@@ -353,63 +325,97 @@ public final class SemanticVersion implements ISemanticVersion {
         }
         return true;
     }
-    
+
+    @Override
+    public List<String> getBuildDataList() {
+        return Collections.unmodifiableList(buildData);
+    }
+
     /**
      * Returns the major version number.
-     * 
+     *
      * @return major version number
      */
     @Override
     public int getMajorNumber() {
         return majorNumber;
     }
-    
+
     /**
      * Returns the minor version number.
-     * 
+     *
      * @return the minorNumber
      */
     @Override
     public int getMinorNumber() {
         return minorNumber;
     }
-    
+
     /**
      * Returns the patch version number.
-     * 
+     *
      * @return the patchNumber
      */
     @Override
     public int getPatchNumber() {
         return patchNumber;
     }
-    
+
+    @Override
+    public List<String> getPreReleaseDataList() {
+        return Collections.unmodifiableList(preReleaseData);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (buildData == null ? 0 : buildData.hashCode());
+        result = prime * result + majorNumber;
+        result = prime * result + minorNumber;
+        result = prime * result + patchNumber;
+        result = prime * result + (preReleaseData == null ? 0 : preReleaseData.hashCode());
+        return result;
+    }
+
     @Override
     public void incrementMajorNumber() {
         majorNumber++;
         minorNumber = 0;
         patchNumber = 0;
     }
-    
+
     @Override
     public void incrementMinorNumber() {
         minorNumber++;
         patchNumber = 0;
     }
-    
+
     @Override
     public void incrementPatchNumber() {
         patchNumber++;
     }
-    
+
     @Override
-    public List<String> getPreReleaseDataList() {
-        return Collections.unmodifiableList(preReleaseData);
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(majorNumber).append(".").append(minorNumber).append(".").append(patchNumber);
+        if (!preReleaseData.isEmpty()) {
+            sb.append("-");
+            boolean isFirst = true;
+            for (String preItem : preReleaseData) {
+                if (!isFirst) {
+                    sb.append(".");
+                }
+                sb.append(preItem);
+                isFirst = false;
+            }
+        }
+        return sb.toString();
     }
-    
-    @Override
-    public List<String> getBuildDataList() {
-        return Collections.unmodifiableList(buildData);
-    }
-    
+
 }

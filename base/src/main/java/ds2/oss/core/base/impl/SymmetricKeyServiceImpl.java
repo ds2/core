@@ -34,7 +34,7 @@ import ds2.oss.core.api.SymmetricKeyService;
 
 /**
  * The implementation for the symmetric key service.
- * 
+ *
  * @version 0.2
  * @author dstrauss
  */
@@ -49,7 +49,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
      */
     @Inject
     private SecurityBaseData baseData;
-    
+
     @Override
     public byte[] performHashing(final char[] origin, final byte[] salt, final int iterationCount,
         final SymmetricKeyNames n) {
@@ -73,7 +73,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
         }
         return rc;
     }
-    
+
     @Override
     public byte[] performHashing(final char[] origin, final SymmetricKeyNames n) {
         final byte[] rc = performHashing(origin, baseData.getSalt(), baseData.getMinIteration(), n);

@@ -28,28 +28,28 @@ import ds2.oss.core.api.Descriptive;
  *            the value type
  */
 public interface OptionIdentifier<V> extends Serializable, Descriptive {
-    
+
     /**
      * Returns the application name of this option.
      *
      * @return the application name
      */
     String getApplicationName();
-    
+
     /**
      * Returns the option name.
      *
      * @return the name of the option
      */
     String getOptionName();
-    
+
     /**
      * Returns the value type for this option.
      *
      * @return the value type
      */
     ValueType getValueType();
-    
+
     /**
      * Flag to indicate that this option contains an encrypted value and must be decoded. It is
      * expected that when this value is true, the option by default must have its value already

@@ -25,15 +25,21 @@ import ds2.oss.core.api.HexCodec;
 
 /**
  * A hex konverter.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
 @ApplicationScoped
 public class HexKonverter implements HexCodec {
     /**
+     * The list of hex chars.
+     */
+    private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+        'f', };
+
+    /**
      * Returns the pairs of the given char sequence.
-     * 
+     *
      * @param s
      *            the char sequence
      * @return a list of pairs
@@ -54,10 +60,10 @@ public class HexKonverter implements HexCodec {
         }
         return rc;
     }
-    
+
     /**
      * Returns the alphabet position of the given char in the hex alphabet.
-     * 
+     *
      * @param c
      *            the char to find
      * @return the position index, or -1 if not found
@@ -72,13 +78,7 @@ public class HexKonverter implements HexCodec {
         }
         return -1;
     }
-    
-    /**
-     * The list of hex chars.
-     */
-    private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
-        'f', };
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.core.api.svc.HexCodec#decode(char[])
@@ -102,7 +102,7 @@ public class HexKonverter implements HexCodec {
         }
         return baos.toByteArray();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.core.api.svc.HexCodec#encode(byte[])
@@ -121,5 +121,5 @@ public class HexKonverter implements HexCodec {
         }
         return sb.toString();
     }
-    
+
 }

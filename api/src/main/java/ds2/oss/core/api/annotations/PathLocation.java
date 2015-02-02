@@ -25,7 +25,7 @@ import javax.inject.Qualifier;
 
 /**
  * Used to dynamically inject a path.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -34,14 +34,14 @@ import javax.inject.Qualifier;
 @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE })
 public @interface PathLocation {
     /**
-     * the property name to use for injection.
-     */
-    @Nonbinding
-    String property() default "";
-    
-    /**
      * The environment variable to use to insert its value via injection.
      */
     @Nonbinding
     String environment() default "";
+
+    /**
+     * the property name to use for injection.
+     */
+    @Nonbinding
+    String property() default "";
 }

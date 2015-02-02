@@ -36,7 +36,7 @@ import ds2.oss.core.api.options.ValueType;
 
 /**
  * The option value dto.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  * @param <E>
@@ -47,46 +47,11 @@ import ds2.oss.core.api.options.ValueType;
 @XmlType(name = "optionValueType")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionValue<E, V> {
-    
+
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 6404306264233903378L;
-    /**
-     * The id of the value.
-     */
-    @XmlAttribute
-    private E id;
-    /**
-     * The creation date.
-     */
-    private Date created;
-    /**
-     * The modification date.
-     */
-    private Date modified;
-    /**
-     * The start date for this value.
-     */
-    @NotNull
-    private Date validFrom;
-    /**
-     * The stop date for this value.
-     */
-    private Date validTo;
-    /**
-     * The cluster this value belongs to.
-     */
-    @XmlElement(type = ClusterDto.class)
-    private Cluster cluster;
-    /**
-     * The server runtime configuration for this value.
-     */
-    private RuntimeConfiguration configuration;
-    /**
-     * The server identifier this value belongs to.
-     */
-    private ServerIdentifier server;
     /**
      * The approver name.
      */
@@ -97,314 +62,78 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     @NotNull
     private String authorName;
     /**
+     * The cluster this value belongs to.
+     */
+    @XmlElement(type = ClusterDto.class)
+    private Cluster cluster;
+    /**
+     * The server runtime configuration for this value.
+     */
+    private RuntimeConfiguration configuration;
+    /**
+     * The creation date.
+     */
+    private Date created;
+    @XmlAttribute
+    private boolean encrypted;
+    /**
+     * The id of the value.
+     */
+    @XmlAttribute
+    private E id;
+    /**
+     * The modification date.
+     */
+    private Date modified;
+    /**
      * The id of the referenced option.
      */
     @NotNull
     private E optionReference;
+    /**
+     * The requested domain.
+     */
+    private String requestedDomain;
+    /**
+     * The server identifier this value belongs to.
+     */
+    private ServerIdentifier server;
     /**
      * The stage for this value.
      */
     @NotNull
     private OptionValueStage stage;
     /**
-     * The value.
-     */
-    private V value;
-    /**
-     * The requested domain.
-     */
-    private String requestedDomain;
-    /**
      * The unencrypted value.
      */
     @XmlTransient
     private transient V unencryptedValue;
+    /**
+     * The start date for this value.
+     */
+    @NotNull
+    private Date validFrom;
+    /**
+     * The stop date for this value.
+     */
+    private Date validTo;
+    /**
+     * The value.
+     */
+    private V value;
     /**
      * the value type.
      */
     @XmlElement
     @NotNull
     private ValueType valueType;
-    @XmlAttribute
-    private boolean encrypted;
-    
-    /**
-     * Sets the unencrypted value.
-     * 
-     * @param unencryptedValue
-     *            the unencrypted value
-     */
-    public void setUnencryptedValue(V unencryptedValue) {
-        this.unencryptedValue = unencryptedValue;
-    }
-    
-    @Override
-    public E getId() {
-        return id;
-    }
-    
-    @Override
-    public Date getCreated() {
-        return created;
-    }
-    
-    @Override
-    public Date getModified() {
-        return modified;
-    }
-    
-    @Override
-    public Date getValidFrom() {
-        return validFrom;
-    }
-    
-    @Override
-    public Date getValidTo() {
-        return validTo;
-    }
-    
-    @Override
-    public Cluster getCluster() {
-        return cluster;
-    }
-    
-    @Override
-    public RuntimeConfiguration getConfiguration() {
-        return configuration;
-    }
-    
-    @Override
-    public ServerIdentifier getServer() {
-        return server;
-    }
-    
-    @Override
-    public String getApproverName() {
-        return approverName;
-    }
-    
-    @Override
-    public String getAuthorName() {
-        return authorName;
-    }
-    
-    @Override
-    public E getOptionReference() {
-        return optionReference;
-    }
-    
-    @Override
-    public OptionValueStage getStage() {
-        return stage;
-    }
-    
-    @Override
-    public V getValue() {
-        return value;
-    }
-    
-    /**
-     * Sets the id.
-     * 
-     * @param id
-     *            the id to set
-     */
-    public void setId(final E id) {
-        this.id = id;
-    }
-    
-    /**
-     * Sets the creation date.
-     * 
-     * @param created
-     *            the created to set
-     */
-    public void setCreated(final Date created) {
-        this.created = created;
-    }
-    
-    /**
-     * Sets the modification date.
-     * 
-     * @param modified
-     *            the modified to set
-     */
-    public void setModified(final Date modified) {
-        this.modified = modified;
-    }
-    
-    /**
-     * Sets the valid from date.
-     * 
-     * @param validFrom
-     *            the validFrom to set
-     */
-    public void setValidFrom(final Date validFrom) {
-        this.validFrom = validFrom;
-    }
-    
-    /**
-     * Sets the validTo date.
-     * 
-     * @param validTo
-     *            the validTo to set
-     */
-    public void setValidTo(final Date validTo) {
-        this.validTo = validTo;
-    }
-    
-    /**
-     * Sets the cluster.
-     * 
-     * @param cluster
-     *            the cluster to set
-     */
-    public void setCluster(final Cluster cluster) {
-        this.cluster = cluster;
-    }
-    
-    /**
-     * Sets the runtime config.
-     * 
-     * @param configuration
-     *            the configuration to set
-     */
-    public void setConfiguration(final RuntimeConfiguration configuration) {
-        this.configuration = configuration;
-    }
-    
-    /**
-     * Sets the server identifier.
-     * 
-     * @param server
-     *            the server to set
-     */
-    public void setServer(final ServerIdentifier server) {
-        this.server = server;
-    }
-    
-    /**
-     * Sets the approver name.
-     * 
-     * @param approverName
-     *            the approverName to set
-     */
-    public void setApproverName(final String approverName) {
-        this.approverName = approverName;
-    }
-    
-    /**
-     * Sets the author name.
-     * 
-     * @param authorName
-     *            the authorName to set
-     */
-    public void setAuthorName(final String authorName) {
-        this.authorName = authorName;
-    }
-    
-    /**
-     * Sets the option reference id.
-     * 
-     * @param optionReference
-     *            the optionReference to set
-     */
-    public void setOptionReference(final E optionReference) {
-        this.optionReference = optionReference;
-    }
-    
-    /**
-     * Sets the value stage.
-     * 
-     * @param stage
-     *            the stage to set
-     */
-    public void setStage(final OptionValueStage stage) {
-        this.stage = stage;
-    }
-    
-    /**
-     * Sets the value.
-     * 
-     * @param value
-     *            the value to set
-     */
-    public void setValue(final V value) {
-        this.value = value;
-    }
-    
-    @Override
-    public String getRequestedDomain() {
-        return requestedDomain;
-    }
-    
-    /**
-     * Sets the requested domain.
-     * 
-     * @param requestedDomain
-     */
-    public void setRequestedDomain(String requestedDomain) {
-        this.requestedDomain = requestedDomain;
-    }
-    
-    @Override
-    public V getUnencryptedValue() {
-        return unencryptedValue;
-    }
-    
-    @Override
-    public ValueType getValueType() {
-        return valueType;
-    }
-    
-    public void setValueType(ValueType valueType2) {
-        valueType = valueType2;
-    }
-    
-    @Override
-    public boolean isEncrypted() {
-        return encrypted;
-    }
-    
-    public void setEncrypted(boolean encrypted) {
-        this.encrypted = encrypted;
-    }
-    
-    // TODO hashcode und equals einbauen
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((approverName == null) ? 0 : approverName.hashCode());
-        result = prime * result + ((authorName == null) ? 0 : authorName.hashCode());
-        result = prime * result + ((cluster == null) ? 0 : cluster.hashCode());
-        result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
-        result = prime * result + ((created == null) ? 0 : created.hashCode());
-        result = prime * result + (encrypted ? 1231 : 1237);
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((modified == null) ? 0 : modified.hashCode());
-        result = prime * result + ((optionReference == null) ? 0 : optionReference.hashCode());
-        result = prime * result + ((requestedDomain == null) ? 0 : requestedDomain.hashCode());
-        result = prime * result + ((server == null) ? 0 : server.hashCode());
-        result = prime * result + ((stage == null) ? 0 : stage.hashCode());
-        result = prime * result + ((validFrom == null) ? 0 : validFrom.hashCode());
-        result = prime * result + ((validTo == null) ? 0 : validTo.hashCode());
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        result = prime * result + ((valueType == null) ? 0 : valueType.hashCode());
-        return result;
-    }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -513,7 +242,278 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
         }
         return true;
     }
-    
+
+    @Override
+    public String getApproverName() {
+        return approverName;
+    }
+
+    @Override
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    @Override
+    public Cluster getCluster() {
+        return cluster;
+    }
+
+    @Override
+    public RuntimeConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    @Override
+    public Date getCreated() {
+        return created;
+    }
+
+    @Override
+    public E getId() {
+        return id;
+    }
+
+    @Override
+    public Date getModified() {
+        return modified;
+    }
+
+    @Override
+    public E getOptionReference() {
+        return optionReference;
+    }
+
+    @Override
+    public String getRequestedDomain() {
+        return requestedDomain;
+    }
+
+    @Override
+    public ServerIdentifier getServer() {
+        return server;
+    }
+
+    @Override
+    public OptionValueStage getStage() {
+        return stage;
+    }
+
+    @Override
+    public V getUnencryptedValue() {
+        return unencryptedValue;
+    }
+
+    @Override
+    public Date getValidFrom() {
+        return validFrom;
+    }
+
+    @Override
+    public Date getValidTo() {
+        return validTo;
+    }
+
+    @Override
+    public V getValue() {
+        return value;
+    }
+
+    @Override
+    public ValueType getValueType() {
+        return valueType;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + (approverName == null ? 0 : approverName.hashCode());
+        result = prime * result + (authorName == null ? 0 : authorName.hashCode());
+        result = prime * result + (cluster == null ? 0 : cluster.hashCode());
+        result = prime * result + (configuration == null ? 0 : configuration.hashCode());
+        result = prime * result + (created == null ? 0 : created.hashCode());
+        result = prime * result + (encrypted ? 1231 : 1237);
+        result = prime * result + (id == null ? 0 : id.hashCode());
+        result = prime * result + (modified == null ? 0 : modified.hashCode());
+        result = prime * result + (optionReference == null ? 0 : optionReference.hashCode());
+        result = prime * result + (requestedDomain == null ? 0 : requestedDomain.hashCode());
+        result = prime * result + (server == null ? 0 : server.hashCode());
+        result = prime * result + (stage == null ? 0 : stage.hashCode());
+        result = prime * result + (validFrom == null ? 0 : validFrom.hashCode());
+        result = prime * result + (validTo == null ? 0 : validTo.hashCode());
+        result = prime * result + (value == null ? 0 : value.hashCode());
+        result = prime * result + (valueType == null ? 0 : valueType.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean isEncrypted() {
+        return encrypted;
+    }
+
+    /**
+     * Sets the approver name.
+     *
+     * @param approverName
+     *            the approverName to set
+     */
+    public void setApproverName(final String approverName) {
+        this.approverName = approverName;
+    }
+
+    /**
+     * Sets the author name.
+     *
+     * @param authorName
+     *            the authorName to set
+     */
+    public void setAuthorName(final String authorName) {
+        this.authorName = authorName;
+    }
+
+    /**
+     * Sets the cluster.
+     *
+     * @param cluster
+     *            the cluster to set
+     */
+    public void setCluster(final Cluster cluster) {
+        this.cluster = cluster;
+    }
+
+    /**
+     * Sets the runtime config.
+     *
+     * @param configuration
+     *            the configuration to set
+     */
+    public void setConfiguration(final RuntimeConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
+    /**
+     * Sets the creation date.
+     *
+     * @param created
+     *            the created to set
+     */
+    public void setCreated(final Date created) {
+        this.created = created;
+    }
+
+    public void setEncrypted(final boolean encrypted) {
+        this.encrypted = encrypted;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param id
+     *            the id to set
+     */
+    public void setId(final E id) {
+        this.id = id;
+    }
+
+    /**
+     * Sets the modification date.
+     *
+     * @param modified
+     *            the modified to set
+     */
+    public void setModified(final Date modified) {
+        this.modified = modified;
+    }
+
+    /**
+     * Sets the option reference id.
+     *
+     * @param optionReference
+     *            the optionReference to set
+     */
+    public void setOptionReference(final E optionReference) {
+        this.optionReference = optionReference;
+    }
+
+    /**
+     * Sets the requested domain.
+     *
+     * @param requestedDomain
+     */
+    public void setRequestedDomain(final String requestedDomain) {
+        this.requestedDomain = requestedDomain;
+    }
+
+    /**
+     * Sets the server identifier.
+     *
+     * @param server
+     *            the server to set
+     */
+    public void setServer(final ServerIdentifier server) {
+        this.server = server;
+    }
+
+    /**
+     * Sets the value stage.
+     *
+     * @param stage
+     *            the stage to set
+     */
+    public void setStage(final OptionValueStage stage) {
+        this.stage = stage;
+    }
+
+    /**
+     * Sets the unencrypted value.
+     *
+     * @param unencryptedValue
+     *            the unencrypted value
+     */
+    public void setUnencryptedValue(final V unencryptedValue) {
+        this.unencryptedValue = unencryptedValue;
+    }
+
+    /**
+     * Sets the valid from date.
+     *
+     * @param validFrom
+     *            the validFrom to set
+     */
+    public void setValidFrom(final Date validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    /**
+     * Sets the validTo date.
+     *
+     * @param validTo
+     *            the validTo to set
+     */
+    public void setValidTo(final Date validTo) {
+        this.validTo = validTo;
+    }
+
+    // TODO hashcode und equals einbauen
+
+    /**
+     * Sets the value.
+     *
+     * @param value
+     *            the value to set
+     */
+    public void setValue(final V value) {
+        this.value = value;
+    }
+
+    public void setValueType(final ValueType valueType2) {
+        valueType = valueType2;
+    }
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -612,5 +612,5 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
         builder.append(")");
         return builder.toString();
     }
-    
+
 }

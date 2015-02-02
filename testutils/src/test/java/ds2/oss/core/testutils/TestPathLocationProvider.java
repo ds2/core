@@ -25,7 +25,7 @@ import ds2.oss.core.api.annotations.PathLocation;
 
 /**
  * Dummy provider for the sec path test.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -33,7 +33,7 @@ import ds2.oss.core.api.annotations.PathLocation;
 public class TestPathLocationProvider {
     /**
      * Produces a path to the maven target directory.
-     * 
+     *
      * @return the test path to use in test cases
      */
     @Produces

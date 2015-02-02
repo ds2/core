@@ -17,14 +17,14 @@ package ds2.oss.core.api;
 
 /**
  * Contract for a hash generator.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
 public interface HashGenerator {
     /**
      * Generates a hash value from the given bytes.
-     * 
+     *
      * @param b
      *            the bytes to hash
      * @param g
