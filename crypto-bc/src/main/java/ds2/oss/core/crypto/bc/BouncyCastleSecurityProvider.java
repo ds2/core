@@ -26,17 +26,16 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Specializes;
 
-import ds2.oss.core.crypto.DefaultSecurityProvider;
-import ds2.oss.core.crypto.SecurityInstanceProvider;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import ds2.oss.core.crypto.DefaultSecurityProvider;
+import ds2.oss.core.crypto.SecurityInstanceProvider;
 
 /**
  * The bouncy castle security provider.
@@ -60,7 +59,8 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
     /**
      * Actions to perform at startup.
      */
-    @PostConstruct
+    @Override
+	@PostConstruct
     public void onLoad() {
         LOG.debug("Loading BC Provider");
         Security.insertProviderAt(new BouncyCastleProvider(), 1);

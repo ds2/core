@@ -68,6 +68,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         }
         V rc = null;
         final Annotation a = new ValueCodecMarkerLiteral(t);
+        @SuppressWarnings("unchecked")
         final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
         rc = codec.toValue((String) thisVal);
         return rc;
@@ -77,6 +78,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
     public String toString(final ValueType valueType, final Object val) {
         String rc = null;
         final Annotation a = new ValueCodecMarkerLiteral(valueType);
+        @SuppressWarnings("unchecked")
         final ValueCodec<Object> codec = (ValueCodec<Object>) codecs.select(a).get();
         rc = codec.toString(val);
         return rc;
@@ -101,6 +103,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setEncoded(e.getEncoded());
         rc.setInitVector(e.getInitVector());
         final Annotation a = new ValueCodecMarkerLiteral(ident.getValueType());
+        @SuppressWarnings("unchecked")
         final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
         rc.setDefaultValue(codec.toValue((String) e.getDefaultValue()));
         return rc;

@@ -21,6 +21,8 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.Root;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
@@ -110,11 +112,11 @@ public abstract class AbstractOptionsPersistenceSupportBean
      * @return the found option
      */
     protected <V> OptionDto<Long, V> findOptionByIdentifier(final EntityManager em, final OptionIdentifier<V> ident) {
-        final Query q = em.createNamedQuery(QUERY_FINDOPTIONBYIDENTIFIER);
+        TypedQuery<OptionEntity> q = em.createNamedQuery(QUERY_FINDOPTIONBYIDENTIFIER, OptionEntity.class);
         q.setParameter("optionName", ident.getOptionName());
         q.setParameter("appName", ident.getApplicationName());
         q.setMaxResults(1);
-        final OptionEntity foundOption = getSecureSingle(q, OptionEntity.class);
+        final OptionEntity foundOption = getSecureSingle(q);
         LOG.debug("Found entity is {}", foundOption);
         return parser.toDto(foundOption, ident);
     }

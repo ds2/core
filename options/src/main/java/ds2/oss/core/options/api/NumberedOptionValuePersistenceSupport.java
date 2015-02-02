@@ -26,5 +26,5 @@ package ds2.oss.core.options.api;
  *
  */
 public interface NumberedOptionValuePersistenceSupport extends OptionValuePersistenceSupport<Long> {
-    
+    //nothing special
 }

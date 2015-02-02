@@ -222,7 +222,8 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     
     @Override
     public <V> OptionValue<Long, V> getOptionValueById(Long id) throws OptionException {
-        OptionValueDto<Long, V> foundVal = (OptionValueDto<Long, V>) numOptionValDb.getById(id);
+        @SuppressWarnings("unchecked")
+		OptionValueDto<Long, V> foundVal = (OptionValueDto<Long, V>) numOptionValDb.getById(id);
         return foundVal;
     }
     

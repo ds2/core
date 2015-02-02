@@ -19,19 +19,18 @@ import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
-import javax.annotation.PostConstruct;
 
 /**
  * The JVM default security provider.
@@ -49,7 +48,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
 
     @PostConstruct
     public void onLoad() {
-        LOG.debug("Loading JCE default provider.");
+        LOG.debug("Using JCE default provider.");
     }
 
     /*

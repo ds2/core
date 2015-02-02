@@ -86,7 +86,8 @@ public class CacheControllerProvider {
             provideCache(config.xmlFile(), config.cacheName(), null,
                 null);
         LOG.debug("Getting new instance of store bean");
-        InfinispanStoreBean<K, V> rc = (InfinispanStoreBean<K, V>) stores.get();
+        @SuppressWarnings("unchecked")
+		InfinispanStoreBean<K, V> rc = (InfinispanStoreBean<K, V>) stores.get();
         rc.setCache(foundCache);
         LOG.debug("Done, returning new impl {}", rc);
         return rc;

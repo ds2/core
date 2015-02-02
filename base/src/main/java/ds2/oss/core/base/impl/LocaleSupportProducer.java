@@ -39,6 +39,7 @@ public class LocaleSupportProducer {
      * @return the locale support.
      */
     @Produces
+    @LocaleData(baseName="")
     @Dependent
     public LocaleSupport createLocaleSupport(final InjectionPoint p) {
         String rb = null;

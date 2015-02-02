@@ -15,22 +15,13 @@
  */
 package ds2.oss.core.base.impl;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
-import javax.interceptor.Interceptor;
-
-import ds2.oss.core.api.SecurityBaseData;
-import java.lang.invoke.MethodHandles;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import ds2.oss.core.api.SecurityBaseData;
 
 /**
  * Dummy alternative for the sec base data.
@@ -41,10 +32,6 @@ import org.slf4j.LoggerFactory;
 @ApplicationScoped
 public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
 
-    /**
-     * A logger.
-     */
-    private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * A randomizer.
      */

@@ -31,26 +31,37 @@ import ds2.oss.core.options.api.OptionValueEncrypterProvider;
  *
  */
 @ApplicationScoped
-public class OptionValueEncrypterProviderImpl implements OptionValueEncrypterProvider {
-    /**
-     * The string encrypter.
-     */
-    @Inject
-    @ForValueType(ValueType.STRING)
-    private OptionValueEncrypter<String> stringEnc;
-    
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.options.api.OptionValueEncrypterProvider#getForValueType(ds2.oss.core.api.options .ValueType,
-     * java.lang.Class)
-     */
-    @Override
-    public <V> OptionValueEncrypter<V> getForValueType(ValueType t) {
-        switch (t) {
-            case STRING:
-                return (OptionValueEncrypter<V>) stringEnc;
-        }
-        return null;
-    }
-    
+public class OptionValueEncrypterProviderImpl implements
+		OptionValueEncrypterProvider {
+	/**
+	 * The string encrypter.
+	 */
+	@Inject
+	@ForValueType(ValueType.STRING)
+	private OptionValueEncrypter<String> stringEnc;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ds2.oss.core.options.api.OptionValueEncrypterProvider#getForValueType
+	 * (ds2.oss.core.api.options .ValueType, java.lang.Class)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <V> OptionValueEncrypter<V> getForValueType(ValueType t) {
+		OptionValueEncrypter<V> rc = null;
+		if (t != null) {
+			switch (t) {
+			case STRING:
+				rc = (OptionValueEncrypter<V>) stringEnc;
+				break;
+			default:
+				// nothing special to do
+				break;
+			}
+		}
+		return rc;
+	}
+
 }

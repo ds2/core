@@ -24,7 +24,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.ParameterExpression;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,7 +93,6 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
      *            the entity type
      * @return the found item, or null if not found
      */
-    @Deprecated
     protected static <E> E getSecureSingle(final Query q, final Class<E> entityClass) {
         E rc = null;
         try {
@@ -129,18 +127,6 @@ public abstract class AbstractPersistenceSupportImpl<DTO extends Persistable<PRI
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
-    /**
-     * Future setup for QB parameters.
-     *
-     * @param <T>
-     *            the type of the parameter
-     * @return the parameter expression
-     */
-    protected <T> ParameterExpression<T> createParameter() {
-        ParameterExpression<T> rc = null;
-        return rc;
-    }
     
     /**
      * Finds a specific entity.

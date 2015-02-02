@@ -20,6 +20,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.util.Nonbinding;
+
 /**
  * Marks a field to contain some i18n data.
  * 
@@ -33,5 +35,6 @@ public @interface LocaleData {
     /**
      * The base name to the properties file.
      */
+	@Nonbinding
     String baseName();
 }

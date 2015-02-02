@@ -19,7 +19,6 @@ import java.lang.invoke.MethodHandles;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 
 import org.infinispan.Cache;
