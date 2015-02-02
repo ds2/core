@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.elasticsearch.api;
 
@@ -33,21 +33,21 @@ public enum ElasticSearchErrors implements IErrorData {
      * the error id.
      */
     private int id;
-    
+
     /**
-     * 
+     *
      * Inits the error with the given error id.
-     * 
+     *
      * @param id
      *            the error id
      */
-    private ElasticSearchErrors(int id) {
+    private ElasticSearchErrors(final int id) {
         this.id = id;
     }
-    
+
     @Override
     public int getId() {
         return id;
     }
-    
+
 }

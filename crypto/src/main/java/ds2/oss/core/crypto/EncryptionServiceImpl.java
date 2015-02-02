@@ -42,7 +42,7 @@ import ds2.oss.core.api.dto.impl.IvEncodedContentDto;
 
 /**
  * The encryption service.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -52,6 +52,11 @@ public class EncryptionServiceImpl implements EncryptionService {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    /**
+     * The security base data.
+     */
+    @Inject
+    private SecurityBaseData baseData;
     /**
      * A randomizer.
      */
@@ -63,12 +68,35 @@ public class EncryptionServiceImpl implements EncryptionService {
      */
     @Inject
     private SecurityInstanceProvider secProv;
-    /**
-     * The security base data.
-     */
-    @Inject
-    private SecurityBaseData baseData;
-    
+
+    @Override
+    public byte[] decode(final SecretKey secretKey, final Ciphers cipher, final EncodedContent src) {
+        byte[] rc = null;
+        try {
+            final Cipher c = secProv.createCipherInstance(cipher);
+            switch (cipher) {
+                case AES:
+                    c.init(Cipher.DECRYPT_MODE, secretKey,
+                        new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
+                    break;
+                default:
+                    c.init(Cipher.DECRYPT_MODE, secretKey);
+                    break;
+            }
+
+            rc = c.doFinal(src.getEncoded());
+        } catch (final InvalidKeyException e) {
+            LOG.error("Invalid key!", e);
+        } catch (final BadPaddingException e) {
+            LOG.error("Bad padding!", e);
+        } catch (final IllegalBlockSizeException e) {
+            LOG.error("Block size is invalid!", e);
+        } catch (final InvalidAlgorithmParameterException e) {
+            LOG.error("The parameter for this algorithm is invalid!", e);
+        }
+        return rc;
+    }
+
     @Override
     public EncodedContent encode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
         EncodedContent rc = null;
@@ -108,34 +136,6 @@ public class EncryptionServiceImpl implements EncryptionService {
             LOG.error("The parameter for this algorithm is invalid!", e);
         }
         LOG.debug("Result of encoding is {}", rc);
-        return rc;
-    }
-    
-    @Override
-    public byte[] decode(final SecretKey secretKey, final Ciphers cipher, final EncodedContent src) {
-        byte[] rc = null;
-        try {
-            final Cipher c = secProv.createCipherInstance(cipher);
-            switch (cipher) {
-                case AES:
-                    c.init(Cipher.DECRYPT_MODE, secretKey,
-                        new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
-                    break;
-                default:
-                    c.init(Cipher.DECRYPT_MODE, secretKey);
-                    break;
-            }
-            
-            rc = c.doFinal(src.getEncoded());
-        } catch (final InvalidKeyException e) {
-            LOG.error("Invalid key!", e);
-        } catch (final BadPaddingException e) {
-            LOG.error("Bad padding!", e);
-        } catch (final IllegalBlockSizeException e) {
-            LOG.error("Block size is invalid!", e);
-        } catch (final InvalidAlgorithmParameterException e) {
-            LOG.error("The parameter for this algorithm is invalid!", e);
-        }
         return rc;
     }
 }

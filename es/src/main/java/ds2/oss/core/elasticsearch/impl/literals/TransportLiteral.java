@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.elasticsearch.impl.literals;
 
@@ -28,22 +28,22 @@ import ds2.oss.core.elasticsearch.api.annotations.UsingTransport;
  *
  */
 public class TransportLiteral extends AnnotationLiteral<UsingTransport> implements UsingTransport {
-    
+
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 3244594469497508259L;
     private TransportTypes value;
-    
+
     /**
      * @param t
      *            the transport type
-     * 
+     *
      */
-    public TransportLiteral(TransportTypes t) {
+    public TransportLiteral(final TransportTypes t) {
         value = t;
     }
-    
+
     @Override
     public TransportTypes value() {
         return value;

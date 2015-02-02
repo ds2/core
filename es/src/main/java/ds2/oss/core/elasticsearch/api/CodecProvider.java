@@ -17,14 +17,14 @@ package ds2.oss.core.elasticsearch.api;
 
 /**
  * The codec provider.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public interface CodecProvider {
     /**
      * Finds a codec for the given class type.
-     * 
+     *
      * @param c
      *            the class type
      * @param <T>
@@ -32,10 +32,10 @@ public interface CodecProvider {
      * @return the codec, or null if not found
      */
     <T> TypeCodec<T> findFor(Class<T> c);
-    
+
     /**
      * Dummy method to get the count of found instances.
-     * 
+     *
      * @return 0
      */
     int getInstanceCount();

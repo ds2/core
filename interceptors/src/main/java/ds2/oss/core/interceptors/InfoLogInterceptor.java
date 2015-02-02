@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An interceptor for any info logging.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
@@ -35,8 +35,18 @@ import org.slf4j.LoggerFactory;
 @LogCallings
 public class InfoLogInterceptor {
     /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(InfoLogInterceptor.class);
+
+    /**
+     * A map with loggers.
+     */
+    private static Map<String, Logger> loggerMap = new HashMap<>();
+
+    /**
      * Creates an exit message.
-     * 
+     *
      * @param ic
      *            the invocation context
      * @param rc
@@ -53,10 +63,10 @@ public class InfoLogInterceptor {
         sb.append(rc);
         return sb.toString();
     }
-    
+
     /**
      * Returns the header string containing the ic target, method name and parameter values.
-     * 
+     *
      * @param ic
      *            the invocation context
      * @return a header string
@@ -74,7 +84,7 @@ public class InfoLogInterceptor {
         final Object[] params = ic.getParameters();
         boolean isFirst = true;
         if (params != null && params.length > 0) {
-            
+
             for (Object param : params) {
                 if (!isFirst) {
                     sb.append(", ");
@@ -91,10 +101,10 @@ public class InfoLogInterceptor {
         sb.append(")");
         return sb.toString();
     }
-    
+
     /**
      * Returns the logger for the given target class.
-     * 
+     *
      * @param ic
      *            the invocation contex to get the target from
      * @return a logger.
@@ -111,20 +121,10 @@ public class InfoLogInterceptor {
             return rc;
         }
     }
-    
-    /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(InfoLogInterceptor.class);
-    
-    /**
-     * A map with loggers.
-     */
-    private static Map<String, Logger> loggerMap = new HashMap<>();
-    
+
     /**
      * Logs a given call to/from a method.
-     * 
+     *
      * @param ic
      *            the invocation context.
      * @return the result of the invocation context.

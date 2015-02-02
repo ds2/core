@@ -46,13 +46,10 @@ public class CacheControllerProvider {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(CacheControllerProvider.class);
-    @Inject
-    @Any
-    private Provider<InfinispanStoreBean<?, ?>> stores;
     
     /**
      * Loads a cache for the given coordinates.
-     * 
+     *
      * @param resFile
      * @param cName
      * @param kClass
@@ -72,54 +69,61 @@ public class CacheControllerProvider {
         return rc;
     }
 
+    @Inject
+    @Any
+    private Provider<InfinispanStoreBean<?, ?>> stores;
+    
     /**
      * Dummy generator for any @{link InfinispanStore}.
      */
-    private <K, V extends Persistable<K>> InfinispanStore<K,V> createInjection(final InjectionPoint p) {
+    private <K, V extends Persistable<K>> InfinispanStore<K, V> createInjection(final InjectionPoint p) {
         LOG.debug("Checking cut point..");
         InfinispanConfig config = p.getAnnotated().getAnnotation(InfinispanConfig.class);
         if (config == null) {
             throw new IllegalStateException("Cannot find the infinispan config annotation at injection point " + p);
         }
         LOG.debug("Loading cache from given config data");
-        Cache<K, V> foundCache =
-            provideCache(config.xmlFile(), config.cacheName(), null,
-                null);
+        Cache<K, V> foundCache = provideCache(config.xmlFile(), config.cacheName(), null, null);
         LOG.debug("Getting new instance of store bean");
         @SuppressWarnings("unchecked")
-		InfinispanStoreBean<K, V> rc = (InfinispanStoreBean<K, V>) stores.get();
+        InfinispanStoreBean<K, V> rc = (InfinispanStoreBean<K, V>) stores.get();
         rc.setCache(foundCache);
         LOG.debug("Done, returning new impl {}", rc);
         return rc;
     }
-
-    /**
-     * Dummy injector for any string based InfinispanStores.
-     * @param p the injection point
-     * @param <V> any string based persistable
-     * @return the store to use
-     */
-    @Produces
-    @InfinispanConfig
-    @Dependent
-    public <V extends Persistable<String>> InfinispanStore<String,V> createStringInjection(final InjectionPoint p) {
-        return createInjection(p);
-    }
-
+    
     /**
      * Dummy injector for any long based InfinispanStores.
-     * @param p the injection point
-     * @param <V> any long based persistable
+     * 
+     * @param p
+     *            the injection point
+     * @param <V>
+     *            any long based persistable
      * @return the store to use
      */
     @Produces
     @InfinispanConfig
     @Dependent
     @Any
-    public <V extends Persistable<Long>> InfinispanStore<Long,V> createLongInjection(final InjectionPoint p) {
+    public <V extends Persistable<Long>> InfinispanStore<Long, V> createLongInjection(final InjectionPoint p) {
         return createInjection(p);
     }
-
+    
+    /**
+     * Dummy injector for any string based InfinispanStores.
+     * 
+     * @param p
+     *            the injection point
+     * @param <V>
+     *            any string based persistable
+     * @return the store to use
+     */
+    @Produces
+    @InfinispanConfig
+    @Dependent
+    public <V extends Persistable<String>> InfinispanStore<String, V> createStringInjection(final InjectionPoint p) {
+        return createInjection(p);
+    }
     
     @Produces
     public <K, V> Configuration loadConfig() {

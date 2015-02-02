@@ -32,7 +32,7 @@ import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
 
 /**
  * A provider for any found ES codec.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -48,24 +48,14 @@ public class CodecProviderImpl implements CodecProvider {
     @Inject
     @Any
     private Instance<TypeCodec<?>> foundCodecs;
-    
-    /**
-     * Actions to perform after class init.
-     */
-    @PostConstruct
-    public void onClass() {
-        if (foundCodecs.isUnsatisfied()) {
-            LOG.warn("found codecs are unsatisfied!");
-        }
-    }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeCodec<T> findFor(final Class<T> c) {
         if (c == null) {
             return null;
         }
-        
+
         TypeCodec<?> rc = null;
         final Annotation a = new EsCodecAnnotationLiteral(c);
         LOG.debug("Annotation of codec should be {}", a);
@@ -82,10 +72,20 @@ public class CodecProviderImpl implements CodecProvider {
         LOG.debug("rc will be {}", rc);
         return (TypeCodec<T>) rc;
     }
-    
+
     @Override
     public int getInstanceCount() {
         return 1;
     }
-    
+
+    /**
+     * Actions to perform after class init.
+     */
+    @PostConstruct
+    public void onClass() {
+        if (foundCodecs.isUnsatisfied()) {
+            LOG.warn("found codecs are unsatisfied!");
+        }
+    }
+
 }

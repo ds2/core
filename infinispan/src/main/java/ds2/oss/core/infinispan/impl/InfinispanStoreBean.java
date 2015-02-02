@@ -30,10 +30,10 @@ import ds2.oss.core.api.Persistable;
 
 /**
  * The impl.
- * 
+ *
  * @author dstrauss
  * @version 0.3
- * 
+ *
  * @param <K>
  *            the key type
  * @param <V>
@@ -49,12 +49,17 @@ public class InfinispanStoreBean<K, V extends Persistable<K>> implements Infinis
      * The cache instance.
      */
     private Cache<K, V> cache;
-    
+
+    @Override
+    public V get(final K k) {
+        return cache.get(k);
+    }
+
     @PostConstruct
     public void onLoad() {
         LOG.debug("I am alive");
     }
-    
+
     /**
      * Actions to perform at stop.
      */
@@ -63,7 +68,11 @@ public class InfinispanStoreBean<K, V extends Persistable<K>> implements Infinis
         LOG.debug("Stopping cache..");
         cache.stop();
     }
-    
+
+    void setCache(final Cache<K, V> foundCache) {
+        cache = foundCache;
+    }
+
     @Override
     public V store(final V e) {
         if (e == null) {
@@ -73,14 +82,5 @@ public class InfinispanStoreBean<K, V extends Persistable<K>> implements Infinis
             throw new IllegalArgumentException("Given persistable has no id!");
         }
         return cache.put(e.getId(), e);
-    }
-    
-    @Override
-    public V get(final K k) {
-        return cache.get(k);
-    }
-    
-    void setCache(Cache<K, V> foundCache) {
-        cache = foundCache;
     }
 }

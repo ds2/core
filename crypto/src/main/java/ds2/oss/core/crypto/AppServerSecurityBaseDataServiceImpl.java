@@ -55,73 +55,126 @@ import ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl;
  */
 @ApplicationScoped
 @Specializes
-public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseDataImpl implements AppServerSecurityBaseDataService {
-    
+public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseDataImpl
+    implements
+    AppServerSecurityBaseDataService {
+
+    /**
+     * A simple lock.
+     */
+    private static final Lock LOCK = new ReentrantLock();
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
-     * The filename containing the AES secret key data.
-     */
-    private static final String SK_FILENAME = "0xsk.txt";
-    /**
      * The properties filename.
      */
     private static final String PROPS_FILENAME = "sec.properties";
     /**
-     * A simple lock.
+     * The filename containing the AES secret key data.
      */
-    private static final Lock LOCK = new ReentrantLock();
-    
+    private static final String SK_FILENAME = "0xsk.txt";
+
     /**
-     * The hex codec.
+     * The AES secret key.
      */
-    @Inject
-    private HexCodec hex;
-    /**
-     * The IO service.
-     */
-    @Inject
-    private IoService io;
-    /**
-     * The converter.
-     */
-    @Inject
-    private ConverterTool conv;
-    /**
-     * The salt.
-     */
-    private byte[] salt;
-    /**
-     * The init vector.
-     */
-    private byte[] initVector;
-    /**
-     * The iteration count.
-     */
-    private int minIteration = 65535;
+    private SecretKey aesSecretKey;
     /**
      * The bytes provider.
      */
     @Inject
     private BytesProvider bytes;
     /**
-     * The storage location to load or write data to.
+     * The converter.
      */
     @Inject
-    @PathLocation(property = SYS_PROPERTY, environment = "DS2_APPSEC_HOME")
-    private Path storageLocation;
+    private ConverterTool conv;
     /**
-     * The AES secret key.
+     * The hex codec.
      */
-    private SecretKey aesSecretKey;
+    @Inject
+    private HexCodec hex;
+    /**
+     * The init vector.
+     */
+    private byte[] initVector;
+    /**
+     * The IO service.
+     */
+    @Inject
+    private IoService io;
     /**
      * The key generator service.
      */
     @Inject
     private KeyGeneratorService kg;
-    
+    /**
+     * The iteration count.
+     */
+    private int minIteration = 65535;
+    /**
+     * The salt.
+     */
+    private byte[] salt;
+    /**
+     * The storage location to load or write data to.
+     */
+    @Inject
+    @PathLocation(property = SYS_PROPERTY, environment = "DS2_APPSEC_HOME")
+    private Path storageLocation;
+
+    @Override
+    public void createData() {
+        try {
+            LOCK.lock();
+            LOG.debug("Creating new salt, init vector etc.");
+            salt = bytes.createRandomByteArray(512);
+            initVector = bytes.createRandomByteArray(16);
+        } finally {
+            LOCK.unlock();
+        }
+        aesSecretKey = kg.generateAesKey();
+    }
+
+    @Override
+    public SecretKey getAppserverSecretKey() {
+        return aesSecretKey;
+    }
+
+    @Override
+    public byte[] getInitVector() {
+        try {
+            LOCK.lock();
+            return initVector = bytes.createRandomByteArray(16);
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    @Override
+    public int getMinIteration() {
+        return minIteration;
+    }
+
+    @Override
+    public byte[] getSalt() {
+        try {
+            LOCK.lock();
+            return salt;
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    /**
+     * Store the data on exit.
+     */
+    @PreDestroy
+    public void onExit() {
+        storeData(Charset.defaultCharset());
+    }
+
     /**
      * Actions to perform on load.
      */
@@ -141,52 +194,14 @@ public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseD
                 minIteration = 65535;
             }
         }
-        if ((salt == null) || (initVector == null)) {
-            this.createData();
+        if (salt == null || initVector == null) {
+            createData();
         }
         if (skContent != null) {
             aesSecretKey = kg.generateAesFromBytes(hex.decode(skContent.toCharArray()));
         }
     }
-    
-    @Override
-    public byte[] getSalt() {
-        try {
-            LOCK.lock();
-            return salt;
-        } finally {
-            LOCK.unlock();
-        }
-    }
-    
-    @Override
-    public int getMinIteration() {
-        return minIteration;
-    }
-    
-    @Override
-    public byte[] getInitVector() {
-        try {
-            LOCK.lock();
-            return initVector = bytes.createRandomByteArray(16);
-        } finally {
-            LOCK.unlock();
-        }
-    }
-    
-    @Override
-    public void createData() {
-        try {
-            LOCK.lock();
-            LOG.debug("Creating new salt, init vector etc.");
-            salt = bytes.createRandomByteArray(512);
-            initVector = bytes.createRandomByteArray(16);
-        } finally {
-            LOCK.unlock();
-        }
-        aesSecretKey = kg.generateAesKey();
-    }
-    
+
     @Override
     public void storeData(final Charset cs) {
         final Path propsF = storageLocation.resolve(PROPS_FILENAME);
@@ -206,18 +221,5 @@ public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseD
         } finally {
             LOCK.unlock();
         }
-    }
-    
-    /**
-     * Store the data on exit.
-     */
-    @PreDestroy
-    public void onExit() {
-        storeData(Charset.defaultCharset());
-    }
-    
-    @Override
-    public SecretKey getAppserverSecretKey() {
-        return aesSecretKey;
     }
 }

@@ -30,35 +30,35 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 
 /**
  * An abstract node implementation.
- * 
+ *
  * @param <T>
  *            The type of the node
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearchNode {
-    
+
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(AbstractNodeImpl.class);
-    
-    /**
-     * A lock.
-     */
-    protected final Lock lock = new ReentrantLock();
-    
-    /**
-     * Flag to indicate that a lock is required on the client.
-     */
-    protected volatile boolean needsLock;
-    
+
     /**
      * The node instance.
      */
     protected T client;
-    
+
+    /**
+     * A lock.
+     */
+    protected final Lock lock = new ReentrantLock();
+
+    /**
+     * Flag to indicate that a lock is required on the client.
+     */
+    protected volatile boolean needsLock;
+
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -81,7 +81,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
             needsLock = false;
         }
     }
-    
+
     @Override
     public Client get() {
         if (!needsLock) {
@@ -94,7 +94,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
             lock.unlock();
         }
     }
-    
+
     /**
      * Actions to perform on shutdown.
      */
@@ -108,12 +108,12 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
             lock.unlock();
         }
     }
-    
+
     @Override
     public void removeTransport(final InetSocketAddress... isa) {
         LOG.info("Ignoring");
     }
-    
+
     /**
      * Waits for green status of the cluster.
      */
@@ -121,7 +121,7 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
     public void waitForClusterGreenState() {
         get().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
     }
-    
+
     /**
      * Waits for the yellow status.
      */

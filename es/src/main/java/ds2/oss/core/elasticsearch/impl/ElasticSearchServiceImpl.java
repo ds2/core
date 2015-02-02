@@ -68,15 +68,20 @@ import ds2.oss.core.elasticsearch.api.TypeCodec;
 
 /**
  * The implementation for the ES service.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @ApplicationScoped
 public class ElasticSearchServiceImpl implements ElasticSearchService {
     /**
+     * A logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(ElasticSearchServiceImpl.class);
+
+    /**
      * Filters some resources.
-     * 
+     *
      * @param name
      *            the start of the resource name
      * @param resources
@@ -95,11 +100,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     /**
      * This method tries to find the id of the json document. Usually, this is the first sequence
      * before the .json ending.
-     * 
+     *
      * @param resourceName
      *            the json resource name
      * @return the id, or null if no id has been found
@@ -114,40 +119,36 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if (cutIndex > 0) {
                 rc = foundPattern.substring(1, cutIndex);
             }
-            
+
         }
         return rc;
     }
-    
-    /**
-     * A logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(ElasticSearchServiceImpl.class);
-    /**
-     * The ES client to use.
-     */
-    @Inject
-    private ElasticSearchNode esNode;
     
     /**
      * Any known codecs.
      */
     @Inject
     private CodecProvider codecProvider;
-    
+
+    /**
+     * The ES client to use.
+     */
+    @Inject
+    private ElasticSearchNode esNode;
+
     /**
      * The io service.
      */
     @Inject
     private IoService io;
-    
+
     /**
      * Inits the bean.
      */
     public ElasticSearchServiceImpl() {
         // nothing special to do
     }
-    
+
     @Override
     public void deleteIndexes(final String... indexes) {
         try {
@@ -164,7 +165,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             LOG.info("The index(es) {} were not existing! Ignoring delete request.", indexes);
         }
     }
-    
+
     @Override
     public <T> T get(final String index, final Class<T> c, final String id) {
         LOG.debug("Entering get request for index {}, type {} and id {}", new Object[] { index, c, id });
@@ -196,11 +197,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         } catch (JsonCodecException e) {
             LOG.warn("Error when decoding the result source!", e);
         }
-        
+
         LOG.debug("Result is {}", rc);
         return rc;
     }
-    
+
     @Override
     public <T> List<T> getDefaultData(final Class<T> c) throws JsonCodecException {
         if (c == null) {
@@ -238,7 +239,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public <T> boolean insertDefaultData(final String index, final Class<T> c) {
         // load all JSON files and its content
@@ -289,7 +290,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public boolean installOrUpdateIndex(final String indexName, final Class<?>... dtoClasses) {
         final boolean rc = true;
@@ -322,7 +323,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
             final PutMappingResponse result =
                 esNode.get().admin().indices().preparePutMapping(indexName).setType(indexType)
-                    .setSource(codec.getMapping()).execute().actionGet();
+                .setSource(codec.getMapping()).execute().actionGet();
             if (!result.isAcknowledged()) {
                 LOG.warn("Mapping for type {} on index {} has not been acknowlegded. Expect problems!", new Object[] {
                     indexType, indexName, });
@@ -334,10 +335,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         esNode.waitForClusterYellowState();
         return rc;
     }
-    
+
     /**
      * Prepares an index operation.
-     * 
+     *
      * @param index
      *            the index to use
      * @param typeCodec
@@ -354,10 +355,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public <T> String put(final String index, final T t, final TypeCodec<T> codec) throws CodecException,
-        ElasticSearchException {
+    ElasticSearchException {
         if (t == null) {
             throw new IllegalArgumentException("You must give a dto to put into the index!");
         }
@@ -387,7 +388,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return id;
     }
-    
+
     @Override
     public boolean refreshIndexes(final String... indexes) {
         LOG.debug("Performing refresh on indexes {}", new Object[] { indexes });
@@ -402,7 +403,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public <T> List<T> searchAny(final String indexname, final Class<T> dtoClass) {
         final TypeCodec<T> codec = codecProvider.findFor(dtoClass);

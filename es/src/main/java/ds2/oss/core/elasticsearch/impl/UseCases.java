@@ -30,7 +30,7 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 
 /**
  * Some common usecases.
- * 
+ *
  * @version 0.2
  * @author dstrauss
  */
@@ -40,16 +40,16 @@ public class UseCases {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(UseCases.class);
-    
+
     /**
      * The ES node.
      */
     @Inject
     private ElasticSearchNode esNode;
-    
+
     /**
      * Adds a mapping for a given type.
-     * 
+     *
      * @param indexName
      *            the index name
      * @param typeName
@@ -65,17 +65,17 @@ public class UseCases {
             resp.getState().getMetaData().index(indexName).mappings();
         if (!mappings.containsKey(typeName)) {
             esNode.get().admin().indices().preparePutMapping(indexName).setType(typeName).setSource(json).execute()
-                .actionGet();
+            .actionGet();
         }
         esNode.waitForClusterYellowState();
     }
-    
+
     /**
      * Creates an index.
-     * 
+     *
      * @param indexName
      *            the index name
-     * 
+     *
      * @return TRUE if index has been created, otherwise FALSE
      */
     public boolean createIndex(final String indexName) {
@@ -89,10 +89,10 @@ public class UseCases {
         LOG.warn("index {} already exists, cannot be created again!", indexName);
         return false;
     }
-    
+
     /**
      * Deletes a type from the index.
-     * 
+     *
      * @param index
      *            the index name
      * @param type
@@ -101,7 +101,7 @@ public class UseCases {
     public void deleteEntriesOfType(final String index, final String type) {
         final DeleteByQueryResponse response =
             esNode.get().prepareDeleteByQuery(index).setQuery(QueryBuilders.termQuery("_type", type)).execute()
-                .actionGet();
+            .actionGet();
         LOG.info("Result: {}", response);
         esNode.waitForClusterYellowState();
     }

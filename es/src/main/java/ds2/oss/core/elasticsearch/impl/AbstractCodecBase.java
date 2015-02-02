@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A small code base to support date formatting.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -39,7 +39,7 @@ public abstract class AbstractCodecBase {
      * The formatter.
      */
     private SimpleDateFormat sdf;
-    
+
     /**
      * Inits the base.
      */
@@ -47,10 +47,10 @@ public abstract class AbstractCodecBase {
         sdf = new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'", Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
-    
+
     /**
      * Parses a date into a string.
-     * 
+     *
      * @param d
      *            the date to format
      * @return the string
@@ -63,10 +63,10 @@ public abstract class AbstractCodecBase {
         rc = sdf.format(d);
         return rc;
     }
-    
+
     /**
      * Parses a given string into a date object.
-     * 
+     *
      * @param esDate
      *            the date string
      * @return the parsed date
@@ -84,5 +84,5 @@ public abstract class AbstractCodecBase {
         }
         return rc;
     }
-    
+
 }

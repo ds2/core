@@ -40,17 +40,12 @@ import ds2.oss.core.api.crypto.KeyGeneratorNames;
  */
 @ApplicationScoped
 public class DefaultSecurityProvider implements SecurityInstanceProvider {
-
+    
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    @PostConstruct
-    public void onLoad() {
-        LOG.debug("Using JCE default provider.");
-    }
-
+    
     /*
      * (non-Javadoc)
      * @see
@@ -65,10 +60,10 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        LOG.debug("Returning cipher {} for {}", new Object[]{rc, c});
+        LOG.debug("Returning cipher {} for {}", new Object[] { rc, c });
         return rc;
     }
-
+    
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.crypto.SecurityInstanceProvider#createKeyGenerator(ds2.oss.core.api.crypto.
@@ -83,7 +78,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         }
         return null;
     }
-
+    
     /*
      * (non-Javadoc)
      * @see
@@ -98,5 +93,10 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         }
         return null;
     }
-
+    
+    @PostConstruct
+    public void onLoad() {
+        LOG.debug("Using JCE default provider.");
+    }
+    
 }

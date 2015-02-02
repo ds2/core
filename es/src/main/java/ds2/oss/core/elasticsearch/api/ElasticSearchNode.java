@@ -21,41 +21,41 @@ import org.elasticsearch.client.Client;
 
 /**
  * A contract for an ES node.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public interface ElasticSearchNode {
     /**
-     * Returns a configured client.
-     * 
-     * @return a client
-     */
-    Client get();
-    
-    /**
      * Adds a list of new transport endpoints.
-     * 
+     *
      * @param isa
      *            the new endpoints to add
      */
     void addTransport(InetSocketAddress... isa);
-    
+
+    /**
+     * Returns a configured client.
+     *
+     * @return a client
+     */
+    Client get();
+
     /**
      * Removes a list of transports.
-     * 
+     *
      * @param isa
      *            the transports to remove.
      */
     void removeTransport(InetSocketAddress... isa);
-    
-    /**
-     * Waits for the cluster state to become yellow.
-     */
-    void waitForClusterYellowState();
-    
+
     /**
      * Waits for the cluster state to become green.
      */
     void waitForClusterGreenState();
+
+    /**
+     * Waits for the cluster state to become yellow.
+     */
+    void waitForClusterYellowState();
 }

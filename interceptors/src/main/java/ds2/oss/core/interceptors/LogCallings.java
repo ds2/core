@@ -26,7 +26,7 @@ import javax.interceptor.InterceptorBinding;
 
 /**
  * The interceptor binding annotation to log any calls to this method or bean.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */

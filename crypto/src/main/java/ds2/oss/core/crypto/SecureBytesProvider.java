@@ -27,7 +27,7 @@ import ds2.oss.core.api.crypto.BytesProvider;
 
 /**
  * Implementation for some random bytes.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -41,7 +41,7 @@ public class SecureBytesProvider implements BytesProvider {
     @Inject
     @SecureRandomizer
     private Random zufall;
-    
+
     @Override
     public byte[] createRandomByteArray(final int size) {
         if (size <= 0) {

@@ -22,28 +22,28 @@ import org.elasticsearch.common.transport.TransportAddress;
 
 /**
  * Alternate way to provide a config to the ES node.
- * 
+ *
  * @version 0.2
  * @author dstrauss
  */
 public interface EsConfig {
     /**
      * Returns the cluster name.
-     * 
+     *
      * @return the cluster name
      */
     String getClusterName();
-    
+
     /**
      * This method may return additional configuration parameters for ES. Default is null.
-     * 
+     *
      * @return any additional properties, or null by default.
      */
     Properties getProperties();
-    
+
     /**
      * Returns the transport addresses to connect to.
-     * 
+     *
      * @return the transport addresses
      */
     Set<TransportAddress> getTransportAddresses();

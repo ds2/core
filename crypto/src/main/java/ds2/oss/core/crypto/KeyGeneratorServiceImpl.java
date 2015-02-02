@@ -45,7 +45,7 @@ import ds2.oss.core.api.crypto.KeyGeneratorService;
  */
 @Dependent
 public class KeyGeneratorServiceImpl implements KeyGeneratorService {
-    
+
     /**
      * A logger.
      */
@@ -71,7 +71,7 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
      */
     @Inject
     private SecurityInstanceProvider secProv;
-    
+
     @Override
     public SecretKey generate(final int length, final KeyGeneratorNames name) {
         SecretKey rc;
@@ -80,7 +80,7 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         rc = kgInstance.generateKey();
         return rc;
     }
-    
+
     @Override
     public SecretKey generate(final String pw, final KeyGeneratorNames name) {
         SecretKey rc = null;
@@ -92,33 +92,33 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         }
         return rc;
     }
-    
+
     @Override
-    public SecretKey generateSecureAesKey(final String pw) {
-        return generateSecureAesKey(pw, runtimeData.getAesMaxKeysize());
+    public SecretKey generateAesFromBytes(final byte[] encodedBytes) {
+        return new SecretKeySpec(encodedBytes, "AES");
     }
-    
+
     @Override
     public SecretKey generateAesKey() {
         int keySize = runtimeData.getAesMaxKeysize();
         return this.generate(keySize, KeyGeneratorNames.AES);
     }
-    
+
     @Override
-    public SecretKey generateAesFromBytes(final byte[] encodedBytes) {
-        return new SecretKeySpec(encodedBytes, "AES");
+    public SecretKey generateSecureAesKey(final String pw) {
+        return generateSecureAesKey(pw, runtimeData.getAesMaxKeysize());
     }
-    
+
     @Override
-    public SecretKey generateSecureAesKey(String pw, int keyLength) {
+    public SecretKey generateSecureAesKey(final String pw, final int keyLength) {
         if (pw == null) {
             throw new IllegalArgumentException("No password given to use!");
         }
         SecretKey rc = null;
         try {
             final SecretKeyFactory factory = secProv.createSecretKeyFactoryInstance("PBKDF2WithHmacSHA1");
-            final KeySpec keySpec = new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(),
-                keyLength);
+            final KeySpec keySpec =
+                new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(), keyLength);
             final SecretKey sk1 = factory.generateSecret(keySpec);
             rc = new SecretKeySpec(sk1.getEncoded(), "AES");
         } catch (final InvalidKeySpecException e) {

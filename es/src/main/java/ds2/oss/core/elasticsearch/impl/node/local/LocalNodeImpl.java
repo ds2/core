@@ -33,7 +33,7 @@ import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
 
 /**
  * A local node generator.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -45,7 +45,7 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(LocalNodeImpl.class);
-    
+
     /**
      * Actions to perform at start.
      */
@@ -61,5 +61,5 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
         client.admin().cluster().prepareHealth().setWaitForYellowStatus().get();
         LOG.debug("Local index node is up");
     }
-    
+
 }

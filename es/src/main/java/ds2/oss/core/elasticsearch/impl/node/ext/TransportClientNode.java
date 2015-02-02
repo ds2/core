@@ -37,7 +37,7 @@ import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
 
 /**
  * A transport client impl.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -50,7 +50,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
      */
     @Inject
     private EsConfig config;
-    
+
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -65,7 +65,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             needsLock = false;
         }
     }
-    
+
     /**
      * Actions to perform on init.
      */
@@ -96,7 +96,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             lock.unlock();
         }
     }
-    
+
     @Override
     public void removeTransport(final InetSocketAddress... isa) {
         lock.lock();
@@ -109,5 +109,5 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             lock.unlock();
         }
     }
-    
+
 }
