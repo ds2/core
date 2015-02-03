@@ -78,7 +78,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(ElasticSearchServiceImpl.class);
-
+    
     /**
      * Filters some resources.
      *
@@ -100,7 +100,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-
+    
     /**
      * This method tries to find the id of the json document. Usually, this is the first sequence
      * before the .json ending.
@@ -119,7 +119,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if (cutIndex > 0) {
                 rc = foundPattern.substring(1, cutIndex);
             }
-
+            
         }
         return rc;
     }
@@ -129,28 +129,22 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      */
     @Inject
     private CodecProvider codecProvider;
-
+    
     /**
      * The ES client to use.
      */
     @Inject
     private ElasticSearchNode esNode;
-
+    
     /**
      * The io service.
      */
     @Inject
     private IoService io;
-
-    /**
-     * Inits the bean.
-     */
-    public ElasticSearchServiceImpl() {
-        // nothing special to do
-    }
-
+    
     @Override
     public void deleteIndexes(final String... indexes) {
+        LOG.debug("Prepare to delete indices {}", new Object[] { indexes });
         try {
             final DeleteIndexRequestBuilder deleteIndexRequestBuilder =
                 esNode.get().admin().indices().prepareDelete(indexes);
@@ -162,10 +156,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
         } catch (IndexMissingException e) {
             LOG.debug("Given index did not exist!", e);
-            LOG.info("The index(es) {} were not existing! Ignoring delete request.", indexes);
+            LOG.info("The index(es) {} were not existing! Ignoring delete request.", new Object[] { indexes });
         }
     }
-
+    
     @Override
     public <T> T get(final String index, final Class<T> c, final String id) {
         LOG.debug("Entering get request for index {}, type {} and id {}", new Object[] { index, c, id });
@@ -178,7 +172,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         getRequestBuilder.setId(id).setIndex(index).setType(codec.getIndexTypeName());
         T rc = null;
         try {
-            GetResponse result = getRequestBuilder.execute().actionGet();
+            GetResponse result = getRequestBuilder.get();
             if (result.isExists()) {
                 LOG.debug("Result from ES is {}", result);
                 String json = result.getSourceAsString();
@@ -197,11 +191,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         } catch (JsonCodecException e) {
             LOG.warn("Error when decoding the result source!", e);
         }
-
+        
         LOG.debug("Result is {}", rc);
         return rc;
     }
-
+    
     @Override
     public <T> List<T> getDefaultData(final Class<T> c) throws JsonCodecException {
         if (c == null) {
@@ -239,7 +233,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-
+    
     @Override
     public <T> boolean insertDefaultData(final String index, final Class<T> c) {
         // load all JSON files and its content
@@ -277,7 +271,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 }
                 brb.add(irb);
             }
-            final BulkResponse bulkResult = brb.execute().actionGet();
+            final BulkResponse bulkResult = brb.get();
             LOG.debug("Results: {}", new Object[] { bulkResult.getItems() });
             if (bulkResult.hasFailures()) {
                 LOG.warn("Some errors occurred on insert!");
@@ -290,7 +284,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-
+    
     @Override
     public boolean installOrUpdateIndex(final String indexName, final Class<?>... dtoClasses) {
         final boolean rc = true;
@@ -323,7 +317,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
             final PutMappingResponse result =
                 esNode.get().admin().indices().preparePutMapping(indexName).setType(indexType)
-                .setSource(codec.getMapping()).execute().actionGet();
+                    .setSource(codec.getMapping()).get();
             if (!result.isAcknowledged()) {
                 LOG.warn("Mapping for type {} on index {} has not been acknowlegded. Expect problems!", new Object[] {
                     indexType, indexName, });
@@ -335,7 +329,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         esNode.waitForClusterYellowState();
         return rc;
     }
-
+    
     /**
      * Prepares an index operation.
      *
@@ -355,10 +349,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-
+    
     @Override
     public <T> String put(final String index, final T t, final TypeCodec<T> codec) throws CodecException,
-    ElasticSearchException {
+        ElasticSearchException {
         if (t == null) {
             throw new IllegalArgumentException("You must give a dto to put into the index!");
         }
@@ -388,13 +382,13 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return id;
     }
-
+    
     @Override
     public boolean refreshIndexes(final String... indexes) {
         LOG.debug("Performing refresh on indexes {}", new Object[] { indexes });
         boolean rc = false;
         final RefreshRequestBuilder cmd = esNode.get().admin().indices().prepareRefresh(indexes);
-        final RefreshResponse result = cmd.execute().actionGet();
+        final RefreshResponse result = cmd.get();
         if (result.getSuccessfulShards() <= 0) {
             LOG.warn("Shards could not be refreshed successfully! result is {}", result);
         } else {
@@ -403,7 +397,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-
+    
     @Override
     public <T> List<T> searchAny(final String indexname, final Class<T> dtoClass) {
         final TypeCodec<T> codec = codecProvider.findFor(dtoClass);
@@ -415,7 +409,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         searchQuery.setPostFilter(FilterBuilders.typeFilter(codec.getIndexTypeName()));
         searchQuery.setSize(100);
         searchQuery.setTypes(codec.getIndexTypeName());
-        final SearchResponse result = searchQuery.execute().actionGet();
+        final SearchResponse result = searchQuery.get();
         List<T> rc = Collections.emptyList();
         if (!result.isTimedOut() && result.getSuccessfulShards() > 0) {
             rc = new ArrayList<>((int) result.getHits().getTotalHits());

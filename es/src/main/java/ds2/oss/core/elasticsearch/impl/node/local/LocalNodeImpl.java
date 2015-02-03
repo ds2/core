@@ -17,7 +17,7 @@ package ds2.oss.core.elasticsearch.impl.node.local;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.interceptor.Interceptor;
 
@@ -37,7 +37,7 @@ import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
  * @author dstrauss
  * @version 0.2
  */
-@Dependent
+@ApplicationScoped
 @Alternative
 @Priority(Interceptor.Priority.LIBRARY_BEFORE + 15)
 public class LocalNodeImpl extends AbstractNodeImpl<Client> {
@@ -45,7 +45,7 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(LocalNodeImpl.class);
-
+    
     /**
      * Actions to perform at start.
      */
@@ -61,5 +61,5 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
         client.admin().cluster().prepareHealth().setWaitForYellowStatus().get();
         LOG.debug("Local index node is up");
     }
-
+    
 }

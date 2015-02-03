@@ -104,7 +104,7 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
                 .setPostFilter(FilterBuilders.termFilter("author", "baumkuchen"));
         LOG.debug("Query will be {}", searchQuery);
-        final SearchResponse resp = searchQuery.execute().actionGet();
+        final SearchResponse resp = searchQuery.get();
         final long count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
     }
@@ -124,7 +124,7 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         // is async -> will not be available NOW
         Assert.assertEquals(count, 0);
         esSvc.refreshIndexes(INDEXNAME);
-        resp = searchQuery.execute().actionGet();
+        resp = searchQuery.get();
         count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
     }
