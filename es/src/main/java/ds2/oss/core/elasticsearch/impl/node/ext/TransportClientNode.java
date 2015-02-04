@@ -21,7 +21,7 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.interceptor.Interceptor;
@@ -41,7 +41,7 @@ import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
  * @author dstrauss
  * @version 0.2
  */
-@Dependent
+@ApplicationScoped
 @Alternative
 @Priority(Interceptor.Priority.LIBRARY_BEFORE + 15)
 public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
@@ -50,7 +50,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
      */
     @Inject
     private EsConfig config;
-
+    
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -65,7 +65,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             needsLock = false;
         }
     }
-
+    
     /**
      * Actions to perform on init.
      */
@@ -96,7 +96,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             lock.unlock();
         }
     }
-
+    
     @Override
     public void removeTransport(final InetSocketAddress... isa) {
         lock.lock();
@@ -109,5 +109,5 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             lock.unlock();
         }
     }
-
+    
 }
