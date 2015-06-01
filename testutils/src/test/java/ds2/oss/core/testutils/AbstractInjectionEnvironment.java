@@ -22,6 +22,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.util.TypeLiteral;
 
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
@@ -37,6 +38,7 @@ import org.testng.annotations.BeforeSuite;
  * @version 0.2
  */
 public abstract class AbstractInjectionEnvironment {
+
     /**
      * A lock.
      */
@@ -60,12 +62,10 @@ public abstract class AbstractInjectionEnvironment {
     /**
      * Returns an instance of the given class.
      *
-     * @param c
-     *            the class
+     * @param c the class
      *
      * @return the instance, if found. Otherwise null.
-     * @param <T>
-     *            the type of the bean
+     * @param <T> the type of the bean
      */
     public static <T> T getInstance(final Class<T> c) {
         LOCK.lock();
@@ -76,13 +76,30 @@ public abstract class AbstractInjectionEnvironment {
         }
     }
 
+    public static <T> T getInstance(final TypeLiteral<T> c) {
+        LOCK.lock();
+        try {
+            return wc.instance().select(c).get();
+        } finally {
+            LOCK.unlock();
+        }
+    }
+
+    /**
+     * A convenience method to return the used weld container.
+     *
+     * @return the weld container
+     */
+    public static WeldContainer getWeldContainer() {
+        return wc;
+    }
+
     /**
      * Returns an instance with the given annotation data.
      *
-     * @param c
-     *            the target class to search for
-     * @param annotations
-     *            some annotations to find the specific CDI bean
+     * @param <T> the type to return
+     * @param c the target class to search for
+     * @param annotations some annotations to find the specific CDI bean
      * @return the found bean, or null if an error occurred
      */
     public static <T> T getInstance(final Class<T> c, final Annotation... annotations) {
@@ -90,9 +107,9 @@ public abstract class AbstractInjectionEnvironment {
             LOCK.lock();
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
             if (beans != null && !beans.isEmpty()) {
-                for (Bean<?> b : beans) {
+                beans.stream().forEach((b) -> {
                     LOG.debug("Bean is {}", b);
-                }
+                });
             }
             return wc.instance().select(c, annotations).get();
         } finally {
