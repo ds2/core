@@ -62,6 +62,24 @@ public class SymKeyServiceImplTest extends AbstractInjectionEnvironment {
         String erg = hx.encode(b);
         Assert.assertEquals(erg, "0c60c80f961f0e71f3a9b524af6012062fe037a6");
     }
+
+    @Test
+    public void rfc6080_4() throws UnsupportedEncodingException {
+        byte[] b =
+                to.performHashing("password".toCharArray(),
+                        "salt".getBytes("utf-8"), 5000, SymmetricKeyNames.PBKDF256, 256);
+        String erg = hx.encode(b);
+        Assert.assertEquals(erg, "8fc2bcffbb4b1ac9b9de03588d390f3d9bf336c2c4422c90c158cc714225f629");
+    }
+
+    @Test
+    public void rfc6080_5() throws UnsupportedEncodingException {
+        byte[] b =
+                to.performHashing("password".toCharArray(),
+                        "salt".getBytes("utf-8"), 5000, SymmetricKeyNames.PBKDF512, 512);
+        String erg = hx.encode(b);
+        Assert.assertEquals(erg, "8cc55858f341586bde60d595d376fdafc4535d94a7383231f2adf323b5c508d2bdddd75b783b2c3acb196334288402406041cb1114ed13e6b96443b0aafccd5e");
+    }
     
     @Test
     public void rfc6080_2() throws UnsupportedEncodingException {

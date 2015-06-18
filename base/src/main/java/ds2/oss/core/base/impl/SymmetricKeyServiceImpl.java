@@ -53,6 +53,11 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
     @Override
     public byte[] performHashing(final char[] origin, final byte[] salt, final int iterationCount,
         final SymmetricKeyNames n) {
+        return performHashing(origin, salt, iterationCount, n, n.getSuggestedKeyLength());
+    }
+
+    @Override
+    public byte[] performHashing(char[] origin, byte[] salt, int iterationCount, SymmetricKeyNames n, int keyLength) {
         if (origin == null) {
             LOG.warn("No origin data given to hash!");
             return null;
@@ -63,7 +68,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
         byte[] rc = null;
         try {
             final SecretKeyFactory skf = SecretKeyFactory.getInstance(n.getName());
-            final KeySpec ks = new PBEKeySpec(origin, salt, iterationCount, n.getSuggestedKeyLength());
+            final KeySpec ks = new PBEKeySpec(origin, salt, iterationCount, keyLength);
             final SecretKey erg = skf.generateSecret(ks);
             rc = erg.getEncoded();
         } catch (final NoSuchAlgorithmException e) {

@@ -23,6 +23,14 @@ package ds2.oss.core.api;
  */
 public enum SymmetricKeyNames {
     /**
+     * The PBKDF2 with SHA256.
+     */
+    PBKDF512("PBKDF2WithHmacSHA512", 128*8),
+    /**
+     * The PBKDF2 with SHA256.
+     */
+    PBKDF256("PBKDF2WithHmacSHA256", 64*8),
+    /**
      * The PBKDF2 algorithm.
      */
     PBKDF2("PBKDF2WithHmacSHA1", 160);
