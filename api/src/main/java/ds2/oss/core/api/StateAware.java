@@ -29,5 +29,5 @@ public interface StateAware extends Serializable {
      *
      * @return the state. May return null if not set.
      */
-    EntryStates getEntryState();
+    EntryState getEntryState();
 }

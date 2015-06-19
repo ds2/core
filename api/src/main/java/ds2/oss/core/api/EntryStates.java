@@ -24,7 +24,7 @@ import java.util.Map;
  * @author dstrauss
  * @version 0.1
  */
-public enum EntryStates implements NumericEnumValue {
+public enum EntryStates implements EntryState {
     /**
      * The entry is active.
      */
@@ -77,6 +77,10 @@ public enum EntryStates implements NumericEnumValue {
      */
     private EntryStates(final int i) {
         numericalValue = i;
+    }
+
+    public String getEntryStateName(){
+        return name();
     }
 
     @Override
