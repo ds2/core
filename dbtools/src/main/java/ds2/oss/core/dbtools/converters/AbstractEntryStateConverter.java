@@ -8,10 +8,10 @@ import javax.persistence.AttributeConverter;
 /**
  * Created by dstrauss on 19.06.15.
  */
-public abstract class AbstractEntryStateConverter implements AttributeConverter<EntryState, Integer> {
+public abstract class AbstractEntryStateConverter<E extends EntryState> implements AttributeConverter<E, Integer> {
 
     @Override
-    public Integer convertToDatabaseColumn(final EntryState attribute) {
+    public Integer convertToDatabaseColumn(final E attribute) {
         if (attribute == null) {
             return null;
         }
@@ -19,13 +19,13 @@ public abstract class AbstractEntryStateConverter implements AttributeConverter<
     }
 
     @Override
-    public EntryState convertToEntityAttribute(final Integer dbData) {
+    public E convertToEntityAttribute(final Integer dbData) {
         if (dbData == null) {
             return null;
         }
         return getStateById(dbData.intValue());
     }
 
-    protected abstract <E extends EntryState> E getStateById(int id);
+    protected abstract E getStateById(int id);
 
 }

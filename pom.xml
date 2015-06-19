@@ -72,6 +72,7 @@
     <module>testutils</module>
     <module>dbtools</module>
     <module>crypto-bc</module>
+      <module>dbtools-it</module>
   </modules>
   <profiles>
     <profile>

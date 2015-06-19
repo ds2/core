@@ -19,6 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 
+import ds2.oss.core.api.EntryState;
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.StateAware;
 import ds2.oss.core.dbtools.converters.EntryStatesConverter;
@@ -31,7 +32,7 @@ import ds2.oss.core.dbtools.converters.EntryStatesConverter;
  */
 @Embeddable
 public class StateAwareModule implements StateAware {
-
+    
     /**
      * The svuid.
      */
@@ -42,23 +43,23 @@ public class StateAwareModule implements StateAware {
     @Column(name = "state_id", nullable = false, updatable = true)
     @Convert(converter = EntryStatesConverter.class)
     private EntryStates entryState = EntryStates.PREPARED;
-
+    
     /**
      * Inits the module.
      */
     public StateAwareModule() {
         // stateId = EntryStates.PREPARED.getNumericalValue();
     }
-
+    
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.StateAware#getState()
      */
     @Override
-    public EntryStates getEntryState() {
+    public EntryState getEntryState() {
         return entryState;
     }
-
+    
     /**
      * Sets the entry state.
      *
@@ -71,5 +72,5 @@ public class StateAwareModule implements StateAware {
         }
         entryState = s;
     }
-
+    
 }
