@@ -28,24 +28,22 @@ public enum EntryStates implements EntryState {
     /**
      * The entry is active.
      */
-    ACTIVE(1),
-    /**
-     * The entry is deleted.
-     */
-    DELETED(3),
-    /**
-     * The entry is locked and must not be modified.
-     */
-    LOCKED(2),
-    /**
-     * The entry is new, in draft.
-     */
+    ACTIVE(1), /**
+                * The entry is deleted.
+                */
+    DELETED(3), /**
+                 * The entry is locked and must not be modified.
+                 */
+    LOCKED(2), /**
+                * The entry is new, in draft.
+                */
     PREPARED(0);
-
+    
     /**
      * A cache map.
      */
     private static final Map<Integer, EntryStates> cacheMap = new HashMap<>(4);
+    
     static {
         cacheMap.put(PREPARED.getNumericalValue(), PREPARED);
         cacheMap.put(ACTIVE.getNumericalValue(), ACTIVE);
@@ -63,12 +61,12 @@ public enum EntryStates implements EntryState {
     public static EntryStates getById(final int i) {
         return cacheMap.get(i);
     }
-
+    
     /**
      * The numerical value.
      */
     private final int numericalValue;
-
+    
     /**
      * Inits the enum value.
      *
@@ -78,11 +76,12 @@ public enum EntryStates implements EntryState {
     private EntryStates(final int i) {
         numericalValue = i;
     }
-
-    public String getEntryStateName(){
+    
+    @Override
+    public String getEntryStateName() {
         return name();
     }
-
+    
     @Override
     public int getNumericalValue() {
         return numericalValue;

@@ -23,7 +23,8 @@ package ds2.oss.core.api;
  */
 public interface NumericEnumValue {
     /**
-     * Returns the numerical value for this enum value.
+     * Returns the numerical value for this enum value. This is also considered as the primary key
+     * for the enum value.
      *
      * @return the enum value
      */

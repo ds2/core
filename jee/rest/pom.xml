@@ -1,0 +1,9 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>ds2-oss-core-jee</artifactId>
+    <groupId>ds2.oss.core.jee</groupId>
+    <version>0.3-SNAPSHOT</version>
+  </parent>
+  <artifactId>ds2-oss-core-jee-rest</artifactId>
+</project>

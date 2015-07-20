@@ -31,7 +31,7 @@ import ds2.oss.core.api.EntryState;
 import ds2.oss.core.api.Persistable;
 import ds2.oss.core.api.StateAware;
 import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
-import ds2.oss.core.dbtools.modules.StateAwareModule;
+import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
 
 /**
  * Dummy entity.
@@ -56,7 +56,7 @@ public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifi
      * The state.
      */
     @Embedded
-    private final StateAwareModule state;
+    private final EntryStatesAwareModule state;
     /**
      * The times.
      */
@@ -67,7 +67,7 @@ public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifi
      * Inits the entity.
      */
     public DummyEntity() {
-        state = new StateAwareModule();
+        state = new EntryStatesAwareModule();
         times = new CreatedModifiedAwareModule();
     }
     

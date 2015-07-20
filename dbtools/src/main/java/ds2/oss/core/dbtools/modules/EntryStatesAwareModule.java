@@ -31,7 +31,7 @@ import ds2.oss.core.dbtools.converters.EntryStatesConverter;
  * @version 0.1
  */
 @Embeddable
-public class StateAwareModule implements StateAware {
+public class EntryStatesAwareModule implements StateAware {
     
     /**
      * The svuid.
@@ -47,7 +47,7 @@ public class StateAwareModule implements StateAware {
     /**
      * Inits the module.
      */
-    public StateAwareModule() {
+    public EntryStatesAwareModule() {
         // stateId = EntryStates.PREPARED.getNumericalValue();
     }
     
