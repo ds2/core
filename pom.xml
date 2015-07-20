@@ -73,6 +73,7 @@
     <module>dbtools</module>
     <module>crypto-bc</module>
       <module>dbtools-it</module>
+    <module>jee</module>
   </modules>
   <profiles>
     <profile>
