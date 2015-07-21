@@ -1,26 +1,29 @@
-package ds2.oss.core.dbtools.it;
+package ds2.oss.core.dbtools.it.entities;
 
 import java.util.Date;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import ds2.oss.core.api.EntryState;
-import ds2.oss.core.api.StateAware;
+import ds2.oss.core.api.Persistable;
+import ds2.oss.core.dbtools.AbstractStateAwareBase;
 
 /**
  * Created by dstrauss on 19.06.15.
  */
-@Entity
+@Entity(name = "MyE")
 @Table(name = "oc_my")
-public class MyEntity implements StateAware {
+@AssociationOverrides({
+    @AssociationOverride(name = "entryState", joinColumns = @JoinColumn(name = "state_id", nullable = false) ) })
+public class MyEntity extends AbstractStateAwareBase<StateEntity>implements Persistable<Long> {
     /**
      * The svuid.
      */
@@ -34,16 +37,9 @@ public class MyEntity implements StateAware {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
-    @JoinColumn(name = "state", nullable = false)
-    @ManyToOne(targetEntity = StateEntity.class)
-    private EntryState state;
     
     @Override
-    public EntryState getEntryState() {
-        return state;
-    }
-    
-    public long getId() {
+    public Long getId() {
         return id;
     }
     
@@ -67,7 +63,4 @@ public class MyEntity implements StateAware {
         this.date = date;
     }
     
-    public void setState(EntryState state) {
-        this.state = state;
-    }
 }

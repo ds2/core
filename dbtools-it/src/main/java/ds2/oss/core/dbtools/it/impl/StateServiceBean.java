@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ds2.oss.core.dbtools.it;
+package ds2.oss.core.dbtools.it.impl;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import ds2.oss.core.api.EntryState;
+import ds2.oss.core.dbtools.it.StateService;
+import ds2.oss.core.dbtools.it.entities.StateEntity;
 
 /**
  * @author dstrauss

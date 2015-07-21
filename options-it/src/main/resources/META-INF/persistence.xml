@@ -23,7 +23,6 @@ http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/persistence_2
   <persistence-unit name="corePU">
     <jta-data-source>jdbc/core</jta-data-source>
     <class>ds2.oss.core.options.impl.entities.OptionEntity</class>
-    <class>ds2.oss.core.dbtools.modules.StateAwareModule</class>
     <class>ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule</class>
     <class>ds2.oss.core.options.internal.OptionStageConverter</class>
     <class>ds2.oss.core.options.internal.ValueTypeConverter</class>

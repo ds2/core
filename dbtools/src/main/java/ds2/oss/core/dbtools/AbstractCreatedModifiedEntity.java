@@ -11,12 +11,16 @@ import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
 /**
  * Created by dstrauss on 18.06.15.
  */
+
 @MappedSuperclass
-public class AbstractCreatedModifiedEntity implements CreatedModifiedAware {
+public abstract class AbstractCreatedModifiedEntity implements CreatedModifiedAware {
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 8846962750701956032L;
+    /**
+     * The embeddable to handle the columns.
+     */
     @Embedded
     private CreatedModifiedAwareModule cma = new CreatedModifiedAwareModule();
     
@@ -28,6 +32,12 @@ public class AbstractCreatedModifiedEntity implements CreatedModifiedAware {
         return cma.getCreated();
     }
     
+    /**
+     * Sets the creation date.
+     * 
+     * @param date
+     *            the creation date.
+     */
     public void setCreated(Date date) {
         if (cma == null) {
             cma = new CreatedModifiedAwareModule();
@@ -41,6 +51,19 @@ public class AbstractCreatedModifiedEntity implements CreatedModifiedAware {
             cma = new CreatedModifiedAwareModule();
         }
         return cma.getModified();
+    }
+    
+    /**
+     * Sets the modified date. Usually you want to use {@link #touchModified()} instead.
+     * 
+     * @param d
+     *            the modification date
+     */
+    public void setModified(Date d) {
+        if (cma == null) {
+            cma = new CreatedModifiedAwareModule();
+        }
+        cma.setModified(d);
     }
     
     public void touchModified() {

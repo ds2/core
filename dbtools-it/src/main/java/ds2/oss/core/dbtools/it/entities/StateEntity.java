@@ -1,4 +1,4 @@
-package ds2.oss.core.dbtools.it;
+package ds2.oss.core.dbtools.it.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,21 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import ds2.oss.core.api.EntryState;
+import ds2.oss.core.api.Persistable;
 
 /**
  * Created by dstrauss on 19.06.15.
  */
-@Entity
+@Entity(name = "State")
 @Table(name = "oc_state")
-public class StateEntity implements EntryState {
+public class StateEntity implements EntryState, Persistable<Long> {
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 5050515061070554228L;
     @Id
-    @Column(name = "id")
+    @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(nullable = false)
     private String name;
     
@@ -45,6 +46,15 @@ public class StateEntity implements EntryState {
     
     @Override
     public int getNumericalValue() {
-        return id;
+        return (int) id;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.api.Persistable#getId()
+     */
+    @Override
+    public Long getId() {
+        return Long.valueOf(id);
     }
 }

@@ -9,7 +9,7 @@ import ds2.oss.core.api.StateAware;
 import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
 
 /**
- * Created by dstrauss on 18.06.15.
+ * An entity that maps the states to the enum {@link EntryStates}.
  */
 @MappedSuperclass
 public abstract class AbstractStateAwareEntity implements StateAware {

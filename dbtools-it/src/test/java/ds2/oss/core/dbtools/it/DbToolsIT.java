@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.dbtools.it.entities.MyEntity;
+import ds2.oss.core.dbtools.it.entities.StateEntity;
+
 /**
  * Created by dstrauss on 19.06.15.
  */
@@ -20,11 +23,11 @@ public class DbToolsIT extends Arquillian {
     
     @Deployment
     public static JavaArchive createTestableDeployment() {
-        final JavaArchive jar =
-            ShrinkWrap.create(JavaArchive.class, "dbtools.jar").addPackages(true, "ds2.oss.core")
-                .addAsManifestResource("test-persistence.xml", "persistence.xml")
-                // Enable CDI
-                .addAsManifestResource("my-beans.xml", "beans.xml");
+        final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "dbtools.jar").addPackages(true, "ds2.oss.core")
+            .addAsManifestResource("test-persistence.xml", "persistence.xml")
+            // Enable CDI
+            // .addAsManifestResource("my-beans.xml", "beans.xml")
+        ;
         LOG.info("Content of archive: {}", jar.toString(Formatters.VERBOSE));
         return jar;
     }
@@ -38,7 +41,7 @@ public class DbToolsIT extends Arquillian {
     private StateService states;
     
     @Test
-    public void beforeClass() {
+    public void createStates() {
         Assert.assertNotNull(states);
         Assert.assertNotNull(states.createStateByName("prepared"));
         Assert.assertNotNull(states.createStateByName("allowed"));
@@ -52,7 +55,7 @@ public class DbToolsIT extends Arquillian {
         Assert.assertNotNull(states.createStateByName("deleted"));
     }
     
-    @Test(dependsOnMethods = "beforeClass")
+    @Test(dependsOnMethods = "createStates")
     public void testCreate1() {
         MyEntity e = to.create("test", new StateEntity(4, "flying high"));
         Assert.assertNotNull(e);
