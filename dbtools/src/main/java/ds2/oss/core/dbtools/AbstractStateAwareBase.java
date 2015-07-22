@@ -4,7 +4,6 @@
 package ds2.oss.core.dbtools;
 
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
 
 import ds2.oss.core.api.EntryState;
 import ds2.oss.core.api.StateAware;
@@ -16,7 +15,7 @@ import ds2.oss.core.api.StateAware;
  *            
  */
 @MappedSuperclass
-public class AbstractStateAwareBase<E extends EntryState> implements StateAware {
+public abstract class AbstractStateAwareBase<E extends EntryState> implements StateAware {
     
     /**
      * The svuid.
@@ -26,8 +25,6 @@ public class AbstractStateAwareBase<E extends EntryState> implements StateAware 
      * The state column.
      */
     private E entryState;
-    @Version
-    private Integer version;
     
     /**
      * Sets the entryState.

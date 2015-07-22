@@ -20,9 +20,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.Root;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
@@ -44,7 +42,7 @@ import ds2.oss.core.options.impl.entities.OptionEntity;
  */
 public abstract class AbstractOptionsPersistenceSupportBean
     extends
-    AbstractPersistenceSupportImpl<OptionDto<Long, ?>, Long> implements NumberedOptionsPersistenceSupport {
+    AbstractPersistenceSupportImpl<OptionDto<Long, ?>, Long>implements NumberedOptionsPersistenceSupport {
     /**
      * A logger.
      */
@@ -136,11 +134,11 @@ public abstract class AbstractOptionsPersistenceSupportBean
      */
     protected <V> OptionDto<Long, V> setOptionStage(final EntityManager em, final OptionIdentifier<V> ident,
         final OptionStage newStage) {
-        final Query q = em.createNamedQuery(QUERY_FINDOPTIONBYIDENTIFIER);
+        final TypedQuery<OptionEntity> q = em.createNamedQuery(QUERY_FINDOPTIONBYIDENTIFIER, OptionEntity.class);
         q.setParameter("optionName", ident.getOptionName());
         q.setParameter("appName", ident.getApplicationName());
         q.setMaxResults(1);
-        final OptionEntity foundOption = getSecureSingle(q, OptionEntity.class);
+        final OptionEntity foundOption = getSecureSingle(q);
         final OptionStage oldStage = foundOption.getStage();
         foundOption.setStage(newStage);
         em.merge(foundOption);

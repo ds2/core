@@ -64,11 +64,11 @@ import ds2.oss.core.options.internal.OptionValueContextModule_;
  *
  * @author dstrauss
  * @version 0.3
- *
+ *          
  */
 public abstract class AbstractOptionValuePersistenceSupportBean
     extends
-    AbstractPersistenceSupportImpl<OptionValueDto<Long, ?>, Long> implements NumberedOptionValuePersistenceSupport {
+    AbstractPersistenceSupportImpl<OptionValueDto<Long, ?>, Long>implements NumberedOptionValuePersistenceSupport {
     
     /**
      * Returns the option context predicate.
@@ -99,8 +99,8 @@ public abstract class AbstractOptionValuePersistenceSupportBean
             predicates.add(qb.isNull(path.get(OptionValueContextModule_.configuration)));
         }
         if (ctx.getRequestedDomain() != null) {
-            predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.requestedDomain), String.class,
-                REQ_DOMAIN));
+            predicates.add(
+                getIsNullOrValue(qb, path.get(OptionValueContextModule_.requestedDomain), String.class, REQ_DOMAIN));
         } else {
             predicates.add(qb.isNull(path.get(OptionValueContextModule_.requestedDomain)));
         }
@@ -115,8 +115,8 @@ public abstract class AbstractOptionValuePersistenceSupportBean
                     SERVER_HOSTNAME));
             }
             if (si.getIpAddress() != null) {
-                predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.serverIp), String.class,
-                    SERVER_IP));
+                predicates
+                    .add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.serverIp), String.class, SERVER_IP));
             }
             
         } else {
@@ -247,15 +247,15 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         optionQuery.select(optionRoot);
         
         List<Predicate> optionPredicates = new ArrayList<Predicate>();
-        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.applicationName),
-            cb.parameter(String.class, "applicationName")));
-        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.optionName),
-            cb.parameter(String.class, "optionName")));
+        optionPredicates.add(
+            cb.equal(optionRoot.get(OptionEntity_.applicationName), cb.parameter(String.class, "applicationName")));
+        optionPredicates
+            .add(cb.equal(optionRoot.get(OptionEntity_.optionName), cb.parameter(String.class, "optionName")));
         optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.stage), OptionStage.Online));
         optionQuery.where(optionPredicates.toArray(new Predicate[optionPredicates.size()]));
         /*
-         * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get(OptionEntity_
-         * .id), qb.parameter(Long.class, "optionId")));
+         * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get(
+         * OptionEntity_ .id), qb.parameter(Long.class, "optionId")));
          */
         /*
          * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get("id"),
@@ -269,12 +269,12 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
         List<Order> orderByList = new ArrayList<Order>(4);
         orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.cluster)));
-        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx)
-            .get(OptionValueContextModule_.configuration)));
-        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(
-            OptionValueContextModule_.requestedDomain)));
-        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(
-            OptionValueContextModule_.serverHostname)));
+        orderByList
+            .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.configuration)));
+        orderByList
+            .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.requestedDomain)));
+        orderByList
+            .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.serverHostname)));
         cq.orderBy(orderByList.toArray(new Order[orderByList.size()]));
         // perform query to database
         TypedQuery<OptionValueEntity> query = em.createQuery(cq);
@@ -373,4 +373,5 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         t.setCreated(e.getCreated());
         t.setModified(e.getModified());
     }
+    
 }

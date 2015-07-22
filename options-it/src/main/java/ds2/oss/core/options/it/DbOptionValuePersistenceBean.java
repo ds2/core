@@ -43,7 +43,7 @@ import ds2.oss.core.options.impl.entities.OptionValueEntity;
 
 /**
  * @author dstrauss
- *
+ *         
  */
 @Stateless(name = "optionValuePersistence")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -96,6 +96,16 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
         }
         // find option by ident
         return findBestOptionValue(em, ident, ctx);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.dbtools.AbstractPersistenceSupportImpl#getEntityClass()
+     */
+    @Override
+    protected Class<OptionValueDto<Long, ?>> getEntityClass() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }

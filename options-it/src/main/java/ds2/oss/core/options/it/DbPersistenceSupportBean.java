@@ -33,10 +33,9 @@ import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.ejb.AbstractOptionsPersistenceSupportBean;
 
-
 /**
  * @author dstrauss
- * 
+ *         
  */
 @Stateless(name = "persistenceBean")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -71,6 +70,16 @@ public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportB
     @Override
     public <V> OptionDto<Long, V> setOptionStage(final OptionIdentifier<V> ident, final OptionStage newStage) {
         return setOptionStage(em, ident, newStage);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see ds2.oss.core.dbtools.AbstractPersistenceSupportImpl#getEntityClass()
+     */
+    @Override
+    protected Class<OptionDto<Long, ?>> getEntityClass() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }
