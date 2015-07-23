@@ -13,7 +13,7 @@ import ds2.oss.core.api.CreatedByModifiedByAware;
  *         
  */
 @MappedSuperclass
-public class DefaultCreatedByModifiedByEntity extends AbstractCreatedModifiedEntity
+public abstract class AbstractCreatedByModifiedByEntity extends AbstractCreatedModifiedEntity
     implements
     CreatedByModifiedByAware {
     
