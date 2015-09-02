@@ -54,6 +54,8 @@ public abstract class AbstractPersistenceSupportImpl<E extends Persistable<PRIMK
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     /**
+     * Returns the entity class.
+     * 
      * @return the entity class
      */
     protected abstract Class<E> getEntityClass();

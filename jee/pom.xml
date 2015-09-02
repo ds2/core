@@ -9,6 +9,7 @@
   </parent>
   <groupId>ds2.oss.core.jee</groupId>
   <artifactId>ds2-oss-core-jee</artifactId>
+  <name>DS/2 OSS Core JEE Modules</name>
   <packaging>pom</packaging>
   <modules>
     <module>rest</module>
