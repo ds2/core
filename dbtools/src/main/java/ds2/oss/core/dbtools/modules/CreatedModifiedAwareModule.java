@@ -31,53 +31,31 @@ import ds2.oss.core.api.CreatedModifiedAware;
  * @version 0.1
  */
 @Embeddable
-public class CreatedModifiedAwareModule implements CreatedModifiedAware {
-
+public class CreatedModifiedAwareModule extends CreatedAwareModule implements CreatedModifiedAware {
+    
     /**
      * The svuid.
      */
     private static final long serialVersionUID = 305082117441818515L;
-    /**
-     * The creation date.
-     */
-    @Column(name = "created", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
     /**
      * The modification date.
      */
     @Column(name = "modified", nullable = false, updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
-
+    
     /**
      * Inits the module.
      */
     public CreatedModifiedAwareModule() {
-        created = new Date();
         modified = new Date();
     }
-
-    @Override
-    public Date getCreated() {
-        return created;
-    }
-
+    
     @Override
     public Date getModified() {
         return modified;
     }
-
-    /**
-     * Sets the creation date.
-     *
-     * @param c
-     *            the created to set
-     */
-    public void setCreated(final Date c) {
-        created = c;
-    }
-
+    
     /**
      * Sets the modification date.
      *
@@ -87,7 +65,7 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
     public void setModified(final Date m) {
         modified = m;
     }
-
+    
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -96,18 +74,18 @@ public class CreatedModifiedAwareModule implements CreatedModifiedAware {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("CreatedModifiedAwareModule (created=");
-        builder.append(created);
+        builder.append(getCreated());
         builder.append(", modified=");
         builder.append(modified);
         builder.append(")");
         return builder.toString();
     }
-
+    
     /**
      * Updates the modified date.
      */
     public final void touchModified() {
         modified = new Date();
     }
-
+    
 }

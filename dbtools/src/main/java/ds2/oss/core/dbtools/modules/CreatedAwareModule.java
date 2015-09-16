@@ -49,4 +49,20 @@ public class CreatedAwareModule implements CreatedAware {
         created = d;
     }
     
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("(");
+        if (created != null) {
+            builder.append("created=");
+            builder.append(created);
+        }
+        builder.append(")");
+        return builder.toString();
+    }
+    
 }
