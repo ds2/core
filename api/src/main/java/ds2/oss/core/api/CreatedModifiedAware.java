@@ -15,27 +15,12 @@
  */
 package ds2.oss.core.api;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
  * A persistence contract to identify a persistable object via JPA.
  *
  * @author dstrauss
  * @version 0.1
  */
-public interface CreatedModifiedAware extends Serializable {
-    /**
-     * Returns the creation date.
-     *
-     * @return the creation date
-     */
-    Date getCreated();
-
-    /**
-     * Returns the modification date.
-     *
-     * @return the modification date
-     */
-    Date getModified();
+public interface CreatedModifiedAware extends CreatedAware, ModifiedAware {
+    // nothing special
 }

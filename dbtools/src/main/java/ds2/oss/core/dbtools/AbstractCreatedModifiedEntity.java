@@ -6,14 +6,15 @@ import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
 import ds2.oss.core.api.CreatedModifiedAware;
-import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
+import ds2.oss.core.dbtools.modules.CreatedAwareModule;
+import ds2.oss.core.dbtools.modules.ModifiedAwareModule;
 
 /**
  * Created by dstrauss on 18.06.15.
  */
 
 @MappedSuperclass
-public abstract class AbstractCreatedModifiedEntity implements CreatedModifiedAware {
+public abstract class AbstractCreatedModifiedEntity extends AbstractCreatedEntity implements CreatedModifiedAware {
     /**
      * The svuid.
      */
@@ -22,14 +23,13 @@ public abstract class AbstractCreatedModifiedEntity implements CreatedModifiedAw
      * The embeddable to handle the columns.
      */
     @Embedded
-    private CreatedModifiedAwareModule cma = new CreatedModifiedAwareModule();
+    private CreatedAwareModule cam = new CreatedAwareModule();
+    @Embedded
+    private ModifiedAwareModule mam = new ModifiedAwareModule();
     
     @Override
     public Date getCreated() {
-        if (cma == null) {
-            cma = new CreatedModifiedAwareModule();
-        }
-        return cma.getCreated();
+        return getCam().getCreated();
     }
     
     /**
@@ -38,19 +38,14 @@ public abstract class AbstractCreatedModifiedEntity implements CreatedModifiedAw
      * @param date
      *            the creation date.
      */
+    @Override
     public void setCreated(Date date) {
-        if (cma == null) {
-            cma = new CreatedModifiedAwareModule();
-        }
-        cma.setCreated(date);
+        getCam().setCreated(date);
     }
     
     @Override
     public Date getModified() {
-        if (cma == null) {
-            cma = new CreatedModifiedAwareModule();
-        }
-        return cma.getModified();
+        return getMam().getModified();
     }
     
     /**
@@ -60,16 +55,24 @@ public abstract class AbstractCreatedModifiedEntity implements CreatedModifiedAw
      *            the modification date
      */
     public void setModified(Date d) {
-        if (cma == null) {
-            cma = new CreatedModifiedAwareModule();
+        getMam().setModified(d);
+    }
+    
+    private ModifiedAwareModule getMam() {
+        if (mam == null) {
+            mam = new ModifiedAwareModule();
         }
-        cma.setModified(d);
+        return mam;
+    }
+    
+    private CreatedAwareModule getCam() {
+        if (cam == null) {
+            cam = new CreatedAwareModule();
+        }
+        return cam;
     }
     
     public void touchModified() {
-        if (cma == null) {
-            cma = new CreatedModifiedAwareModule();
-        }
-        cma.touchModified();
+        getMam().touchModified();
     }
 }
