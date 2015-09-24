@@ -34,7 +34,7 @@ public interface PersistenceSupport<E extends Persistable<PRIMKEY>, PRIMKEY> {
      * @return the found object, or null
      */
     E getById(PRIMKEY e);
-
+    
     /**
      * Persists the given dto.
      *

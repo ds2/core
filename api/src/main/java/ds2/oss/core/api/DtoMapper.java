@@ -3,25 +3,30 @@
  */
 package ds2.oss.core.api;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
- * Dummy contract for a dto mapper.
- * 
  * @author dstrauss
- * @param <E>
- *            the entity type
- * @param <K>
- *            the primary key type
- * @param <D>
- *            the dto type
+ * @param <A>
+ *            the origin dto type
+ * @param <B>
+ *            the target dto type
  *            
  */
-public interface DtoMapper<E extends Persistable<K>, K, D> {
+public interface DtoMapper<A, B> {
     /**
      * Converts the given entity into its dto representation.
      * 
-     * @param e
+     * @param a
      *            the entity
      * @return the dto
      */
-    D convert(E e);
+    B convert(A a);
+    
+    /**
+     * @param secureList
+     * @return the list
+     */
+    List<B> convertToList(Collection<A> secureList);
 }
