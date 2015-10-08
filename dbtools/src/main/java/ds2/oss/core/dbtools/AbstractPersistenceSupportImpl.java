@@ -160,9 +160,9 @@ public abstract class AbstractPersistenceSupportImpl<E extends Persistable<PRIMK
         } catch (final IllegalStateException e) {
             LOG.debug("Error when executing the given query! Returning null.", e);
         } catch (final NoResultException e) {
-            LOG.debug("Given query returned no result! Ignoring.", e);
+            LOG.debug("Given query returned no result! Ignoring.");
         } catch (final NonUniqueResultException e) {
-            LOG.warn("Given query does not return one but several results! Returning only first item.", e);
+            LOG.warn("Given query does not return one but several results! Returning only first item.");
             rc = getSecureList(q).get(0);
         }
         return rc;
