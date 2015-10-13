@@ -25,7 +25,10 @@ import ds2.oss.core.api.StateAware;
 import ds2.oss.core.dbtools.converters.EntryStatesConverter;
 
 /**
- * Module for a state entry.
+ * Module for a state entry using the default enum {@link EntryStates}. Usually,
+ * this should not be used in production environments where a state can have
+ * more than the given default values from our enum. But it is a good starting
+ * point.
  *
  * @author dstrauss
  * @version 0.1

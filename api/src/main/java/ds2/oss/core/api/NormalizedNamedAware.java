@@ -5,19 +5,9 @@
  */
 package ds2.oss.core.api;
 
-import java.io.Serializable;
-
 /**
- * Indicates that this object supports a name field.
  *
  * @author deindesign
  */
-public interface NamedAware extends Serializable {
-
-    /**
-     * Returns the name of this object.
-     *
-     * @return the name
-     */
-    String getName();
+public interface NormalizedNamedAware extends NamedAware, NormalizedNameAware {
 }
