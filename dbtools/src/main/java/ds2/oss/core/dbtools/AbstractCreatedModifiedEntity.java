@@ -12,7 +12,6 @@ import ds2.oss.core.dbtools.modules.ModifiedAwareModule;
 /**
  * Created by dstrauss on 18.06.15.
  */
-
 @MappedSuperclass
 public abstract class AbstractCreatedModifiedEntity extends AbstractCreatedEntity implements CreatedModifiedAware {
     /**

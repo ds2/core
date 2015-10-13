@@ -32,7 +32,7 @@ import ds2.oss.core.dbtools.converters.EntryStatesConverter;
  */
 @Embeddable
 public class EntryStatesAwareModule implements StateAware {
-    
+
     /**
      * The svuid.
      */
@@ -43,14 +43,7 @@ public class EntryStatesAwareModule implements StateAware {
     @Column(name = "state_id", nullable = false, updatable = true)
     @Convert(converter = EntryStatesConverter.class)
     private EntryStates entryState = EntryStates.PREPARED;
-    
-    /**
-     * Inits the module.
-     */
-    public EntryStatesAwareModule() {
-        // stateId = EntryStates.PREPARED.getNumericalValue();
-    }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.StateAware#getState()
@@ -59,12 +52,11 @@ public class EntryStatesAwareModule implements StateAware {
     public EntryState getEntryState() {
         return entryState;
     }
-    
+
     /**
      * Sets the entry state.
      *
-     * @param s
-     *            the state to set
+     * @param s the state to set
      */
     public void setEntryState(final EntryStates s) {
         if (s == null) {
@@ -72,5 +64,5 @@ public class EntryStatesAwareModule implements StateAware {
         }
         entryState = s;
     }
-    
+
 }
