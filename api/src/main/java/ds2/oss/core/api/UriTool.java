@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ds2.oss.core.base.impl;
+package ds2.oss.core.api;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -27,9 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * URI builder tool.
@@ -42,29 +40,27 @@ public final class UriTool {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+    private static final Logger LOG = Logger.getLogger(UriTool.class.getName());
+
     /**
      * Creates a tool from a given string that is considered to be a uri string.
      *
-     * @param string
-     *            the string considered to be a uri
+     * @param string the string considered to be a uri
      * @return the uri tool
      */
     public static UriTool createFrom(final String string) {
         try {
             return UriTool.createFrom(new URI(string));
         } catch (final URISyntaxException e) {
-            LOG.warn("Error when creating the URI!", e);
+            LOG.log(Level.WARNING, "Error when creating the URI from " + string, e);
         }
         return null;
     }
-    
+
     /**
      * Creates a new uri tool.
      *
-     * @param u
-     *            the base uri
+     * @param u the base uri
      * @return the uri tool
      */
     public static UriTool createFrom(final URI u) {
@@ -83,12 +79,11 @@ public final class UriTool {
         rc.userInfo = u.getUserInfo();
         return rc;
     }
-    
+
     /**
      * Converts a given query string into a map.
      *
-     * @param query2
-     *            the query string
+     * @param query2 the query string
      * @return the map
      */
     private static Map<String, List<String>> fillQueryParamsFromQuery(final String query2) {
@@ -113,18 +108,16 @@ public final class UriTool {
         }
         return rc;
     }
-    
+
     /**
      * Converts the given query map into a single string.
      *
-     * @param queryParams2
-     *            the map
+     * @param queryParams2 the map
      * @return the single string
-     * @throws UnsupportedEncodingException
-     *             if the encoding is unsupported
+     * @throws UnsupportedEncodingException if the encoding is unsupported
      */
     private static String setQueryString(final Map<String, List<String>> queryParams2)
-        throws UnsupportedEncodingException {
+            throws UnsupportedEncodingException {
         final StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
         final List<String> paramNames = new ArrayList<>(queryParams2.keySet());
@@ -146,7 +139,7 @@ public final class UriTool {
         }
         return sb.toString();
     }
-    
+
     /**
      * The authority.
      */
@@ -198,10 +191,8 @@ public final class UriTool {
     /**
      * Adds the values to a query parameter.
      *
-     * @param name
-     *            the query parameter
-     * @param val
-     *            the new values
+     * @param name the query parameter
+     * @param val the new values
      * @return this tool
      */
     public UriTool addQueryParam(final String name, final String... val) {
@@ -214,10 +205,9 @@ public final class UriTool {
      * Builds the final uri.
      *
      * @return the uri
-     * @throws URISyntaxException
-     *             in case of a syntax exception
-     * @throws UnsupportedEncodingException
-     *             in case of an unsupported encoding exception
+     * @throws URISyntaxException in case of a syntax exception
+     * @throws UnsupportedEncodingException in case of an unsupported encoding
+     * exception
      */
     public URI build() throws URISyntaxException, UnsupportedEncodingException {
         query = setQueryString(queryParams);
@@ -231,8 +221,8 @@ public final class UriTool {
     }
 
     /**
-     * Builds the final uri. Besides {@link #build()}, this method will not throw an exception if an
-     * error occurred but will return null.
+     * Builds the final uri. Besides {@link #build()}, this method will not
+     * throw an exception if an error occurred but will return null.
      *
      * @return the uri
      */
@@ -240,7 +230,7 @@ public final class UriTool {
         try {
             return build();
         } catch (final UnsupportedEncodingException | URISyntaxException e) {
-            LOG.debug("Error when creating the URI!", e);
+            LOG.log(Level.FINE, "Error when creating the URI!", e);
         }
         return null;
     }
@@ -257,8 +247,7 @@ public final class UriTool {
     /**
      * Adds a path segment to the current path.
      *
-     * @param pathSegment
-     *            the path segment to add
+     * @param pathSegment the path segment to add
      * @return this tool
      */
     public UriTool path(final String pathSegment) {
@@ -268,7 +257,7 @@ public final class UriTool {
         try {
             path += "/" + URLEncoder.encode(pathSegment, "utf-8");
         } catch (final UnsupportedEncodingException e) {
-            LOG.debug("Error when adding a path segment!", e);
+            LOG.log(Level.FINE, "Error when adding a path segment!", e);
         }
         return this;
     }
@@ -276,8 +265,7 @@ public final class UriTool {
     /**
      * Sets a new host name.
      *
-     * @param hostname
-     *            the new host name
+     * @param hostname the new host name
      * @return this tool
      */
     public UriTool setHost(final String hostname) {
@@ -288,8 +276,7 @@ public final class UriTool {
     /**
      * Sets the path.
      *
-     * @param p
-     *            the path
+     * @param p the path
      * @return this tool
      */
     public UriTool setPath(final String p) {
@@ -300,10 +287,8 @@ public final class UriTool {
     /**
      * Sets a new value for a query param.
      *
-     * @param name
-     *            the query parameter name
-     * @param val
-     *            the new values
+     * @param name the query parameter name
+     * @param val the new values
      * @return this tool
      */
     public UriTool setQueryParam(final String name, final String... val) {
@@ -311,5 +296,30 @@ public final class UriTool {
         valList.clear();
         valList.addAll(Arrays.asList(val));
         return this;
+    }
+
+    /**
+     * Puts a slash char in front of the path if not already done.
+     */
+    public void setSlashBeforePath() {
+        if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
+    }
+
+    /**
+     * Clears the host and port.
+     */
+    public void clearHost() {
+        host = null;
+        port = -1;
+    }
+
+    /**
+     * Clears the scheme and the host data.
+     */
+    public void makeDirectoryOnly() {
+        clearHost();
+        scheme = null;
     }
 }

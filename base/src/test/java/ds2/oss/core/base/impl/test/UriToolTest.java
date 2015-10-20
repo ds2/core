@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.base.impl.UriTool;
+import ds2.oss.core.api.UriTool;
 
 /**
  * Tests for the uri tool.
