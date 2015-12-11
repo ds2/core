@@ -20,6 +20,7 @@ import java.util.Date;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.ConverterTool;
+import ds2.oss.core.statics.Convert;
 
 /**
  * Implemenation of the converter.
@@ -45,15 +46,6 @@ public class ConverterToolImpl implements ConverterTool {
     
     @Override
     public int toInt(final Object o, final int defValue) {
-        int rc = defValue;
-        if (o != null) {
-            if (o instanceof Number) {
-                final Number number = (Number) o;
-                rc = number.intValue();
-            } else if (o instanceof String) {
-                rc = Integer.parseInt(o.toString());
-            }
-        }
-        return rc;
+        return Convert.toInt(o, defValue);
     }
 }

@@ -74,6 +74,7 @@
     <module>crypto-bc</module>
       <module>dbtools-it</module>
     <module>jee</module>
+    <module>statics</module>
   </modules>
   <profiles>
     <profile>
