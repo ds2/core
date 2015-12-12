@@ -22,7 +22,7 @@ package ds2.oss.core.api;
  * @version 0.3
  */
 public class CoreException extends Exception {
-
+    
     /**
      * The svuid.
      */
@@ -31,7 +31,7 @@ public class CoreException extends Exception {
      * The error data.
      */
     private final IErrorData errorData;
-
+    
     /**
      * Inits the exception with the given error data.
      *
@@ -42,7 +42,20 @@ public class CoreException extends Exception {
         super("" + d);
         errorData = d;
     }
-
+    
+    /**
+     * Inits this exception with the given error data and message.
+     * 
+     * @param d
+     *            the error data
+     * @param msg
+     *            the error message
+     */
+    public CoreException(final IErrorData d, String msg) {
+        super(msg);
+        errorData = d;
+    }
+    
     /**
      * Inits the exception with the given error data and cause.
      *
@@ -55,20 +68,7 @@ public class CoreException extends Exception {
         super("" + d, t);
         errorData = d;
     }
-
-    /**
-     * Inits a simple exception.
-     *
-     * @param msg
-     *            the error message
-     * @deprecated Please use another constructor. This one here is for backward compatibility.
-     */
-    @Deprecated
-    public CoreException(final String msg) {
-        super(msg);
-        errorData = null;
-    }
-
+    
     /**
      * Returns the error data.
      *

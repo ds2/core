@@ -22,6 +22,10 @@ public class JaxRsClientException extends CoreException {
         super(d);
     }
     
+    public JaxRsClientException(IErrorData d, String msg) {
+        super(d, msg);
+    }
+    
     public JaxRsClientException(IErrorData d, Throwable t) {
         super(d, t);
     }
