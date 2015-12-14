@@ -15,18 +15,18 @@
  */
 package ds2.oss.core.base.impl;
 
+import ds2.oss.core.api.ISemanticVersion;
+import ds2.oss.core.api.Version;
+import ds2.oss.core.statics.Convert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.ISemanticVersion;
-import ds2.oss.core.api.Version;
 
 /**
  * The implementation for a semantic version.
@@ -121,8 +121,8 @@ public final class SemanticVersion implements ISemanticVersion {
             final String item2 = list2.get(i);
             int diff = 0;
             if (isNumeric(item1) && isNumeric(item2)) {
-                final int item1L = Tools.toInt(item1, 0);
-                final int item2L = Tools.toInt(item2, 0);
+                final int item1L = Convert.toInt(item1, 0);
+                final int item2L = Convert.toInt(item2, 0);
                 diff = item1L - item2L;
             } else {
                 diff = item1.compareTo(item2);

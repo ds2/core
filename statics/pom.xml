@@ -12,5 +12,9 @@
       <artifactId>ds2-oss-core-api</artifactId>
       <version>0.3-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
   </dependencies>
 </project>

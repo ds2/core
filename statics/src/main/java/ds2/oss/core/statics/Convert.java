@@ -3,19 +3,22 @@
  */
 package ds2.oss.core.statics;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.invoke.MethodHandles;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @author dstrauss
  *         
  */
-public class Convert {
+public final class Convert {
     /**
      * A logger.
      */
-    private static final Logger LOG = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     
     /**
      * Inits this object.
@@ -43,7 +46,7 @@ public class Convert {
                 try {
                     rc = Integer.parseInt(o.toString());
                 } catch (NumberFormatException e) {
-                    LOG.log(Level.FINE, "Error when converting " + o + " to int!", e);
+                    LOG.debug("Error when converting {} to int!",o, e);
                 }
             }
         }
@@ -69,9 +72,26 @@ public class Convert {
                 try {
                     rc = Long.parseLong(o.toString());
                 } catch (NumberFormatException e) {
-                    LOG.log(Level.FINE, "Error when converting " + o + " to long!", e);
+                    LOG.debug("Error when converting {} to long!",o, e);
                 }
             }
+        }
+        return rc;
+    }
+
+    /**
+     * Converts a given string into a url.
+     *
+     * @param urlStr
+     *            the url string
+     * @return the url object, or null if an error occurred
+     */
+    public static URL toUrl(final String urlStr) {
+        URL rc = null;
+        try {
+            rc = new URL(urlStr);
+        } catch (final MalformedURLException e) {
+            LOG.debug("Error when converting the given string into a url!", e);
         }
         return rc;
     }

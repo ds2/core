@@ -5,6 +5,4 @@ package ds2.oss.core.api;
  */
 public interface Validate {
     boolean isEmpty(String s);
-
-    boolean isNotEmpty(String s);
 }
