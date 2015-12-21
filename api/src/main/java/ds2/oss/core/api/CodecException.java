@@ -31,7 +31,6 @@ public class CodecException extends CoreException {
      */
     public CodecException(final IErrorData d) {
         super(d);
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -40,7 +39,6 @@ public class CodecException extends CoreException {
      */
     public CodecException(final IErrorData d, final Throwable t) {
         super(d, t);
-        // TODO Auto-generated constructor stub
     }
 
 }

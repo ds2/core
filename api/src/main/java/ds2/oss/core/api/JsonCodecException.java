@@ -34,7 +34,6 @@ public class JsonCodecException extends CodecException {
      */
     public JsonCodecException(final IErrorData d) {
         super(d);
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -43,7 +42,6 @@ public class JsonCodecException extends CodecException {
      */
     public JsonCodecException(final IErrorData d, final Throwable t) {
         super(d, t);
-        // TODO Auto-generated constructor stub
     }
 
 }
