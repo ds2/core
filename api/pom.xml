@@ -17,5 +17,9 @@
           <groupId>javax.validation</groupId>
           <artifactId>validation-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -68,6 +68,11 @@ public class CoreException extends Exception {
         super("" + d, t);
         errorData = d;
     }
+
+    public CoreException(final IErrorData d, final String msg, final Throwable t){
+        super(msg, t);
+        errorData=d;
+    }
     
     /**
      * Returns the error data.
