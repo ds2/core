@@ -13,6 +13,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.Charset;
@@ -57,12 +58,32 @@ public class PropertiesLoaderProvider {
                 if(rc==null){
                     rc=readFromEnv(pl);
                 }
+                if(rc==null){
+                    rc=readFromResource(pl);
+                }
                 if(rc==null&&!pl.setNullOnFail()){
                     rc=new Properties();
                 }
             }
         }
         LOG.debug("returning properties: {}", rc);
+        return rc;
+    }
+
+    private Properties readFromResource(PropertiesLoader pl) {
+        String resourcePath=pl.resource();
+        Properties rc=null;
+        if(!val.isEmpty(resourcePath)){
+            LOG.debug("Trying to load resource {}", resourcePath);
+            try (InputStream is=getClass().getResourceAsStream(resourcePath);){
+                rc=new Properties();
+                rc.load(is);
+            } catch (IOException e) {
+                LOG.warn("Error when loading the resource "+resourcePath,e);
+                rc=null;
+            }
+
+        }
         return rc;
     }
 
