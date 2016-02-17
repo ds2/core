@@ -6,11 +6,13 @@
     <version>0.3-SNAPSHOT</version>
   </parent>
   <artifactId>ds2-oss-core-statics</artifactId>
+  <name>DS/2 OSS Core SCAI</name>
+  <description>Static classes and interfaces.</description>
   <dependencies>
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-api</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
