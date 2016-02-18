@@ -4,6 +4,6 @@ git:
 branches:
   only:
     - develop
-    # - master
+    - master
 jdk:
   - oraclejdk8
