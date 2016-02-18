@@ -1,6 +1,6 @@
 # DS/2 OSS Core
 
-[![Build Status](https://travis-ci.org/ds2/core.svg?branch=master)](https://travis-ci.org/ds2/core)
+[![Build Status](https://travis-ci.org/ds2/core.svg?branch=develop)](https://travis-ci.org/ds2/core)
 
 The OSS components of the DS/2 Core Implementation. This set of artifacts provides you with a bunch of tools
 and utilities to create flexible code with only small code additions. All is meant for JEE7 in mind.
