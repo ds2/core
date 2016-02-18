@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.HexCodec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Testcase for the hex converter.
@@ -29,7 +30,7 @@ import ds2.oss.core.api.HexCodec;
  * @author dstrauss
  * @version 0.3
  */
-public class HexKonverterTest extends WeldWrapper {
+public class HexKonverterTest extends AbstractInjectionEnvironment {
     /**
      * The contract to use.
      */

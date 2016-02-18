@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import ds2.oss.core.elasticsearch.api.annotations.TransportTypes;
+import ds2.oss.core.elasticsearch.impl.literals.TransportLiteral;
 import ds2.oss.core.elasticsearch.test.support.EsNodeGetter;
 import ds2.oss.core.elasticsearch.test.support.EsNodeSetter;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Test for the concurrency system.
@@ -41,8 +44,7 @@ public class ConcurrentTest extends AbstractInjectionEnvironment {
     /**
      * A logger.
      */
-    private static final Logger LOG = LoggerFactory
-        .getLogger(ConcurrentTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConcurrentTest.class);
     /**
      * The ES node.
      */

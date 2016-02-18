@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 import java.io.Serializable;
 
 /**
  * Contract for a state aware dto.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
 public interface StateAware extends Serializable {
     /**
      * Returns the state of the entry.
-     * 
+     *
      * @return the state. May return null if not set.
      */
-    EntryStates getEntryState();
+    EntryState getEntryState();
 }

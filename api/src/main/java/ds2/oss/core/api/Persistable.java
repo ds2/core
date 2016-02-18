@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 import java.io.Serializable;
 
 /**
- * Contract for a persistable object.
- * 
+ * Contract for a persistable object, having a unique id.
+ *
  * @author dstrauss
  * @version 0.1
  * @param <E>
@@ -31,7 +28,7 @@ import java.io.Serializable;
 public interface Persistable<E> extends Serializable {
     /**
      * Returns the primary key of this persistable object.
-     * 
+     *
      * @return the id
      */
     E getId();

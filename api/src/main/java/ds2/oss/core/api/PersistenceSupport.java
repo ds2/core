@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,30 @@
 package ds2.oss.core.api;
 
 /**
- * A persistence support contract.
- * 
+ * A persistence support contract. This can be a database, or a cache instance. Or ElasticSearch.
+ *
  * @author dstrauss
- * @param <T>
- *            the entity type
  * @param <E>
+ *            the entity type
+ * @param <PRIMKEY>
  *            the entity primary key type
  * @version 0.2
  */
-public interface PersistenceSupport<T extends Persistable<E>, E> {
-    /**
-     * Persists the given dto.
-     * 
-     * @param t
-     *            the dto to persist.
-     */
-    void persist(T t);
-    
+public interface PersistenceSupport<E extends Persistable<PRIMKEY>, PRIMKEY> {
     /**
      * Returns the object with the given id.
-     * 
+     *
      * @param e
      *            the id
      * @return the found object, or null
      */
-    T getById(E e);
+    E getById(PRIMKEY e);
+    
+    /**
+     * Persists the given dto.
+     *
+     * @param t
+     *            the dto to persist.
+     */
+    void persist(E t);
 }

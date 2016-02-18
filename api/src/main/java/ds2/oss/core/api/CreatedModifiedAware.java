@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,32 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * A persistence contract to identify a persistable object via JPA.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
-public interface CreatedModifiedAware extends Serializable {
-    /**
-     * Returns the creation date.
-     * 
-     * @return the creation date
-     */
-    Date getCreated();
-    
-    /**
-     * Returns the modification date.
-     * 
-     * @return the modification date
-     */
-    Date getModified();
+public interface CreatedModifiedAware extends CreatedAware, ModifiedAware {
+    // nothing special
 }

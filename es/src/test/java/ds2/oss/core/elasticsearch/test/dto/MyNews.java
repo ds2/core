@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@ package ds2.oss.core.elasticsearch.test.dto;
 
 import java.util.Date;
 
-import ds2.oss.core.elasticsearch.api.FieldTypes;
-import ds2.oss.core.elasticsearch.api.IndexTypes;
-import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
+import ds2.oss.core.api.es.FieldTypes;
+import ds2.oss.core.api.es.IndexTypes;
+import ds2.oss.core.api.es.PropertyMapping;
+import ds2.oss.core.api.es.TypeMapping;
 
 /**
  * The Dto to persist.
@@ -50,103 +50,6 @@ public class MyNews {
      */
     @PropertyMapping(index = IndexTypes.NOT_ANALYZED)
     private String author;
-    
-    /**
-     * INits the dto.
-     */
-    public MyNews() {
-        // nothing special to do
-    }
-    
-    /**
-     * Returns the title.
-     * 
-     * @return the title
-     */
-    public String getTitle() {
-        return title;
-    }
-    
-    /**
-     * Sets the title.
-     * 
-     * @param title
-     *            the title to set
-     */
-    public void setTitle(final String title) {
-        this.title = title;
-    }
-    
-    /**
-     * Returns the message.
-     * 
-     * @return the msg
-     */
-    public String getMsg() {
-        return msg;
-    }
-    
-    /**
-     * Sets the message.
-     * 
-     * @param msg
-     *            the msg to set
-     */
-    public void setMsg(final String msg) {
-        this.msg = msg;
-    }
-    
-    /**
-     * Returns the post date.
-     * 
-     * @return the postDate
-     */
-    public Date getPostDate() {
-        return postDate;
-    }
-    
-    /**
-     * Sets the post date.
-     * 
-     * @param postDate
-     *            the postDate to set
-     */
-    public void setPostDate(final Date postDate) {
-        this.postDate = postDate;
-    }
-    
-    /**
-     * Returns the author.
-     * 
-     * @return the author
-     */
-    public String getAuthor() {
-        return author;
-    }
-    
-    /**
-     * Sets the author.
-     * 
-     * @param author
-     *            the author to set
-     */
-    public void setAuthor(final String author) {
-        this.author = author;
-    }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = (prime * result) + ((author == null) ? 0 : author.hashCode());
-        result = (prime * result) + ((postDate == null) ? 0 : postDate.hashCode());
-        result = (prime * result) + ((title == null) ? 0 : title.hashCode());
-        return result;
-    }
     
     /*
      * (non-Javadoc)
@@ -186,6 +89,96 @@ public class MyNews {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Returns the author.
+     * 
+     * @return the author
+     */
+    public String getAuthor() {
+        return author;
+    }
+    
+    /**
+     * Returns the message.
+     * 
+     * @return the msg
+     */
+    public String getMsg() {
+        return msg;
+    }
+    
+    /**
+     * Returns the post date.
+     * 
+     * @return the postDate
+     */
+    public Date getPostDate() {
+        return postDate;
+    }
+    
+    /**
+     * Returns the title.
+     * 
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (author == null ? 0 : author.hashCode());
+        result = prime * result + (postDate == null ? 0 : postDate.hashCode());
+        result = prime * result + (title == null ? 0 : title.hashCode());
+        return result;
+    }
+    
+    /**
+     * Sets the author.
+     * 
+     * @param author
+     *            the author to set
+     */
+    public void setAuthor(final String author) {
+        this.author = author;
+    }
+    
+    /**
+     * Sets the message.
+     * 
+     * @param msg
+     *            the msg to set
+     */
+    public void setMsg(final String msg) {
+        this.msg = msg;
+    }
+    
+    /**
+     * Sets the post date.
+     * 
+     * @param postDate
+     *            the postDate to set
+     */
+    public void setPostDate(final Date postDate) {
+        this.postDate = postDate;
+    }
+    
+    /**
+     * Sets the title.
+     * 
+     * @param title
+     *            the title to set
+     */
+    public void setTitle(final String title) {
+        this.title = title;
     }
     
     /*

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,17 @@
  */
 package ds2.oss.core.base.impl;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import ds2.oss.core.api.BitSupport;
 
 /**
  * The impl for the bit support contract.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
+@ApplicationScoped
 public class BitSupportImpl implements BitSupport {
     /**
      * Constant for the number 8.
@@ -32,16 +35,16 @@ public class BitSupportImpl implements BitSupport {
      * Constant for 0xff byte sequence.
      */
     private static final int XFF = 0xff;
-    
+
     /**
      * Inits the bean.
      */
     public BitSupportImpl() {
         // nothing special to do
     }
-    
+
     @Override
-    public final int createInt(final byte... b) {
+    public int createInt(final byte... b) {
         int rc = 0;
         if (b == null) {
             return rc;
@@ -52,9 +55,9 @@ public class BitSupportImpl implements BitSupport {
         }
         return rc;
     }
-    
+
     @Override
-    public final long createLong(final byte... b) {
+    public long createLong(final byte... b) {
         long rc = 0;
         if (b == null) {
             return rc;
@@ -65,11 +68,11 @@ public class BitSupportImpl implements BitSupport {
         }
         return rc;
     }
-    
+
     @Override
-    public final byte[] getBytesFrom(final long l, final int offset, final int length) {
+    public byte[] getBytesFrom(final long l, final int offset, final int length) {
         // TBD
         return null;
     }
-    
+
 }

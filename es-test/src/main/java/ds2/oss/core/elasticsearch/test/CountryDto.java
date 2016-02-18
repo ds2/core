@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-
-import ds2.oss.core.elasticsearch.api.annotations.PropertyMapping;
-import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
+import ds2.oss.core.api.es.DynamicMapping;
+import ds2.oss.core.api.es.PropertyMapping;
+import ds2.oss.core.api.es.TypeMapping;
 
 /**
  * The country dto.
@@ -25,7 +25,7 @@ import ds2.oss.core.elasticsearch.api.annotations.TypeMapping;
  * @author dstrauss
  * @version 0.2
  */
-@TypeMapping(value = "country")
+@TypeMapping(value = "country", dynamicMapping = DynamicMapping.FALSE)
 public class CountryDto {
     
     /**

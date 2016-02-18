@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,69 +30,40 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 
 /**
  * An abstract node implementation.
- * 
+ *
  * @param <T>
  *            The type of the node
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearchNode {
-    
+
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(AbstractNodeImpl.class);
-    
-    /**
-     * A lock.
-     */
-    protected final Lock lock = new ReentrantLock();
-    
-    /**
-     * Flag to indicate that a lock is required on the client.
-     */
-    protected boolean needsLock;
-    
+
     /**
      * The node instance.
      */
     protected T client;
-    
+
     /**
-     * Sets up the node impl.
+     * A lock.
      */
-    public AbstractNodeImpl() {
-        // nothing special to do
-    }
-    
+    protected final Lock lock = new ReentrantLock();
+
     /**
-     * Actions to perform on shutdown.
+     * Flag to indicate that a lock is required on the client.
      */
-    @PreDestroy
-    public void onShutdown() {
-        LOG.debug("Shutting down node...");
-        client.close();
-    }
-    
-    @Override
-    public Client get() {
-        if (!needsLock) {
-            return client;
-        }
-        lock.lock();
-        try {
-            return client;
-        } finally {
-            lock.unlock();
-        }
-    }
-    
+    protected volatile boolean needsLock;
+
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
         try {
-            if (!lock.tryLock(5, TimeUnit.SECONDS)) {
+            if (!lock.tryLock(10, TimeUnit.SECONDS)) {
                 LOG.error("Could not get lock for this node! Cannot add given sockets.");
                 return;
             }
@@ -110,25 +81,52 @@ public abstract class AbstractNodeImpl<T extends Client> implements ElasticSearc
             needsLock = false;
         }
     }
-    
+
+    @Override
+    public Client get() {
+        if (!needsLock) {
+            return client;
+        }
+        lock.lock();
+        try {
+            return client;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * Actions to perform on shutdown.
+     */
+    @PreDestroy
+    public void onShutdown() {
+        lock.lock();
+        try {
+            LOG.debug("Shutting down node...");
+            client.close();
+        } finally {
+            lock.unlock();
+        }
+    }
+
     @Override
     public void removeTransport(final InetSocketAddress... isa) {
         LOG.info("Ignoring");
     }
-    
-    /**
-     * Waits for the yellow status.
-     */
-    @Override
-    public void waitForClusterYellowState() {
-        get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
-    }
-    
+
     /**
      * Waits for green status of the cluster.
      */
     @Override
     public void waitForClusterGreenState() {
         get().admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+    }
+
+    /**
+     * Waits for the yellow status.
+     */
+    @Override
+    public void waitForClusterYellowState() {
+        get().admin().cluster().prepareHealth().setWaitForYellowStatus().execute().actionGet();
     }
 }

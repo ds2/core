@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>ds2.oss.core</groupId>
@@ -17,10 +18,7 @@
     <dependency>
       <groupId>org.jboss.weld.se</groupId>
       <artifactId>weld-se-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.enterprise</groupId>
-      <artifactId>cdi-api</artifactId>
+      <version>2.2.5.Final</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -36,26 +34,26 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>persistence-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.openejb</groupId>
-      <artifactId>openejb-core</artifactId>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-testutils</artifactId>
+      <version>0.3-SNAPSHOT</version>
       <scope>test</scope>
+      <classifier>tests</classifier>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
+      <groupId>org.jboss</groupId>
+      <artifactId>jandex</artifactId>
+      <version>1.2.2.Final</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.jboss.arquillian.container</groupId>
-      <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jboss.arquillian.testng</groupId>
-      <artifactId>arquillian-testng-container</artifactId>
-      <scope>test</scope>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-statics</artifactId>
+      <version>0.3-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

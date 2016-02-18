@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import ds2.oss.core.api.HexCodec;
 import ds2.oss.core.api.SymmetricKeyNames;
 import ds2.oss.core.api.SymmetricKeyService;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Tests.
@@ -32,7 +33,7 @@ import ds2.oss.core.api.SymmetricKeyService;
  * @author dstrauss
  */
 @Test(groups = "sym")
-public class SymKeyServiceImplTest extends WeldWrapper {
+public class SymKeyServiceImplTest extends AbstractInjectionEnvironment {
     /**
      * The test object.
      */
@@ -60,6 +61,24 @@ public class SymKeyServiceImplTest extends WeldWrapper {
                 "salt".getBytes("utf-8"), 1, SymmetricKeyNames.PBKDF2);
         String erg = hx.encode(b);
         Assert.assertEquals(erg, "0c60c80f961f0e71f3a9b524af6012062fe037a6");
+    }
+
+    @Test
+    public void rfc6080_4() throws UnsupportedEncodingException {
+        byte[] b =
+                to.performHashing("password".toCharArray(),
+                        "salt".getBytes("utf-8"), 5000, SymmetricKeyNames.PBKDF256, 256);
+        String erg = hx.encode(b);
+        Assert.assertEquals(erg, "8fc2bcffbb4b1ac9b9de03588d390f3d9bf336c2c4422c90c158cc714225f629");
+    }
+
+    @Test
+    public void rfc6080_5() throws UnsupportedEncodingException {
+        byte[] b =
+                to.performHashing("password".toCharArray(),
+                        "salt".getBytes("utf-8"), 5000, SymmetricKeyNames.PBKDF512, 512);
+        String erg = hx.encode(b);
+        Assert.assertEquals(erg, "8cc55858f341586bde60d595d376fdafc4535d94a7383231f2adf323b5c508d2bdddd75b783b2c3acb196334288402406041cb1114ed13e6b96443b0aafccd5e");
     }
     
     @Test

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import ds2.oss.core.api.Base64Codec;
 
 /**
  * Eine Klasse, um eine Base64-Konvertierung zu machen. Siehe RFC 1521.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -50,10 +50,10 @@ public class Base64Konverter implements Base64Codec {
      * The padding character to fill empty spaces with.
      */
     private static final char PADDING = '=';
-    
+
     /**
      * Berechnet, wieviel Padding benutzt werden muss.
-     * 
+     *
      * @param srclaenge
      *            die Anzahl der Bytes, die base64 gemacht werden sollen.
      * @return die Anzahl der Padding-Zeichen nach dem Encoding
@@ -66,17 +66,17 @@ public class Base64Konverter implements Base64Codec {
         }
         return (byte) (3 - modulo);
     }
-    
+
     /**
      * the alphabet to use.
      */
     private final char[] alphabet;
-    
+
     /**
      * A debugging flag.
      */
     private final boolean mitEnter = true;
-    
+
     /** Creates a new instance of Base64Konverter. */
     public Base64Konverter() {
         super();
@@ -93,7 +93,7 @@ public class Base64Konverter implements Base64Codec {
         alphabet[62] = '+';
         alphabet[63] = '/';
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -128,24 +128,24 @@ public class Base64Konverter implements Base64Codec {
                     letztesByte = (byte) (index & 0x0F);
                     letztesByte <<= 4;
                     break;
-                case 2:
-                    // 00yyyyzz
-                    aktByte = (byte) (index & 0x3C);
-                    aktByte >>= 2;
+                    case 2:
+                        // 00yyyyzz
+                        aktByte = (byte) (index & 0x3C);
+                        aktByte >>= 2;
                     aktByte |= letztesByte;
                     bytes.add(Byte.valueOf(aktByte));
                     letztesByte = (byte) (index & 0x3);
                     letztesByte <<= 6;
                     break;
-                case 3:
-                    // 00zzzzzz
-                    aktByte = (byte) (index & 0x3F);
-                    aktByte |= letztesByte;
-                    bytes.add(Byte.valueOf(aktByte));
-                    break;
-                default:
-                    // should not happen
-                    break;
+                    case 3:
+                        // 00zzzzzz
+                        aktByte = (byte) (index & 0x3F);
+                        aktByte |= letztesByte;
+                        bytes.add(Byte.valueOf(aktByte));
+                        break;
+                    default:
+                        // should not happen
+                        break;
             }
         }
         if (bytes.size() <= 0) {
@@ -159,7 +159,7 @@ public class Base64Konverter implements Base64Codec {
         }
         return rc;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -179,34 +179,34 @@ public class Base64Konverter implements Base64Codec {
                     // 11111100
                     aktByte2 = aktChar & 0xFC;
                     aktByte2 >>= 2;
-                    aktByte2 &= 0x3F;
-                    letztesByte = aktChar & 0x3;
-                    letztesByte <<= 4;
-                    baos.write((byte) aktByte2);
-                    break;
-                case 1:
-                    // 11110000
-                    aktByte2 = aktChar & 0xF0;
-                    aktByte2 >>= 4;
-                    aktByte2 &= 0x0F;
-                    aktByte2 |= letztesByte;
-                    baos.write((byte) aktByte2);
-                    letztesByte = aktChar & 0x0F;
-                    letztesByte <<= 2;
-                    break;
-                case 2:
-                    // 11000000
-                    aktByte2 = aktChar & 0xC0;
-                    aktByte2 >>= 6;
-                    aktByte2 |= letztesByte;
-                    baos.write((byte) aktByte2);
-                    aktByte2 = aktChar & 0x3F;
-                    baos.write((byte) aktByte2);
-                    letztesByte = -1;
-                    break;
-                default:
-                    LOG.error("Upps, ein Algo-Fehler: aktByte=" + i + " (" + aktChar + ")");
-                    break;
+        aktByte2 &= 0x3F;
+        letztesByte = aktChar & 0x3;
+        letztesByte <<= 4;
+        baos.write((byte) aktByte2);
+        break;
+        case 1:
+            // 11110000
+            aktByte2 = aktChar & 0xF0;
+            aktByte2 >>= 4;
+        aktByte2 &= 0x0F;
+        aktByte2 |= letztesByte;
+        baos.write((byte) aktByte2);
+        letztesByte = aktChar & 0x0F;
+        letztesByte <<= 2;
+        break;
+        case 2:
+            // 11000000
+            aktByte2 = aktChar & 0xC0;
+            aktByte2 >>= 6;
+        aktByte2 |= letztesByte;
+        baos.write((byte) aktByte2);
+        aktByte2 = aktChar & 0x3F;
+        baos.write((byte) aktByte2);
+        letztesByte = -1;
+        break;
+        default:
+            LOG.error("Upps, ein Algo-Fehler: aktByte=" + i + " (" + aktChar + ")");
+            break;
             }
         }
         if (letztesByte >= 0) {
@@ -222,7 +222,7 @@ public class Base64Konverter implements Base64Codec {
         for (int i = 0; i < pad; i++) {
             rc.append(PADDING);
         }
-        
+
         final StringBuffer rc2 = new StringBuffer(rc.length());
         for (int i = 0; i < rc.length(); i++) {
             if (i > 0 && i % MAXLINELENGTH == 0) {
@@ -234,10 +234,10 @@ public class Base64Konverter implements Base64Codec {
         }
         return rc2.toString();
     }
-    
+
     /**
      * Returns a cleaned version of the given char array.
-     * 
+     *
      * @param s
      *            the char array
      * @return the cleaned char array
@@ -261,10 +261,10 @@ public class Base64Konverter implements Base64Codec {
         final char[] cleanedChars = sb.toString().toCharArray();
         return cleanedChars;
     }
-    
+
     /**
      * Liefert die Byte-Version des Base64-Chars zurueck.
-     * 
+     *
      * @param c
      *            der Base64-Char
      * @return seine Position im Alphabet. -1 bei einem Fehler.

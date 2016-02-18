@@ -46,6 +46,11 @@
       <artifactId>glassfish-embedded-all</artifactId>
     </dependency>
     <!-- <dependency> <groupId>com.google.inject</groupId> <artifactId>guice</artifactId> </dependency> -->
+    <dependency>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-dbtools</artifactId>
+      <version>0.3-SNAPSHOT</version>
+    </dependency>
   </dependencies>
   <description>The base integration tests.</description>
 </project>

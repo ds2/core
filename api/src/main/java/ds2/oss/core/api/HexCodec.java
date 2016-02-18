@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package ds2.oss.core.api;
 
 /**
  * Contract for a hex encoder.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,19 +22,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Stereotype;
 import javax.inject.Qualifier;
 
 /**
  * Marks a codec. Any implementation having this annotation will be {@link ApplicationScoped}, and
  * must make use of the {@link ds2.oss.core.elasticsearch.api.TypeCodec TypeCodec} interface.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.FIELD })
-@ApplicationScoped
+@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
+@Dependent
 @Documented
+@Stereotype
 @Qualifier
 public @interface EsCodec {
     /**

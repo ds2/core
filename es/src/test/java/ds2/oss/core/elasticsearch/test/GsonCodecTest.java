@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.elasticsearch.api.GsonCodec;
+import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * The gson codec tests.
@@ -36,23 +38,25 @@ public class GsonCodecTest extends AbstractInjectionEnvironment {
     /**
      * The test object.
      */
-    private GsonCodec to;
+    private JsonCodec to;
     
     @BeforeMethod(alwaysRun = true)
     public void onMethod() {
-        to = getInstance(GsonCodec.class);
+        to = getInstance(JsonCodec.class);
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void serializeNull() {
+    public void serializeNull() throws CoreException {
         to.encode(null);
     }
     
     /**
      * Serializer test.
+     * 
+     * @throws CoreException
      */
     @Test
-    public void testSerializeNews() {
+    public void testSerializeNews() throws CoreException {
         final MyNews n = new MyNews();
         n.setAuthor("testuser");
         n.setMsg("Hello, world");
@@ -75,13 +79,15 @@ public class GsonCodecTest extends AbstractInjectionEnvironment {
     
     /**
      * Unserialize test.
+     * 
+     * @throws CoreException
      */
     @Test
-    public void testUnserialize() {
+    public void testUnserialize() throws CoreException {
         final MyNews n =
             to.decode(
-                MyNews.class,
-                "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T21:26:00.000+0200\"}");
+                "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T21:26:00.000+0200\"}",
+                MyNews.class);
         Assert.assertNotNull(n);
         Assert.assertEquals(n.getAuthor(), "testuser");
         Assert.assertEquals(n.getMsg(), "Hello, world");

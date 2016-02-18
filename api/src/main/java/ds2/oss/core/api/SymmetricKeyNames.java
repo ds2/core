@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,27 +17,35 @@ package ds2.oss.core.api;
 
 /**
  * All known instance names for secret key factories.
- * 
+ *
  * @version 0.2
  * @author dstrauss
  */
 public enum SymmetricKeyNames {
     /**
+     * The PBKDF2 with SHA256.
+     */
+    PBKDF512("PBKDF2WithHmacSHA512", 128*8),
+    /**
+     * The PBKDF2 with SHA256.
+     */
+    PBKDF256("PBKDF2WithHmacSHA256", 64*8),
+    /**
      * The PBKDF2 algorithm.
      */
     PBKDF2("PBKDF2WithHmacSHA1", 160);
     /**
-     * The hash name.
-     */
-    private String name;
-    /**
      * The known key length that this algorithm may produce.
      */
     private int keyLength;
-    
+    /**
+     * The hash name.
+     */
+    private String name;
+
     /**
      * INits the enum value.
-     * 
+     *
      * @param n
      *            the hash name
      * @param kl
@@ -47,19 +55,19 @@ public enum SymmetricKeyNames {
         name = n;
         keyLength = kl;
     }
-    
+
     /**
      * Returns the hash algorithm name.
-     * 
+     *
      * @return the hash algorithm name
      */
     public String getName() {
         return name;
     }
-    
+
     /**
      * Returns the suggested key length.
-     * 
+     *
      * @return the suggested key length
      */
     public int getSuggestedKeyLength() {

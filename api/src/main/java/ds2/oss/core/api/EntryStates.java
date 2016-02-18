@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,46 +20,56 @@ import java.util.Map;
 
 /**
  * The states of persistable entries.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
-public enum EntryStates implements NumericEnumValue {
-    /**
-     * The entry is new, in draft.
-     */
-    PREPARED(0),
+public enum EntryStates implements EntryState {
     /**
      * The entry is active.
      */
-    ACTIVE(1),
-    /**
-     * The entry is deleted.
-     */
-    DELETED(3),
-    /**
-     * The entry is locked and must not be modified.
-     */
-    LOCKED(2);
+    ACTIVE(1), /**
+                * The entry is deleted.
+                */
+    DELETED(3), /**
+                 * The entry is locked and must not be modified.
+                 */
+    LOCKED(2), /**
+                * The entry is new, in draft.
+                */
+    PREPARED(0);
     
     /**
      * A cache map.
      */
-    private static Map<Integer, EntryStates> cacheMap = new HashMap<>(4);
+    private static final Map<Integer, EntryStates> cacheMap = new HashMap<>(4);
+    
     static {
-        cacheMap.put(Integer.valueOf(PREPARED.getNumericalValue()), PREPARED);
-        cacheMap.put(Integer.valueOf(ACTIVE.getNumericalValue()), ACTIVE);
-        cacheMap.put(Integer.valueOf(LOCKED.getNumericalValue()), LOCKED);
-        cacheMap.put(Integer.valueOf(DELETED.getNumericalValue()), DELETED);
+        cacheMap.put(PREPARED.getNumericalValue(), PREPARED);
+        cacheMap.put(ACTIVE.getNumericalValue(), ACTIVE);
+        cacheMap.put(LOCKED.getNumericalValue(), LOCKED);
+        cacheMap.put(DELETED.getNumericalValue(), DELETED);
     }
+    
+    /**
+     * Returns the entry state for the given id.
+     *
+     * @param i
+     *            the id of the enum value
+     * @return the enum value, or null if not found
+     */
+    public static EntryStates getById(final int i) {
+        return cacheMap.get(i);
+    }
+    
     /**
      * The numerical value.
      */
-    private int numericalValue;
+    private final int numericalValue;
     
     /**
      * Inits the enum value.
-     * 
+     *
      * @param i
      *            the numerical value
      */
@@ -68,18 +78,12 @@ public enum EntryStates implements NumericEnumValue {
     }
     
     @Override
-    public int getNumericalValue() {
-        return numericalValue;
+    public String getEntryStateName() {
+        return name();
     }
     
-    /**
-     * Returns the entry state for the given id.
-     * 
-     * @param i
-     *            the id of the enum value
-     * @return the enum value, or null if not found
-     */
-    public static EntryStates getById(final int i) {
-        return cacheMap.get(Integer.valueOf(i));
+    @Override
+    public int getNumericalValue() {
+        return numericalValue;
     }
 }

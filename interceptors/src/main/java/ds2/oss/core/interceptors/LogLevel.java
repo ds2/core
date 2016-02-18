@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,32 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.interceptors;
 
 /**
  * The known supported log levels for now.
- * 
+ *
  * @author dstrauss
  * @version 0.1
  */
 public enum LogLevel {
     /**
+     * The DEBUG log level.
+     */
+    DEBUG,
+    /**
      * The INFO log level.
      */
     INFO,
-    /**
-     * The WARN log level.
-     */
-    WARN,
     /**
      * The ERROR log level.
      */
     SEVERE,
     /**
-     * The DEBUG log level.
+     * The WARN log level.
      */
-    DEBUG;
+    WARN;
 }

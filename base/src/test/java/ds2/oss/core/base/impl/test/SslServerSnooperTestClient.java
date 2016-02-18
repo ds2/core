@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package ds2.oss.core.base.impl.test;
 import java.security.cert.X509Certificate;
 
 import ds2.oss.core.api.SslServerSnooper;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * A small test client.
@@ -41,12 +42,11 @@ public final class SslServerSnooperTestClient {
      *            the server hostname
      */
     public static void main(final String[] args) {
-        WeldWrapper.onSuiteStart();
-        final SslServerSnooper to =
-            WeldWrapper.getInstance(SslServerSnooper.class);
-        final String hostname = args.length > 0 ? args[0] : "localhost";
+        AbstractInjectionEnvironment.onSuiteStart();
+        final SslServerSnooper to = AbstractInjectionEnvironment.getInstance(SslServerSnooper.class);
+        final String hostname = args.length > 0 ? args[0] : "tools.designskins.com";
         final X509Certificate[] certs = to.getServerCertificates(hostname, 443);
-        System.out.println(certs);
-        WeldWrapper.afterSuite();
+        System.out.println("Certs: " + certs);
+        AbstractInjectionEnvironment.onSuiteEnd();
     }
 }

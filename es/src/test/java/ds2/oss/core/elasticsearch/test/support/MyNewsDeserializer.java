@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import ds2.oss.core.elasticsearch.api.annotations.GsonDeserializer;
+import ds2.oss.core.codec.gson.GsonTools;
+import ds2.oss.core.codec.gson.api.GsonDeserializer;
 import ds2.oss.core.elasticsearch.impl.AbstractCodecBase;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
+
+import javax.enterprise.context.Dependent;
 
 /**
  * MyNews Deserializer.
@@ -34,6 +37,7 @@ import ds2.oss.core.elasticsearch.test.dto.MyNews;
  * @version 0.2
  */
 @GsonDeserializer(MyNews.class)
+@Dependent
 public class MyNewsDeserializer extends AbstractCodecBase implements JsonDeserializer<MyNews> {
     
     @Override
@@ -41,10 +45,10 @@ public class MyNewsDeserializer extends AbstractCodecBase implements JsonDeseria
         throws JsonParseException {
         final MyNews rc = new MyNews();
         final JsonObject obj = json.getAsJsonObject();
-        rc.setAuthor(getAsString(obj, "author"));
-        rc.setMsg(getAsString(obj, "message"));
-        rc.setTitle(getAsString(obj, "title"));
-        rc.setPostDate(toDate(getAsString(obj, "postDate")));
+        rc.setAuthor(GsonTools.getAsString(obj, "author"));
+        rc.setMsg(GsonTools.getAsString(obj, "message"));
+        rc.setTitle(GsonTools.getAsString(obj, "title"));
+        rc.setPostDate(toDate(GsonTools.getAsString(obj, "postDate")));
         return rc;
     }
     

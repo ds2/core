@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,15 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.FilterBuilders;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.elasticsearch.api.ElasticSearchException;
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
@@ -34,6 +38,7 @@ import ds2.oss.core.elasticsearch.impl.UseCases;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import ds2.oss.core.elasticsearch.test.support.CountryCodec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * Check write read behaviour.
@@ -42,6 +47,7 @@ import ds2.oss.core.elasticsearch.test.support.CountryCodec;
  * @version 0.2
  */
 public class WriteReadTest extends AbstractInjectionEnvironment {
+    private static final Logger LOG = LoggerFactory.getLogger(WriteReadTest.class);
     /**
      * The index name to use.
      */
@@ -78,25 +84,33 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         uc.addMapping(INDEXNAME, newsCodec.getIndexTypeName(), newsCodec.getMapping());
     }
     
+    @AfterClass
+    public void onEndClass() {
+        esSvc.deleteIndexes(INDEXNAME);
+    }
+    
     @Test
-    public void rwTest1() {
+    public void rwTest1() throws ElasticSearchException, CodecException {
         final MyNews news1 = new MyNews();
         news1.setAuthor("baumkuchen");
         news1.setMsg("This is a very sensitive message.");
         news1.setPostDate(new Date());
         news1.setTitle("Secrets beyond imagination");
-        esSvc.put(INDEXNAME, news1, newsCodec);
+        String id = esSvc.put(INDEXNAME, news1, newsCodec);
+        esSvc.refreshIndexes(INDEXNAME);
+        Assert.assertNotNull(esSvc.get(INDEXNAME, MyNews.class, id));
         final SearchRequestBuilder searchQuery =
             esNode.get().prepareSearch(INDEXNAME).setTypes(newsCodec.getIndexTypeName())
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
-                .setFilter(FilterBuilders.termFilter("author", "baumkuchen"));
-        final SearchResponse resp = searchQuery.execute().actionGet();
+                .setPostFilter(FilterBuilders.termFilter("author", "baumkuchen"));
+        LOG.debug("Query will be {}", searchQuery);
+        final SearchResponse resp = searchQuery.get();
         final long count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
     }
     
     @Test
-    public void rwTest2() {
+    public void rwTest2() throws ElasticSearchException, CodecException {
         final CountryDto c = new CountryDto();
         c.setIsoCode("DE");
         c.setName("Germany");
@@ -104,19 +118,14 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         final SearchRequestBuilder searchQuery =
             esNode.get().prepareSearch(INDEXNAME).setTypes(countryCodec.getIndexTypeName())
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
-                .setFilter(FilterBuilders.termFilter("name", "germany"));
+                .setPostFilter(FilterBuilders.termFilter("name", "germany"));
         SearchResponse resp = searchQuery.execute().actionGet();
         long count = resp.getHits().totalHits();
         // is async -> will not be available NOW
         Assert.assertEquals(count, 0);
         esSvc.refreshIndexes(INDEXNAME);
-        resp = searchQuery.execute().actionGet();
+        resp = searchQuery.get();
         count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
-    }
-    
-    @AfterClass
-    public void onEndClass() {
-        esSvc.deleteIndexes(INDEXNAME);
     }
 }

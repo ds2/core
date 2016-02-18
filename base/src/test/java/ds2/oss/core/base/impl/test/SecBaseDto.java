@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import java.nio.charset.Charset;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.SecurityBaseData;
+import javax.enterprise.inject.Alternative;
 
 /**
  * The dto.
@@ -27,6 +28,7 @@ import ds2.oss.core.api.SecurityBaseData;
  * @version 0.2
  * @author dstrauss
  */
+@Alternative
 @ApplicationScoped
 public class SecBaseDto implements SecurityBaseData {
     @Override
@@ -38,4 +40,9 @@ public class SecBaseDto implements SecurityBaseData {
     public int getMinIteration() {
         return 20000;
     }
+
+  @Override
+  public byte[] getInitVector() {
+    return new byte[0];
+  }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.base.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import ds2.oss.core.api.HexCodec;
 
 /**
  * A hex konverter.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
+@ApplicationScoped
 public class HexKonverter implements HexCodec {
     /**
      * The list of hex chars.
      */
     private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
         'f', };
-    
+
     /**
      * Returns the pairs of the given char sequence.
-     * 
+     *
      * @param s
      *            the char sequence
      * @return a list of pairs
@@ -60,10 +60,10 @@ public class HexKonverter implements HexCodec {
         }
         return rc;
     }
-    
+
     /**
      * Returns the alphabet position of the given char in the hex alphabet.
-     * 
+     *
      * @param c
      *            the char to find
      * @return the position index, or -1 if not found
@@ -78,13 +78,13 @@ public class HexKonverter implements HexCodec {
         }
         return -1;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.core.api.svc.HexCodec#decode(char[])
      */
     @Override
-    public final byte[] decode(final char[] s) {
+    public byte[] decode(final char[] s) {
         if (s == null) {
             return null;
         }
@@ -102,13 +102,13 @@ public class HexKonverter implements HexCodec {
         }
         return baos.toByteArray();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.core.api.svc.HexCodec#encode(byte[])
      */
     @Override
-    public final String encode(final byte[] b) {
+    public String encode(final byte[] b) {
         if (b == null) {
             return null;
         }
@@ -121,5 +121,5 @@ public class HexKonverter implements HexCodec {
         }
         return sb.toString();
     }
-    
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,13 @@
  */
 package ds2.oss.core.elasticsearch.tests;
 
+import java.util.Properties;
+import java.util.Set;
+
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.elasticsearch.api.EsConfig;
+import org.elasticsearch.common.transport.TransportAddress;
 
 /**
  * Dummy dto.
@@ -31,5 +35,15 @@ public class EsConfigDto implements EsConfig {
     @Override
     public String getClusterName() {
         return "dummyCluster1";
+    }
+    
+    @Override
+    public Properties getProperties() {
+        return null;
+    }
+
+    @Override
+    public Set<TransportAddress> getTransportAddresses() {
+        return null;
     }
 }

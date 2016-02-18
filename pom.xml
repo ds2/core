@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jee-base</artifactId>
     <groupId>ds2.base.oss</groupId>
-    <version>0.79</version>
+    <version>0.81</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ds2.oss.core</groupId>
@@ -17,12 +17,11 @@
     <issueTrackerId>OSSCORE</issueTrackerId>
     <license.header.author>Dirk Strauss</license.header.author>
     <license.header.email>dstrauss@ds-2.de</license.header.email>
-    <license.header.year>2012-2013</license.header.year>
+    <license.header.year>2012-2015</license.header.year>
     <license.id>asl_v2</license.id>
     <license.header.projectName>DS/2 OSS Core</license.header.projectName>
     <license.header.description>The OSS core libraries from DS/2</license.header.description>
     <mvn.releaseplugin.version>2.3.2</mvn.releaseplugin.version>
-    <lucene.version>4.3.1</lucene.version>
   </properties>
   <distributionManagement>
     <site>
@@ -58,10 +57,31 @@
     <module>base-it</module>
     <module>es</module>
     <module>es-test</module>
+    <module>options</module>
+    <module>infinispan</module>
+    <module>options-it</module>
+    <module>crypto</module>
+    <module>codec-boon</module>
+    <module>codec-gson</module>
+    <module>codec-fastxml</module>
+    <module>webtools</module>
+    <module>xmpp</module>
+    <module>xmpp-gcm</module>
+    <module>test-ear</module>
+    <module>es-apt</module>
+    <module>testutils</module>
+    <module>dbtools</module>
+    <module>crypto-bc</module>
+      <module>dbtools-it</module>
+    <module>jee</module>
+    <module>statics</module>
   </modules>
   <profiles>
     <profile>
       <id>no-repo-man</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <repositories>
         <repository>
           <id>commondatastorage.google.ds2</id>
@@ -94,4 +114,35 @@
       </pluginRepositories>
     </profile>
   </profiles>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.bsc.maven</groupId>
+                    <artifactId>maven-processor-plugin</artifactId>
+                    <versionRange>[3.1.0-beta1,)</versionRange>
+                    <goals>
+                      <goal>process</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

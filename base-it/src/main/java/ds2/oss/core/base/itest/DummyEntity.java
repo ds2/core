@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import ds2.oss.core.api.CreatedModifiedAware;
-import ds2.oss.core.api.EntryStates;
+import ds2.oss.core.api.EntryState;
 import ds2.oss.core.api.Persistable;
 import ds2.oss.core.api.StateAware;
-import ds2.oss.core.base.impl.CreatedModifiedAwareModule;
-import ds2.oss.core.base.impl.StateAwareModule;
+import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
+import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
 
 /**
  * Dummy entity.
@@ -41,11 +41,7 @@ import ds2.oss.core.base.impl.StateAwareModule;
  */
 @Entity
 @Table(name = "core_dummy")
-public class DummyEntity
-    implements
-    Persistable<Long>,
-    StateAware,
-    CreatedModifiedAware {
+public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifiedAware {
     /**
      * The svuid.
      */
@@ -60,7 +56,7 @@ public class DummyEntity
      * The state.
      */
     @Embedded
-    private final StateAwareModule state;
+    private final EntryStatesAwareModule state;
     /**
      * The times.
      */
@@ -71,23 +67,23 @@ public class DummyEntity
      * Inits the entity.
      */
     public DummyEntity() {
-        state = new StateAwareModule();
+        state = new EntryStatesAwareModule();
         times = new CreatedModifiedAwareModule();
-    }
-    
-    @Override
-    public Long getId() {
-        return id;
-    }
-    
-    @Override
-    public EntryStates getEntryState() {
-        return state.getEntryState();
     }
     
     @Override
     public Date getCreated() {
         return times.getCreated();
+    }
+    
+    @Override
+    public EntryState getEntryState() {
+        return state.getEntryState();
+    }
+    
+    @Override
+    public Long getId() {
+        return id;
     }
     
     @Override

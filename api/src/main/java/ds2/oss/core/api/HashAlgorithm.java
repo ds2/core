@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * 
- */
 package ds2.oss.core.api;
 
 /**
  * The known hash algorithms for the MessageDigest.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -45,20 +42,20 @@ public enum HashAlgorithm {
      * The algorithm id.
      */
     private String alg;
-    
+
     /**
      * Inits the enum value.
-     * 
+     *
      * @param s
      *            the algorithm id
      */
     private HashAlgorithm(final String s) {
         alg = s;
     }
-    
+
     /**
      * Returns the algorithm id for this hash type.
-     * 
+     *
      * @return the algorithm id
      */
     public String getAlgorithm() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ds2.oss.core.api.Base64Codec;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * The base64 test.
@@ -29,7 +30,7 @@ import ds2.oss.core.api.Base64Codec;
  * @author dstrauss
  * @version 0.4
  */
-public class Base64KonverterTest extends WeldWrapper {
+public class Base64KonverterTest extends AbstractInjectionEnvironment {
     /**
      * The contract to test.
      */

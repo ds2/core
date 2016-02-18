@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,41 +21,41 @@ import org.elasticsearch.client.Client;
 
 /**
  * A contract for an ES node.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public interface ElasticSearchNode {
     /**
-     * Returns a configured client.
-     * 
-     * @return a client
-     */
-    Client get();
-    
-    /**
      * Adds a list of new transport endpoints.
-     * 
+     *
      * @param isa
      *            the new endpoints to add
      */
     void addTransport(InetSocketAddress... isa);
-    
+
+    /**
+     * Returns a configured client.
+     *
+     * @return a client
+     */
+    Client get();
+
     /**
      * Removes a list of transports.
-     * 
+     *
      * @param isa
      *            the transports to remove.
      */
     void removeTransport(InetSocketAddress... isa);
-    
-    /**
-     * Waits for the cluster state to become yellow.
-     */
-    void waitForClusterYellowState();
-    
+
     /**
      * Waits for the cluster state to become green.
      */
     void waitForClusterGreenState();
+
+    /**
+     * Waits for the cluster state to become yellow.
+     */
+    void waitForClusterYellowState();
 }

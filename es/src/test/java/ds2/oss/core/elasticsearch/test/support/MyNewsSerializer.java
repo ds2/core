@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2013 Dirk Strauss
+ * Copyright 2012-2015 Dirk Strauss
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import ds2.oss.core.elasticsearch.api.annotations.GsonSerializer;
+import ds2.oss.core.codec.gson.GsonTools;
+import ds2.oss.core.codec.gson.api.GsonSerializer;
 import ds2.oss.core.elasticsearch.impl.AbstractCodecBase;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
+
+import javax.enterprise.context.Dependent;
 
 /**
  * MyNews serializer.
@@ -34,15 +37,16 @@ import ds2.oss.core.elasticsearch.test.dto.MyNews;
  * @version 0.2
  */
 @GsonSerializer(MyNews.class)
+@Dependent
 public class MyNewsSerializer extends AbstractCodecBase implements JsonSerializer<MyNews> {
     
     @Override
     public JsonElement serialize(final MyNews src, final Type typeOfSrc, final JsonSerializationContext context) {
         final JsonObject rc = new JsonObject();
-        addIfNotNull(rc, "title", src.getTitle());
-        addIfNotNull(rc, "author", src.getAuthor());
-        addIfNotNull(rc, "message", src.getMsg());
-        addIfNotNull(rc, "postDate", fromDate(src.getPostDate()));
+        GsonTools.addIfNotNull(rc, "title", src.getTitle());
+        GsonTools.addIfNotNull(rc, "author", src.getAuthor());
+        GsonTools.addIfNotNull(rc, "message", src.getMsg());
+        GsonTools.addIfNotNull(rc, "postDate", fromDate(src.getPostDate()));
         return rc;
     }
 }
