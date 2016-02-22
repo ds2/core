@@ -18,8 +18,11 @@ package ds2.oss.core.base.impl;
 import java.util.Random;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
+import javax.ws.rs.Priorities;
 
 import ds2.oss.core.api.SecurityBaseData;
 
@@ -30,6 +33,8 @@ import ds2.oss.core.api.SecurityBaseData;
  * @version 0.2
  */
 @ApplicationScoped
+@Alternative
+@Priority(1)
 public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
     
     /**

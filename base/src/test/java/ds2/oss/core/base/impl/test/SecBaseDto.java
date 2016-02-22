@@ -17,6 +17,7 @@ package ds2.oss.core.base.impl.test;
 
 import java.nio.charset.Charset;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.SecurityBaseData;
@@ -30,6 +31,7 @@ import javax.enterprise.inject.Alternative;
  */
 @Alternative
 @ApplicationScoped
+@Priority(2)
 public class SecBaseDto implements SecurityBaseData {
     @Override
     public byte[] getSalt() {
@@ -41,8 +43,8 @@ public class SecBaseDto implements SecurityBaseData {
         return 20000;
     }
 
-  @Override
-  public byte[] getInitVector() {
+    @Override
+    public byte[] getInitVector() {
     return new byte[0];
   }
 }

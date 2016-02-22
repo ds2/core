@@ -11,3 +11,12 @@ Usually, you add this artifact in scope runtime:
         <version>RELEASE</version>
         <scope>runtime</scope>
     </dependency>
+
+## The SymmetricKey Service
+
+This is a service to generate hashes or hash a given byte sequence. 
+The service is used for several cryptographic methods.
+
+Starting with version 0.3, a dummy configuration is being used, even for production. You should take care about
+the configuration by providing an implementation of type SecurityBaseData in scope ApplicationScoped.
+The current implementation being used is AlternateSecurityBaseDataImpl.

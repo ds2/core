@@ -22,7 +22,9 @@
   <scan>
     <exclude name="com.google.common.util.concurrent.ServiceManager" />
    </scan>
+    <!--
    <alternatives>
      <class>ds2.oss.core.base.impl.test.SecBaseDto</class>
    </alternatives>
+    -->
 </beans>

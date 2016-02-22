@@ -13,7 +13,7 @@ This filter is meant to add some logging data on every web request. Especially t
 * ...
 
 All this information is added via SLF4Js MDC system to any underlying logging solution. Current logging systems
-that use MDC are
+that use MDC so far are
 
 * Logback
 * Log4j 1.x
