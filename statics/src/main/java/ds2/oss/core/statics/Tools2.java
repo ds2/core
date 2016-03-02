@@ -21,10 +21,35 @@ import java.util.Collection;
  * Created by deindesign on 21.12.15.
  */
 public interface Tools2 {
-    public static <E,V> E getNullOrElementFromCollection(Collection<E> c, E def){
+    /**
+     * Returns the first element from a given collection, or the default value.
+     * @param c the collection
+     * @param def the default value
+     * @param <E> the type
+     * @param <V> the value type
+     * @return the first element of the collection, or null
+     */
+    static <E,V> E getNullOrElementFromCollection(Collection<E> c, E def){
         E rc=def;
         if(c!=null){
             rc=c.iterator().next();
+        }
+        return rc;
+    }
+
+    /**
+     * Returns the first non-null element from the given sequence of items.
+     * @param e the items
+     * @param <E> the type
+     * @return the first non-null element, or null
+     */
+    static <E> E getFirstNonNullElement(E...e){
+        E rc=null;
+        for(E eItem : e){
+            if(eItem!=null){
+                rc=eItem;
+                break;
+            }
         }
         return rc;
     }

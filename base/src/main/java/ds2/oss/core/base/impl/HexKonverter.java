@@ -16,6 +16,7 @@
 package ds2.oss.core.base.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class HexKonverter implements HexCodec {
      */
     private static final char[] LISTE = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
         'f', };
+    private boolean useSimple=true;
 
     /**
      * Returns the pairs of the given char sequence.
@@ -112,14 +114,23 @@ public class HexKonverter implements HexCodec {
         if (b == null) {
             return null;
         }
-        final StringBuilder sb = new StringBuilder();
-        for (byte b2 : b) {
-            int upper = b2 & 0xf0;
-            upper >>= 4;
-            final int lower = b2 & 0x0f;
-            sb.append(LISTE[upper]).append(LISTE[lower]);
+        String rc;
+        if(useSimple){
+            rc=new BigInteger(1, b).toString(16);
+        } else {
+            final StringBuilder sb = new StringBuilder();
+            for (byte b2 : b) {
+                int upper = b2 & 0xf0;
+                upper >>= 4;
+                final int lower = b2 & 0x0f;
+                sb.append(LISTE[upper]).append(LISTE[lower]);
+            }
+            rc=sb.toString();
         }
-        return sb.toString();
+        if(rc.length()>0&&rc.length()%2!=0){
+            rc="0"+rc;
+        }
+        return rc;
     }
 
 }

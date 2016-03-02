@@ -144,11 +144,17 @@ public abstract class AbstractInjectionEnvironment {
                 LOG.info("Nothing to do, ignoring");
                 return;
             }
+            LOG.debug("Performing some setup before starting the CDI environment..");
+            performInitialSetup();
             LOG.debug("Starting init");
             wc = weld.initialize();
         } finally {
             LOCK.unlock();
         }
         LOG.debug("Done with init");
+    }
+
+    protected static void performInitialSetup() {
+        //Actually, do nothing here. If you have something to setup BEFORE starting the CDI, please put it up here
     }
 }
