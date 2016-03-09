@@ -42,7 +42,7 @@ public class LocalhostTestClient extends AbstractInjectionEnvironment {
         LocalhostTestClient t = new LocalhostTestClient();
         t.onSuiteStart();
         LOG.info("Getting xmpp");
-        IXmppSupport xmpp = LocalhostTestClient.getInstance(IXmppSupport.class);
+        IXmppSupport xmpp = t.getInstance(IXmppSupport.class);
         LOG.info("Is connected: {}", xmpp.isConnected());
         if (xmpp.isConnected()) {
             try {

@@ -26,7 +26,7 @@ import ds2.oss.core.testutils.AbstractInjectionEnvironment;
  * @author dstrauss
  * @version 0.2
  */
-public final class SslServerSnooperTestClient {
+public class SslServerSnooperTestClient extends AbstractInjectionEnvironment {
     
     /**
      * Dummy constructor.
@@ -42,11 +42,12 @@ public final class SslServerSnooperTestClient {
      *            the server hostname
      */
     public static void main(final String[] args) {
-        AbstractInjectionEnvironment.onSuiteStart();
-        final SslServerSnooper to = AbstractInjectionEnvironment.getInstance(SslServerSnooper.class);
+        SslServerSnooperTestClient instance=new SslServerSnooperTestClient();
+        instance.onSuiteStart();
+        final SslServerSnooper to = instance.getInstance(SslServerSnooper.class);
         final String hostname = args.length > 0 ? args[0] : "tools.designskins.com";
         final X509Certificate[] certs = to.getServerCertificates(hostname, 443);
         System.out.println("Certs: " + certs);
-        AbstractInjectionEnvironment.onSuiteEnd();
+        instance.onSuiteEnd();
     }
 }

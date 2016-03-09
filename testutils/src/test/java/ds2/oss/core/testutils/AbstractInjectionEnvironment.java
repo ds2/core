@@ -67,7 +67,11 @@ public abstract class AbstractInjectionEnvironment {
      * @return the instance, if found. Otherwise null.
      * @param <T> the type of the bean
      */
-    public static <T> T getInstance(final Class<T> c) {
+    protected <T> T getInstance(final Class<T> c) {
+        if(wc==null){
+            LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+            return null;
+        }
         LOCK.lock();
         try {
             return wc.instance().select(c).get();
@@ -76,7 +80,11 @@ public abstract class AbstractInjectionEnvironment {
         }
     }
 
-    public static <T> T getInstance(final TypeLiteral<T> c) {
+    protected <T> T getInstance(final TypeLiteral<T> c) {
+        if(wc==null){
+            LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+            return null;
+        }
         LOCK.lock();
         try {
             return wc.instance().select(c).get();
@@ -102,7 +110,11 @@ public abstract class AbstractInjectionEnvironment {
      * @param annotations some annotations to find the specific CDI bean
      * @return the found bean, or null if an error occurred
      */
-    public static <T> T getInstance(final Class<T> c, final Annotation... annotations) {
+    protected <T> T getInstance(final Class<T> c, final Annotation... annotations) {
+        if(wc==null){
+            LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+            return null;
+        }
         try {
             LOCK.lock();
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
@@ -121,14 +133,18 @@ public abstract class AbstractInjectionEnvironment {
      * Actions to perform at the end of the test suite.
      */
     @AfterSuite(alwaysRun = true)
-    public static void onSuiteEnd() {
-        LOCK.lock();
-        try {
-            LOG.debug("Shutting down Weld");
-            weld.shutdown();
-            wc = null;
-        } finally {
-            LOCK.unlock();
+    public void onSuiteEnd() {
+        if(weld!=null){
+            LOCK.lock();
+            try {
+                LOG.debug("Shutting down Weld");
+                weld.shutdown();
+                wc = null;
+            } finally {
+                LOCK.unlock();
+            }
+        } else {
+            LOG.debug("Weld is null, ignoring shutting it down as perhaps at start it has crashed.");
         }
     }
 
@@ -136,7 +152,7 @@ public abstract class AbstractInjectionEnvironment {
      * Actions to perform at test suite start.
      */
     @BeforeSuite(alwaysRun = true)
-    public static void onSuiteStart() {
+    public void onSuiteStart() {
         LOG.debug("Entering Weld Init");
         LOCK.lock();
         try {
@@ -154,7 +170,7 @@ public abstract class AbstractInjectionEnvironment {
         LOG.debug("Done with init");
     }
 
-    protected static void performInitialSetup() {
+    protected void performInitialSetup() {
         //Actually, do nothing here. If you have something to setup BEFORE starting the CDI, please put it up here
     }
 }
