@@ -50,14 +50,14 @@ public abstract class AbstractInjectionEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /**
-     * The container.
+     * The container that manages the instances.
      */
     private static WeldContainer wc;
 
     /**
      * The classpath scanner.
      */
-    private static Weld weld = new Weld();
+    private static Weld weld=new Weld();
 
     /**
      * Returns an instance of the given class.
@@ -68,12 +68,12 @@ public abstract class AbstractInjectionEnvironment {
      * @param <T> the type of the bean
      */
     protected <T> T getInstance(final Class<T> c) {
-        if(wc==null){
-            LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
-            return null;
-        }
         LOCK.lock();
         try {
+            if(wc==null){
+                LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+                return null;
+            }
             return wc.instance().select(c).get();
         } finally {
             LOCK.unlock();
@@ -81,12 +81,12 @@ public abstract class AbstractInjectionEnvironment {
     }
 
     protected <T> T getInstance(final TypeLiteral<T> c) {
-        if(wc==null){
-            LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
-            return null;
-        }
         LOCK.lock();
         try {
+            if(wc==null){
+                LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+                return null;
+            }
             return wc.instance().select(c).get();
         } finally {
             LOCK.unlock();
@@ -111,12 +111,12 @@ public abstract class AbstractInjectionEnvironment {
      * @return the found bean, or null if an error occurred
      */
     protected <T> T getInstance(final Class<T> c, final Annotation... annotations) {
-        if(wc==null){
-            LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
-            return null;
-        }
         try {
             LOCK.lock();
+            if(wc==null){
+                LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+                return null;
+            }
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
             if (beans != null && !beans.isEmpty()) {
                 beans.stream().forEach((b) -> {
@@ -134,18 +134,18 @@ public abstract class AbstractInjectionEnvironment {
      */
     @AfterSuite(alwaysRun = true)
     public void onSuiteEnd() {
-        if(weld!=null){
-            LOCK.lock();
+        LOCK.lock();
             try {
-                LOG.debug("Shutting down Weld");
-                weld.shutdown();
-                wc = null;
+                if(wc!=null){
+                    LOG.debug("Shutting down Weld");
+                    weld.shutdown();
+                    wc = null;
+                } else {
+                    LOG.warn("Weld Container is null, ignoring shutting it down as perhaps at start it has crashed.");
+                }
             } finally {
                 LOCK.unlock();
             }
-        } else {
-            LOG.debug("Weld is null, ignoring shutting it down as perhaps at start it has crashed.");
-        }
     }
 
     /**
