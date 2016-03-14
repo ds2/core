@@ -16,6 +16,7 @@
 package ds2.oss.core.crypto;
 
 import java.lang.invoke.MethodHandles;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
@@ -26,6 +27,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.enterprise.context.ApplicationScoped;
 
+import ds2.oss.core.api.crypto.AlgorithmNamed;
+import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,11 +56,12 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
      * .Ciphers)
      */
     @Override
-    public Cipher createCipherInstance(final Ciphers c) {
+    public Cipher createCipherInstance(final AlgorithmNamed c) {
+        LOG.debug("Getting cipher for alg {}", c);
         Cipher rc = null;
         try {
-            rc = c.getCipherInstance();
-        } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
+            rc=Cipher.getInstance(c.getAlgorithmName());
+        } catch (final NoSuchPaddingException | NoSuchAlgorithmException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
         LOG.debug("Returning cipher {} for {}", new Object[] { rc, c });
@@ -70,15 +74,25 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
      * KeyGeneratorNames)
      */
     @Override
-    public KeyGenerator createKeyGenerator(final KeyGeneratorNames name) {
+    public KeyGenerator createKeyGenerator(final AlgorithmNamed name) {
         try {
-            return KeyGenerator.getInstance(name.name());
+            return KeyGenerator.getInstance(name.getAlgorithmName());
         } catch (final NoSuchAlgorithmException e) {
             LOG.error("Error when creating an instance of a key generator!", e);
         }
         return null;
     }
-    
+
+    @Override
+    public KeyPairGenerator createKeyPairGenerator(AlgorithmNamed alg) {
+        try {
+            return KeyPairGenerator.getInstance(alg.getAlgorithmName());
+        } catch (NoSuchAlgorithmException e) {
+            LOG.error("Error when creating an instance of a key generator with alg "+alg+"!", e);
+        }
+        return null;
+    }
+
     /*
      * (non-Javadoc)
      * @see

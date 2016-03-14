@@ -19,8 +19,12 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKeyFactory;
 
+import ds2.oss.core.api.crypto.AlgorithmNamed;
 import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
+
+import java.security.KeyPairGenerator;
 
 /**
  * A contract for some provider based instances.
@@ -37,7 +41,7 @@ public interface SecurityInstanceProvider {
      *
      * @return the cipher, or null if an error occurred.
      */
-    Cipher createCipherInstance(Ciphers c);
+    Cipher createCipherInstance(AlgorithmNamed c);
 
     /**
      * Creates a key generator.
@@ -46,7 +50,14 @@ public interface SecurityInstanceProvider {
      *            the key generator name
      * @return the instance, or null if an error occurred
      */
-    KeyGenerator createKeyGenerator(KeyGeneratorNames name);
+    KeyGenerator createKeyGenerator(AlgorithmNamed name);
+
+    /**
+     * Creates a kp generator.
+     * @param alg the algorithm to use
+     * @return the instance, or null if an error occurred
+     */
+    KeyPairGenerator createKeyPairGenerator(AlgorithmNamed alg);
 
     /**
      * Creates a secret key factory.

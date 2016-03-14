@@ -21,9 +21,14 @@ package ds2.oss.core.api.crypto;
  * @author dstrauss
  * @version 0.3
  */
-public enum KeyGeneratorNames {
+public enum KeyGeneratorNames implements AlgorithmNamed {
     /**
      * AES.
      */
-    AES;
+    AES {
+        @Override
+        public String getAlgorithmName() {
+            return name();
+        }
+    };
 }

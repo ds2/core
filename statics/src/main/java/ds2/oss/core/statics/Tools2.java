@@ -53,4 +53,36 @@ public interface Tools2 {
         }
         return rc;
     }
+
+    static <E extends Enum<E>> E findEnumValueByName(Class<E> enumClass, String name, E defValue){
+        E rc=defValue;
+        try {
+            rc = Enum.valueOf(enumClass, name);
+        } catch(IllegalArgumentException | NullPointerException e){
+            //ok, maybe lowercase/uppercase problem
+            for(E e1 : enumClass.getEnumConstants()){
+                if(e1.name().equalsIgnoreCase(name)){
+                    rc=e1;
+                    break;
+                }
+            }
+        }
+        return rc;
+    }
+
+    static <E extends Enum<E>> E findEnumValueByName(Class<E> enumClass, String name){
+        E rc=null;
+        try {
+            rc = Enum.valueOf(enumClass, name);
+        } catch(IllegalArgumentException | NullPointerException e){
+            //ok, maybe lowercase/uppercase problem
+            for(E e1 : enumClass.getEnumConstants()){
+                if(e1.name().equalsIgnoreCase(name)){
+                    rc=e1;
+                    break;
+                }
+            }
+        }
+        return rc;
+    }
 }

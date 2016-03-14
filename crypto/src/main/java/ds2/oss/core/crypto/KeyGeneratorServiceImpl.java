@@ -28,6 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+import ds2.oss.core.api.crypto.AlgorithmNamed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +74,7 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     private SecurityInstanceProvider secProv;
 
     @Override
-    public SecretKey generate(final int length, final KeyGeneratorNames name) {
+    public SecretKey generate(final int length, final AlgorithmNamed name) {
         SecretKey rc;
         final KeyGenerator kgInstance = secProv.createKeyGenerator(name);
         kgInstance.init(length, random);
@@ -82,11 +83,11 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     }
 
     @Override
-    public SecretKey generate(final String pw, final KeyGeneratorNames name) {
+    public SecretKey generate(final String pw, final AlgorithmNamed name) {
         SecretKey rc = null;
         try {
             final byte[] pwBytes = pw.getBytes("utf-8");
-            rc = new SecretKeySpec(pwBytes, name.name());
+            rc = new SecretKeySpec(pwBytes, name.getAlgorithmName());
         } catch (final UnsupportedEncodingException e) {
             LOG.error("Unknown encoding!", e);
         }

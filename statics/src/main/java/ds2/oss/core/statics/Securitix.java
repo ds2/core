@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.security.Provider;
 import java.security.Security;
-import java.security.SecurityPermission;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -19,6 +18,10 @@ public interface Securitix {
     Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     Lock LOCK=new ReentrantLock();
 
+    /**
+     * Adds the given provider to the list of supported security providers.
+     * @param p the provider
+     */
     static void installProvider(Provider p){
         LOCK.lock();
         try {
@@ -43,6 +46,11 @@ public interface Securitix {
         }
     }
 
+    /**
+     * Installs the given provider at the given position.
+     * @param p the provider
+     * @param position the position to insert the provider at. Starts with 1.
+     */
     static void installProvider(Provider p, int position){
         LOCK.lock();
         try {

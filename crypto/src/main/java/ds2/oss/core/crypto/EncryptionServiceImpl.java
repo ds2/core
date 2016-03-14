@@ -28,15 +28,13 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import ds2.oss.core.api.crypto.*;
+import ds2.oss.core.statics.Tools2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.SecurityBaseData;
 import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.crypto.Ciphers;
-import ds2.oss.core.api.crypto.EncodedContent;
-import ds2.oss.core.api.crypto.EncryptionService;
-import ds2.oss.core.api.crypto.IvEncodedContent;
 import ds2.oss.core.api.dto.impl.EncodedContentDto;
 import ds2.oss.core.api.dto.impl.IvEncodedContentDto;
 
@@ -70,11 +68,12 @@ public class EncryptionServiceImpl implements EncryptionService {
     private SecurityInstanceProvider secProv;
 
     @Override
-    public byte[] decode(final SecretKey secretKey, final Ciphers cipher, final EncodedContent src) {
+    public byte[] decode(final SecretKey secretKey, final AlgorithmNamed cipher, final EncodedContent src) {
         byte[] rc = null;
         try {
             final Cipher c = secProv.createCipherInstance(cipher);
-            switch (cipher) {
+            Ciphers cipherEnum=Ciphers.getByAlgorithmName(cipher.getAlgorithmName());
+            switch (cipherEnum) {
                 case AES:
                     c.init(Cipher.DECRYPT_MODE, secretKey,
                         new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
@@ -98,9 +97,10 @@ public class EncryptionServiceImpl implements EncryptionService {
     }
 
     @Override
-    public EncodedContent encode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
+    public EncodedContent encode(final SecretKey secretKey, final AlgorithmNamed cipherAlg, final byte[] src) {
         EncodedContent rc = null;
         try {
+            Ciphers cipher=Ciphers.getByAlgorithmName(cipherAlg.getAlgorithmName());
             final Cipher c = secProv.createCipherInstance(cipher);
             LOG.debug("Cipher {}, sk={}", new Object[] { c, secretKey });
             switch (cipher) {

@@ -42,7 +42,11 @@ public enum CoreErrors implements IErrorData {
     /**
      * If a specific required option could not be found.
      */
-    OptionNotFound(5);
+    OptionNotFound(5),
+    /**
+     * If a specific generator could not be found.
+     */
+    NoGeneratorFound(6);
     /**
      * The error code.
      */
@@ -54,7 +58,7 @@ public enum CoreErrors implements IErrorData {
      * @param i
      *            the numerical error code
      */
-    private CoreErrors(final int i) {
+    CoreErrors(final int i) {
         code = i;
     }
 

@@ -27,7 +27,7 @@ import javax.crypto.NoSuchPaddingException;
  * @author dstrauss
  * @version 0.3
  */
-public enum Ciphers {
+public enum Ciphers implements AlgorithmNamed{
     /**
      * AES cipher.
      */
@@ -95,6 +95,11 @@ public enum Ciphers {
         return Cipher.getInstance(instanceName, providerName);
     }
 
+    @Override
+    public String getAlgorithmName() {
+        return instanceName;
+    }
+
     /**
      * Returns the suggested key length for this cipher.
      *
@@ -102,5 +107,14 @@ public enum Ciphers {
      */
     public int getSuggestedKeyLength() {
         return suggestedKeyLength;
+    }
+
+    public static Ciphers getByAlgorithmName(String algorithmName) {
+        for(Ciphers c : values()){
+            if(c.instanceName.equalsIgnoreCase(algorithmName)){
+                return c;
+            }
+        }
+        return null;
     }
 }
