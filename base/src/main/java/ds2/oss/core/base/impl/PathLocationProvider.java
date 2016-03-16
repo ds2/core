@@ -21,6 +21,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
+import javax.annotation.Priority;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -37,6 +40,8 @@ import ds2.oss.core.api.annotations.PathLocation;
  * @version 0.3
  */
 @Alternative
+@Dependent
+@Priority(1)
 public class PathLocationProvider {
     /**
      * A logger.

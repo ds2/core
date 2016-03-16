@@ -10,6 +10,7 @@ import ds2.oss.core.api.crypto.KeyPairGeneratorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.security.KeyPair;
@@ -23,6 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by deindesign on 11.03.16.
  */
+@ApplicationScoped
 public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
     private static final Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
