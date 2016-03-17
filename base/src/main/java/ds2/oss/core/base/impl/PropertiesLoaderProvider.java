@@ -41,7 +41,7 @@ import java.util.Set;
 /**
  * Created by deindesign on 13.12.15.
  */
-@Alternative
+@Dependent
 public class PropertiesLoaderProvider {
     /**
      * A logger.
@@ -90,7 +90,7 @@ public class PropertiesLoaderProvider {
         Properties rc=null;
         if(!val.isEmpty(resourcePath)){
             LOG.debug("Trying to load resource {}", resourcePath);
-            try (InputStream is=getClass().getResourceAsStream(resourcePath);){
+            try (InputStream is=getClass().getResourceAsStream(resourcePath)){
                 rc=new Properties();
                 rc.load(is);
             } catch (IOException e) {
@@ -112,6 +112,10 @@ public class PropertiesLoaderProvider {
     }
 
     private Properties readFromSysprop(PropertiesLoader pl){
+        String sysPropStr=pl.sysProp();
+        if(val.isEmpty(sysPropStr)){
+            return null;
+        }
         String sysPropVal=System.getProperty(pl.sysProp());
         if(!val.isEmpty(sysPropVal)){
             Path p=Paths.get(sysPropVal);
@@ -132,7 +136,7 @@ public class PropertiesLoaderProvider {
     private Properties readFile(Path p){
             Properties rc=null;
             if(Files.isReadable(p)){
-                try(BufferedReader reader=Files.newBufferedReader(p, Charset.forName("utf-8"));) {
+                try(BufferedReader reader=Files.newBufferedReader(p, Charset.forName("utf-8"))) {
                     rc=new Properties();
                     rc.load(reader);
                 } catch (IOException e) {

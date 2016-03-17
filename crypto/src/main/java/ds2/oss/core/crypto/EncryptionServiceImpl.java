@@ -28,6 +28,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import ds2.oss.core.api.Assert;
 import ds2.oss.core.api.crypto.*;
 import ds2.oss.core.statics.Tools2;
 import org.slf4j.Logger;
@@ -66,10 +67,15 @@ public class EncryptionServiceImpl implements EncryptionService {
      */
     @Inject
     private SecurityInstanceProvider secProv;
+    @Inject
+    private Assert assrt;
 
     @Override
     public byte[] decode(final SecretKey secretKey, final AlgorithmNamed cipher, final EncodedContent src) {
         byte[] rc = null;
+        assrt.assertNotNull(secretKey, "No secretkey given to decode!");
+        assrt.assertNotNull(cipher, "No cipher given to use!");
+        assrt.assertNotNull(src, "No content given to read from!");
         try {
             final Cipher c = secProv.createCipherInstance(cipher);
             Ciphers cipherEnum=Ciphers.getByAlgorithmName(cipher.getAlgorithmName());
@@ -99,6 +105,9 @@ public class EncryptionServiceImpl implements EncryptionService {
     @Override
     public EncodedContent encode(final SecretKey secretKey, final AlgorithmNamed cipherAlg, final byte[] src) {
         EncodedContent rc = null;
+        assrt.assertNotNull(secretKey, "No secretkey given to decode!");
+        assrt.assertNotNull(cipherAlg, "No cipher given to use!");
+        assrt.assertNotNull(src, "No content given to read from!");
         try {
             Ciphers cipher=Ciphers.getByAlgorithmName(cipherAlg.getAlgorithmName());
             final Cipher c = secProv.createCipherInstance(cipher);

@@ -16,6 +16,7 @@
 package ds2.oss.core.api.annotations;
 
 import javax.enterprise.util.Nonbinding;
+import javax.inject.Qualifier;
 import javax.validation.constraints.Null;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -29,6 +30,7 @@ import java.nio.file.Paths;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE })
+@Qualifier
 public @interface PropertiesLoader {
     /**
      * A path to a file location.

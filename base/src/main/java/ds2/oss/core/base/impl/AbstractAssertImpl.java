@@ -1,0 +1,24 @@
+package ds2.oss.core.base.impl;
+
+import ds2.oss.core.api.Assert;
+
+/**
+ * Created by deindesign on 17.03.16.
+ */
+public abstract class AbstractAssertImpl implements Assert{
+    protected abstract RuntimeException createException(String msg);
+
+    @Override
+    public void assertNotNull(Object o, String errorMsg) {
+        if(o==null){
+            throw createException(errorMsg);
+        }
+    }
+
+    @Override
+    public void assertNotEmpty(String s, String errorMsg) {
+        if(s==null||s.trim().length()==0){
+            throw createException(errorMsg);
+        }
+    }
+}
