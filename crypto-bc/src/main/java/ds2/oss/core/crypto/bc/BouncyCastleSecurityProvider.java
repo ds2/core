@@ -63,7 +63,7 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
     @Override
 	@PostConstruct
     public void onLoad() {
-        LOG.debug("Loading BC Provider");
+        LOG.debug("Loading and promoting BC Provider");
         Securitix.installProvider(new BouncyCastleProvider(), 1);
     }
     
