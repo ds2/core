@@ -16,9 +16,7 @@
 package ds2.oss.core.crypto.test;
 
 import java.lang.invoke.MethodHandles;
-import java.security.Security;
 
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -51,7 +49,6 @@ public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
     
     @BeforeClass
     public void onClass() {
-        Security.addProvider(new BouncyCastleProvider());
         to = getInstance(BytesProvider.class);
         hex = getInstance(HexCodec.class);
     }

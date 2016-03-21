@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.security.Provider;
 import java.security.Security;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -91,5 +93,28 @@ public interface Securitix {
             LOCK.unlock();
         }
 
+    }
+
+    /**
+     * Returns a list of currently known providers.
+     * @return a list of currently known providers.
+     */
+    static List<String> getCurrentSecurityProviders(){
+        LOCK.lock();
+        List<String> rc=new ArrayList<>();
+        try {
+            Provider[] providers=Security.getProviders();
+            if(providers!=null){
+                for(Provider p : providers){
+                    LOG.debug("Provider found: {}", p);
+                    Set<Provider.Service> services=p.getServices();
+                    LOG.debug("Services of this provider: {}", services);
+                    rc.add(p.getName());
+                }
+            }
+            return rc;
+        } finally {
+            LOCK.unlock();
+        }
     }
 }

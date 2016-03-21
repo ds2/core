@@ -1,10 +1,18 @@
 package ds2.oss.core.api.crypto;
 
 /**
- * Created by deindesign on 11.03.16.
+ * Sample keypair algorithm names.
+ * @author dstrauss
  */
 public enum KeyPairGenAlgorithm implements AlgorithmNamed{
-    RSA("RSA");
+    /**
+     * Default algorithm. Use this if unsure.
+     */
+    RSA("RSA"),
+    /**
+     * Elliptic curve.
+     */
+    EC("EC"), DH("DiffieHellman"), DSA("DSA");
     private String algorithmName;
 
     KeyPairGenAlgorithm(String a){

@@ -46,7 +46,11 @@ public enum CoreErrors implements IErrorData {
     /**
      * If a specific generator could not be found.
      */
-    NoGeneratorFound(6);
+    NoGeneratorFound(6),
+    /**
+     * A given argument is not valid.
+     */
+    IllegalArgument(7), LockingFailed(8);
     /**
      * The error code.
      */
