@@ -1,6 +1,8 @@
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.AssertHelper;
+import ds2.oss.core.api.CoreErrors;
+import ds2.oss.core.api.CoreRuntimeException;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -15,6 +17,6 @@ import javax.enterprise.inject.Alternative;
 public class DefaultAssertImpl extends AbstractAssertImpl implements AssertHelper {
     @Override
     protected RuntimeException createException(String msg) {
-        return new IllegalArgumentException(msg);
+        return new CoreRuntimeException(CoreErrors.IllegalArgument, msg);
     }
 }
