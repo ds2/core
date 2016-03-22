@@ -22,13 +22,12 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 
 import javax.annotation.PostConstruct;
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKeyFactory;
+import javax.crypto.*;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Specializes;
 
+import ds2.oss.core.api.CoreErrors;
+import ds2.oss.core.api.CoreRuntimeException;
 import ds2.oss.core.api.crypto.*;
 import ds2.oss.core.statics.Securitix;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -114,6 +113,18 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
             LOG.error("Given algorithm is unknown to this provider!", e);
         } catch (NoSuchProviderException e) {
             LOG.error("Given provider is unknown!", e);
+        }
+        return null;
+    }
+
+    @Override
+    public KeyAgreement createKeyAgreement(AlgorithmNamed alg) {
+        try {
+            return KeyAgreement.getInstance(alg.getAlgorithmName(), ID);
+        } catch (NoSuchAlgorithmException e) {
+            LOG.error("Unknown algorithm: {}",alg,e);
+        } catch (NoSuchProviderException e) {
+            LOG.error("Unknown provider: {}",ID,e);
         }
         return null;
     }

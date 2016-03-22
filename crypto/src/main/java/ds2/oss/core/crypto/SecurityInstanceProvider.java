@@ -16,6 +16,7 @@
 package ds2.oss.core.crypto;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKeyFactory;
 
@@ -25,6 +26,7 @@ import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
 
 import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
 
 /**
  * A contract for some provider based instances.
@@ -67,4 +69,8 @@ public interface SecurityInstanceProvider {
      * @return the skf, or null if an error occurred
      */
     SecretKeyFactory createSecretKeyFactoryInstance(String string);
+
+    KeyAgreement createKeyAgreement(AlgorithmNamed alg);
+
+    SecureRandom createSecureRandom(AlgorithmNamed alg);
 }

@@ -50,7 +50,19 @@ public enum CoreErrors implements IErrorData {
     /**
      * A given argument is not valid.
      */
-    IllegalArgument(7), LockingFailed(8);
+    IllegalArgument(7),
+    /**
+     * If a method lock failed.
+     */
+    LockingFailed(8),
+    /**
+     * A given algorithm is unknown to the current platform.
+     */
+    AlgorithmNotFound(9),
+    /**
+     * If a given provider (security) is unknown.
+     */
+    UnknownProvider(10);
     /**
      * The error code.
      */
