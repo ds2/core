@@ -28,9 +28,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import ds2.oss.core.api.Assert;
+import ds2.oss.core.api.AssertHelper;
 import ds2.oss.core.api.crypto.*;
-import ds2.oss.core.statics.Tools2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +67,7 @@ public class EncryptionServiceImpl implements EncryptionService {
     @Inject
     private SecurityInstanceProvider secProv;
     @Inject
-    private Assert assrt;
+    private AssertHelper assrt;
 
     @Override
     public byte[] decode(final SecretKey secretKey, final AlgorithmNamed cipher, final EncodedContent src) {

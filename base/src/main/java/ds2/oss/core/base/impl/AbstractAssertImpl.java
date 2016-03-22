@@ -1,11 +1,11 @@
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.Assert;
+import ds2.oss.core.api.AssertHelper;
 
 /**
  * Created by deindesign on 17.03.16.
  */
-public abstract class AbstractAssertImpl implements Assert{
+public abstract class AbstractAssertImpl implements AssertHelper {
     protected abstract RuntimeException createException(String msg);
 
     @Override
