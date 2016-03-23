@@ -21,6 +21,7 @@ package ds2.oss.core.api.crypto;
  * @author dstrauss
  * @version 0.3
  */
+@Deprecated
 public enum KeyPairNames {
     /**
      * RSA.

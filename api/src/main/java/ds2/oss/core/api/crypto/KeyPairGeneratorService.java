@@ -11,4 +11,21 @@ import java.security.KeyPair;
  */
 public interface KeyPairGeneratorService {
     KeyPair generate(@Min(128)int bitSize, @NotNull AlgorithmNamed alg) throws CoreException;
+
+    /**
+     * Generates an RSA key pair.
+     * @param bitSize the bit size
+     * @return the generated key pair
+     * @throws CoreException if an error occurred
+     */
+    KeyPair generateRsaKey(int bitSize) throws CoreException;
+
+    /**
+     * Generates an elliptic curve key pair.
+     * @param bitSize the bit size
+     * @param curveName the curve name
+     * @return the generated key pair
+     * @throws CoreException if an error occurred
+     */
+    KeyPair generateEcKey(int bitSize, String curveName) throws CoreException;
 }

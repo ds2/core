@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
-import java.security.InvalidParameterException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
+import java.security.*;
+import java.security.spec.AlgorithmParameterSpec;
+import java.security.spec.ECParameterSpec;
+import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -47,9 +47,24 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
 
     @Override
     public KeyPair generate(int bitSize, AlgorithmNamed alg) throws CoreException {
+        return generateKeyPairCommon(bitSize, null, alg);
+    }
+
+    @Override
+    public KeyPair generateRsaKey(int bitSize) throws CoreException {
+        return generate(bitSize, KeyPairGenAlgorithm.RSA);
+    }
+
+    @Override
+    public KeyPair generateEcKey(int bitSize, String curveName) throws CoreException {
+        ECParameterSpec params=null;
+        return generateKeyPairCommon(bitSize, params, KeyPairGenAlgorithm.EC);
+    }
+
+    private KeyPair generateKeyPairCommon(int bitSize, AlgorithmParameterSpec params, AlgorithmNamed alg) throws CoreException {
         try {
             LOCK.tryLock(config.getMethodLockTimeout(), TimeUnit.SECONDS);
-            LOG.debug("Preparing keygen with bitSize={} and alg={}", new Object[]{bitSize, alg});
+            LOG.debug("Preparing keygen with bitSize={}", new Object[]{bitSize});
             KeyPair rc = null;
             KeyPairGenerator gen = gens.get(alg.getAlgorithmName());
             if (gen == null) {
@@ -59,13 +74,20 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
                 }
                 gens.put(alg.getAlgorithmName(), gen);
             }
-            gen.initialize(bitSize, randomizer);
+            if(params!=null){
+                gen.initialize(params, randomizer);
+                RSAKeyGenParameterSpec spec=new RSAKeyGenParameterSpec(bitSize, RSAKeyGenParameterSpec.F4);
+            } else {
+                gen.initialize(bitSize, randomizer);
+            }
             rc = gen.generateKeyPair();
             return rc;
         } catch(InvalidParameterException e){
             throw new CoreException(CoreErrors.IllegalArgument, "The bit size "+bitSize+" is wrong!", e);
         } catch (InterruptedException e) {
             throw new CoreException(CoreErrors.LockingFailed, "We could not lock the keygen in time.", e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new CoreException(CoreErrors.IllegalArgument, "The parameters are incorrect!", e);
         } finally {
             LOG.debug("Unlocking method");
             LOCK.unlock();
