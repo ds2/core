@@ -1,6 +1,7 @@
 package ds2.oss.core.crypto.bc.tests;
 
 import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.crypto.EllipticCurveNames;
 import ds2.oss.core.api.crypto.KeyPairGeneratorService;
 import ds2.oss.core.api.crypto.SunEllipticCurveNames;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
@@ -21,16 +22,13 @@ import java.util.Enumeration;
 public class BcKeyPairGeneratorTest extends AbstractInjectionEnvironment {
     private static final Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private KeyPairGeneratorService to;
+    private EllipticCurveNames curves;
 
     @BeforeClass
     public void onClass(){
         to=getInstance(KeyPairGeneratorService.class);
-        LOG.info("Known curves: {}", ECNamedCurveTable.getNames());
-        Enumeration curveNamesEnum=ECNamedCurveTable.getNames();
-        while(curveNamesEnum.hasMoreElements()){
-            String el= (String) curveNamesEnum.nextElement();
-            LOG.debug("CurveName: {}",el);
-        }
+        curves=getInstance(EllipticCurveNames.class);
+        LOG.info("Known curves: {}", curves.getNames());
     }
 
     @Test(enabled = true)

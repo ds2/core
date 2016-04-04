@@ -45,22 +45,6 @@ public class KeyPairGeneratorTest extends AbstractInjectionEnvironment {
     }
 
     @Test(enabled = true)
-    public void testEC2() throws CoreException {
-        KeyPair rc=to.generateEcKey(571, SunEllipticCurveNames.Curve1174.getAlgorithmName());
-        Assert.assertNotNull(rc);
-        Assert.assertNotNull(rc.getPrivate());
-        Assert.assertNotNull(rc.getPublic());
-    }
-
-    @Test(enabled = true)
-    public void testECNamed1() throws CoreException {
-        KeyPair rc=to.generateEcKey(571, "curve2213");
-        Assert.assertNotNull(rc);
-        Assert.assertNotNull(rc.getPrivate());
-        Assert.assertNotNull(rc.getPublic());
-    }
-
-    @Test(enabled = true)
     public void testDSA() throws CoreException {
         KeyPair rc=to.generate(1024, KeyPairGenAlgorithm.DSA);
         Assert.assertNotNull(rc);
