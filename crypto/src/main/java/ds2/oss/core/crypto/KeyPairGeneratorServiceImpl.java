@@ -5,19 +5,16 @@ import ds2.oss.core.api.CoreErrors;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.Validate;
 import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.crypto.AlgorithmNamed;
-import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
-import ds2.oss.core.api.crypto.KeyPairGeneratorService;
+import ds2.oss.core.api.crypto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
+import java.math.BigInteger;
 import java.security.*;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.ECParameterSpec;
-import java.security.spec.RSAKeyGenParameterSpec;
+import java.security.spec.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -57,8 +54,25 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
 
     @Override
     public KeyPair generateEcKey(int bitSize, String curveName) throws CoreException {
-        ECParameterSpec params=null;
+        ECGenParameterSpec params=new ECGenParameterSpec(curveName);
         return generateKeyPairCommon(bitSize, params, KeyPairGenAlgorithm.EC);
+    }
+
+    @Override
+    public KeyPair generateEcKey(int bitSize, EllipticCurveCryptoData data) throws CoreException {
+        ECField field=new ECFieldFp(data.getP());
+        BigInteger a=data.getA();
+        BigInteger b=data.getB();
+        EllipticCurve curve=new EllipticCurve(field, a, b);
+        ECPoint pointOnCurve=new ECPoint(data.getGx(), data.getGy());
+        ECParameterSpec spec=new ECParameterSpec(curve,pointOnCurve, data.getQ(), 1);
+        return generateKeyPairCommon(bitSize, spec, KeyPairGenAlgorithm.EC);
+    }
+
+    @Override
+    public KeyPair generateEcKey(int bitSize) throws CoreException {
+        int m = 0;
+        return null;
     }
 
     private KeyPair generateKeyPairCommon(int bitSize, AlgorithmParameterSpec params, AlgorithmNamed alg) throws CoreException {

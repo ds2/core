@@ -16,10 +16,7 @@
 package ds2.oss.core.crypto;
 
 import java.lang.invoke.MethodHandles;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
+import java.security.*;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.*;
@@ -84,7 +81,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         try {
             return KeyGenerator.getInstance(name.getAlgorithmName());
         } catch (final NoSuchAlgorithmException e) {
-            LOG.error("Error when creating an instance of a key generator!", e);
+            LOG.error("Unknown algorithm: {}", name.getAlgorithmName(), e);
         }
         return null;
     }
@@ -96,7 +93,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         try {
             return KeyPairGenerator.getInstance(alg.getAlgorithmName());
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("Error when creating an instance of a key generator with alg "+alg+"!", e);
+            LOG.error("Unknown algorithm: {}", alg.getAlgorithmName(), e);
         }
         return null;
     }
@@ -112,7 +109,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         try {
             return SecretKeyFactory.getInstance(string);
         } catch (final NoSuchAlgorithmException e) {
-            LOG.error("Error when creating the SKF!", e);
+            LOG.error("Unknown algorithm: {}", string, e);
         }
         return null;
     }
@@ -125,7 +122,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
             KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
             return keyAgreement;
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("Algorithm is unknown for this provider!",e);
+            LOG.error("Unknown algorithm: {}", alg.getAlgorithmName(), e);
         }
         return null;
     }
@@ -137,7 +134,27 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
         try {
             return SecureRandom.getInstance(alg.getAlgorithmName());
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("Unknown algorithm: "+alg.getAlgorithmName(),e);
+            LOG.error("Unknown algorithm: {}", alg.getAlgorithmName(), e);
+        }
+        return null;
+    }
+
+    @Override
+    public KeyFactory createKeyFactory(AlgorithmNamed alg) {
+        try {
+            return KeyFactory.getInstance(alg.getAlgorithmName());
+        } catch (NoSuchAlgorithmException e) {
+            LOG.error("Unknown algorithm: {}", alg.getAlgorithmName(), e);
+        }
+        return null;
+    }
+
+    @Override
+    public MessageDigest createMessageDigest(AlgorithmNamed alg) {
+        try {
+            return MessageDigest.getInstance(alg.getAlgorithmName());
+        } catch (NoSuchAlgorithmException e) {
+            LOG.error("Unknown algorithm: {}", alg.getAlgorithmName(), e);
         }
         return null;
     }

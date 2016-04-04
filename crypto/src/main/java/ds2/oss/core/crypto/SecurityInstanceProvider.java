@@ -25,7 +25,9 @@ import ds2.oss.core.api.crypto.Ciphers;
 import ds2.oss.core.api.crypto.KeyGeneratorNames;
 import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
 
+import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 
 /**
@@ -73,4 +75,13 @@ public interface SecurityInstanceProvider {
     KeyAgreement createKeyAgreement(AlgorithmNamed alg);
 
     SecureRandom createSecureRandom(AlgorithmNamed alg);
+
+    KeyFactory createKeyFactory(AlgorithmNamed alg);
+
+    /**
+     * Creates a message digest with the given algorithm.
+     * @param alg the algorithm
+     * @return the message digest, or null if an error occurred
+     */
+    MessageDigest createMessageDigest(AlgorithmNamed alg);
 }

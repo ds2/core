@@ -28,4 +28,14 @@ public interface KeyPairGeneratorService {
      * @throws CoreException if an error occurred
      */
     KeyPair generateEcKey(int bitSize, String curveName) throws CoreException;
+
+    KeyPair generateEcKey(int bitSize, EllipticCurveCryptoData data) throws CoreException;
+
+    /**
+     * Generates an EC key from a default curve given by the current provider.
+     * @param bitSize the bit size to use
+     * @return a keypair with some default key rules
+     * @throws CoreException if an error occurred
+     */
+    KeyPair generateEcKey(int bitSize) throws CoreException;
 }

@@ -75,6 +75,7 @@
       <module>dbtools-it</module>
     <module>jee</module>
     <module>statics</module>
+    <module>math</module>
   </modules>
   <profiles>
     <profile>

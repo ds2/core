@@ -16,10 +16,8 @@
 package ds2.oss.core.crypto.bc;
 
 import java.lang.invoke.MethodHandles;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.Security;
+import java.security.*;
+import java.security.spec.AlgorithmParameterSpec;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.*;
@@ -30,6 +28,8 @@ import ds2.oss.core.api.CoreErrors;
 import ds2.oss.core.api.CoreRuntimeException;
 import ds2.oss.core.api.crypto.*;
 import ds2.oss.core.statics.Securitix;
+import org.bouncycastle.jcajce.provider.asymmetric.ec.*;
+import org.bouncycastle.jcajce.provider.asymmetric.ec.KeyPairGeneratorSpi;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +64,7 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
     public void onLoad() {
         LOG.debug("Loading and promoting BC Provider");
         Securitix.installProvider(new BouncyCastleProvider(), 1);
+        AlgorithmParameterSpec spec;
     }
     
     /*
@@ -121,6 +122,18 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
     public KeyAgreement createKeyAgreement(AlgorithmNamed alg) {
         try {
             return KeyAgreement.getInstance(alg.getAlgorithmName(), ID);
+        } catch (NoSuchAlgorithmException e) {
+            LOG.error("Unknown algorithm: {}",alg,e);
+        } catch (NoSuchProviderException e) {
+            LOG.error("Unknown provider: {}",ID,e);
+        }
+        return null;
+    }
+
+    @Override
+    public MessageDigest createMessageDigest(AlgorithmNamed alg) {
+        try {
+            return MessageDigest.getInstance(alg.getAlgorithmName(), ID);
         } catch (NoSuchAlgorithmException e) {
             LOG.error("Unknown algorithm: {}",alg,e);
         } catch (NoSuchProviderException e) {
