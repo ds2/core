@@ -3,6 +3,7 @@ package ds2.oss.core.crypto.test;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
 import ds2.oss.core.api.crypto.KeyPairGeneratorService;
+import ds2.oss.core.api.crypto.MontgomeryCurves;
 import ds2.oss.core.api.crypto.SunEllipticCurveNames;
 import ds2.oss.core.statics.Securitix;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
@@ -39,6 +40,14 @@ public class KeyPairGeneratorTest extends AbstractInjectionEnvironment {
     @Test(enabled = true)
     public void testEC1() throws CoreException {
         KeyPair rc=to.generate(571, KeyPairGenAlgorithm.EC);
+        Assert.assertNotNull(rc);
+        Assert.assertNotNull(rc.getPrivate());
+        Assert.assertNotNull(rc.getPublic());
+    }
+
+    @Test(enabled = true)
+    public void testECMontgomery1() throws CoreException {
+        KeyPair rc=to.generateEcKey(511, MontgomeryCurves.M221);
         Assert.assertNotNull(rc);
         Assert.assertNotNull(rc.getPrivate());
         Assert.assertNotNull(rc.getPublic());

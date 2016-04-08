@@ -1,6 +1,7 @@
 package ds2.oss.core.api.crypto;
 
 import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.maths.WeierstrassCurveData;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,10 @@ public interface KeyPairGeneratorService {
     KeyPair generateEcKey(int bitSize, String curveName) throws CoreException;
 
     KeyPair generateEcKey(int bitSize, EllipticCurveCryptoData data) throws CoreException;
+
+    KeyPair generateEcKey(int bitSize, WeierstrassBasedCryptoData wscd) throws CoreException;
+
+    KeyPair generateEcKey(int bitSize, ECMontgomeryCurveCryptoData wscd) throws CoreException;
 
     /**
      * Generates an EC key from a default curve given by the current provider.

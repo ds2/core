@@ -71,5 +71,10 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ds2.oss.core</groupId>
+            <artifactId>ds2-oss-core-math</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

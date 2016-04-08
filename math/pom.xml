@@ -11,6 +11,11 @@
     <artifactId>ds2-oss-core-math</artifactId>
     <dependencies>
         <dependency>
+            <groupId>ds2.oss.core</groupId>
+            <artifactId>ds2-oss-core-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>

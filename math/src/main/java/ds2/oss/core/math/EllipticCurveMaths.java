@@ -1,12 +1,14 @@
 package ds2.oss.core.math;
 
+import ds2.oss.core.api.maths.ECMontgomeryCurveData;
+import ds2.oss.core.api.crypto.EllipticCurveData;
+import ds2.oss.core.api.dto.impl.EllipticCurveDataDto;
+import ds2.oss.core.api.maths.WeierstrassCurveData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.security.spec.EllipticCurve;
 
 /**
  * Created by deindesign on 31.03.16.
@@ -38,6 +40,24 @@ public interface EllipticCurveMaths {
     static BigInteger findOnCurve(BigInteger a, BigInteger b, BigInteger c, BigInteger x){
         //y=sqrt(x^3+a*x^2+b*x+c);
         BigInteger rc=x.pow(3).add(a.multiply(x.pow(2))).add(b.multiply(x)).add(c);
+        return rc;
+    }
+
+    static WeierstrassCurveData toWeierstrass(ECMontgomeryCurveData c){
+        LOG.debug("Starting to convert given montgomery curve data: {}", c);
+        BigInteger a1=BigInteger.valueOf(3L).subtract(c.getA().pow(2));
+        BigInteger a2=BigInteger.valueOf(3L).multiply(c.getB().pow(2));
+        LOG.debug("a1/a2 = {}/{}", a1, a2);
+        BigInteger b1=BigInteger.valueOf(2L).multiply(c.getA().pow(3)).subtract(BigInteger.valueOf(9L).multiply(c.getA()));
+        BigInteger b2=BigInteger.valueOf(27L).multiply(c.getB().pow(3));
+        LOG.debug("b1/b2 = {}/{}", b1, b2);
+        BigInteger a=a1.divide(a2);
+        BigInteger b=b1.divide(b2);
+        LOG.debug("So, a and b of weierstrass are {} and {}", a, b);
+        EllipticCurveDataDto rc=new EllipticCurveDataDto();
+        rc.setA(a);
+        rc.setB(b);
+        LOG.debug("returning weierstrass data: {}", rc);
         return rc;
     }
 }

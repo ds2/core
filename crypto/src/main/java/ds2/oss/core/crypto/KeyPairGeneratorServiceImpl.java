@@ -6,6 +6,7 @@ import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.Validate;
 import ds2.oss.core.api.annotations.SecureRandomizer;
 import ds2.oss.core.api.crypto.*;
+import ds2.oss.core.api.maths.WeierstrassCurveData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,8 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
     private SecureRandom randomizer;
     @Inject
     private CoreConfiguration config;
+    @Inject
+    private EllipticCurveSupport ecSupport;
 
     @Override
     public KeyPair generate(int bitSize, AlgorithmNamed alg) throws CoreException {
@@ -60,7 +63,7 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
 
     @Override
     public KeyPair generateEcKey(int bitSize, EllipticCurveCryptoData data) throws CoreException {
-        ECField field=new ECFieldFp(data.getP());
+        ECField field=new ECFieldFp(data.getPrime());
         BigInteger a=data.getA();
         BigInteger b=data.getB();
         EllipticCurve curve=new EllipticCurve(field, a, b);
@@ -70,9 +73,21 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
     }
 
     @Override
+    public KeyPair generateEcKey(int bitSize, WeierstrassBasedCryptoData wscd) throws CoreException {
+        ECParameterSpec param=ecSupport.createFromData(wscd);
+        return generateKeyPairCommon(bitSize, param, KeyPairGenAlgorithm.EC);
+    }
+
+    @Override
+    public KeyPair generateEcKey(int bitSize, ECMontgomeryCurveCryptoData wscd) throws CoreException {
+        ECParameterSpec param=ecSupport.createFromData(wscd);
+        return generateKeyPairCommon(bitSize, param, KeyPairGenAlgorithm.EC);
+    }
+
+    @Override
     public KeyPair generateEcKey(int bitSize) throws CoreException {
         int m = 0;
-        return null;
+        return generateKeyPairCommon(bitSize, null, KeyPairGenAlgorithm.EC);
     }
 
     private KeyPair generateKeyPairCommon(int bitSize, AlgorithmParameterSpec params, AlgorithmNamed alg) throws CoreException {
