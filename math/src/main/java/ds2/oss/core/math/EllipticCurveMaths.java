@@ -60,4 +60,7 @@ public interface EllipticCurveMaths {
         LOG.debug("returning weierstrass data: {}", rc);
         return rc;
     }
+    static boolean isMontgomeryCofactor4Curve(ECMontgomeryCurveData d){
+        return false;
+    }
 }

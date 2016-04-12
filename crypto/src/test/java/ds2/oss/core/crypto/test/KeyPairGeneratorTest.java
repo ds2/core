@@ -45,7 +45,7 @@ public class KeyPairGeneratorTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(rc.getPublic());
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testECMontgomery1() throws CoreException {
         KeyPair rc=to.generateEcKey(511, MontgomeryCurves.M221);
         Assert.assertNotNull(rc);

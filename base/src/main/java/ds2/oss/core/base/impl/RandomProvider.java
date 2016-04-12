@@ -23,7 +23,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Set;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
@@ -39,6 +41,8 @@ import ds2.oss.core.api.annotations.SecureRandomizer;
  * @version 0.3
  */
 @Dependent
+@Priority(2)
+@Alternative
 public final class RandomProvider {
     /**
      * A logger.
