@@ -20,7 +20,7 @@ import java.util.Collection;
 /**
  * Created by deindesign on 21.12.15.
  */
-public interface Tools2 {
+public interface Methods {
     /**
      * Returns the first element from a given collection, or the default value.
      * @param c the collection
@@ -84,5 +84,14 @@ public interface Tools2 {
             }
         }
         return rc;
+    }
+
+    /**
+     * Checks if the given string contains some value.
+     * @param s the string to check
+     * @return TRUE if not blank, otherwise FALSE.
+     */
+    static boolean isNotBlank(String s){
+        return s!=null&&s.trim().length()>0;
     }
 }
