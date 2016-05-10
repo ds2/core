@@ -50,6 +50,16 @@ public class HexKonverterTest extends AbstractInjectionEnvironment {
         final String erg = new String(b, "utf-8");
         Assert.assertEquals(erg, "t\u00e4st");
     }
+
+    @Test
+    public void decode3() throws UnsupportedEncodingException {
+        final String s = "018080000100010000000006706377656c740264650000010001c00c000100010000017900043e925beb";
+        final byte[] b = to.decode(s.toCharArray());
+        Assert.assertNotNull(b);
+        Assert.assertEquals(b[0], 0x01);
+        //due to MSB being 1 -> negative
+        Assert.assertEquals(b[1], -0x80);
+    }
     
     @Test
     public void decode2() throws UnsupportedEncodingException {

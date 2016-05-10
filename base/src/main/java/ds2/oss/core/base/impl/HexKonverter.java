@@ -16,6 +16,7 @@
 package ds2.oss.core.base.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.invoke.MethodHandles;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 
 import ds2.oss.core.api.HexCodec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A hex konverter.
@@ -32,6 +35,7 @@ import ds2.oss.core.api.HexCodec;
  */
 @ApplicationScoped
 public class HexKonverter implements HexCodec {
+    private static final Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The list of hex chars.
      */
@@ -87,19 +91,23 @@ public class HexKonverter implements HexCodec {
      */
     @Override
     public byte[] decode(final char[] s) {
+        LOG.debug("Chars to decode: {}", s);
         if (s == null) {
             return null;
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final List<String> pairs = getPairs(s);
         for (String pair : pairs) {
+            LOG.debug("Pair to analyze: {}", pair);
             final char upperChar = pair.charAt(0);
             final char lowerChar = pair.charAt(1);
             final int upperQuad = getPos(upperChar);
             final int lowerQuad = getPos(lowerChar);
+            LOG.debug("Pair tuples: {} and {}", upperQuad, lowerQuad);
             byte b = (byte) upperQuad;
             b <<= 4;
             b |= lowerQuad & 0x0f;
+            LOG.debug("Byte to write is {}", b);
             baos.write(b);
         }
         return baos.toByteArray();
