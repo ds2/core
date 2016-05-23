@@ -62,7 +62,12 @@ public enum CoreErrors implements IErrorData {
     /**
      * If a given provider (security) is unknown.
      */
-    UnknownProvider(10);
+    UnknownProvider(10),
+    /**
+     * If a given transport type value could not match with an enum value.
+     */
+    UnknownEnumValue(11)
+    ;
     /**
      * The error code.
      */

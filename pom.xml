@@ -76,6 +76,7 @@
     <module>jee</module>
     <module>statics</module>
     <module>math</module>
+    <module>abstracts</module>
   </modules>
   <profiles>
     <profile>
