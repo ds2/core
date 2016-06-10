@@ -3,8 +3,6 @@ package ds2.oss.core.statics;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.management.remote.JMXServiceURL;
-
 /**
  * Created by dstrauss on 08.06.16.
  */
@@ -20,9 +18,4 @@ public class MethodsTest {
         Assert.assertEquals(n.intValue(),23);
     }
 
-    @Test(enabled = false)
-    public void testVms(){
-        JMXServiceURL url=Methods.getJmxServiceUrlByLocalPid(1235);
-        Assert.assertNotNull(url);
-    }
 }
