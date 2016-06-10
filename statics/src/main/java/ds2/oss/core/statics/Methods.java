@@ -15,20 +15,11 @@
  */
 package ds2.oss.core.statics;
 
-import com.sun.tools.attach.AttachNotSupportedException;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
-import com.sun.tools.javac.jvm.Pool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.management.ConnectorAddressLink;
 
-import javax.management.remote.JMXServiceURL;
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.net.MalformedURLException;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by deindesign on 21.12.15.
