@@ -103,7 +103,15 @@ public interface Methods {
         return rc;
     }
 
+    /**
+     * Finds a given enum value inside an enum.
+     * @param enumClass the enum clas to check
+     * @param name the enum value name to look for
+     * @param <E> the enum type
+     * @return the found enum value, or null if not found
+     */
     static <E extends Enum<E>> E findEnumValueByName(Class<E> enumClass, String name){
+        LOG.debug("Checking for enum value {} in {}", name, enumClass);
         E rc=null;
         try {
             rc = Enum.valueOf(enumClass, name);
@@ -116,6 +124,7 @@ public interface Methods {
                 }
             }
         }
+        LOG.debug("Returning possible result: {}", rc);
         return rc;
     }
 
@@ -138,37 +147,4 @@ public interface Methods {
         return s==null||s.trim().length()<=0;
     }
 
-    static JMXServiceURL getJmxServiceUrlByLocalPid(int pid){
-        JMXServiceURL rc=null;
-        List<VirtualMachineDescriptor> vms=VirtualMachine.list();
-        for(VirtualMachineDescriptor vmd : vms){
-            VirtualMachine vm=null;
-            try {
-                vm=VirtualMachine.attach(vmd);
-                //VirtualMachine vm2=VirtualMachine.attach(""+pid);
-            } catch (AttachNotSupportedException e) {
-                LOG.debug("Cannot attach to this VM!", e);
-            } catch (IOException e) {
-                LOG.debug("IO error when trying to attach!", e);
-            }
-            if(vm==null){
-                continue;
-            }
-            String connectorProp;
-            try {
-                LOG.debug("VMs properties: {}", vm.getSystemProperties());
-                connectorProp = vm.getSystemProperties().getProperty("com.sun.management.jmxremote.localConnectorAddress");
-                if(isBlank(connectorProp)){
-                    connectorProp=ConnectorAddressLink.importFrom(Converts.toInt(vmd.id().trim(),0));
-                }
-                if(!isBlank(connectorProp)){
-                    LOG.debug("Found url: {}", connectorProp);
-                    rc=new JMXServiceURL(connectorProp);
-                }
-            } catch (IOException e) {
-                LOG.debug("IO error when using the connection!");
-            }
-        }
-        return rc;
-    }
 }

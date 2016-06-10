@@ -75,5 +75,7 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
         byte[] buffer = new byte[512];
         random.nextBytes(buffer);
         salt = buffer;
+        initVector=new byte[16];
+        random.nextBytes(initVector);
     }
 }

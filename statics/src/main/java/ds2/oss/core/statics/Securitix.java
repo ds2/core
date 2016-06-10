@@ -101,8 +101,8 @@ public interface Securitix {
      */
     static List<String> getCurrentSecurityProviders(){
         LOCK.lock();
-        List<String> rc=new ArrayList<>();
         try {
+            List<String> rc=new ArrayList<>();
             Provider[] providers=Security.getProviders();
             if(providers!=null){
                 for(Provider p : providers){

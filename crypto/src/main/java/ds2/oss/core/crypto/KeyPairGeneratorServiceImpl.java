@@ -92,25 +92,26 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
 
     private KeyPair generateKeyPairCommon(int bitSize, AlgorithmParameterSpec params, AlgorithmNamed alg) throws CoreException {
         try {
-            LOCK.tryLock(config.getMethodLockTimeout(), TimeUnit.SECONDS);
-            LOG.debug("Preparing keygen with bitSize={}", new Object[]{bitSize});
-            KeyPair rc = null;
-            KeyPairGenerator gen = gens.get(alg.getAlgorithmName());
-            if (gen == null) {
-                gen = secProv.createKeyPairGenerator(alg);
+            if(LOCK.tryLock(config.getMethodLockTimeout(), TimeUnit.SECONDS)) {
+                LOG.debug("Preparing keygen with bitSize={}", new Object[]{bitSize});
+                KeyPair rc = null;
+                KeyPairGenerator gen = gens.get(alg.getAlgorithmName());
                 if (gen == null) {
-                    throw new CoreException(CoreErrors.NoGeneratorFound, "Could not find keypair generator with alg " + alg + "!");
+                    gen = secProv.createKeyPairGenerator(alg);
+                    if (gen == null) {
+                        throw new CoreException(CoreErrors.NoGeneratorFound, "Could not find keypair generator with alg " + alg + "!");
+                    }
+                    gens.put(alg.getAlgorithmName(), gen);
                 }
-                gens.put(alg.getAlgorithmName(), gen);
+                if (params != null) {
+                    gen.initialize(params, randomizer);
+                    RSAKeyGenParameterSpec spec = new RSAKeyGenParameterSpec(bitSize, RSAKeyGenParameterSpec.F4);
+                } else {
+                    gen.initialize(bitSize, randomizer);
+                }
+                rc = gen.generateKeyPair();
+                return rc;
             }
-            if(params!=null){
-                gen.initialize(params, randomizer);
-                RSAKeyGenParameterSpec spec=new RSAKeyGenParameterSpec(bitSize, RSAKeyGenParameterSpec.F4);
-            } else {
-                gen.initialize(bitSize, randomizer);
-            }
-            rc = gen.generateKeyPair();
-            return rc;
         } catch(InvalidParameterException e){
             throw new CoreException(CoreErrors.IllegalArgument, "The bit size "+bitSize+" is wrong!", e);
         } catch (InterruptedException e) {
@@ -121,5 +122,6 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
             LOG.debug("Unlocking method");
             LOCK.unlock();
         }
+        return null;
     }
 }
