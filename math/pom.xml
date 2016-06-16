@@ -9,6 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ds2-oss-core-math</artifactId>
+    <name>DS/2 OSS Core Math</name>
+    <description>Some math related stuff.</description>
     <dependencies>
         <dependency>
             <groupId>ds2.oss.core</groupId>
