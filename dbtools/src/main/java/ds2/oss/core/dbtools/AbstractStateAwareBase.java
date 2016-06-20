@@ -15,20 +15,20 @@
  */
 package ds2.oss.core.dbtools;
 
+import ds2.oss.core.api.EditableStateAware;
+import ds2.oss.core.api.EntryState;
+
 import javax.persistence.MappedSuperclass;
 
-import ds2.oss.core.api.EntryState;
-import ds2.oss.core.api.StateAware;
-
 /**
+ * An entity that maps the states to the dto {@link EntryState}.
+ *
+ * @param <E> the entry state type. Can and should be an entity bean.
  * @author dstrauss
- * @param <E>
- *            the entry state type. Can and should be an entity bean.
- *            
  */
 @MappedSuperclass
-public abstract class AbstractStateAwareBase<E extends EntryState> implements StateAware {
-    
+public abstract class AbstractStateAwareBase<E extends EntryState> implements EditableStateAware<E> {
+
     /**
      * The svuid.
      */
@@ -37,17 +37,17 @@ public abstract class AbstractStateAwareBase<E extends EntryState> implements St
      * The state column.
      */
     private E entryState;
-    
+
     /**
      * Sets the entryState.
-     * 
-     * @param entryState
-     *            the entryState to set
+     *
+     * @param entryState the entryState to set
      */
+    @Override
     public void setEntryState(E entryState) {
         this.entryState = entryState;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.StateAware#getEntryState()
@@ -56,5 +56,5 @@ public abstract class AbstractStateAwareBase<E extends EntryState> implements St
     public EntryState getEntryState() {
         return entryState;
     }
-    
+
 }

@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.dbtools.modules;
 
+import ds2.oss.core.api.EditableNamedAware;
 import ds2.oss.core.api.settable.NamedAware;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,7 +25,7 @@ import javax.persistence.Embeddable;
  * @author deindesign
  */
 @Embeddable
-public class NamedAwareModule implements NamedAware {
+public class NamedAwareModule implements EditableNamedAware {
 
     private static final long serialVersionUID = 4441711038745912312L;
 

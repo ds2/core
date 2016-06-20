@@ -21,6 +21,7 @@ import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
 import ds2.oss.core.api.CreatedAware;
+import ds2.oss.core.api.EditableCreatedAware;
 import ds2.oss.core.dbtools.modules.CreatedAwareModule;
 
 /**
@@ -28,7 +29,7 @@ import ds2.oss.core.dbtools.modules.CreatedAwareModule;
  *         
  */
 @MappedSuperclass
-public abstract class AbstractCreatedEntity implements CreatedAware {
+public abstract class AbstractCreatedEntity implements EditableCreatedAware {
     
     /**
      * The svuid.
@@ -67,6 +68,7 @@ public abstract class AbstractCreatedEntity implements CreatedAware {
      * @param date
      *            the creation date.
      */
+    @Override
     public void setCreated(Date date) {
         if (cam == null) {
             cam = new CreatedAwareModule();

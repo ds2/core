@@ -19,6 +19,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 import ds2.oss.core.api.CreatedByModifiedByAware;
+import ds2.oss.core.api.EditableCreatedByModifiedByAware;
 
 /**
  * @author dstrauss
@@ -27,7 +28,7 @@ import ds2.oss.core.api.CreatedByModifiedByAware;
 @MappedSuperclass
 public abstract class AbstractCreatedByModifiedByEntity extends AbstractCreatedModifiedEntity
         implements
-        CreatedByModifiedByAware {
+        EditableCreatedByModifiedByAware {
 
     /**
      * The svuid.
@@ -43,6 +44,7 @@ public abstract class AbstractCreatedByModifiedByEntity extends AbstractCreatedM
      *
      * @param createdBy the createdBy to set
      */
+    @Override
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
@@ -52,6 +54,7 @@ public abstract class AbstractCreatedByModifiedByEntity extends AbstractCreatedM
      *
      * @param modifiedBy the modifiedBy to set
      */
+    @Override
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
     }

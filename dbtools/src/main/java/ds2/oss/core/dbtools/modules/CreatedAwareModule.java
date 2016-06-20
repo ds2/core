@@ -23,13 +23,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ds2.oss.core.api.CreatedAware;
+import ds2.oss.core.api.EditableCreatedAware;
 
 /**
  * @author dstrauss
  *         
  */
 @Embeddable
-public class CreatedAwareModule implements CreatedAware {
+public class CreatedAwareModule implements EditableCreatedAware {
     /**
      * The svuid.
      */
@@ -56,7 +57,8 @@ public class CreatedAwareModule implements CreatedAware {
     public Date getCreated() {
         return created;
     }
-    
+
+    @Override
     public void setCreated(Date d) {
         created = d;
     }

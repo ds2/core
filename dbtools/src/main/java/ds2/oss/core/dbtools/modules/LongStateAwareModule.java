@@ -22,6 +22,7 @@ import ds2.oss.core.api.StateAware;
  *
  * @author deindesign
  */
+@Deprecated
 public class LongStateAwareModule implements StateAware{
 
     @Override

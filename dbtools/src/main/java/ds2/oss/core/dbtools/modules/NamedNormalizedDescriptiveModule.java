@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.dbtools.modules;
 
+import ds2.oss.core.api.EditableNormalizedNamedDescriptiveAware;
 import ds2.oss.core.api.settable.NormalizedNamedDescriptiveAware;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,7 +25,7 @@ import javax.persistence.Embeddable;
  * @author deindesign
  */
 @Embeddable
-public class NamedNormalizedDescriptiveModule implements NormalizedNamedDescriptiveAware {
+public class NamedNormalizedDescriptiveModule implements EditableNormalizedNamedDescriptiveAware {
 
     private static final long serialVersionUID = -884204081077605434L;
 

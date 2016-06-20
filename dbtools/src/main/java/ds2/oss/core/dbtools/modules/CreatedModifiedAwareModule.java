@@ -23,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ds2.oss.core.api.CreatedModifiedAware;
+import ds2.oss.core.api.EditableCreatedAware;
+import ds2.oss.core.api.EditableCreatedModifiedAware;
 
 /**
  * Embeddable module for the createdModified system.
@@ -31,7 +33,7 @@ import ds2.oss.core.api.CreatedModifiedAware;
  * @version 0.1
  */
 @Embeddable
-public class CreatedModifiedAwareModule extends CreatedAwareModule implements CreatedModifiedAware {
+public class CreatedModifiedAwareModule extends CreatedAwareModule implements EditableCreatedModifiedAware {
     
     /**
      * The svuid.

@@ -26,10 +26,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import ds2.oss.core.api.CreatedModifiedAware;
-import ds2.oss.core.api.EntryState;
-import ds2.oss.core.api.Persistable;
-import ds2.oss.core.api.StateAware;
+import ds2.oss.core.api.*;
 import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
 import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
 
@@ -41,7 +38,7 @@ import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
  */
 @Entity
 @Table(name = "core_dummy")
-public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifiedAware {
+public class DummyEntity implements Persistable<Long>, EditableStateAware<EntryStates>, EditableCreatedModifiedAware {
     /**
      * The svuid.
      */
@@ -107,5 +104,19 @@ public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifi
         builder.append(")");
         return builder.toString();
     }
-    
+
+    @Override
+    public void setEntryState(EntryStates newState) {
+        state.setEntryState(newState);
+    }
+
+    @Override
+    public void setCreated(Date d) {
+        times.setCreated(d);
+    }
+
+    @Override
+    public void setModified(Date d) {
+        times.setModified(d);
+    }
 }

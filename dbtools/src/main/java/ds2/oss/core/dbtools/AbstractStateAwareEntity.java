@@ -18,6 +18,7 @@ package ds2.oss.core.dbtools;
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
+import ds2.oss.core.api.EditableStateAware;
 import ds2.oss.core.api.EntryState;
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.StateAware;
@@ -27,7 +28,7 @@ import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
  * An entity that maps the states to the enum {@link EntryStates}.
  */
 @MappedSuperclass
-public abstract class AbstractStateAwareEntity implements StateAware {
+public abstract class AbstractStateAwareEntity implements EditableStateAware {
     /**
      * The svuid.
      */

@@ -22,6 +22,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ds2.oss.core.api.EditableLifeCycleAware;
 import ds2.oss.core.api.LifeCycleAware;
 
 /**
@@ -32,7 +33,7 @@ import ds2.oss.core.api.LifeCycleAware;
  *
  */
 @Embeddable
-public class LifeCycleAwareModule implements LifeCycleAware {
+public class LifeCycleAwareModule implements EditableLifeCycleAware {
 
     /**
      * The svuid.
@@ -76,10 +77,12 @@ public class LifeCycleAwareModule implements LifeCycleAware {
         return validTo;
     }
 
+    @Override
     public void setValidFrom(final Date validFrom) {
         this.validFrom = validFrom;
     }
 
+    @Override
     public void setValidTo(final Date validTo) {
         this.validTo = validTo;
     }

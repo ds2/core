@@ -22,6 +22,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ds2.oss.core.api.EditableModifiedAware;
 import ds2.oss.core.api.ModifiedAware;
 
 /**
@@ -29,7 +30,7 @@ import ds2.oss.core.api.ModifiedAware;
  *         
  */
 @Embeddable
-public class ModifiedAwareModule implements ModifiedAware {
+public class ModifiedAwareModule implements EditableModifiedAware {
     /**
      * The svuid.
      */
@@ -67,6 +68,7 @@ public class ModifiedAwareModule implements ModifiedAware {
     /**
      * @param d
      */
+    @Override
     public void setModified(Date d) {
         if (d != null) {
             modified = d;

@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.dbtools.modules;
 
+import ds2.oss.core.api.EditableNormalizedNameAware;
 import ds2.oss.core.api.settable.NormalizedNameAware;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,7 +25,7 @@ import javax.persistence.Embeddable;
  * @author deindesign
  */
 @Embeddable
-public class NormalizedNameModule implements NormalizedNameAware {
+public class NormalizedNameModule implements EditableNormalizedNameAware {
 
     private static final long serialVersionUID = -5009052399914767060L;
 

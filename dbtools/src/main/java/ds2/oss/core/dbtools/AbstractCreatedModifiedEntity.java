@@ -21,6 +21,7 @@ import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
 import ds2.oss.core.api.CreatedModifiedAware;
+import ds2.oss.core.api.EditableCreatedModifiedAware;
 import ds2.oss.core.dbtools.modules.CreatedAwareModule;
 import ds2.oss.core.dbtools.modules.ModifiedAwareModule;
 
@@ -28,7 +29,7 @@ import ds2.oss.core.dbtools.modules.ModifiedAwareModule;
  * Created by dstrauss on 18.06.15.
  */
 @MappedSuperclass
-public abstract class AbstractCreatedModifiedEntity extends AbstractCreatedEntity implements CreatedModifiedAware {
+public abstract class AbstractCreatedModifiedEntity extends AbstractCreatedEntity implements EditableCreatedModifiedAware {
     /**
      * The svuid.
      */
@@ -68,6 +69,7 @@ public abstract class AbstractCreatedModifiedEntity extends AbstractCreatedEntit
      * @param d
      *            the modification date
      */
+    @Override
     public void setModified(Date d) {
         getMam().setModified(d);
     }
