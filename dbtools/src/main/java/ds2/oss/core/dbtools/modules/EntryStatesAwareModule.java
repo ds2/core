@@ -53,7 +53,7 @@ public class EntryStatesAwareModule implements EditableStateAware<EntryStates> {
      * @see ds2.oss.core.api.StateAware#getState()
      */
     @Override
-    public EntryState getEntryState() {
+    public EntryStates getEntryState() {
         return entryState;
     }
 

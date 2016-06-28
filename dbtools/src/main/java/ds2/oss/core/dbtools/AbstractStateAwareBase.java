@@ -53,7 +53,7 @@ public abstract class AbstractStateAwareBase<E extends EntryState> implements Ed
      * @see ds2.oss.core.api.StateAware#getEntryState()
      */
     @Override
-    public EntryState getEntryState() {
+    public E getEntryState() {
         return entryState;
     }
 

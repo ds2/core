@@ -74,7 +74,7 @@ public class DummyEntity implements Persistable<Long>, EditableStateAware<EntryS
     }
     
     @Override
-    public EntryState getEntryState() {
+    public EntryStates getEntryState() {
         return state.getEntryState();
     }
     
