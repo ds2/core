@@ -23,11 +23,11 @@ import java.io.Serializable;
  * @author dstrauss
  * @version 0.1
  */
-public interface StateAware extends Serializable {
+public interface StateAware<E extends EntryState> extends Serializable {
     /**
      * Returns the state of the entry.
      *
      * @return the state. May return null if not set.
      */
-    EntryState getEntryState();
+    E getEntryState();
 }

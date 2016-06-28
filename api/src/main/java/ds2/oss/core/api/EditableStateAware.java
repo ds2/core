@@ -3,7 +3,7 @@ package ds2.oss.core.api;
 /**
  * Created by dstrauss on 19.06.16.
  */
-public interface EditableStateAware<E extends EntryState> extends StateAware {
+public interface EditableStateAware<E extends EntryState> extends StateAware<E> {
     /**
      * Sets a new state.
      *
