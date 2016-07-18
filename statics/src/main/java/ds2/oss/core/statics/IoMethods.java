@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -15,10 +16,11 @@ public interface IoMethods {
     /**
      * A logger.
      */
-    Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /**
      * Recursively deletes a given path directory.
+     *
      * @param directory the directory to delete
      * @throws IOException if an IO error occurred
      */
@@ -44,8 +46,18 @@ public interface IoMethods {
     }
 
     static void touchFile(Path file) throws IOException {
-        Path dir=file.getParent();
+        Path dir = file.getParent();
         Files.createDirectories(dir);
-        Files.write(file, "".getBytes("utf-8"), StandardOpenOption.CREATE_NEW,StandardOpenOption.WRITE);
+        Files.write(file, "".getBytes("utf-8"), StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+    }
+
+    static void close(InputStream is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (IOException e) {
+                LOG.debug("Error when closing the given input stream!", e);
+            }
+        }
     }
 }
