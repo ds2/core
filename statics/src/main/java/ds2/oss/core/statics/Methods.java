@@ -147,4 +147,36 @@ public interface Methods {
         return s == null || s.trim().length() <= 0;
     }
 
+    /**
+     * Compares two objects.
+     * @param s1 the first object
+     * @param s2 the 2nd object
+     * @return the result of the comparison
+     */
+    static <E extends Comparable<E>> int compare(E s1, E s2) {
+        if (s1 != null) {
+            return s1.compareTo(s2);
+        } else if (s2 != null) {
+            return -1 * s2.compareTo(s1);
+        }
+        // both are null
+        return 0;
+    }
+
+    /**
+     * Compares two strings.
+     * @param s1 the first string
+     * @param s2 the 2nd string
+     * @return the result of the comparison
+     */
+    static int compare(String s1, String s2) {
+        if (s1 != null) {
+            return s1.compareToIgnoreCase(s2);
+        } else if (s2 != null) {
+            return -1 * s2.compareToIgnoreCase(s1);
+        }
+        // both are null
+        return 0;
+    }
+
 }
