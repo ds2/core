@@ -1,0 +1,56 @@
+rootProject.name = 'core'
+include ':ds2-oss-core-api'
+include ':ds2-oss-core-base'
+include ':ds2-oss-core-interceptors'
+include ':ds2-oss-core-base-it'
+include ':ds2-oss-core-elasticsearch'
+include ':ds2-oss-core-elasticsearch-test'
+include ':ds2-oss-core-options'
+include ':ds2-oss-core-infinispan'
+include ':ds2-oss-core-options-it'
+include ':ds2-oss-core-crypto'
+include ':ds2-oss-core-codec-boon'
+include ':ds2-oss-core-codec-gson'
+include ':ds2-oss-core-codec-fastxml'
+include ':ds2-oss-core-webtools'
+include ':ds2-oss-core-xmpp'
+include ':ds2-oss-core-xmpp-gcm'
+include ':ds2-oss-core-test-ear'
+include ':ds2-oss-core-elasticsearch-annotationprocessing'
+include ':ds2-oss-core-testutils'
+include ':ds2-oss-core-dbtools'
+include ':ds2-oss-core-crypto-bouncycastle'
+include ':ds2-oss-core-dbtools-it'
+include ':ds2-oss-core-jee:ds2-oss-core-jee-rest'
+include ':ds2-oss-core-jee'
+include ':ds2-oss-core-statics'
+include ':ds2-oss-core-math'
+include ':ds2-oss-core-abstracts'
+
+project(':ds2-oss-core-api').projectDir = "$rootDir/api" as File
+project(':ds2-oss-core-base').projectDir = "$rootDir/base" as File
+project(':ds2-oss-core-interceptors').projectDir = "$rootDir/interceptors" as File
+project(':ds2-oss-core-base-it').projectDir = "$rootDir/base-it" as File
+project(':ds2-oss-core-elasticsearch').projectDir = "$rootDir/es" as File
+project(':ds2-oss-core-elasticsearch-test').projectDir = "$rootDir/es-test" as File
+project(':ds2-oss-core-options').projectDir = "$rootDir/options" as File
+project(':ds2-oss-core-infinispan').projectDir = "$rootDir/infinispan" as File
+project(':ds2-oss-core-options-it').projectDir = "$rootDir/options-it" as File
+project(':ds2-oss-core-crypto').projectDir = "$rootDir/crypto" as File
+project(':ds2-oss-core-codec-boon').projectDir = "$rootDir/codec-boon" as File
+project(':ds2-oss-core-codec-gson').projectDir = "$rootDir/codec-gson" as File
+project(':ds2-oss-core-codec-fastxml').projectDir = "$rootDir/codec-fastxml" as File
+project(':ds2-oss-core-webtools').projectDir = "$rootDir/webtools" as File
+project(':ds2-oss-core-xmpp').projectDir = "$rootDir/xmpp" as File
+project(':ds2-oss-core-xmpp-gcm').projectDir = "$rootDir/xmpp-gcm" as File
+project(':ds2-oss-core-test-ear').projectDir = "$rootDir/test-ear" as File
+project(':ds2-oss-core-elasticsearch-annotationprocessing').projectDir = "$rootDir/es-apt" as File
+project(':ds2-oss-core-testutils').projectDir = "$rootDir/testutils" as File
+project(':ds2-oss-core-dbtools').projectDir = "$rootDir/dbtools" as File
+project(':ds2-oss-core-crypto-bouncycastle').projectDir = "$rootDir/crypto-bc" as File
+project(':ds2-oss-core-dbtools-it').projectDir = "$rootDir/dbtools-it" as File
+project(':ds2-oss-core-jee:ds2-oss-core-jee-rest').projectDir = "$rootDir/jee/rest" as File
+project(':ds2-oss-core-jee').projectDir = "$rootDir/jee" as File
+project(':ds2-oss-core-statics').projectDir = "$rootDir/statics" as File
+project(':ds2-oss-core-math').projectDir = "$rootDir/math" as File
+project(':ds2-oss-core-abstracts').projectDir = "$rootDir/abstracts" as File
