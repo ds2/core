@@ -1,28 +1,27 @@
-allprojects  {
-  apply plugin: 'maven'
+allprojects {
+    apply plugin: 'maven'
 
-  group = 'ds2.oss.core'
-version = '0.3-SNAPSHOT'
+    group = 'ds2.oss.core'
+    version = '0.3-SNAPSHOT'
 }
 
 subprojects {
-  apply plugin: 'java'
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-  
-  repositories {
-    mavenLocal()
-    
-    maven { url "file:/storage/mavenrepo/3" }
-    maven { url "https://ci.designskins.com/nexus/content/groups/dd" }
-    maven { url "https://commondatastorage.googleapis.com/ds2/mvn/oss/releases" }
-    maven { url "https://maven.java.net/content/groups/promoted" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-  }
 
-  configurations.all {
-}
-  
-  
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+
+        maven { url "https://ci.designskins.com/nexus/content/groups/dd" }
+        maven { url "https://commondatastorage.googleapis.com/ds2/mvn/oss/releases" }
+        maven { url "https://maven.java.net/content/groups/promoted" }
+    }
+
+    configurations.all {
+    }
+
 }
