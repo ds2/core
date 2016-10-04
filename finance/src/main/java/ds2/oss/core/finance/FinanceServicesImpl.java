@@ -15,12 +15,15 @@ public class FinanceServicesImpl implements FinanceServices {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Override
-    public BigDecimal calculateNettoPrice(BigDecimal val, long vat, int targetScale) {
+    public BigDecimal calculateNettoPrice(BigDecimal val, BigDecimal vat, int targetScale) {
         LOG.debug("MA value to calculate is {}", val);
         val = val.setScale(targetScale, RoundingMode.HALF_UP);
         BigDecimal rc = val;
         rc = rc.multiply(BigDecimal.valueOf(100l));
-        rc = rc.divide(BigDecimal.valueOf(vat), targetScale, RoundingMode.HALF_UP);
+        if (vat.compareTo(BigDecimal.valueOf(100L)) < 0) {
+            vat = vat.add(BigDecimal.valueOf(100));
+        }
+        rc = rc.divide(vat, targetScale, RoundingMode.HALF_UP);
         LOG.debug("rc from netto price is {}", rc);
         return rc;
     }

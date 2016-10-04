@@ -149,6 +149,7 @@ public interface Methods {
 
     /**
      * Compares two objects.
+     *
      * @param s1 the first object
      * @param s2 the 2nd object
      * @return the result of the comparison
@@ -165,6 +166,7 @@ public interface Methods {
 
     /**
      * Compares two strings.
+     *
      * @param s1 the first string
      * @param s2 the 2nd string
      * @return the result of the comparison
@@ -177,6 +179,19 @@ public interface Methods {
         }
         // both are null
         return 0;
+    }
+
+    /**
+     * Adds an element to a given collection, only if it is not null.
+     *
+     * @param el  the element
+     * @param c   the collection to add the element to
+     * @param <E> the type of the collection content
+     */
+    static <E> void addIfNotNull(E el, Collection<E> c) {
+        if (el != null && c != null) {
+            c.add(el);
+        }
     }
 
 }
