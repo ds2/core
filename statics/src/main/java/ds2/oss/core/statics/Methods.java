@@ -172,13 +172,16 @@ public interface Methods {
      * @return the result of the comparison
      */
     static int compare(String s1, String s2) {
-        if (s1 != null) {
-            return s1.compareToIgnoreCase(s2);
-        } else if (s2 != null) {
-            return -1 * s2.compareToIgnoreCase(s1);
+        if (s1 == null && s2 == null) {
+            return 0;
         }
-        // both are null
-        return 0;
+        if (s1 != null && s2 == null) {
+            return -1;
+        }
+        if (s1 == null && s2 != null) {
+            return 1;
+        }
+        return s1.compareToIgnoreCase(s2);
     }
 
     /**
