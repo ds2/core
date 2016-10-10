@@ -1,8 +1,12 @@
+plugins {
+    id 'net.researchgate.release' version '2.4.1'
+}
+
 allprojects {
     apply plugin: 'maven'
 
     group = 'ds2.oss.core'
-    version = '0.3-SNAPSHOT'
+    version = project.version
 }
 
 subprojects {
@@ -16,7 +20,6 @@ subprojects {
         jcenter()
         mavenCentral()
 
-        maven { url "https://ci.designskins.com/nexus/content/groups/dd" }
         maven { url "https://commondatastorage.googleapis.com/ds2/mvn/oss/releases" }
         maven { url "https://maven.java.net/content/groups/promoted" }
     }
