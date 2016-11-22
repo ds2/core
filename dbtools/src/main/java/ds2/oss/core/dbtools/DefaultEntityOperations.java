@@ -15,21 +15,18 @@
  */
 package ds2.oss.core.dbtools;
 
-import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.List;
+import ds2.oss.core.api.Persistable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.Persistable;
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author dstrauss
@@ -55,7 +52,7 @@ public abstract class DefaultEntityOperations<E extends Persistable<Long>> {
     public List<E> getAll(EntityManager em, int size) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(getEntityClass());
-        Root<E> rootE = cq.distinct(true).from(getEntityClass());
+        cq.distinct(true).from(getEntityClass());
         TypedQuery<E> q = em.createQuery(cq);
         return getSecureList(q);
     }

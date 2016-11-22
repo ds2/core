@@ -47,8 +47,10 @@ public interface IoMethods {
 
     static void touchFile(Path file) throws IOException {
         Path dir = file.getParent();
-        Files.createDirectories(dir);
-        Files.write(file, "".getBytes("utf-8"), StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+        if(dir!=null){
+            Files.createDirectories(dir);
+            Files.write(file, "".getBytes("utf-8"), StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
+        }
     }
 
     static void close(InputStream is) {

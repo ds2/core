@@ -15,17 +15,6 @@
  */
 package ds2.oss.core.options.impl.ejb;
 
-import java.lang.invoke.MethodHandles;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.validation.Validator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
@@ -33,6 +22,15 @@ import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.validation.Validator;
+import java.lang.invoke.MethodHandles;
+import java.util.Set;
 
 /**
  * An abstract EJB to be used for database transactional wrapping.
@@ -139,7 +137,6 @@ public abstract class AbstractOptionsPersistenceSupportBean
         q.setParameter("appName", ident.getApplicationName());
         q.setMaxResults(1);
         final OptionEntity foundOption = getSecureSingle(q);
-        final OptionStage oldStage = foundOption.getStage();
         foundOption.setStage(newStage);
         em.merge(foundOption);
         return parser.toDto(foundOption, ident);
