@@ -15,18 +15,18 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import java.nio.charset.Charset;
-
+import ds2.oss.core.api.Base64Codec;
+import ds2.oss.core.base.impl.Base64Konverter;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.Base64Codec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.nio.charset.Charset;
 
 /**
  * The base64 test.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -43,18 +43,19 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
      * The message to convert.
      */
     private static final String CS = "h\u00e4llo";
-    
+
     @BeforeClass
     public void onInit() {
+        Base64Konverter c = null;
         to = getInstance(Base64Codec.class);
         cs = Charset.forName("utf-8");
     }
-    
+
     @Test
     public void decodeNull() {
         Assert.assertNull(to.decode(null));
     }
-    
+
     @Test
     public void decode1() {
         String s1 = "aMOkbGxv";
@@ -64,14 +65,14 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
         String s2 = new String(b, cs);
         Assert.assertEquals(s2, CS);
     }
-    
+
     @Test
     public void encode1() {
         final byte[] b = CS.getBytes(cs);
         final String t = to.encode(b);
         Assert.assertEquals(t, "aMOkbGxv");
     }
-    
+
     @Test(enabled = false)
     public void testContains1() {
         // final byte pos = to.holeAlphabetPosFuerChar('a');

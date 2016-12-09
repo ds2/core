@@ -15,7 +15,7 @@ dependencies {
         Please review and delete this closure when resolved. */
     }
 }
-test.useTestNG()
+//test.useTestNG()
 
 task packageTests(type: Jar, dependsOn: testClasses) {
     from sourceSets.test.output

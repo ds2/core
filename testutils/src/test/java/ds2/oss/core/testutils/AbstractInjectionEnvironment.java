@@ -15,21 +15,20 @@
  */
 package ds2.oss.core.testutils;
 
-import java.lang.annotation.Annotation;
-import java.lang.invoke.MethodHandles;
-import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.util.TypeLiteral;
-
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.util.TypeLiteral;
+import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandles;
+import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The injection env. Basically the same as the WeldWrapper.
@@ -57,20 +56,19 @@ public abstract class AbstractInjectionEnvironment {
     /**
      * The classpath scanner.
      */
-    private static Weld weld=new Weld();
+    private static Weld weld = new Weld();
 
     /**
      * Returns an instance of the given class.
      *
-     * @param c the class
-     *
-     * @return the instance, if found. Otherwise null.
+     * @param c   the class
      * @param <T> the type of the bean
+     * @return the instance, if found. Otherwise null.
      */
     protected <T> T getInstance(final Class<T> c) {
         LOCK.lock();
         try {
-            if(wc==null){
+            if (wc == null) {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
@@ -83,7 +81,7 @@ public abstract class AbstractInjectionEnvironment {
     protected <T> T getInstance(final TypeLiteral<T> c) {
         LOCK.lock();
         try {
-            if(wc==null){
+            if (wc == null) {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
@@ -105,15 +103,15 @@ public abstract class AbstractInjectionEnvironment {
     /**
      * Returns an instance with the given annotation data.
      *
-     * @param <T> the type to return
-     * @param c the target class to search for
+     * @param <T>         the type to return
+     * @param c           the target class to search for
      * @param annotations some annotations to find the specific CDI bean
      * @return the found bean, or null if an error occurred
      */
     protected <T> T getInstance(final Class<T> c, final Annotation... annotations) {
         try {
             LOCK.lock();
-            if(wc==null){
+            if (wc == null) {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
@@ -135,17 +133,17 @@ public abstract class AbstractInjectionEnvironment {
     @AfterSuite(alwaysRun = true)
     public void onSuiteEnd() {
         LOCK.lock();
-            try {
-                if(wc!=null){
-                    LOG.debug("Shutting down Weld");
-                    weld.shutdown();
-                    wc = null;
-                } else {
-                    LOG.warn("Weld Container is null, ignoring shutting it down as perhaps at start it has crashed.");
-                }
-            } finally {
-                LOCK.unlock();
+        try {
+            if (wc != null) {
+                LOG.debug("Shutting down Weld");
+                weld.shutdown();
+                wc = null;
+            } else {
+                LOG.warn("Weld Container is null, ignoring shutting it down as perhaps at start it has crashed.");
             }
+        } finally {
+            LOCK.unlock();
+        }
     }
 
     /**
