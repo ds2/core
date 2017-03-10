@@ -22,7 +22,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 /**
  * The base64 test.
@@ -77,5 +82,14 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
     public void testContains1() {
         // final byte pos = to.holeAlphabetPosFuerChar('a');
         // Assert.assertEquals(pos, 26);
+    }
+
+    @Test
+    public void decodeToFile() throws IOException {
+        String b64Str = "8c2d2737";
+        byte[] data = to.decode(b64Str.toCharArray());
+        Path path = Files.write(File.createTempFile("ds2-oss-core-base-b64", ".bin").toPath(), data, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+        System.out.println("Data is written to " + path);
+        Assert.assertTrue(Files.exists(path));
     }
 }

@@ -197,4 +197,18 @@ public interface Methods {
         }
     }
 
+    /**
+     * Returns the size of the collection.
+     *
+     * @param collection the collection
+     * @param <E>        the type of the collection
+     * @return 0, or the size of the collection
+     */
+    static <E> int size(Collection<E> collection) {
+        if (collection != null) {
+            return collection.size();
+        }
+        return 0;
+    }
+
 }
