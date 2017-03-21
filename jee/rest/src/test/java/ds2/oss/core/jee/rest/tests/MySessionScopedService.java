@@ -7,13 +7,14 @@ import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.Serializable;
 import java.net.SocketTimeoutException;
 
 /**
  * Created by dstrauss on 21.02.17.
  */
 @SessionScoped
-public class MySessionScopedService extends AbstractJaxRsClient<MyJaxException> {
+public class MySessionScopedService extends AbstractJaxRsClient<MyJaxException> implements Serializable {
     @Inject
     private Client client;
 
