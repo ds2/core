@@ -18,13 +18,15 @@
  */
 package ds2.oss.core.api;
 
+import java.io.Serializable;
+
 /**
  * Info about a specific version of an operating system.
  *
  * @author dstrauss
  * @version 0.3
  */
-public interface OperatingSystemDetails extends Comparable<OperatingSystemDetails> {
+public interface OperatingSystemDetails extends Comparable<OperatingSystemDetails>, Serializable {
     /**
      * Returns the system name.
      *
