@@ -19,7 +19,7 @@ public class RandomProviderTest extends AbstractInjectionEnvironment {
         random = getInstance(Random.class);
     }
 
-    @Test
+    @Test(enabled = false)
     public void testExist() {
         Assert.assertNotNull(random);
     }

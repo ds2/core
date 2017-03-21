@@ -88,7 +88,7 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
     public void decodeToFile() throws IOException {
         String b64Str = "8c2d2737";
         byte[] data = to.decode(b64Str.toCharArray());
-        Path path = Files.write(File.createTempFile("ds2-oss-core-base-b64", ".bin").toPath(), data, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+        Path path = Files.write(File.createTempFile("ds2-oss-core-base-b64", ".bin").toPath(), data, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         System.out.println("Data is written to " + path);
         Assert.assertTrue(Files.exists(path));
     }
