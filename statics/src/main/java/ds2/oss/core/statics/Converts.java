@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -107,6 +109,25 @@ public interface Converts {
                     variant = m.group();
                 }
                 rc = new Locale(lang, country, variant);
+            }
+        }
+        return rc;
+    }
+
+    /**
+     * Parses a given string assuming to be an ip address to an ip address object. This method MAY invoke
+     * the dns lookup.
+     *
+     * @param ipAddressOrHostname the ip address, or host name
+     * @return the inet address
+     */
+    static InetAddress toInetAddress(String ipAddressOrHostname) {
+        InetAddress rc = null;
+        if (!Methods.isBlank(ipAddressOrHostname)) {
+            try {
+                rc = InetAddress.getByName(ipAddressOrHostname);
+            } catch (UnknownHostException e) {
+                LOG.debug("Error when converting the given sequence to ip address: {}", ipAddressOrHostname, e);
             }
         }
         return rc;
