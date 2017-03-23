@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @param <E>
  *            the type of the primary key. Usually Long or something similar.
  */
-public interface Persistable<E> extends Serializable {
+public interface Persistable<E> extends IdAware<E> {
     /**
      * Returns the primary key of this persistable object.
      *
