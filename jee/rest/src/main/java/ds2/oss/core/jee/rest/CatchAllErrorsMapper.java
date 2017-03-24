@@ -14,13 +14,13 @@ import java.lang.invoke.MethodHandles;
  * Created by dstrauss on 24.03.17.
  */
 @Provider
-public class CatchAllErrorsMapper implements ExceptionMapper<Exception> {
+public class CatchAllErrorsMapper<E extends Exception> implements ExceptionMapper<E> {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Inject
-    private ExceptionTransformer transformer;
+    private ExceptionTransformer<E> transformer;
 
     @Override
-    public Response toResponse(Exception exception) {
+    public Response toResponse(E exception) {
         LOG.debug("Got this error here: {}", exception);
         Response rc = transformer.transform(exception);
         LOG.debug("Returning this response to the client: {}", rc);
