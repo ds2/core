@@ -18,7 +18,9 @@ package ds2.oss.core.statics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Created by deindesign on 21.12.15.
@@ -209,6 +211,31 @@ public interface Methods {
             return collection.size();
         }
         return 0;
+    }
+
+    /**
+     * Returns a shortened version of a given collection.
+     *
+     * @param c        the origin collection
+     * @param maxItems the maximum items to get from the collection to return
+     * @param <E>      the type
+     * @return the shortened collection
+     */
+    static <E> Collection<E> shorten(Collection<E> c, int maxItems) {
+        if (c == null) {
+            return null;
+        }
+        if (c.size() <= maxItems) {
+            return c;
+        }
+        int min = maxItems;
+        Collection<E> rc = new ArrayList<>(min);
+        Iterator<E> cIt = c.iterator();
+        for (int i = 0; i < min; ++i) {
+            E element = cIt.next();
+            rc.add(element);
+        }
+        return rc;
     }
 
 }
