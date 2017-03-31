@@ -19,13 +19,11 @@ import ds2.oss.core.api.JaxRsClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +74,9 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      */
     public Response performGET(WebTarget wt, SocketErrorHandler<E> eh) throws E {
         LOG.debug("Performing GET on {}..", wt.getUri());
+        Response rc = null;
         try {
-            Response rc = wt.request(supportedMediaTypes.toArray(new MediaType[supportedMediaTypes.size()])).get();
+            rc = wt.request(supportedMediaTypes.toArray(new MediaType[supportedMediaTypes.size()])).get();
             afterResponse(rc);
             return rc;
         } catch (Exception e) {
@@ -126,6 +125,29 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         return performPUTJson(wt, ent, defaultErrorHandler);
     }
 
+    public Response performPOSTFormUrlencoded(WebTarget wt, MultivaluedMap<String, String> map) throws E {
+        return performPOSTFormUrlencoded(wt, map, defaultErrorHandler);
+    }
+
+    public Response performPOSTFormUrlencoded(WebTarget wt, MultivaluedMap<String, String> map, SocketErrorHandler<E> eh) throws E {
+        LOG.debug("Performing POST on {}..", wt.getUri());
+        Response rc = null;
+        try {
+            Form form = new Form(map);
+            Entity<Form> entity = Entity.form(form);
+            rc = wt.request(supportedMediaTypes.toArray(new MediaType[supportedMediaTypes.size()])).post(entity);
+            afterResponse(rc);
+            return rc;
+        } catch (Exception e) {
+            LOG.debug("We received an exception here when performing the request!", e);
+            eh.handleException(e);
+        } finally {
+            LOG.debug("Done with POST query on {}", wt.getUri());
+        }
+        LOG.warn("The client has received an exception, so we will return null as a response here");
+        return null;
+    }
+
     /**
      * Performs a GET operation on the given web target.
      *
@@ -141,7 +163,10 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * Dummy method to print all headers of the given response.
      *
      * @param rc the response
+     * @see HeaderRequestLogger
+     * @deprecated Better use the client filter for this.
      */
+    @Deprecated
     public static void printHeaders(Response rc) {
         LOG.debug("Printing headers:");
         MultivaluedMap<String, Object> headers = rc.getHeaders();
@@ -186,14 +211,21 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
     }
 
     /**
-     * Closes the response object after it is no longer needed.
+     * Closes the response object after it is no longer needed. Typically you call this method AFTER you checked for
+     * the response object, if it is an error etc.
      *
      * @param response the response object
      */
     public static void closeResponseFinally(Response response) {
         LOG.debug("Closing response object");
         if (response != null) {
-            response.close();
+            try {
+                response.close();
+            } catch (IllegalStateException e) {
+                LOG.debug("Response may be closed already!", e);
+            } catch (ProcessingException e) {
+                LOG.debug("Response may be closed already!", e);
+            }
         }
     }
 
@@ -212,7 +244,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         C rc = null;
         parseResponseForErrors(response);
         if (c != null) {
-            rc = response.readEntity(c);
+            rc = readResponseAs(response, c);
         }
         return rc;
     }
@@ -259,8 +291,9 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
 
     public Response performDELETE(WebTarget wt, SocketErrorHandler<E> eh) throws E {
         LOG.debug("Performing DELETE on {}..", wt.getUri());
+        Response rc = null;
         try {
-            Response rc = wt.request(supportedMediaTypes.toArray(new MediaType[supportedMediaTypes.size()])).delete();
+            rc = wt.request(supportedMediaTypes.toArray(new MediaType[supportedMediaTypes.size()])).delete();
             afterResponse(rc);
             return rc;
         } catch (Exception e) {
@@ -271,6 +304,16 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         }
         LOG.warn("The client has received an exception, so we will return null as a response here");
         return null;
+    }
+
+    protected <E> E readResponseAs(Response response, Class<E> targetClass) {
+        E rc = null;
+        try {
+            rc = response.readEntity(targetClass);
+        } catch (ProcessingException e) {
+            LOG.debug("Could not read response into {}!", targetClass, e);
+        }
+        return rc;
     }
 
     public Response performDELETE(WebTarget wt) throws E {
