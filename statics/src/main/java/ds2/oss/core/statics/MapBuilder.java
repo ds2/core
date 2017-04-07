@@ -18,7 +18,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ds2.oss.core.base.impl;
+package ds2.oss.core.statics;
 
 import java.util.HashMap;
 import java.util.Map;

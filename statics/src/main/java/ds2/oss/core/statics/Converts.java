@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,6 +79,24 @@ public interface Converts {
             rc = new URL(urlStr);
         } catch (final MalformedURLException e) {
             LOG.debug("Error when converting the given string into a url!", e);
+        }
+        return rc;
+    }
+
+    /**
+     * Converts a given string into a uri.
+     *
+     * @param s the uri string
+     * @return the uri object, or null if an error occurred
+     */
+    static URI toUri(String s) {
+        URI rc = null;
+        if (!Methods.isBlank(s)) {
+            try {
+                rc = new URI(s);
+            } catch (URISyntaxException e) {
+                LOG.debug("Error when converting the given string into a uri!", e);
+            }
         }
         return rc;
     }

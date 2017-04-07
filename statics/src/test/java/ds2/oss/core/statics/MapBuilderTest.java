@@ -18,14 +18,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ds2.oss.core.base.impl.test;
+package ds2.oss.core.statics;
 
 import java.util.Map;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.base.impl.MapBuilder;
+import ds2.oss.core.statics.MapBuilder;
 
 /**
  * test for the map builder.
