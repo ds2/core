@@ -37,17 +37,18 @@ import java.util.Map;
 @LogResourceRequests
 @Priority(Priorities.HEADER_DECORATOR)
 public class ResourceRequestLogger implements ContainerRequestFilter {
-    private static final Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @Override public void filter(ContainerRequestContext requestContext) throws IOException {
-        StringBuilder sb=new StringBuilder(600);
+    @Override
+    public void filter(ContainerRequestContext requestContext) throws IOException {
+        StringBuilder sb = new StringBuilder(600);
         sb.append(requestContext.getRequest().getMethod()).append(" ");
         requestContext.getUriInfo();
-        String path=requestContext.getUriInfo().getPath();
+        String path = requestContext.getUriInfo().getPath();
         sb.append(path);
-        MultivaluedMap<String, String> headers=requestContext.getHeaders();
+        MultivaluedMap<String, String> headers = requestContext.getHeaders();
         sb.append("Headers:\n");
-        for(Map.Entry<String, List<String>> header : headers.entrySet()){
+        for (Map.Entry<String, List<String>> header : headers.entrySet()) {
             sb.append(header.getKey()).append("=").append(header.getValue());
             sb.append("\n");
         }
