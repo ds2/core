@@ -15,38 +15,39 @@
  */
 package ds2.oss.core.jee.rest;
 
-import java.io.IOException;
-import java.lang.invoke.MethodHandles;
-import java.util.List;
-import java.util.Map.Entry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.client.ClientRequestContext;
-import javax.ws.rs.client.ClientRequestFilter;
+import javax.ws.rs.client.ClientResponseContext;
+import javax.ws.rs.client.ClientResponseFilter;
 import javax.ws.rs.core.MultivaluedMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 
 /**
  * @author dstrauss
- *         
  */
 @Priority(Priorities.HEADER_DECORATOR)
-public class HeaderRequestLogger implements ClientRequestFilter {
+public class ClientHeaderResponseLogger implements ClientResponseFilter {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /*
      * (non-Javadoc)
-     * @see javax.ws.rs.client.ClientRequestFilter#filter(javax.ws.rs.client.ClientRequestContext)
+     * @see javax.ws.rs.client.ClientResponseFilter#filter(javax.ws.rs.client.ClientRequestContext,
+     * javax.ws.rs.client.ClientResponseContext)
      */
     @Override
-    public void filter(ClientRequestContext requestContext) throws IOException {
-        MultivaluedMap<String, Object> headers = requestContext.getHeaders();
-        for (Entry<String, List<Object>> s : headers.entrySet()) {
-            LOG.debug("Request header: {} = {}", s.getKey(), s.getValue());
+    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
+        if(LOG.isDebugEnabled()){
+            MultivaluedMap<String, String> headers = responseContext.getHeaders();
+            LOG.debug("Headers received are: {}", headers);
+            LOG.debug("MediaType received is {}", responseContext.getMediaType());
+            LOG.debug("Any cookies received: {}", responseContext.getCookies());
+            LOG.debug("Return status is: {}", responseContext.getStatusInfo());
         }
     }
-    
+
 }

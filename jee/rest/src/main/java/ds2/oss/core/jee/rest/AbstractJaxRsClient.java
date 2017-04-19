@@ -163,7 +163,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * Dummy method to print all headers of the given response.
      *
      * @param rc the response
-     * @see HeaderRequestLogger
+     * @see ClientHeaderRequestLogger
      * @deprecated Better use the client filter for this.
      */
     @Deprecated

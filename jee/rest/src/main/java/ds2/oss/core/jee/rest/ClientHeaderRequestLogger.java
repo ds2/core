@@ -21,33 +21,33 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.client.ClientRequestContext;
-import javax.ws.rs.client.ClientResponseContext;
-import javax.ws.rs.client.ClientResponseFilter;
+import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * @author dstrauss
  */
 @Priority(Priorities.HEADER_DECORATOR)
-public class HeaderResponseLogger implements ClientResponseFilter {
+public class ClientHeaderRequestLogger implements ClientRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /*
      * (non-Javadoc)
-     * @see javax.ws.rs.client.ClientResponseFilter#filter(javax.ws.rs.client.ClientRequestContext,
-     * javax.ws.rs.client.ClientResponseContext)
+     * @see javax.ws.rs.client.ClientRequestFilter#filter(javax.ws.rs.client.ClientRequestContext)
      */
     @Override
-    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) throws IOException {
-        if(LOG.isDebugEnabled()){
-            MultivaluedMap<String, String> headers = responseContext.getHeaders();
-            LOG.debug("Headers received are: {}", headers);
-            LOG.debug("MediaType received is {}", responseContext.getMediaType());
-            LOG.debug("Any cookies received: {}", responseContext.getCookies());
-            LOG.debug("Return status is: {}", responseContext.getStatusInfo());
+    public void filter(ClientRequestContext requestContext) throws IOException {
+        MultivaluedMap<String, Object> headers = requestContext.getHeaders();
+        for (Entry<String, List<Object>> s : headers.entrySet()) {
+            LOG.debug("Request header: {} = {}", s.getKey(), s.getValue());
         }
+        LOG.debug("Request uri: {}", requestContext.getUri());
+        LOG.debug("Accepted types: {}", requestContext.getAcceptableMediaTypes());
+        LOG.debug("Accepted languages: {}", requestContext.getAcceptableLanguages());
     }
 
 }

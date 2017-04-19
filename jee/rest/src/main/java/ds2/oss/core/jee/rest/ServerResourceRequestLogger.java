@@ -36,7 +36,7 @@ import java.util.Map;
 @Provider
 @LogResourceRequests
 @Priority(Priorities.HEADER_DECORATOR)
-public class ResourceRequestLogger implements ContainerRequestFilter {
+public class ServerResourceRequestLogger implements ContainerRequestFilter {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Override
