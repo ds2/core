@@ -79,6 +79,7 @@
     <module>abstracts</module>
       <module>finance</module>
       <module>owbtest</module>
+      <module>codec-genson</module>
   </modules>
   <profiles>
     <profile>

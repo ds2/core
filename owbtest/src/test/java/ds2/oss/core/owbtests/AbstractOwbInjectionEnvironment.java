@@ -56,7 +56,7 @@ public class AbstractOwbInjectionEnvironment {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
-            return wc.getContextService().
+            return null;
         } finally {
             LOCK.unlock();
         }
