@@ -45,7 +45,7 @@ public class ClientHeaderRequestLogger implements ClientRequestFilter {
         for (Entry<String, List<Object>> s : headers.entrySet()) {
             LOG.debug("Request header: {} = {}", s.getKey(), s.getValue());
         }
-        LOG.debug("Request uri: {}", requestContext.getUri());
+        LOG.debug("Request uri: {} {}", requestContext.getMethod(), requestContext.getUri());
         LOG.debug("Accepted types: {}", requestContext.getAcceptableMediaTypes());
         LOG.debug("Accepted languages: {}", requestContext.getAcceptableLanguages());
     }

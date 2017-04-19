@@ -41,5 +41,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <groupId>org.jboss</groupId>
       <artifactId>jandex</artifactId>
     </dependency>
+    <dependency>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-webtools</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 </project>
