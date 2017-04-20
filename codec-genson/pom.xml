@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ds2-oss-core-codec-genson</artifactId>
-    <name>DS/2 OSS Core Codec Geson</name>
+    <name>DS/2 OSS Core Codec Genson</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

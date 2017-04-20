@@ -1,5 +1,6 @@
 package ds2.oss.core.owbtests;
 
+import ds2.oss.core.statics.Methods;
 import org.apache.webbeans.config.WebBeansContext;
 import org.apache.webbeans.spi.ContainerLifecycle;
 import org.slf4j.Logger;
@@ -7,9 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.TypeLiteral;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Type;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -42,11 +45,16 @@ public class AbstractOwbInjectionEnvironment {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
-            Type type;
-            return (T) wc.getBeanManager().getBeans(c).iterator().next();
+            BeanManager bm = wc.getBeanManager();
+            Set<Bean<?>> foundBeans = bm.getBeans(c);
+            if (Methods.size(foundBeans) > 0) {
+                Bean bean = foundBeans.iterator().next();
+                return c.cast(bean.create(null));
+            }
         } finally {
             LOCK.unlock();
         }
+        return null;
     }
 
     protected <T> T getInstance(final TypeLiteral<T> c) {
