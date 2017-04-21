@@ -146,7 +146,17 @@ public interface Methods {
      * @return TRUE if not blank, otherwise FALSE.
      */
     static boolean isBlank(String s) {
-        return s == null || s.trim().length() <= 0;
+        boolean rc = true;
+        if (s != null && s.trim().length() > 0) {
+            for (char c : s.toCharArray()) {
+                if (!Character.isWhitespace(c)) {
+                    rc = false;
+                    break;
+                }
+            }
+        }
+        return rc;
+
     }
 
     /**
