@@ -136,14 +136,14 @@ public interface Methods {
      */
     @Deprecated
     static boolean isNotBlank(String s) {
-        return s != null && s.trim().length() > 0;
+        return !isBlank(s);
     }
 
     /**
      * Checks if the given string contains some value.
      *
      * @param s the string to check
-     * @return TRUE if not blank, otherwise FALSE.
+     * @return TRUE if blank, otherwise FALSE.
      */
     static boolean isBlank(String s) {
         boolean rc = true;
