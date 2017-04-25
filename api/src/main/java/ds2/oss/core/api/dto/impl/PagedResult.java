@@ -31,5 +31,5 @@ public class PagedResult<E> implements Serializable {
      * The page number. Starts with 1.
      */
     @Min(1)
-    private int page;
+    private int startIndex;
 }
