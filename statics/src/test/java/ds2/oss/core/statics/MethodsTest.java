@@ -1,7 +1,15 @@
 package ds2.oss.core.statics;
 
+import ds2.oss.core.api.CoreErrors;
+import ds2.oss.core.api.CoreException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Created by dstrauss on 08.06.16.
@@ -42,6 +50,24 @@ public class MethodsTest {
     @Test
     public void compareStrings2() {
         Assert.assertEquals(Methods.compare("a", "A"), 0);
+    }
+
+    @Test
+    public void testIsExceptionOf1() {
+        CoreException c1 = new CoreException(CoreErrors.EncryptionFailed);
+        assertTrue(Methods.isCausedBy(c1, CoreException.class));
+    }
+
+    @Test
+    public void testIsExceptionOf2() {
+        CoreException c1 = new CoreException(CoreErrors.EncryptionFailed, "test", new SocketTimeoutException("test"));
+        assertTrue(Methods.isCausedBy(c1, SocketTimeoutException.class));
+    }
+
+    @Test
+    public void testIsExceptionOf3() {
+        CoreException c1 = new CoreException(CoreErrors.EncryptionFailed, "test", new SocketTimeoutException("test"));
+        assertFalse(Methods.isCausedBy(c1, SocketException.class));
     }
 
 }

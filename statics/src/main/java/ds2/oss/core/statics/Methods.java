@@ -248,4 +248,25 @@ public interface Methods {
         return rc;
     }
 
+    /**
+     * Simple validation if the given exception is or has the root cause of
+     * the given exception class.
+     *
+     * @param e   the exception to check
+     * @param eC  the exception class to check
+     * @param <E> the exception type
+     * @return TRUE if the given exception is or has the root cause of the given exception class, otherwise and by default FALSE
+     */
+    static <E extends Exception> boolean isCausedBy(Throwable e, Class<E> eC) {
+        boolean rc = false;
+        if (e != null && eC != null) {
+            if (eC.isAssignableFrom(e.getClass())) {
+                rc = true;
+            } else if (e.getCause() != null) {
+                rc = isCausedBy(e.getCause(), eC);
+            }
+        }
+        return rc;
+    }
+
 }

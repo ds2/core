@@ -48,6 +48,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      */
     protected final List<MediaType> supportedMediaTypes;
     private SocketErrorHandler<E> defaultErrorHandler;
+    protected boolean closeAfterParse = true;
 
     /**
      * Inits this object.
@@ -56,6 +57,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         supportedMediaTypes = new ArrayList<>();
         supportedMediaTypes.add(MediaType.APPLICATION_JSON_TYPE);
         defaultErrorHandler = e -> {
+            LOG.debug("Got this exception here:", e);
             E e2 = getExceptionOnClientAccess(e);
             if (e2 != null) {
                 throw e2;
@@ -246,6 +248,9 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         if (c != null) {
             rc = readResponseAs(response, c);
         }
+        if (closeAfterParse) {
+            closeResponseFinally(response);
+        }
         return rc;
     }
 
@@ -265,6 +270,9 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         List<C> rc = response.readEntity(new GenericType<List<C>>() {
             // nothing special to do
         });
+        if (closeAfterParse) {
+            closeResponseFinally(response);
+        }
         return rc;
     }
 
@@ -306,6 +314,14 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         return null;
     }
 
+    /**
+     * Internal method to handle possible checks of the response.
+     *
+     * @param response    the response
+     * @param targetClass the possible target class to read the response into
+     * @param <E>         the type of the response object
+     * @return the object on success, otherwise null
+     */
     protected <E> E readResponseAs(Response response, Class<E> targetClass) {
         E rc = null;
         try {
@@ -316,6 +332,13 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         return rc;
     }
 
+    /**
+     * Performs a delete on the given web target.
+     *
+     * @param wt the web target
+     * @return the response received
+     * @throws E an exception in case of a transport error
+     */
     public Response performDELETE(WebTarget wt) throws E {
         return performDELETE(wt, defaultErrorHandler);
     }

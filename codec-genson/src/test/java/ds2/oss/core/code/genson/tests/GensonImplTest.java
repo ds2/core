@@ -32,7 +32,7 @@ public class GensonImplTest extends AbstractInjectionEnvironment {
         stringPagedResult.setMaxResults(4);
         String json = to.encode(stringPagedResult);
         Assert.assertNotNull(json);
-        Assert.assertEquals(json, "{\"maxResults\":4,\"page\":0,\"resultList\":[\"this\",\"is\",\"a\",\"test\"]}");
+        Assert.assertEquals(json, "{\"maxResults\":4,\"resultList\":[\"this\",\"is\",\"a\",\"test\"],\"startIndex\":0}");
 
         //now backwards
         PagedResult<String> rc = to.decode(json, PagedResult.class);
@@ -47,7 +47,7 @@ public class GensonImplTest extends AbstractInjectionEnvironment {
         stringPagedResult.setMaxResults(4);
         String json = to.encode(stringPagedResult);
         Assert.assertNotNull(json);
-        Assert.assertEquals(json, "{\"maxResults\":4,\"page\":0,\"resultList\":[{\"age\":23,\"gender\":\"MALE\",\"name\":\"Dirk\"},{\"age\":7,\"gender\":\"FEMALE\",\"name\":\"Mausi\"}]}");
+        Assert.assertEquals(json, "{\"maxResults\":4,\"resultList\":[{\"age\":23,\"gender\":\"MALE\",\"name\":\"Dirk\"},{\"age\":7,\"gender\":\"FEMALE\",\"name\":\"Mausi\"}],\"startIndex\":0}");
 
         //now backwards
         PagedResult<Person> instanceIdea = new PagedResult<>();
