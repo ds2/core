@@ -261,7 +261,9 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @param c        the target entity in the list
      * @return the list of entities
      * @throws E the entity type
+     * @deprecated Due to the nature of class inspection on runtime we discourage the use of this method. Please use the other one.
      */
+    @Deprecated
     public <C> List<C> parseResponseAsList(Response response, Class<C> c) throws E {
         if (response == null) {
             return null;
@@ -274,6 +276,28 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
             closeResponseFinally(response);
         }
         return rc;
+    }
+
+    /**
+     * Converts the given response into a list of objects of the response does not contain an error.
+     *
+     * @param response the response
+     * @param c        the generic type instance to use for mapping the json
+     * @return the list of entities
+     * @throws E the entity type
+     */
+    public <C, G extends GenericType<List<C>>> List<C> parseResponseAsList(Response response, G c) throws E {
+        if (response == null) {
+            return null;
+        } else {
+            this.parseResponseForErrors(response);
+            List<C> rc = response.readEntity(c);
+            if (this.closeAfterParse) {
+                closeResponseFinally(response);
+            }
+
+            return rc;
+        }
     }
 
     /**

@@ -3,8 +3,13 @@ package ds2.oss.core.statics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.net.*;
+import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -146,5 +151,22 @@ public interface Converts {
             }
         }
         return rc;
+    }
+
+    static String readFromInputStream(InputStream is, Charset cs) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, cs), 4098);
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        try {
+            while ((line = br.readLine()) != null) {
+                if (sb.length() > 0) {
+                    sb.append('\n');
+                }
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            LOG.debug("Error when reading the line from the buffer!", e);
+        }
+        return sb.toString();
     }
 }
