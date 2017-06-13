@@ -35,8 +35,9 @@ import java.util.Map.Entry;
  * specific filters, added on client initialisation.
  * <p>To use it, you need to create a JaxRS client by using the ClientBuilder.</p>
  *
- * @param <E> an exception type
+ * @param <E> an exception type of transport errors.
  * @author dstrauss
+ * @see SocketErrorHandler
  */
 public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implements JaxRsClient<E> {
     /**

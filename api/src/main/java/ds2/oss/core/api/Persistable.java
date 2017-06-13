@@ -15,21 +15,12 @@
  */
 package ds2.oss.core.api;
 
-import java.io.Serializable;
-
 /**
  * Contract for a persistable object, having a unique id.
  *
+ * @param <E> the type of the primary key. Usually Long or something similar.
  * @author dstrauss
  * @version 0.1
- * @param <E>
- *            the type of the primary key. Usually Long or something similar.
  */
 public interface Persistable<E> extends IdAware<E> {
-    /**
-     * Returns the primary key of this persistable object.
-     *
-     * @return the id
-     */
-    E getId();
 }

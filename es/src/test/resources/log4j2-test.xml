@@ -23,13 +23,13 @@
     </Console>
   </appenders>
   <loggers>
-    <logger name="ds2.oss.core.elasticsearch" level="debug">
+    <logger name="ds2.oss.core.elasticsearch" level="debug" additivity="false">
       <appender-ref ref="Console" />
     </logger>
-    <logger name="ds2.oss.core.codec.gson" level="debug">
+    <logger name="ds2.oss.core.codec.gson" level="debug" additivity="false">
       <appender-ref ref="Console" />
     </logger>
-      <logger name="org.jboss.weld" level="debug">
+      <logger name="org.jboss.weld" level="debug" additivity="false">
           <appender-ref ref="Console" />
       </logger>
     <root level="info">

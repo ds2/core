@@ -16,6 +16,9 @@
 package ds2.oss.core.api;
 
 /**
+ * This type of exception is thrown on transport level. Say, it is usually
+ * thrown when a network error occurs.
+ *
  * @author dstrauss
  */
 public class JaxRsClientException extends CoreException {

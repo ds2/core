@@ -18,8 +18,9 @@ package ds2.oss.core.jee.rest;
 import ds2.oss.core.api.JaxRsClientException;
 
 /**
+ * This contract deals with errors on application level of a jax rs call.
+ *
  * @author dstrauss
- *         
  */
 public interface SocketErrorHandler<E extends JaxRsClientException> {
     void handleException(Exception e) throws E;
