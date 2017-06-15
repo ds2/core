@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jee-base</artifactId>
     <groupId>ds2.base.oss</groupId>
-    <version>0.81</version>
+    <version>0.82-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>ds2.oss.core</groupId>
@@ -13,6 +13,7 @@
   <version>0.3-SNAPSHOT</version>
   <description>The OSS components of DS/2 Core.</description>
   <properties>
+    <weld.version>2.4.3.Final</weld.version>
     <siteProjectName>ds2OssCore</siteProjectName>
     <issueTrackerId>OSSCORE</issueTrackerId>
     <license.header.author>Dirk Strauss</license.header.author>

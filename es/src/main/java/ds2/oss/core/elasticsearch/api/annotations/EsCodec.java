@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Stereotype;
+import javax.enterprise.util.Nonbinding;
 import javax.inject.Qualifier;
 
 /**
@@ -37,11 +38,11 @@ import javax.inject.Qualifier;
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
 @Dependent
 @Documented
-@Stereotype
 @Qualifier
 public @interface EsCodec {
     /**
      * The dto type to address.
      */
+    //@Nonbinding
     Class<?> value();
 }
