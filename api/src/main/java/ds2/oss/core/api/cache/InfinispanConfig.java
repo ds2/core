@@ -43,6 +43,6 @@ public @interface InfinispanConfig {
      * The name of the xml file that contains the cache config. Default is infinispan.xml.
      */
     @Nonbinding
-    String xmlFile() default "infinispan.xml";
+    String xmlFile() default "";
 
 }

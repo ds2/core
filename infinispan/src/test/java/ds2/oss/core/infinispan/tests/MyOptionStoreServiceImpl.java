@@ -38,9 +38,7 @@ import ds2.oss.core.api.cache.InfinispanConfig;
 public class MyOptionStoreServiceImpl {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Inject
-    @InfinispanConfig(
-        cacheName = "options",
-        xmlFile = "test-infinispan.xml")
+    @InfinispanConfig
     private InfinispanStore<String, MyOption> storage;
     
     @PostConstruct

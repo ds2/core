@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A small code base to support date formatting.
@@ -40,6 +42,7 @@ public abstract class AbstractCodecBase {
      * The formatter.
      */
     private SimpleDateFormat sdf;
+    private static final Lock LOCK=new ReentrantLock();
 
     /**
      * Inits the base.
@@ -56,12 +59,17 @@ public abstract class AbstractCodecBase {
      * @return the string
      */
     public String fromDate(final Date d) {
-        if (d == null) {
-            return null;
+        LOCK.lock();
+        try {
+            if (d == null) {
+                return null;
+            }
+            String rc = null;
+            rc = sdf.format(d);
+            return rc;
+        } finally {
+            LOCK.unlock();
         }
-        String rc = null;
-        rc = sdf.format(d);
-        return rc;
     }
 
     /**
@@ -71,18 +79,23 @@ public abstract class AbstractCodecBase {
      * @return the parsed date
      */
     public Date toDate(final String esDate) {
-        LOG.debug("Trying to convert to date: {}", esDate);
-        Date rc = null;
-        if (!Methods.isBlank(esDate)) {
-            LOG.debug("Parsing date {}", esDate);
-            try {
-                rc = sdf.parse(esDate);
-            } catch (final ParseException e) {
-                LOG.warn("Error when parsing given date!", e);
+        LOCK.lock();
+        try {
+            LOG.debug("Trying to convert to date: {}", esDate);
+            Date rc = null;
+            if (!Methods.isBlank(esDate)) {
+                LOG.debug("Parsing date {}", esDate);
+                try {
+                    rc = sdf.parse(esDate);
+                } catch (final ParseException e) {
+                    LOG.warn("Error when parsing given date!", e);
+                }
             }
+            LOG.debug("Returning date: {}", rc);
+            return rc;
+        } finally {
+            LOCK.unlock();
         }
-        LOG.debug("Returning date: {}", rc);
-        return rc;
     }
 
 }
