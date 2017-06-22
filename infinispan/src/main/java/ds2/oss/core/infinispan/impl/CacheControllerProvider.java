@@ -15,16 +15,10 @@
  */
 package ds2.oss.core.infinispan.impl;
 
-import java.io.IOException;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-import javax.inject.Inject;
-import javax.inject.Provider;
-
+import ds2.oss.core.api.InfinispanStore;
+import ds2.oss.core.api.Persistable;
+import ds2.oss.core.api.cache.InfinispanConfig;
+import ds2.oss.core.statics.Methods;
 import org.infinispan.Cache;
 import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
@@ -33,9 +27,14 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.InfinispanStore;
-import ds2.oss.core.api.Persistable;
-import ds2.oss.core.api.cache.InfinispanConfig;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
+import javax.inject.Provider;
+import java.io.IOException;
 
 /**
  * Created by dstrauss on 20.08.13.
@@ -46,7 +45,9 @@ public class CacheControllerProvider {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(CacheControllerProvider.class);
-    
+
+    private boolean useMyDefaults = true;
+
     /**
      * Loads a cache for the given coordinates.
      *
@@ -56,10 +57,16 @@ public class CacheControllerProvider {
      * @param vClass
      * @return the cache, or null
      */
-    private static <K, V> Cache<K, V> provideCache(final String resFile, final String cName, final Class<K> kClass,
-        final Class<V> vClass) {
-        LOG.debug("Loading cache {} from resource {}", new Object[] { cName, resFile });
+    private <K, V> Cache<K, V> provideCache(String resFile, String cName, final Class<K> kClass,
+                                            final Class<V> vClass) {
         Cache<K, V> rc = null;
+        if (Methods.isBlank(resFile) && useMyDefaults) {
+            resFile = "def-infinispan.xml";
+        }
+        if (Methods.isBlank(cName) && useMyDefaults) {
+            cName = "default";
+        }
+        LOG.debug("Loading cache {} from resource {}", new Object[]{cName, resFile});
         try {
             DefaultCacheManager cm = new DefaultCacheManager(resFile);
             rc = cm.getCache(cName);
@@ -72,7 +79,7 @@ public class CacheControllerProvider {
     @Inject
     @Any
     private Provider<InfinispanStoreBean<?, ?>> stores;
-    
+
     /**
      * Dummy generator for any @{link InfinispanStore}.
      */
@@ -91,14 +98,12 @@ public class CacheControllerProvider {
         LOG.debug("Done, returning new impl {}", rc);
         return rc;
     }
-    
+
     /**
      * Dummy injector for any long based InfinispanStores.
-     * 
-     * @param p
-     *            the injection point
-     * @param <V>
-     *            any long based persistable
+     *
+     * @param p   the injection point
+     * @param <V> any long based persistable
      * @return the store to use
      */
     @Produces
@@ -108,14 +113,12 @@ public class CacheControllerProvider {
     public <V extends Persistable<Long>> InfinispanStore<Long, V> createLongInjection(final InjectionPoint p) {
         return createInjection(p);
     }
-    
+
     /**
      * Dummy injector for any string based InfinispanStores.
-     * 
-     * @param p
-     *            the injection point
-     * @param <V>
-     *            any string based persistable
+     *
+     * @param p   the injection point
+     * @param <V> any string based persistable
      * @return the store to use
      */
     @Produces
@@ -124,7 +127,7 @@ public class CacheControllerProvider {
     public <V extends Persistable<String>> InfinispanStore<String, V> createStringInjection(final InjectionPoint p) {
         return createInjection(p);
     }
-    
+
     @Produces
     public <K, V> Configuration loadConfig() {
         return new ConfigurationBuilder().eviction().strategy(EvictionStrategy.LRU).maxEntries(100).build();

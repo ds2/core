@@ -13,12 +13,12 @@
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-api</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.weld.se</groupId>
       <artifactId>weld-se-core</artifactId>
-      <version>2.2.5.Final</version>
+      <version>${weld.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -37,7 +37,7 @@
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-testutils</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>
     </dependency>
@@ -54,7 +54,7 @@
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-statics</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 </project>

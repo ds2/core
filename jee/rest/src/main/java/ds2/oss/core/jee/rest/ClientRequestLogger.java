@@ -28,23 +28,33 @@ public class ClientRequestLogger implements ClientRequestFilter, WriterIntercept
 
     @Override
     public void filter(ClientRequestContext requestContext) throws IOException {
-        if (LOG.isDebugEnabled() && requestContext.hasEntity()) {
-            LOG.debug("Entity to send: {}", requestContext.getEntity());
+        if (LOG.isDebugEnabled()) {
+            LoggingOutputStream<OutputStream> los = new LoggingOutputStream<>(requestContext.getEntityStream());
+            los.setMaxLength(maxEntitySize);
+            requestContext.setEntityStream(los);
+            requestContext.setProperty(PROPKEY, los);
         }
-        LoggingOutputStream<OutputStream> los = new LoggingOutputStream<>(requestContext.getEntityStream());
-        los.setMaxLength(maxEntitySize);
-        requestContext.setEntityStream(los);
-        requestContext.setProperty(PROPKEY, los);
     }
 
     @Override
     public void aroundWriteTo(WriterInterceptorContext context) throws IOException, WebApplicationException {
         Object los = context.getProperty(PROPKEY);
         context.proceed();
-        if (los != null && los instanceof LoggingOutputStream) {
+        if (LOG.isDebugEnabled() && los != null && los instanceof LoggingOutputStream) {
             LoggingOutputStream<OutputStream> thisOs = (LoggingOutputStream<OutputStream>) los;
             Charset cs = StandardCharsets.UTF_8;
             LOG.debug("Client request payload: {}", thisOs.getBytesAsString(cs));
         }
+    }
+
+    public int getMaxEntitySize() {
+        return maxEntitySize;
+    }
+
+    public void setMaxEntitySize(int maxEntitySize) {
+        if (maxEntitySize <= 0) {
+            throw new IllegalArgumentException("This value is too low: " + maxEntitySize);
+        }
+        this.maxEntitySize = maxEntitySize;
     }
 }
