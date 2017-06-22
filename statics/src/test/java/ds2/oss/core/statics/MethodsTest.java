@@ -7,9 +7,12 @@ import org.testng.annotations.Test;
 
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * Created by dstrauss on 08.06.16.
@@ -17,7 +20,7 @@ import static org.testng.Assert.assertTrue;
 public class MethodsTest {
     @Test
     public void testNumber1() {
-        Assert.assertNull(Methods.parseNumber(null));
+        assertNull(Methods.parseNumber(null));
     }
 
     @Test
@@ -68,6 +71,19 @@ public class MethodsTest {
     public void testIsExceptionOf3() {
         CoreException c1 = new CoreException(CoreErrors.EncryptionFailed, "test", new SocketTimeoutException("test"));
         assertFalse(Methods.isCausedBy(c1, SocketException.class));
+    }
+
+    @Test
+    public void testShorten1() {
+        List<Integer> intList = IntStream.rangeClosed(1, 30).boxed().collect(Collectors.toList());
+        Collection<Integer> shortCollection = Methods.shorten(intList, 10);
+        assertEquals(shortCollection.size(), 10);
+    }
+
+    @Test
+    public void testShortenNull() {
+        Collection<Integer> shortCollection = Methods.shorten(null, 10);
+        assertNull(shortCollection);
     }
 
 }

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 /**
  * Created by deindesign on 21.12.15.
@@ -238,14 +239,7 @@ public interface Methods {
         if (c.size() <= maxItems) {
             return c;
         }
-        int min = maxItems;
-        Collection<E> rc = new ArrayList<>(min);
-        Iterator<E> cIt = c.iterator();
-        for (int i = 0; i < min; ++i) {
-            E element = cIt.next();
-            rc.add(element);
-        }
-        return rc;
+        return c.stream().limit(maxItems).collect(Collectors.toList());
     }
 
     /**
