@@ -47,6 +47,9 @@ public class CacheControllerProvider {
     private static final Logger LOG = LoggerFactory.getLogger(CacheControllerProvider.class);
 
     private boolean useMyDefaults = true;
+    @Inject
+    @Any
+    private Provider<InfinispanStoreBean<?, ?>> stores;
 
     /**
      * Loads a cache for the given coordinates.
@@ -75,10 +78,6 @@ public class CacheControllerProvider {
         }
         return rc;
     }
-
-    @Inject
-    @Any
-    private Provider<InfinispanStoreBean<?, ?>> stores;
 
     /**
      * Dummy generator for any @{link InfinispanStore}.

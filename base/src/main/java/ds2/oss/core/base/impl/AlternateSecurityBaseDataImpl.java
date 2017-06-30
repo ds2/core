@@ -31,7 +31,7 @@ import java.util.Random;
  * @author dstrauss
  * @version 0.2
  */
-@ApplicationScoped
+//@ApplicationScoped
 @Alternative
 @Priority(Interceptor.Priority.APPLICATION + 10)
 public class AlternateSecurityBaseDataImpl implements SecurityBaseData {

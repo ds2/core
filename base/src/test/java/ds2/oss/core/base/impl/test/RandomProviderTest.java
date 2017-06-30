@@ -1,6 +1,5 @@
 package ds2.oss.core.base.impl.test;
 
-import ds2.oss.core.base.impl.Base64Konverter;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -19,7 +18,7 @@ public class RandomProviderTest extends AbstractInjectionEnvironment {
         random = getInstance(Random.class);
     }
 
-    @Test(enabled = false)
+    @Test
     public void testExist() {
         Assert.assertNotNull(random);
     }

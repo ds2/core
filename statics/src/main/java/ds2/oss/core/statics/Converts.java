@@ -10,9 +10,13 @@ import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static ds2.oss.core.statics.Methods.isBlank;
 
 /**
  * Contract to convert somethings.
@@ -96,7 +100,7 @@ public interface Converts {
      */
     static URI toUri(String s) {
         URI rc = null;
-        if (!Methods.isBlank(s)) {
+        if (!isBlank(s)) {
             try {
                 rc = new URI(s);
             } catch (URISyntaxException e) {
@@ -115,7 +119,7 @@ public interface Converts {
      */
     static Locale parseLocaleString(String s) {
         Locale rc = null;
-        if (!Methods.isBlank(s)) {
+        if (!isBlank(s)) {
             Matcher m = LETTERS.matcher(s.toLowerCase());
             String lang;
             String country = "";
@@ -143,7 +147,7 @@ public interface Converts {
      */
     static InetAddress toInetAddress(String ipAddressOrHostname) {
         InetAddress rc = null;
-        if (!Methods.isBlank(ipAddressOrHostname)) {
+        if (!isBlank(ipAddressOrHostname)) {
             try {
                 rc = InetAddress.getByName(ipAddressOrHostname);
             } catch (UnknownHostException e) {
@@ -153,10 +157,17 @@ public interface Converts {
         return rc;
     }
 
+    /**
+     * Reads an input stream into a string.
+     *
+     * @param is the input stream
+     * @param cs the charset to decode the received bytes
+     * @return the string
+     */
     static String readFromInputStream(InputStream is, Charset cs) {
         BufferedReader br = new BufferedReader(new InputStreamReader(is, cs), 4098);
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
         try {
             while ((line = br.readLine()) != null) {
                 if (sb.length() > 0) {
@@ -168,5 +179,37 @@ public interface Converts {
             LOG.debug("Error when reading the line from the buffer!", e);
         }
         return sb.toString();
+    }
+
+    /**
+     * Converts a given base64 string back into a string.
+     *
+     * @param base64EncodedString the base64 string
+     * @param targetCharset       the target charset to use to create the string
+     * @return the decoded string
+     */
+    static String convertBase64ToString(String base64EncodedString, Charset targetCharset) {
+        if (isBlank(base64EncodedString)) {
+            return "";
+        }
+        if (targetCharset == null) {
+            targetCharset = StandardCharsets.UTF_8;
+        }
+        byte[] mantleBytes = base64EncodedString.getBytes();
+        byte[] base64Bytes = Base64.getDecoder().decode(mantleBytes);
+        String rc = new String(base64Bytes, targetCharset);
+        return rc;
+    }
+
+    /**
+     * Converts a given string into base64 using the iso-8859-1 charset.
+     *
+     * @param s             the string to encode
+     * @param targetCharset the charset to use to split the given string into bytes
+     * @return the base64 string, using iso-8859-1 encoding.
+     */
+    static String toBase64(String s, Charset targetCharset) {
+        byte[] targetBytes = s.getBytes(targetCharset);
+        return Base64.getEncoder().encodeToString(targetBytes);
     }
 }

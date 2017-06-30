@@ -41,7 +41,7 @@ public class DbToolsIT extends Arquillian {
         final JavaArchive jar = ShrinkWrap.create(JavaArchive.class, "dbtools.jar").addPackages(true, "ds2.oss.core")
             .addAsManifestResource("test-persistence.xml", "persistence.xml")
             // Enable CDI
-            // .addAsManifestResource("my-beans.xml", "beans.xml")
+            .addAsManifestResource("my-beans.xml", "beans.xml")
         ;
         LOG.info("Content of archive: {}", jar.toString(Formatters.VERBOSE));
         return jar;
