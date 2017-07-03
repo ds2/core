@@ -3,9 +3,9 @@ package ds2.oss.core.statics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.invoke.MethodHandles;
+import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -47,7 +47,7 @@ public interface IoMethods {
 
     static void touchFile(Path file) throws IOException {
         Path dir = file.getParent();
-        if(dir!=null){
+        if (dir != null) {
             Files.createDirectories(dir);
             Files.write(file, "".getBytes("utf-8"), StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
         }
@@ -61,5 +61,35 @@ public interface IoMethods {
                 LOG.debug("Error when closing the given input stream!", e);
             }
         }
+    }
+
+    static String readResourceFromClasspath(String resName, Charset cs) {
+        String resName2 = resName;
+        if (!resName.startsWith("/")) {
+            resName2 = "/" + resName;
+        }
+        String rc = null;
+        try (InputStream is = IoMethods.class.getResourceAsStream(resName2)) {
+            if (is != null) {
+                Reader isr = new InputStreamReader(is, cs);
+                BufferedReader br = new BufferedReader(isr);
+                StringBuilder sb = new StringBuilder();
+                while (true) {
+                    final String line = br.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    sb.append(line);
+                }
+                rc = sb.toString();
+            } else {
+                LOG.warn("Could not find resource {}!", resName2);
+            }
+        } catch (IOException e) {
+            LOG.debug("Error occurred on reading!", e);
+        }
+
+
+        return rc;
     }
 }
