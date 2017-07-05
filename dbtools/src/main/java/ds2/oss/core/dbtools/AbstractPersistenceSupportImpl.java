@@ -206,28 +206,12 @@ public abstract class AbstractPersistenceSupportImpl<E extends Persistable<PRIMK
     public E getSecureFindById(final EntityManager em, final PRIMKEY id) {
         return getSecureFindById(em, getEntityClass(), id);
     }
-    
-    /**
-     * Returns all entries.
-     * 
-     * @param em
-     *            the entity manager
-     * @param size
-     *            the maximum size. Use 0 to return ALL entries.
-     * @return the found entries
-     */
-    protected List<E> getAll(EntityManager em, int size) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<E> cq = cb.createQuery(getEntityClass());
-        Root<E> rootE = cq.distinct(true).from(getEntityClass());
-        cq.select(rootE);
-        TypedQuery<E> q = em.createQuery(cq);
-        if (size > 0) {
-            q.setMaxResults(size);
-        }
-        return getSecureList(q);
+
+    @Override
+    public E getById(PRIMKEY e) {
+        return null;
     }
-    
+
     /**
      * This will create a new db entry using the given entity bean. Update operations are done
      * implicit by loading an entity and updating its values.
@@ -242,4 +226,5 @@ public abstract class AbstractPersistenceSupportImpl<E extends Persistable<PRIMK
     protected void create(EntityManager em, E e) {
         em.persist(e);
     }
+
 }

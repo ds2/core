@@ -80,7 +80,12 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
     public void persist(OptionDto<Long, ?> t) {
         LOG.info("Using a non-operational method. Returning dummy value!");
     }
-    
+
+    @Override
+    public void deleteById(Long id) {
+        LOG.info("Using a non-operational method.");
+    }
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#getById(java.lang.Object)

@@ -1,17 +1,19 @@
 package ds2.oss.core.api.crypto;
 
-import javax.crypto.SecretKey;
-
 /**
  * Created by deindesign on 11.03.16.
  */
 public enum SecretKeyFactories {
-    PBKDF2WithHmacSHA1("PBKDF2WithHmacSHA1");
+    PBKDF2WithHmacSHA1("PBKDF2WithHmacSHA1"),
+    SHA512withRSA("SHA512withRSA"),
+    HmacSHA512("HmacSHA512");
     private String algorithmName;
-    SecretKeyFactories(String s){
-        algorithmName=s;
+
+    SecretKeyFactories(String s) {
+        algorithmName = s;
     }
-    public String getAlgorithmName(){
+
+    public String getAlgorithmName() {
         return algorithmName;
     }
 }

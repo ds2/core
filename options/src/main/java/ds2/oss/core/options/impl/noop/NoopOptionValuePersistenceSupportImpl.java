@@ -50,7 +50,12 @@ public class NoopOptionValuePersistenceSupportImpl implements NumberedOptionValu
     public void persist(OptionValueDto<Long, ?> t) {
         LOG.info("Using non-operational method. Please reconfigure injection!");
     }
-    
+
+    @Override
+    public void deleteById(Long id) {
+        LOG.info("Using non-operational method. Please reconfigure injection!");
+    }
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#getById(java.lang.Object)

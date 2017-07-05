@@ -18,28 +18,27 @@ package ds2.oss.core.api;
 /**
  * A persistence support contract. This can be a database, or a cache instance. Or ElasticSearch.
  *
+ * @param <E>       the entity type
+ * @param <PRIMKEY> the entity primary key type
  * @author dstrauss
- * @param <E>
- *            the entity type
- * @param <PRIMKEY>
- *            the entity primary key type
  * @version 0.2
  */
 public interface PersistenceSupport<E extends Persistable<PRIMKEY>, PRIMKEY> {
     /**
      * Returns the object with the given id.
      *
-     * @param e
-     *            the id
+     * @param e the id
      * @return the found object, or null
      */
     E getById(PRIMKEY e);
-    
+
     /**
      * Persists the given dto.
      *
-     * @param t
-     *            the dto to persist.
+     * @param t the dto to persist.
      */
     void persist(E t);
+
+    void deleteById(PRIMKEY id);
+
 }

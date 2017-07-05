@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Priority;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -40,6 +41,7 @@ import java.util.Set;
 //@Dependent
 @Priority(2)
 @Alternative
+@Dependent
 public class RandomProvider {
     /**
      * A logger.
