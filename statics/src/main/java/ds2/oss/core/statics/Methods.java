@@ -15,12 +15,12 @@
  */
 package ds2.oss.core.statics;
 
+import ds2.oss.core.api.IdAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -261,6 +261,20 @@ public interface Methods {
             }
         }
         return rc;
+    }
+
+    static <F extends IdAware<E>, E> E getIdFromIdAware(F f) {
+        if (f == null) {
+            return null;
+        }
+        return f.getId();
+    }
+
+    static <F extends IdAware<E>, E> List<E> getIdsFromIdAwares(Collection<F> f) {
+        if (size(f) <= 0) {
+            return null;
+        }
+        return f.stream().filter(c -> c != null).map(entity -> entity.getId()).distinct().collect(Collectors.toList());
     }
 
 }

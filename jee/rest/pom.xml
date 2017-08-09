@@ -14,13 +14,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <artifactId>javaee-web-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>ds2.oss.core</groupId>
-      <artifactId>ds2-oss-core-api</artifactId>
-      <version>0.3-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ds2.oss.core</groupId>
+      <artifactId>ds2-oss-core-statics</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
@@ -29,7 +29,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <dependency>
       <groupId>ds2.oss.core</groupId>
       <artifactId>ds2-oss-core-testutils</artifactId>
-      <version>0.3-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>
     </dependency>
