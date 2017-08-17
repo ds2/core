@@ -21,6 +21,8 @@ package ds2.oss.core.api;
  * @param <E> the type of the primary key. Usually Long or something similar.
  * @author dstrauss
  * @version 0.1
+ * @deprecated Replaced by IdAware.
  */
+@Deprecated
 public interface Persistable<E> extends IdAware<E> {
 }
