@@ -23,7 +23,7 @@ package ds2.oss.core.api;
  * @author dstrauss
  * @version 0.2
  */
-public interface PersistenceSupport<E extends Persistable<PRIMKEY>, PRIMKEY> {
+public interface PersistenceSupport<E extends IdAware<PRIMKEY>, PRIMKEY> {
     /**
      * Returns the object with the given id.
      *

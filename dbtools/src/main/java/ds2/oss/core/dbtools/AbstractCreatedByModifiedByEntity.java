@@ -15,15 +15,13 @@
  */
 package ds2.oss.core.dbtools;
 
+import ds2.oss.core.api.EditableCreatedByModifiedByAware;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import ds2.oss.core.api.CreatedByModifiedByAware;
-import ds2.oss.core.api.EditableCreatedByModifiedByAware;
-
 /**
  * @author dstrauss
- *
  */
 @MappedSuperclass
 public abstract class AbstractCreatedByModifiedByEntity extends AbstractCreatedModifiedEntity

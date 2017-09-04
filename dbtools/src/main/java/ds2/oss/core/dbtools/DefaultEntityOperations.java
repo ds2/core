@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.dbtools;
 
-import ds2.oss.core.api.Persistable;
+import ds2.oss.core.api.IdAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,26 +29,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @param <E> the persistable entity
  * @author dstrauss
- * @param <E>
- *            the persistable entity
- *            
  */
 @Deprecated
-public abstract class DefaultEntityOperations<E extends Persistable<Long>> {
+public abstract class DefaultEntityOperations<E extends IdAware<Long>> {
     /**
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     public E getByIdLong(EntityManager em, long id) {
         return em.find(getEntityClass(), Long.valueOf(id));
     }
-    
+
     public E getByIdInt(EntityManager em, int id) {
         return em.find(getEntityClass(), Integer.valueOf(id));
     }
-    
+
     public List<E> getAll(EntityManager em, int size) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<E> cq = cb.createQuery(getEntityClass());
@@ -56,7 +54,7 @@ public abstract class DefaultEntityOperations<E extends Persistable<Long>> {
         TypedQuery<E> q = em.createQuery(cq);
         return getSecureList(q);
     }
-    
+
     protected static <E> List<E> getSecureList(final TypedQuery<E> q) {
         List<E> rc = null;
         try {
@@ -69,19 +67,18 @@ public abstract class DefaultEntityOperations<E extends Persistable<Long>> {
         }
         return rc;
     }
-    
+
     /**
      * This will create a new db entry using the given entity bean. Update operations are done
      * implicit by loading an entity and updating its values.
-     * 
+     * <p>
      * the entity manager
-     * 
-     * @param e
-     *            the entity to create
+     *
+     * @param e the entity to create
      */
     public void create(EntityManager em, E e) {
         em.persist(e);
     }
-    
+
     protected abstract Class<E> getEntityClass();
 }
