@@ -3,10 +3,11 @@ package ds2.oss.core.api.persistence;
 import ds2.oss.core.api.IdAware;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 public abstract class AbstractEntityDtoConverterImpl<PKTYPE, ENTITY extends IdAware<PKTYPE>, DTO extends IdAware<PKTYPE>> {
 
-    public <E extends Exception> ENTITY createEntityFromDto(EntityManager em, DTO dto) throws E {
+    public ENTITY createEntityFromDto(EntityManager em, DTO dto) {
         ENTITY entity = createEntityInstance();
         enrichEntity(dto, entity);
         validateEntity(entity);
@@ -15,15 +16,15 @@ public abstract class AbstractEntityDtoConverterImpl<PKTYPE, ENTITY extends IdAw
     }
 
     /**
-     * Perform some dummy validation.
+     * Perform some dummy validation. Can throw a runtime exception.
      *
      * @param entity the entity to validate
      */
-    protected <E extends Exception> void validateEntity(ENTITY entity) throws E {
+    protected void validateEntity(ENTITY entity) throws InvalidEntityException {
 
     }
 
-    public <E extends Exception> ENTITY updateEntity(EntityManager em, Class<ENTITY> entityClass, PKTYPE id, DTO delta) throws E {
+    public ENTITY updateEntity(EntityManager em, Class<ENTITY> entityClass, PKTYPE id, DTO delta) throws InvalidEntityException {
         ENTITY foundEntity = JpaSupport.findById(em, entityClass, id);
         if (foundEntity == null) {
             onNotFoundEntity(entityClass, id);
@@ -33,9 +34,18 @@ public abstract class AbstractEntityDtoConverterImpl<PKTYPE, ENTITY extends IdAw
         return foundEntity;
     }
 
-    protected abstract <E extends Exception> void onNotFoundEntity(Class<ENTITY> entityClass, PKTYPE id) throws E;
+    /**
+     * Actions to perform if the given entity could not be found. Implementations can override this behavior.
+     *
+     * @param entityClass the entity class
+     * @param id          the id of the entity
+     * @throws EntityNotFoundException if not found.
+     */
+    protected void onNotFoundEntity(Class<ENTITY> entityClass, PKTYPE id) throws EntityNotFoundException {
+        throw new EntityNotFoundException("Could not find entity " + entityClass.getName() + " with id of " + id);
+    }
 
-    protected abstract <E extends Exception> void enrichEntity(DTO dto, ENTITY entity) throws E;
+    protected abstract void enrichEntity(DTO dto, ENTITY entity) throws InvalidEntityException;
 
     /**
      * Returns a new instance of this entity. Typically, this will return something like  new ENTITY() but
