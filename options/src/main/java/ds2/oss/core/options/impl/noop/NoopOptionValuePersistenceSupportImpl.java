@@ -15,23 +15,22 @@
  */
 package ds2.oss.core.options.impl.noop;
 
-import java.lang.invoke.MethodHandles;
-
-import javax.enterprise.context.ApplicationScoped;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.api.options.OptionValueStage;
+import ds2.oss.core.api.persistence.OperationalContext;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.ApplicationScoped;
+import java.lang.invoke.MethodHandles;
 
 /**
  * Simple noop option value persistence support.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -41,7 +40,7 @@ public class NoopOptionValuePersistenceSupportImpl implements NumberedOptionValu
      * a logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#persist(ds2.oss.core.api.Persistable)
@@ -76,5 +75,5 @@ public class NoopOptionValuePersistenceSupportImpl implements NumberedOptionValu
         LOG.info("Using non-operational method! Please reconfigure injection!");
         return null;
     }
-    
+
 }

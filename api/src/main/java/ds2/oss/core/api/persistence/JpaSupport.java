@@ -47,10 +47,20 @@ public interface JpaSupport {
      * @param e  the entity to delete
      * @return TRUE
      */
-    static <E extends IdAware<Long>> boolean deleteEntity(
+    static <E extends IdAware<?>> boolean deleteEntity(
             final EntityManager em, final E e) {
         em.remove(e);
         return true;
+    }
+
+    static <E extends IdAware<?>> boolean deleteEntity(
+            final EntityManager em, Class<E> entityClass, Object id) {
+        E entity = em.find(entityClass, id);
+        if (entity != null) {
+            em.remove(entity);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -63,8 +73,7 @@ public interface JpaSupport {
      */
     static <E extends IdAware<?>> E findById(
             final EntityManager em, final Class<E> c, @NotNull final Object id) {
-        E rc = null;
-        rc = em.find(c, id);
+        E rc = em.find(c, id);
         return rc;
     }
 
@@ -82,9 +91,11 @@ public interface JpaSupport {
         try {
             em.persist(e);
         } catch (EntityExistsException e2) {
-            LOG.log(Level.SEVERE, "This entity already exists!", e2);
+            LOG.log(Level.FINE, "This entity already exists!", e2);
+            throw e2;
         } catch (RuntimeException e2) {
-            LOG.log(Level.SEVERE, "A strange runtime error occurred!", e2);
+            LOG.log(Level.FINE, "A strange runtime error occurred!", e2);
+            throw e2;
         }
         return rc;
     }

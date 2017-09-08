@@ -15,6 +15,10 @@
  */
 package ds2.oss.core.api;
 
+import ds2.oss.core.api.persistence.InvalidEntityException;
+
+import javax.persistence.EntityNotFoundException;
+
 /**
  * A persistence support contract. This can be a database, or a cache instance. Or ElasticSearch.
  *
@@ -22,7 +26,11 @@ package ds2.oss.core.api;
  * @param <PRIMKEY> the entity primary key type
  * @author dstrauss
  * @version 0.2
+ * @see ds2.oss.core.api.persistence.JpaSupport JpaSupport
+ * @see JpaCrudFacade JpaCrudFacade
+ * @deprecated Due to some refactorings this contract will be removed in the future.
  */
+@Deprecated
 public interface PersistenceSupport<E extends IdAware<PRIMKEY>, PRIMKEY> {
     /**
      * Returns the object with the given id.
@@ -30,15 +38,15 @@ public interface PersistenceSupport<E extends IdAware<PRIMKEY>, PRIMKEY> {
      * @param e the id
      * @return the found object, or null
      */
-    E getById(PRIMKEY e);
+    E getById(PRIMKEY e) throws EntityNotFoundException;
 
     /**
      * Persists the given dto.
      *
      * @param t the dto to persist.
      */
-    void persist(E t);
+    void persist(E t) throws InvalidEntityException;
 
-    void deleteById(PRIMKEY id);
+    void deleteById(PRIMKEY id) throws EntityNotFoundException;
 
 }

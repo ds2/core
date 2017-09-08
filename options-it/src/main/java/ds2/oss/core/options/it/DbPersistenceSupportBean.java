@@ -28,6 +28,7 @@ import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author dstrauss
@@ -63,7 +64,7 @@ public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportB
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(@NotNull Long id) {
         em.remove(em.find(OptionEntity.class, id));
     }
 

@@ -18,8 +18,11 @@
  */
 package ds2.oss.core.base.itest;
 
+import ds2.oss.core.api.persistence.InvalidEntityException;
+
 import javax.ejb.*;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -46,18 +49,18 @@ public class DummyPersistenceBean implements DummyPersistence {
     }
 
     @Override
-    public void persist(final DummyEntity t) {
+    public DummyEntity getById(final Long e) {
+        return em.find(DummyEntity.class, e);
+    }
+
+    @Override
+    public void persist(DummyEntity t) throws InvalidEntityException {
         em.persist(t);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws EntityNotFoundException {
         em.remove(em.find(DummyEntity.class, id));
-    }
-
-    @Override
-    public DummyEntity getById(final Long e) {
-        return em.find(DummyEntity.class, e);
     }
 
 }

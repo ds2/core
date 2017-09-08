@@ -31,10 +31,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by dstrauss on 19.06.15.
@@ -88,7 +86,7 @@ public class MyEntityServiceBean extends AbstractPersistenceSupportImpl<MyEntity
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaDelete<MyEntity> cq = cb.createCriteriaDelete(MyEntity.class);
         Root<MyEntity> root = cq.from(MyEntity.class);
-        cq.where(cb.equal(root.get("id"),id));
+        cq.where(cb.equal(root.get("id"), id));
         em.createQuery(cq).executeUpdate();
     }
 
