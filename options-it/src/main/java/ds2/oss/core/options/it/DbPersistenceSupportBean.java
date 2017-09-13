@@ -64,7 +64,7 @@ public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportB
     }
 
     @Override
-    public void deleteById(@NotNull Long id) {
+    public void deleteById(Long id) {
         em.remove(em.find(OptionEntity.class, id));
     }
 

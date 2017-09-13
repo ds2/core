@@ -34,13 +34,13 @@ import java.util.Set;
 
 /**
  * An abstract EJB to be used for database transactional wrapping.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 public abstract class AbstractOptionsPersistenceSupportBean
-    extends
-    AbstractPersistenceSupportImpl<OptionDto<Long, ?>, Long>implements NumberedOptionsPersistenceSupport {
+        extends
+        AbstractPersistenceSupportImpl<OptionDto<Long, ?>, Long> implements NumberedOptionsPersistenceSupport {
     /**
      * A logger.
      */
@@ -55,20 +55,18 @@ public abstract class AbstractOptionsPersistenceSupportBean
      */
     @Inject
     private Validator val;
-    
+
     @Override
     public OptionDto<Long, Object> getById(final Long e) {
         throw new UnsupportedOperationException(
-            "getById is not supported for options! Use the OptionIdentifier instead.");
+                "getById is not supported for options! Use the OptionIdentifier instead.");
     }
-    
+
     /**
      * Persists a given entry into the database.
-     * 
-     * @param em
-     *            the entity manager
-     * @param t
-     *            the option to store
+     *
+     * @param em the entity manager
+     * @param t  the option to store
      */
     protected void performPersist(final EntityManager em, final OptionDto<Long, ?> t) {
         LOG.debug("Trying to persist given dto {}", t);
@@ -95,16 +93,13 @@ public abstract class AbstractOptionsPersistenceSupportBean
         t.setModified(ent.getModified());
         t.setModifierName(ent.getModifierName());
     }
-    
+
     /**
      * Finds an option.
-     * 
-     * @param em
-     *            the entity manager
-     * @param ident
-     *            the option identifier
-     * @param <V>
-     *            the value of the option
+     *
+     * @param em    the entity manager
+     * @param ident the option identifier
+     * @param <V>   the value of the option
      * @return the found option
      */
     protected <V> OptionDto<Long, V> findOptionByIdentifier(final EntityManager em, final OptionIdentifier<V> ident) {
@@ -116,22 +111,18 @@ public abstract class AbstractOptionsPersistenceSupportBean
         LOG.debug("Found entity is {}", foundOption);
         return parser.toDto(foundOption, ident);
     }
-    
+
     /**
      * Sets a new option stage for a given option.
-     * 
-     * @param em
-     *            the entity manager
-     * @param ident
-     *            the option identifier
-     * @param newStage
-     *            the new stage value
-     * @param <V>
-     *            the value of the option
+     *
+     * @param em       the entity manager
+     * @param ident    the option identifier
+     * @param newStage the new stage value
+     * @param <V>      the value of the option
      * @return the updated option
      */
     protected <V> OptionDto<Long, V> setOptionStage(final EntityManager em, final OptionIdentifier<V> ident,
-        final OptionStage newStage) {
+                                                    final OptionStage newStage) {
         final TypedQuery<OptionEntity> q = em.createNamedQuery(QUERY_FINDOPTIONBYIDENTIFIER, OptionEntity.class);
         q.setParameter("optionName", ident.getOptionName());
         q.setParameter("appName", ident.getApplicationName());
@@ -141,4 +132,5 @@ public abstract class AbstractOptionsPersistenceSupportBean
         em.merge(foundOption);
         return parser.toDto(foundOption, ident);
     }
+
 }

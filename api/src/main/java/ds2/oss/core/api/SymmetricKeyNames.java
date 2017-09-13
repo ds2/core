@@ -15,21 +15,23 @@
  */
 package ds2.oss.core.api;
 
+import ds2.oss.core.api.crypto.AlgorithmNamed;
+
 /**
  * All known instance names for secret key factories.
  *
- * @version 0.2
  * @author dstrauss
+ * @version 0.2
  */
-public enum SymmetricKeyNames {
+public enum SymmetricKeyNames implements AlgorithmNamed {
     /**
      * The PBKDF2 with SHA256.
      */
-    PBKDF512("PBKDF2WithHmacSHA512", 128*8),
+    PBKDF512("PBKDF2WithHmacSHA512", 128 * 8),
     /**
      * The PBKDF2 with SHA256.
      */
-    PBKDF256("PBKDF2WithHmacSHA256", 64*8),
+    PBKDF256("PBKDF2WithHmacSHA256", 64 * 8),
     /**
      * The PBKDF2 algorithm.
      */
@@ -46,25 +48,14 @@ public enum SymmetricKeyNames {
     /**
      * INits the enum value.
      *
-     * @param n
-     *            the hash name
-     * @param kl
-     *            the key length
+     * @param n  the hash name
+     * @param kl the key length
      */
-    private SymmetricKeyNames(final String n, final int kl) {
+    SymmetricKeyNames(final String n, final int kl) {
         name = n;
         keyLength = kl;
     }
-
-    /**
-     * Returns the hash algorithm name.
-     *
-     * @return the hash algorithm name
-     */
-    public String getName() {
-        return name;
-    }
-
+    
     /**
      * Returns the suggested key length.
      *
@@ -72,5 +63,10 @@ public enum SymmetricKeyNames {
      */
     public int getSuggestedKeyLength() {
         return keyLength;
+    }
+
+    @Override
+    public String getAlgorithmName() {
+        return name;
     }
 }

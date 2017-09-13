@@ -15,8 +15,10 @@
  */
 package ds2.oss.core.api;
 
+import ds2.oss.core.api.crypto.HashedResult;
+
 /**
- * Contract for a hash generator.
+ * Contract for a hash generator for message digests.
  *
  * @author dstrauss
  * @version 0.4
@@ -25,11 +27,11 @@ public interface HashGenerator {
     /**
      * Generates a hash value from the given bytes.
      *
-     * @param b
-     *            the bytes to hash
-     * @param g
-     *            the algorithm to use
+     * @param b the bytes to hash
+     * @param g the algorithm to use (one of the message digests)
      * @return the hash value
      */
     byte[] getHashValue(byte[] b, HashAlgorithm g);
+
+    HashedResult encode(HashAlgorithm algorithm, byte[] salt, int rounds, byte[] valueToEncode);
 }

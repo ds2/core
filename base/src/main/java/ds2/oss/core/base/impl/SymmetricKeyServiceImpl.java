@@ -15,28 +15,26 @@
  */
 package ds2.oss.core.base.impl;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import ds2.oss.core.api.SecurityBaseData;
+import ds2.oss.core.api.SymmetricKeyNames;
+import ds2.oss.core.api.SymmetricKeyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.SecurityBaseData;
-import ds2.oss.core.api.SymmetricKeyNames;
-import ds2.oss.core.api.SymmetricKeyService;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 
 /**
  * The implementation for the symmetric key service.
  *
- * @version 0.2
  * @author dstrauss
+ * @version 0.2
  */
 @ApplicationScoped
 public class SymmetricKeyServiceImpl implements SymmetricKeyService {
@@ -52,7 +50,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
 
     @Override
     public byte[] performHashing(final char[] origin, final byte[] salt, final int iterationCount,
-        final SymmetricKeyNames n) {
+                                 final SymmetricKeyNames n) {
         return performHashing(origin, salt, iterationCount, n, n.getSuggestedKeyLength());
     }
 
@@ -67,7 +65,7 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
         }
         byte[] rc = null;
         try {
-            final SecretKeyFactory skf = SecretKeyFactory.getInstance(n.getName());
+            final SecretKeyFactory skf = SecretKeyFactory.getInstance(n.getAlgorithmName());
             final KeySpec ks = new PBEKeySpec(origin, salt, iterationCount, keyLength);
             final SecretKey erg = skf.generateSecret(ks);
             rc = erg.getEncoded();
