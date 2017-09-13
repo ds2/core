@@ -45,7 +45,7 @@ public class SslServerSnooperTestClient extends AbstractInjectionEnvironment {
         SslServerSnooperTestClient instance=new SslServerSnooperTestClient();
         instance.onSuiteStart();
         final SslServerSnooper to = instance.getInstance(SslServerSnooper.class);
-        final String hostname = args.length > 0 ? args[0] : "tools.designskins.com";
+        final String hostname = args.length > 0 ? args[0] : "foundation.qot.io";
         final X509Certificate[] certs = to.getServerCertificates(hostname, 443);
         System.out.println("Certs: " + certs);
         instance.onSuiteEnd();
