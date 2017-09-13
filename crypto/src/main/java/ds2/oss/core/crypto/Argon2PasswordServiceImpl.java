@@ -11,6 +11,7 @@ import javax.enterprise.context.Dependent;
 import java.lang.invoke.MethodHandles;
 
 @Dependent
+@ds2.oss.core.api.crypto.Argon2
 public class Argon2PasswordServiceImpl implements PasswordService {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private Argon2 argon2;

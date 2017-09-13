@@ -1,35 +1,39 @@
 package ds2.oss.core.crypto.test;
 
+import ds2.oss.core.api.crypto.Argon2;
 import ds2.oss.core.api.crypto.CoreCryptoException;
 import ds2.oss.core.api.crypto.PasswordService;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
+import javax.enterprise.util.AnnotationLiteral;
 
-public class PwServiceImplTest extends AbstractInjectionEnvironment {
-    private PasswordService to;
+import static org.testng.Assert.*;
+
+public class Argon2PasswordServiceImplTest extends AbstractInjectionEnvironment {
+    private PasswordService argon2To;
 
     @BeforeClass
     public void onClass() {
-        to = getInstance(PasswordService.class);
+        argon2To = getInstance(PasswordService.class, new AnnotationLiteral<Argon2>() {
+        });
     }
 
     @Test
     public void testCreateNull() throws CoreCryptoException {
-        assertNull(to.encryptPw(null));
+        assertNull(argon2To.encryptPw(null));
     }
 
     @Test
     public void testCreateEmpty() throws CoreCryptoException {
-        assertNull(to.encryptPw("".toCharArray()));
+        assertNull(argon2To.encryptPw("".toCharArray()));
     }
 
     @Test
     public void testCreate1() throws CoreCryptoException {
-        String s = to.encryptPw("test".toCharArray());
+        String s = argon2To.encryptPw("test".toCharArray());
         assertNotNull(s);
+        assertTrue(s.indexOf("argon2") > 0);
     }
 }
