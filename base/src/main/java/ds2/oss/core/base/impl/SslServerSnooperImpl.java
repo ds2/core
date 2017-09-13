@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.security.*;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -108,6 +109,20 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         sb.append("\nSerial: ").append(cert.getSerialNumber());
         sb.append("\nFrom: ").append(cert.getNotBefore());
         sb.append("\nUntil: ").append(cert.getNotAfter());
+        try {
+            sb.append("\nFingerprint: ");
+            for (byte b : MessageDigest.getInstance("SHA1").digest(cert.getEncoded())) {
+                sb.append(String.format(":%02X", b));
+            }
+            sb.append("\nFingerprint SHA256: ");
+            for (byte b : MessageDigest.getInstance("SHA-256").digest(cert.getEncoded())) {
+                sb.append(String.format(":%02X", b));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            LOG.warn("Unknown message digest!", e);
+        } catch (CertificateEncodingException e) {
+            LOG.warn("Error when encoding the certificate!", e);
+        }
         return sb.toString();
     }
 
