@@ -43,6 +43,11 @@ public interface SecurityBaseData {
      * Returns the salt to use.
      *
      * @return the salt value
+     * @see ds2.oss.core.api.crypto.BytesProvider
+     * @deprecated Salts should be used only once. Use the ByteProvider instead!
      */
+    @Deprecated
     byte[] getSalt();
+
+    int getCpuCount();
 }

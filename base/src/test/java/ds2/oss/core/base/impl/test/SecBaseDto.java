@@ -15,19 +15,18 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import java.nio.charset.Charset;
+import ds2.oss.core.api.SecurityBaseData;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
-
-import ds2.oss.core.api.SecurityBaseData;
 import javax.enterprise.inject.Alternative;
+import java.nio.charset.Charset;
 
 /**
  * The dto.
- * 
- * @version 0.2
+ *
  * @author dstrauss
+ * @version 0.2
  */
 @Alternative
 @ApplicationScoped
@@ -37,7 +36,12 @@ public class SecBaseDto implements SecurityBaseData {
     public byte[] getSalt() {
         return "mySaltedWord".getBytes(Charset.forName("utf-8"));
     }
-    
+
+    @Override
+    public int getCpuCount() {
+        return 1;
+    }
+
     @Override
     public int getMinIteration() {
         return 20000;
@@ -45,6 +49,6 @@ public class SecBaseDto implements SecurityBaseData {
 
     @Override
     public byte[] getInitVector() {
-    return new byte[0];
-  }
+        return new byte[0];
+    }
 }

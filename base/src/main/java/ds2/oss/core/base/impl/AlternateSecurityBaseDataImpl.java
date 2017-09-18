@@ -19,7 +19,6 @@ import ds2.oss.core.api.SecurityBaseData;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.interceptor.Interceptor;
@@ -64,6 +63,11 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
     @Override
     public byte[] getSalt() {
         return salt;
+    }
+
+    @Override
+    public int getCpuCount() {
+        return 1;
     }
 
     /**
