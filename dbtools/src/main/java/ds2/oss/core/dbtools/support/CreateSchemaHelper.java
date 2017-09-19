@@ -36,7 +36,7 @@ public class CreateSchemaHelper {
                 throw new IllegalStateException("Currently not suported: " + type);
         }
         persistenceProperties.put("javax.persistence.schema-generation.scripts.action", "drop-and-create");
-        String filenameBase = persistenceUnitName + " " + type.name().toLowerCase();
+        String filenameBase = persistenceUnitName + "_" + type.name().toLowerCase();
         String dropSql = filenameBase + "_dropStatements.sql";
         String createSql = filenameBase + "_createStatements.sql";
         if (!Files.exists(baseDir)) {
@@ -53,6 +53,6 @@ public class CreateSchemaHelper {
         persistenceProperties.put("javax.persistence.schema-generation.scripts.create-target", createPath.toAbsolutePath());
         LOG.debug("Starting generator..");
         Persistence.generateSchema(persistenceUnitName, persistenceProperties);
-        LOG.info("Hopefully done now; files should be in {}", baseDir);
+        LOG.info("Hopefully done now; files should be in {}, {} and {}", new Object[]{baseDir.toAbsolutePath(), dropPath, createPath});
     }
 }
