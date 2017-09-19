@@ -15,7 +15,6 @@
  */
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.SecurityBaseData;
 import ds2.oss.core.api.SymmetricKeyNames;
 import ds2.oss.core.api.SymmetricKeyService;
 import org.slf4j.Logger;
@@ -25,7 +24,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -42,11 +40,10 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(SymmetricKeyServiceImpl.class);
+
     /**
      * The security base data.
      */
-    @Inject
-    private SecurityBaseData baseData;
 
     @Override
     public byte[] performHashing(final char[] origin, final byte[] salt, final int iterationCount,
@@ -77,9 +74,4 @@ public class SymmetricKeyServiceImpl implements SymmetricKeyService {
         return rc;
     }
 
-    @Override
-    public byte[] performHashing(final char[] origin, final SymmetricKeyNames n) {
-        final byte[] rc = performHashing(origin, baseData.getSalt(), baseData.getMinIteration(), n);
-        return rc;
-    }
 }
