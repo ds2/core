@@ -19,6 +19,7 @@ import ds2.oss.core.api.IdAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -275,6 +276,13 @@ public interface Methods {
             return null;
         }
         return f.stream().filter(c -> c != null).map(entity -> entity.getId()).distinct().collect(Collectors.toList());
+    }
+
+    static <E> Collection<E> nonNull(Collection<E> collection) {
+        if (collection == null) {
+            collection = new ArrayList<>(0);
+        }
+        return collection;
     }
 
 }
