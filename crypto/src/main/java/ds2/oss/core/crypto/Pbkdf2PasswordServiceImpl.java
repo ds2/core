@@ -11,13 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.util.Base64;
 
 @Dependent
 @Pbkdf2
+@Alternative
+@Priority(100)
 public class Pbkdf2PasswordServiceImpl implements PasswordService {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Inject

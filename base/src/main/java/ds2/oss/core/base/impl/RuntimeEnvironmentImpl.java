@@ -1,6 +1,6 @@
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.annotations.PropertiesLoader;
+import ds2.oss.core.api.annotations.StringLoader;
 import ds2.oss.core.api.environment.*;
 import ds2.oss.core.statics.Methods;
 
@@ -14,10 +14,10 @@ public class RuntimeEnvironmentImpl implements RuntimeEnvironment {
     private ServerIdentifierProvider identifierProvider;
     private RuntimeConfiguration runtimeConfiguration;
     private Cluster cluster;
-    @PropertiesLoader(sysProp = "ds2CoreClusterId", envProp = "DS2_OSSCORE_CLUSTER_ID")
+    @StringLoader(sysProp = "ds2CoreClusterId", envProp = "DS2_OSSCORE_CLUSTER_ID")
     @Inject
     private String clusterName;
-    @PropertiesLoader(sysProp = "runtimeEnvironment", envProp = "DS2_OSSCORE_RUNTIME_NAME")
+    @StringLoader(sysProp = "runtimeEnvironment", envProp = "DS2_OSSCORE_RUNTIME_NAME")
     @Inject
     private String runtimeConfigurationName;
 
