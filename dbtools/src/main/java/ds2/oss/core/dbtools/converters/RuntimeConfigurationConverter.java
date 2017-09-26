@@ -18,7 +18,7 @@ package ds2.oss.core.dbtools.converters;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 
 /**
  * To convert between runtimeConfig and db data.
@@ -28,10 +28,10 @@ import ds2.oss.core.api.environment.RuntimeConfiguration;
  *
  */
 @Converter
-public class RuntimeConfigurationConverter implements AttributeConverter<RuntimeConfiguration, String> {
+public class RuntimeConfigurationConverter implements AttributeConverter<RuntimeType, String> {
 
     @Override
-    public String convertToDatabaseColumn(final RuntimeConfiguration attribute) {
+    public String convertToDatabaseColumn(final RuntimeType attribute) {
         if (attribute == null) {
             return null;
         }
@@ -39,8 +39,8 @@ public class RuntimeConfigurationConverter implements AttributeConverter<Runtime
     }
 
     @Override
-    public RuntimeConfiguration convertToEntityAttribute(final String dbData) {
-        return RuntimeConfiguration.parseConfig(dbData);
+    public RuntimeType convertToEntityAttribute(final String dbData) {
+        return RuntimeType.parseConfig(dbData);
     }
 
 }

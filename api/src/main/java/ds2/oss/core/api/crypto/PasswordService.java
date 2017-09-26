@@ -8,4 +8,6 @@ public interface PasswordService {
      * @return the hash value to persist.
      */
     String encryptPw(char[] pw) throws CoreCryptoException;
+
+    boolean isValidPassword(String hash, char[] pw);
 }

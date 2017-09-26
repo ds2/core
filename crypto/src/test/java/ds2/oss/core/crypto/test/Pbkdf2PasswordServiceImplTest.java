@@ -36,4 +36,11 @@ public class Pbkdf2PasswordServiceImplTest extends AbstractInjectionEnvironment 
         assertNotNull(s);
         assertTrue(s.indexOf("pbkdf2") >= 0);
     }
+
+    @Test
+    public void testCreateAndValidate() throws CoreCryptoException {
+        String s = pbkdf2To.encryptPw("test".toCharArray());
+        assertNotNull(s);
+        assertTrue(pbkdf2To.isValidPassword(s, "test".toCharArray()));
+    }
 }

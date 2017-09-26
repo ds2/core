@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
 
@@ -49,7 +49,7 @@ public class OptionValueContextDto implements OptionValueContext {
      * The runtime configuration.
      */
     @XmlElement
-    private RuntimeConfiguration configuration;
+    private RuntimeType configuration;
     /**
      * The requested domain.
      */
@@ -87,7 +87,7 @@ public class OptionValueContextDto implements OptionValueContext {
      * @param config
      *            the runtime configuration
      */
-    public OptionValueContextDto(final Cluster c, final RuntimeConfiguration config) {
+    public OptionValueContextDto(final Cluster c, final RuntimeType config) {
         this(c);
         configuration = config;
     }
@@ -102,7 +102,7 @@ public class OptionValueContextDto implements OptionValueContext {
      * @param reqDomain
      *            the requested domain
      */
-    public OptionValueContextDto(final Cluster c, final RuntimeConfiguration config, final String reqDomain) {
+    public OptionValueContextDto(final Cluster c, final RuntimeType config, final String reqDomain) {
         this(c, config);
         requestedDomain = reqDomain;
     }
@@ -120,8 +120,8 @@ public class OptionValueContextDto implements OptionValueContext {
      * @param serverIdentifier
      *            the server identifier
      */
-    public OptionValueContextDto(final Cluster c, final RuntimeConfiguration config, final String reqDomain,
-        final ServerIdentifier serverIdentifier) {
+    public OptionValueContextDto(final Cluster c, final RuntimeType config, final String reqDomain,
+                                 final ServerIdentifier serverIdentifier) {
         this(c, config, reqDomain);
         server = serverIdentifier;
     }
@@ -183,7 +183,7 @@ public class OptionValueContextDto implements OptionValueContext {
      * @see ds2.oss.core.api.options.OptionValueContext#getConfiguration()
      */
     @Override
-    public RuntimeConfiguration getConfiguration() {
+    public RuntimeType getConfiguration() {
         return configuration;
     }
 
@@ -236,7 +236,7 @@ public class OptionValueContextDto implements OptionValueContext {
      * @param configuration
      *            the configuration to set
      */
-    public void setConfiguration(final RuntimeConfiguration configuration) {
+    public void setConfiguration(final RuntimeType configuration) {
         this.configuration = configuration;
     }
 

@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class RuntimeEnvironmentImpl implements RuntimeEnvironment {
     @Inject
     private ServerIdentifierProvider identifierProvider;
-    private RuntimeConfiguration runtimeConfiguration;
+    private RuntimeType runtimeType;
     private Cluster cluster;
     @StringLoader(sysProp = "ds2CoreClusterId", envProp = "DS2_OSSCORE_CLUSTER_ID")
     @Inject
@@ -28,9 +28,9 @@ public class RuntimeEnvironmentImpl implements RuntimeEnvironment {
         } else {
             cluster = new ClusterDto(clusterName);
         }
-        runtimeConfiguration = RuntimeConfiguration.parseConfig(runtimeConfigurationName);
-        if (runtimeConfiguration == null) {
-            runtimeConfiguration = RuntimeConfiguration.LocalDevelopment;
+        runtimeType = RuntimeType.parseConfig(runtimeConfigurationName);
+        if (runtimeType == null) {
+            runtimeType = RuntimeType.LocalDevelopment;
         }
     }
 
@@ -40,8 +40,8 @@ public class RuntimeEnvironmentImpl implements RuntimeEnvironment {
     }
 
     @Override
-    public RuntimeConfiguration getRuntimeConfiguration() {
-        return runtimeConfiguration;
+    public RuntimeType getRuntimeType() {
+        return runtimeType;
     }
 
     @Override

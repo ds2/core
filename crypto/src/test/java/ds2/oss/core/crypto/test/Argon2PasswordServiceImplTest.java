@@ -36,4 +36,11 @@ public class Argon2PasswordServiceImplTest extends AbstractInjectionEnvironment 
         assertNotNull(s);
         assertTrue(s.indexOf("argon2") > 0);
     }
+
+    @Test
+    public void testCreateAndValidate() throws CoreCryptoException {
+        String s = argon2To.encryptPw("test235".toCharArray());
+        assertNotNull(s);
+        assertTrue(argon2To.isValidPassword(s, "test235".toCharArray()));
+    }
 }

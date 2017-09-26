@@ -4,6 +4,7 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import ds2.oss.core.api.SecurityBaseData;
 import ds2.oss.core.api.crypto.PasswordService;
+import ds2.oss.core.statics.Methods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,5 +57,14 @@ public class Argon2PasswordServiceImpl implements PasswordService {
         String hash = argon2.hash(iterations, memory, parallel, pw);
         LOG.debug("Hashed pw data is: {}", hash);
         return hash;
+    }
+
+    @Override
+    public boolean isValidPassword(String hash, char[] pw) {
+        boolean isValid = false;
+        if (!Methods.isBlank(hash) && pw != null) {
+            isValid = argon2.verify(hash, pw);
+        }
+        return isValid;
     }
 }

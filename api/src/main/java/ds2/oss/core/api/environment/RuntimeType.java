@@ -26,8 +26,8 @@ import javax.xml.bind.annotation.XmlType;
  * @version 0.3
  */
 @XmlType(namespace = "http://www.ds2/ns/oss/core/environment")
-@XmlEnum(String.class)
-public enum RuntimeConfiguration {
+@XmlEnum
+public enum RuntimeType {
     /**
      * Alpha.
      */
@@ -63,17 +63,17 @@ public enum RuntimeConfiguration {
      */
     @XmlEnumValue("staging")
     Staging("stg");
+
     /**
      * Parses the given config name to be one of the known configurations.
      *
-     * @param configName
-     *            the config name. This can be the name of the enum, or the shortcode.
+     * @param configName the config name. This can be the name of the enum, or the shortcode.
      * @return the configuration. In case nothing has been found with the given name,
-     *         {@link #LocalDevelopment} will be returned.
+     * {@link #LocalDevelopment} will be returned.
      */
-    public static RuntimeConfiguration parseConfig(final String configName) {
-        RuntimeConfiguration rc = RuntimeConfiguration.LocalDevelopment;
-        for (RuntimeConfiguration c : values()) {
+    public static RuntimeType parseConfig(final String configName) {
+        RuntimeType rc = RuntimeType.LocalDevelopment;
+        for (RuntimeType c : values()) {
             if (c.name().equalsIgnoreCase(configName)) {
                 rc = c;
             }
@@ -92,10 +92,9 @@ public enum RuntimeConfiguration {
     /**
      * Inits the enum.
      *
-     * @param id
-     *            a short identifier string for this runtime name
+     * @param id a short identifier string for this runtime name
      */
-    private RuntimeConfiguration(final String id) {
+    private RuntimeType(final String id) {
         ident = id;
     }
 
