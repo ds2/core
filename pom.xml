@@ -81,6 +81,7 @@
       <module>finance</module>
       <module>owbtest</module>
       <module>codec-genson</module>
+      <module>shiro-jee</module>
   </modules>
   <profiles>
     <profile>
