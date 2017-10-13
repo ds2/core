@@ -1,10 +1,11 @@
 package ds2.oss.core.api;
 
 import ds2.oss.core.api.persistence.AbstractEntityDtoConverterImpl;
+import ds2.oss.core.api.persistence.CorePersistenceException;
 import ds2.oss.core.api.persistence.InvalidEntityException;
 import ds2.oss.core.api.persistence.OperationalContext;
 
-public class DummyEntityDtoImpl extends AbstractEntityDtoConverterImpl<Long, IdAware<Long>, IdAware<Long>> {
+public class DummyEntityDtoImpl extends AbstractEntityDtoConverterImpl<Long, IdAware<Long>, IdAware<Long>, CorePersistenceException> {
 
     @Override
     protected void enrichEntity(IdAware<Long> longIdAware, IdAware<Long> longIdAware2, OperationalContext context) throws InvalidEntityException {
