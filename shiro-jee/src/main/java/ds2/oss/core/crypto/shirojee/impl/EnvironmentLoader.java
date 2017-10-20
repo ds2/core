@@ -2,6 +2,7 @@ package ds2.oss.core.crypto.shirojee.impl;
 
 import ds2.oss.core.crypto.shirojee.api.RealmProvider;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.Session;
@@ -9,6 +10,8 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,15 +25,21 @@ public class EnvironmentLoader {
     private RealmProvider realmProvider;
 
     @Produces
+    @ApplicationScoped
     public SecurityManager createSecurityManager() {
-        LOG.debug("Preparing a security manager here..");
-        SecurityManager securityManager = new DefaultSecurityManager(realmProvider.getRealms());
-//Make the SecurityManager instance available to the entire application via static memory:
-        SecurityUtils.setSecurityManager(securityManager);
-        return SecurityUtils.getSecurityManager();
+        try {
+            LOG.debug("Preparing a security manager here..");
+            return SecurityUtils.getSecurityManager();
+        } catch (UnavailableSecurityManagerException e) {
+            LOG.debug("SecManager not yet available. Try to create one from the realm provider..");
+            SecurityManager securityManager = new DefaultSecurityManager(realmProvider.getRealms());
+            SecurityUtils.setSecurityManager(securityManager);
+            return createSecurityManager();
+        }
     }
 
     @Produces
+    @RequestScoped
     public Subject createSubject() {
         LOG.debug("Preparing a subject here..");
         createSecurityManager();
