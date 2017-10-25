@@ -12,6 +12,7 @@ import java.util.List;
 public class RealmProviderImpl implements RealmProvider {
     @Override
     public List<Realm> getRealms() {
+
         PropertiesRealm realm = new PropertiesRealm();
         realm.setResourcePath("classpath:myUsers.properties");
         realm.onInit();
