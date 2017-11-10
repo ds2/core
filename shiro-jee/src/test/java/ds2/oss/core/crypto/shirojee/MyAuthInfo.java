@@ -9,10 +9,12 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 @Setter
 @Getter
 public class MyAuthInfo implements AuthenticationInfo {
+    private boolean locked;
+    private boolean credentialsExpired;
+
     @Override
     public PrincipalCollection getPrincipals() {
-        PrincipalCollection collection=new SimplePrincipalCollection();
-        collection.
+        PrincipalCollection collection = new SimplePrincipalCollection();
         return collection;
     }
 

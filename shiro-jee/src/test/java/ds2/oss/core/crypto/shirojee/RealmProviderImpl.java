@@ -16,6 +16,7 @@ public class RealmProviderImpl implements RealmProvider {
         PropertiesRealm realm = new PropertiesRealm();
         realm.setResourcePath("classpath:myUsers.properties");
         realm.onInit();
-        return Arrays.asList(realm);
+        MyRealm testRealm = new MyRealm();
+        return Arrays.asList(testRealm, realm);
     }
 }

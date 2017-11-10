@@ -66,13 +66,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean isInRole(String role) {
-        LOG.debug("Checking for role {}", role);
+        LOG.debug("Checking for role {} in subject []", role, subject.getPrincipal());
         boolean rc = false;
         try {
             rc = subject.hasRole(role);
         } catch (AuthorizationException e) {
             LOG.debug("the given permission is wrong for this subject!", e);
         }
+        LOG.debug("Returning check for role: {}", rc);
         return rc;
     }
 

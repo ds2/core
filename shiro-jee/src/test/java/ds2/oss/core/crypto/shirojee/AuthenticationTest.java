@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class AuthenticationTest extends AbstractInjectionEnvironment {
@@ -28,6 +29,27 @@ public class AuthenticationTest extends AbstractInjectionEnvironment {
     public void auth1() {
         boolean b = authenticationService.authenticateBasic("root", "rootPassword".toCharArray());
         assertTrue(b);
+    }
+
+    @Test
+    @ActivateRequestContext
+    public void authMyRealm() {
+        boolean b = authenticationService.authenticateBasic("myuser", "mypw".toCharArray());
+        assertTrue(b);
+    }
+
+    @Test
+    @ActivateRequestContext
+    public void checkMyRealmRole() {
+        assertTrue(authenticationService.authenticateBasic("myuser", "mypw".toCharArray()));
+        assertTrue(authenticationService.isInRole("writer"));
+    }
+
+    @Test
+    @ActivateRequestContext
+    public void checkMyRealmRole2() {
+        assertTrue(authenticationService.authenticateBasic("myuser", "mypw".toCharArray()));
+        assertFalse(authenticationService.isInRole("driver"));
     }
 
     @AfterMethod
