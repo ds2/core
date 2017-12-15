@@ -18,19 +18,16 @@ package ds2.oss.core.api;
 /**
  * The infinispan service.
  *
- * @version 0.3
+ * @param <K> the key type
+ * @param <V> the value type
  * @author dstrauss
- * @param <K>
- *            the key type
- * @param <V>
- *            the value type
+ * @version 0.3
  */
-public interface InfinispanStore<K, V extends Persistable<K>> {
+public interface IdAwareCache<K, V extends IdAware<K>> {
     /**
      * Returns the value with the given key.
      *
-     * @param k
-     *            the key
+     * @param k the key
      * @return the value
      */
     V get(K k);
@@ -38,8 +35,7 @@ public interface InfinispanStore<K, V extends Persistable<K>> {
     /**
      * Stores an item in the cluster.
      *
-     * @param e
-     *            the item to store
+     * @param e the item to store
      * @return the item again
      */
     V store(V e);

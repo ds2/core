@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.InfinispanStore;
+import ds2.oss.core.api.IdAwareCache;
 import ds2.oss.core.api.cache.InfinispanConfig;
 
 /**
@@ -39,7 +39,7 @@ public class MyOptionStoreServiceImpl {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Inject
     @InfinispanConfig
-    private InfinispanStore<String, MyOption> storage;
+    private IdAwareCache<String, MyOption> storage;
     
     @PostConstruct
     public void onInit() {

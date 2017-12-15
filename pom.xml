@@ -82,6 +82,7 @@
       <module>owbtest</module>
       <module>codec-genson</module>
       <module>shiro-jee</module>
+      <module>hazelcast</module>
   </modules>
   <profiles>
     <profile>

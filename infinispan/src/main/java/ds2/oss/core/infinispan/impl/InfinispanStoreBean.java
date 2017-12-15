@@ -25,7 +25,7 @@ import org.infinispan.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.InfinispanStore;
+import ds2.oss.core.api.IdAwareCache;
 import ds2.oss.core.api.Persistable;
 
 /**
@@ -40,7 +40,7 @@ import ds2.oss.core.api.Persistable;
  *            the value type
  */
 @Dependent
-public class InfinispanStoreBean<K, V extends Persistable<K>> implements InfinispanStore<K, V> {
+public class InfinispanStoreBean<K, V extends Persistable<K>> implements IdAwareCache<K, V> {
     /**
      * A logger.
      */

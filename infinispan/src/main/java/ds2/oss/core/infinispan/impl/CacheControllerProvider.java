@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.infinispan.impl;
 
-import ds2.oss.core.api.InfinispanStore;
+import ds2.oss.core.api.IdAwareCache;
 import ds2.oss.core.api.Persistable;
 import ds2.oss.core.api.cache.InfinispanConfig;
 import ds2.oss.core.statics.Methods;
@@ -82,7 +82,7 @@ public class CacheControllerProvider {
     /**
      * Dummy generator for any @{link InfinispanStore}.
      */
-    private <K, V extends Persistable<K>> InfinispanStore<K, V> createInjection(final InjectionPoint p) {
+    private <K, V extends Persistable<K>> IdAwareCache<K, V> createInjection(final InjectionPoint p) {
         LOG.debug("Checking cut point..");
         InfinispanConfig config = p.getAnnotated().getAnnotation(InfinispanConfig.class);
         if (config == null) {
@@ -109,7 +109,7 @@ public class CacheControllerProvider {
     @InfinispanConfig
     @Dependent
     @Any
-    public <V extends Persistable<Long>> InfinispanStore<Long, V> createLongInjection(final InjectionPoint p) {
+    public <V extends Persistable<Long>> IdAwareCache<Long, V> createLongInjection(final InjectionPoint p) {
         return createInjection(p);
     }
 
@@ -123,7 +123,7 @@ public class CacheControllerProvider {
     @Produces
     @InfinispanConfig
     @Dependent
-    public <V extends Persistable<String>> InfinispanStore<String, V> createStringInjection(final InjectionPoint p) {
+    public <V extends Persistable<String>> IdAwareCache<String, V> createStringInjection(final InjectionPoint p) {
         return createInjection(p);
     }
 
