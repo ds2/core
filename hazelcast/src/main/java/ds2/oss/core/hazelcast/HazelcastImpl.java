@@ -15,7 +15,6 @@ public abstract class HazelcastImpl<K, V extends IdAware<K>> implements IdAwareC
     @PostConstruct
     public void onLoad() {
         Config config = new Config();
-        config.set
         HazelcastInstance h = Hazelcast.newHazelcastInstance(config);
         map = h.getMap("my-distributed-map");
     }

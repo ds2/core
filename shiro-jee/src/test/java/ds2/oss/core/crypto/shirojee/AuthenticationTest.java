@@ -24,28 +24,28 @@ public class AuthenticationTest extends AbstractInjectionEnvironment {
         authenticationService = getInstance(AuthenticationService.class);
     }
 
-    @Test
+    @Test(enabled = false)
     @ActivateRequestContext
     public void auth1() {
         boolean b = authenticationService.authenticateBasic("root", "rootPassword".toCharArray());
         assertTrue(b);
     }
 
-    @Test
+    @Test(enabled = false)
     @ActivateRequestContext
     public void authMyRealm() {
         boolean b = authenticationService.authenticateBasic("myuser", "mypw".toCharArray());
         assertTrue(b);
     }
 
-    @Test
+    @Test(enabled = false)
     @ActivateRequestContext
     public void checkMyRealmRole() {
         assertTrue(authenticationService.authenticateBasic("myuser", "mypw".toCharArray()));
         assertTrue(authenticationService.isInRole("writer"));
     }
 
-    @Test
+    @Test(enabled = false)
     @ActivateRequestContext
     public void checkMyRealmRole2() {
         assertTrue(authenticationService.authenticateBasic("myuser", "mypw".toCharArray()));
@@ -57,14 +57,14 @@ public class AuthenticationTest extends AbstractInjectionEnvironment {
         authenticationService.logout();
     }
 
-    @Test
+    @Test(enabled = false)
     @ActivateRequestContext
     public void auth2() {
         boolean b = authenticationService.authenticateBasic("jsmith", "jsmithPassword".toCharArray());
         assertTrue(b);
     }
 
-    @Test
+    @Test(enabled = false)
     @ActivateRequestContext
     public void authorize1() {
         assertTrue(authenticationService.authenticateBasic("jsmith", "jsmithPassword".toCharArray()));
