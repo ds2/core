@@ -15,14 +15,17 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
+import ds2.oss.core.statics.Methods;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A small code base to support date formatting.
@@ -39,6 +42,7 @@ public abstract class AbstractCodecBase {
      * The formatter.
      */
     private SimpleDateFormat sdf;
+    private static final Lock LOCK=new ReentrantLock();
 
     /**
      * Inits the base.
@@ -51,38 +55,47 @@ public abstract class AbstractCodecBase {
     /**
      * Parses a date into a string.
      *
-     * @param d
-     *            the date to format
+     * @param d the date to format
      * @return the string
      */
     public String fromDate(final Date d) {
-        if (d == null) {
-            return null;
+        LOCK.lock();
+        try {
+            if (d == null) {
+                return null;
+            }
+            String rc = null;
+            rc = sdf.format(d);
+            return rc;
+        } finally {
+            LOCK.unlock();
         }
-        String rc = null;
-        rc = sdf.format(d);
-        return rc;
     }
 
     /**
      * Parses a given string into a date object.
      *
-     * @param esDate
-     *            the date string
+     * @param esDate the date string
      * @return the parsed date
      */
     public Date toDate(final String esDate) {
-        Date rc = null;
-        if (esDate == null) {
-            return rc;
-        }
-        LOG.debug("Parsing date {}", esDate);
+        LOCK.lock();
         try {
-            rc = sdf.parse(esDate);
-        } catch (final ParseException e) {
-            LOG.warn("Error when parsing given date!", e);
+            LOG.debug("Trying to convert to date: {}", esDate);
+            Date rc = null;
+            if (!Methods.isBlank(esDate)) {
+                LOG.debug("Parsing date {}", esDate);
+                try {
+                    rc = sdf.parse(esDate);
+                } catch (final ParseException e) {
+                    LOG.warn("Error when parsing given date!", e);
+                }
+            }
+            LOG.debug("Returning date: {}", rc);
+            return rc;
+        } finally {
+            LOCK.unlock();
         }
-        return rc;
     }
 
 }

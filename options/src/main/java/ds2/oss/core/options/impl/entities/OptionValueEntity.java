@@ -34,7 +34,7 @@ import javax.persistence.TableGenerator;
 import javax.persistence.UniqueConstraint;
 
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionValue;
@@ -170,7 +170,7 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
     }
     
     @Override
-    public RuntimeConfiguration getConfiguration() {
+    public RuntimeType getConfiguration() {
         return ctx.getConfiguration();
     }
     
@@ -297,7 +297,7 @@ public class OptionValueEntity implements OptionValue<Long, Object> {
      * @param configuration
      *            the runtime configuration
      */
-    public void setConfiguration(RuntimeConfiguration configuration) {
+    public void setConfiguration(RuntimeType configuration) {
         ctx.setConfiguration(configuration);
     }
     

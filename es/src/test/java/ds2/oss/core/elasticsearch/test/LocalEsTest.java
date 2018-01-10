@@ -15,9 +15,15 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-import java.util.Date;
-import java.util.List;
-
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.api.CoreException;
+import ds2.oss.core.elasticsearch.api.ElasticSearchException;
+import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import ds2.oss.core.elasticsearch.api.ElasticSearchService;
+import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
+import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -26,18 +32,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.CodecException;
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.elasticsearch.api.ElasticSearchException;
-import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
-import ds2.oss.core.elasticsearch.api.ElasticSearchService;
-import ds2.oss.core.elasticsearch.test.dto.CountryDto;
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Tests for the ES service.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -47,7 +47,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(LocalEsTest.class);
-    
+
     /**
      * The test object.
      */
@@ -61,28 +61,24 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
      */
     private static final String indexName = "localesindex";
     /**
-     * The index type name.
-     */
-    private final String indexType = "news";
-    /**
      * The codec.
      */
     private NewsCodec newsCodec;
-    
+
     @AfterClass
     public void onEndClass() {
         to.deleteIndexes(indexName);
     }
-    
+
     /**
      * Actions to perform on class start.
      */
     @BeforeMethod(alwaysRun = true)
     public void onMethod() {
         to = getInstance(ElasticSearchService.class);
-        
+        newsCodec = getInstance(NewsCodec.class, new EsCodecAnnotationLiteral(MyNews.class));
     }
-    
+
     /**
      * Prepares the index.
      */
@@ -93,15 +89,15 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         to.installOrUpdateIndex(indexName, MyNews.class, CountryDto.class);
         LOG.info("Index is online. Continue with test.");
     }
-    
+
     @Test
     public void testExistense() {
         Assert.assertNotNull(to);
     }
-    
+
     /**
      * Test for the get method.
-     * 
+     *
      * @throws CoreException
      */
     @Test(groups = "load")
@@ -112,14 +108,14 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         mn.setMsg("Hello, world, again");
         mn.setPostDate(postDate);
         mn.setTitle("Hello, again");
-        final String id = to.put(indexName, mn, null);
+        final String id = to.put(indexName, mn, newsCodec);
         Assert.assertNotNull(id);
         final MyNews m2 = to.get(indexName, MyNews.class, id);
         Assert.assertNotNull(m2, "News could not be found!");
         Assert.assertNotNull(m2.getPostDate());
         Assert.assertEquals(m2.getPostDate(), postDate);
     }
-    
+
     /**
      * Test to see if the prep data loading works as expected.
      */
@@ -131,7 +127,7 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(n, "No news found!");
         // Assert.assertNotNull(n.getPostDate());
     }
-    
+
     @Test
     public void testPut1() throws ElasticSearchException, CodecException {
         final MyNews mn = new MyNews();
@@ -141,12 +137,12 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         mn.setTitle("Hello, world");
         to.put(indexName, mn, newsCodec);
     }
-    
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testPutNull() throws ElasticSearchException, CodecException {
         to.put(indexName, null, null);
     }
-    
+
     @Test
     public void testPutWithoutCodec() throws ElasticSearchException, CodecException {
         final MyNews mn = new MyNews();
@@ -156,10 +152,10 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         mn.setTitle("Hello, world 2");
         to.put(indexName, mn, null);
     }
-    
+
     /**
      * Test to check if some resources for a given dto class can be found.
-     * 
+     *
      * @throws CoreException
      */
     @Test(groups = "scan")
@@ -167,10 +163,10 @@ public class LocalEsTest extends AbstractInjectionEnvironment {
         final List<MyNews> rc = to.getDefaultData(MyNews.class);
         Assert.assertNotNull(rc);
     }
-    
+
     /**
      * Test for the get method.
-     * 
+     *
      * @throws ElasticSearchException
      * @throws CodecException
      */

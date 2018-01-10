@@ -76,5 +76,10 @@
             <artifactId>ds2-oss-core-math</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.mkammerer</groupId>
+            <artifactId>argon2-jvm</artifactId>
+            <version>2.2</version>
+        </dependency>
     </dependencies>
 </project>

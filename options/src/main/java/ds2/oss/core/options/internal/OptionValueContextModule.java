@@ -21,7 +21,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.options.OptionValueContext;
@@ -72,7 +72,7 @@ public class OptionValueContextModule implements OptionValueContext {
      */
     @Column(name = "ctx_runtime_config")
     @Convert(converter = RuntimeConfigurationConverter.class)
-    private RuntimeConfiguration configuration;
+    private RuntimeType configuration;
     /**
      * The cluster.
      */
@@ -86,7 +86,7 @@ public class OptionValueContextModule implements OptionValueContext {
     }
     
     @Override
-    public RuntimeConfiguration getConfiguration() {
+    public RuntimeType getConfiguration() {
         return configuration;
     }
     
@@ -116,7 +116,7 @@ public class OptionValueContextModule implements OptionValueContext {
      * @param configuration
      *            the configuration to set
      */
-    public void setConfiguration(RuntimeConfiguration configuration) {
+    public void setConfiguration(RuntimeType configuration) {
         this.configuration = configuration;
     }
     

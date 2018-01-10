@@ -30,20 +30,20 @@ public class CreateSchemaHelper {
             case Postgresql:
                 persistenceProperties.put("javax.persistence.database-product-name", "Postgresql");
                 persistenceProperties.put("javax.persistence.database-major-version", "9");
-                persistenceProperties.put("javax.persistence.database-minor-version", "4");
+                persistenceProperties.put("javax.persistence.database-minor-version", "6");
                 break;
             default:
                 throw new IllegalStateException("Currently not suported: " + type);
         }
         persistenceProperties.put("javax.persistence.schema-generation.scripts.action", "drop-and-create");
-        String filenameBase = "jpa21_schemagen_" + type.name().toLowerCase();
+        String filenameBase = persistenceUnitName + "_" + type.name().toLowerCase();
         String dropSql = filenameBase + "_dropStatements.sql";
         String createSql = filenameBase + "_createStatements.sql";
-        if(!Files.exists(baseDir)){
+        if (!Files.exists(baseDir)) {
             try {
                 Files.createDirectories(baseDir);
             } catch (IOException e) {
-                LOG.error("Error when creating the target directory to write to!",e);
+                LOG.error("Error when creating the target directory to write to!", e);
             }
         }
         Path dropPath = baseDir.resolve(dropSql);
@@ -53,6 +53,6 @@ public class CreateSchemaHelper {
         persistenceProperties.put("javax.persistence.schema-generation.scripts.create-target", createPath.toAbsolutePath());
         LOG.debug("Starting generator..");
         Persistence.generateSchema(persistenceUnitName, persistenceProperties);
-        LOG.info("Hopefully done now; files should be in {}", baseDir);
+        LOG.info("Hopefully done now; files should be in {}, {} and {}", new Object[]{baseDir.toAbsolutePath(), dropPath, createPath});
     }
 }

@@ -15,16 +15,15 @@
  */
 package ds2.oss.core.base.impl;
 
-import java.util.Random;
+import ds2.oss.core.api.SecurityBaseData;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
-import javax.ws.rs.Priorities;
-
-import ds2.oss.core.api.SecurityBaseData;
+import javax.interceptor.Interceptor;
+import java.util.Random;
 
 /**
  * Dummy alternative for the sec base data.
@@ -32,11 +31,12 @@ import ds2.oss.core.api.SecurityBaseData;
  * @author dstrauss
  * @version 0.2
  */
-@ApplicationScoped
+//@ApplicationScoped
 @Alternative
-@Priority(1)
+@Dependent
+@Priority(Interceptor.Priority.APPLICATION + 10)
 public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
-    
+
     /**
      * The init vector.
      */
@@ -51,22 +51,27 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
      * generated!
      */
     private byte[] salt;
-    
+
     @Override
     public byte[] getInitVector() {
         return initVector;
     }
-    
+
     @Override
     public int getMinIteration() {
         return 1000;
     }
-    
+
     @Override
     public byte[] getSalt() {
         return salt;
     }
-    
+
+    @Override
+    public int getCpuCount() {
+        return 1;
+    }
+
     /**
      * Actions to perform after init, after CDI injections.
      */
@@ -75,7 +80,7 @@ public class AlternateSecurityBaseDataImpl implements SecurityBaseData {
         byte[] buffer = new byte[512];
         random.nextBytes(buffer);
         salt = buffer;
-        initVector=new byte[16];
+        initVector = new byte[16];
         random.nextBytes(initVector);
     }
 }

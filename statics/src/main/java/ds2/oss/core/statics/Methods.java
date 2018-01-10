@@ -15,10 +15,14 @@
  */
 package ds2.oss.core.statics;
 
+import ds2.oss.core.api.IdAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by deindesign on 21.12.15.
@@ -134,17 +138,27 @@ public interface Methods {
      */
     @Deprecated
     static boolean isNotBlank(String s) {
-        return s != null && s.trim().length() > 0;
+        return !isBlank(s);
     }
 
     /**
      * Checks if the given string contains some value.
      *
      * @param s the string to check
-     * @return TRUE if not blank, otherwise FALSE.
+     * @return TRUE if blank, otherwise FALSE.
      */
     static boolean isBlank(String s) {
-        return s == null || s.trim().length() <= 0;
+        boolean rc = true;
+        if (s != null && s.trim().length() > 0) {
+            for (char c : s.toCharArray()) {
+                if (!Character.isWhitespace(c)) {
+                    rc = false;
+                    break;
+                }
+            }
+        }
+        return rc;
+
     }
 
     /**
@@ -209,6 +223,66 @@ public interface Methods {
             return collection.size();
         }
         return 0;
+    }
+
+    /**
+     * Returns a shortened version of a given collection.
+     *
+     * @param c        the origin collection
+     * @param maxItems the maximum items to get from the collection to return
+     * @param <E>      the type
+     * @return the shortened collection
+     */
+    static <E> Collection<E> shorten(Collection<E> c, int maxItems) {
+        if (c == null) {
+            return null;
+        }
+        if (c.size() <= maxItems) {
+            return c;
+        }
+        return c.stream().limit(maxItems).collect(Collectors.toList());
+    }
+
+    /**
+     * Simple validation if the given exception is or has the root cause of
+     * the given exception class.
+     *
+     * @param e   the exception to check
+     * @param eC  the exception class to check
+     * @param <E> the exception type
+     * @return TRUE if the given exception is or has the root cause of the given exception class, otherwise and by default FALSE
+     */
+    static <E extends Exception> boolean isCausedBy(Throwable e, Class<E> eC) {
+        boolean rc = false;
+        if (e != null && eC != null) {
+            if (eC.isAssignableFrom(e.getClass())) {
+                rc = true;
+            } else if (e.getCause() != null) {
+                rc = isCausedBy(e.getCause(), eC);
+            }
+        }
+        return rc;
+    }
+
+    static <F extends IdAware<E>, E> E getIdFromIdAware(F f) {
+        if (f == null) {
+            return null;
+        }
+        return f.getId();
+    }
+
+    static <F extends IdAware<E>, E> List<E> getIdsFromIdAwares(Collection<F> f) {
+        if (size(f) <= 0) {
+            return null;
+        }
+        return f.stream().filter(c -> c != null).map(entity -> entity.getId()).distinct().collect(Collectors.toList());
+    }
+
+    static <E> Collection<E> nonNull(Collection<E> collection) {
+        if (collection == null) {
+            collection = new ArrayList<>(0);
+        }
+        return collection;
     }
 
 }

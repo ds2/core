@@ -33,13 +33,13 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import javax.validation.Validator;
 
+import ds2.oss.core.api.environment.RuntimeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
@@ -94,7 +94,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         }
         if (ctx.getConfiguration() != null) {
             predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.configuration),
-                RuntimeConfiguration.class, RT_CONFIG));
+                RuntimeType.class, RT_CONFIG));
         } else {
             predicates.add(qb.isNull(path.get(OptionValueContextModule_.configuration)));
         }

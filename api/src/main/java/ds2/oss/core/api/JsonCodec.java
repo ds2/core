@@ -26,13 +26,12 @@ public interface JsonCodec extends Codec<Object, String> {
     /**
      * Decodes a given json string into the target class.
      *
-     * @param z
-     *            the json string
-     * @param c
-     *            the target class
+     * @param z the json string
+     * @param c the target class
      * @return the target object
-     * @throws JsonCodecException
-     *             if an error occurred
+     * @throws JsonCodecException if an error occurred
      */
     <E extends Object> E decode(String z, Class<E> c) throws JsonCodecException;
+
+    <E extends Object> E decodeInto(String z, E instance) throws JsonCodecException;
 }

@@ -15,19 +15,18 @@
  */
 package ds2.oss.core.dbtools.it.impl;
 
+import ds2.oss.core.api.EntryState;
+import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
+import ds2.oss.core.dbtools.it.entities.StateEntity;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import ds2.oss.core.api.EntryState;
-import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
-import ds2.oss.core.dbtools.it.entities.StateEntity;
-
 /**
  * @author dstrauss
- *         
  */
 @Stateless
 @TransactionAttribute
@@ -35,11 +34,11 @@ import ds2.oss.core.dbtools.it.entities.StateEntity;
 public class StateEntityOperations extends AbstractPersistenceSupportImpl<StateEntity, Long> {
     @PersistenceContext(unitName = "octest")
     private EntityManager em;
-    
+
     public EntryState getById(long l) {
         return getById(Long.valueOf(l));
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.dbtools.DefaultEntityOperations#getEntityClass()
@@ -48,7 +47,7 @@ public class StateEntityOperations extends AbstractPersistenceSupportImpl<StateE
     protected Class<StateEntity> getEntityClass() {
         return StateEntity.class;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#getById(java.lang.Object)
@@ -57,7 +56,7 @@ public class StateEntityOperations extends AbstractPersistenceSupportImpl<StateE
     public StateEntity getById(Long e) {
         return getSecureFindById(em, e);
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#persist(ds2.oss.core.api.Persistable)
@@ -65,5 +64,10 @@ public class StateEntityOperations extends AbstractPersistenceSupportImpl<StateE
     @Override
     public void persist(StateEntity t) {
         create(em, t);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        em.remove(em.find(StateEntity.class, id));
     }
 }

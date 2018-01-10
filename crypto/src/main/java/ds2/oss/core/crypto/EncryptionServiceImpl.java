@@ -15,10 +15,13 @@
  */
 package ds2.oss.core.crypto;
 
-import java.lang.invoke.MethodHandles;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.SecureRandom;
+import ds2.oss.core.api.AssertHelper;
+import ds2.oss.core.api.annotations.SecureRandomizer;
+import ds2.oss.core.api.crypto.*;
+import ds2.oss.core.api.dto.impl.EncodedContentDto;
+import ds2.oss.core.api.dto.impl.IvEncodedContentDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -27,16 +30,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-
-import ds2.oss.core.api.AssertHelper;
-import ds2.oss.core.api.crypto.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.SecurityBaseData;
-import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.dto.impl.EncodedContentDto;
-import ds2.oss.core.api.dto.impl.IvEncodedContentDto;
+import java.lang.invoke.MethodHandles;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.SecureRandom;
 
 /**
  * The encryption service.
@@ -50,11 +47,8 @@ public class EncryptionServiceImpl implements EncryptionService {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    /**
-     * The security base data.
-     */
     @Inject
-    private SecurityBaseData baseData;
+    private BytesProvider bytesProvider;
     /**
      * A randomizer.
      */
@@ -77,11 +71,11 @@ public class EncryptionServiceImpl implements EncryptionService {
         assrt.assertNotNull(src, "No content given to read from!");
         try {
             final Cipher c = secProv.createCipherInstance(cipher);
-            Ciphers cipherEnum=Ciphers.getByAlgorithmName(cipher.getAlgorithmName());
+            Ciphers cipherEnum = Ciphers.getByAlgorithmName(cipher.getAlgorithmName());
             switch (cipherEnum) {
                 case AES:
                     c.init(Cipher.DECRYPT_MODE, secretKey,
-                        new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
+                            new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
                     break;
                 default:
                     c.init(Cipher.DECRYPT_MODE, secretKey);
@@ -108,12 +102,12 @@ public class EncryptionServiceImpl implements EncryptionService {
         assrt.assertNotNull(cipherAlg, "No cipher given to use!");
         assrt.assertNotNull(src, "No content given to read from!");
         try {
-            Ciphers cipher=Ciphers.getByAlgorithmName(cipherAlg.getAlgorithmName());
+            Ciphers cipher = Ciphers.getByAlgorithmName(cipherAlg.getAlgorithmName());
             final Cipher c = secProv.createCipherInstance(cipher);
-            LOG.debug("Cipher {}, sk={}", new Object[] { c, secretKey });
+            LOG.debug("Cipher {}, sk={}", new Object[]{c, secretKey});
             switch (cipher) {
                 case AES:
-                    c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(baseData.getInitVector()), random);
+                    c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(bytesProvider.createRandomByteArray(16)), random);
                     break;
                 default:
                     c.init(Cipher.ENCRYPT_MODE, secretKey, random);

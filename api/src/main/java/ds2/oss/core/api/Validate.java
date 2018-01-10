@@ -16,7 +16,7 @@
 package ds2.oss.core.api;
 
 /**
- * Created by deindesign on 13.12.15.
+ * Simple validate rules.
  */
 public interface Validate {
     boolean isEmpty(String s);

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.ClusterDto;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueStage;
@@ -69,7 +69,7 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     /**
      * The server runtime configuration for this value.
      */
-    private RuntimeConfiguration configuration;
+    private RuntimeType configuration;
     /**
      * The creation date.
      */
@@ -259,7 +259,7 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     }
 
     @Override
-    public RuntimeConfiguration getConfiguration() {
+    public RuntimeType getConfiguration() {
         return configuration;
     }
 
@@ -391,7 +391,7 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
      * @param configuration
      *            the configuration to set
      */
-    public void setConfiguration(final RuntimeConfiguration configuration) {
+    public void setConfiguration(final RuntimeType configuration) {
         this.configuration = configuration;
     }
 

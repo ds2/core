@@ -117,7 +117,7 @@ public abstract class AbstractInjectionEnvironment {
             }
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
             if (beans != null && !beans.isEmpty()) {
-                beans.stream().forEach((b) -> {
+                beans.forEach((b) -> {
                     LOG.debug("Bean is {}", b);
                 });
             }

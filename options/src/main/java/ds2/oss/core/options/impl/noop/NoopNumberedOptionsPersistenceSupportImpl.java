@@ -15,25 +15,22 @@
  */
 package ds2.oss.core.options.impl.noop;
 
-import java.lang.invoke.MethodHandles;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import java.lang.invoke.MethodHandles;
 
 /**
  * A dummy persistence support for numbered options.
- * 
+ *
  * @author dstrauss
  * @version 0.3
- *
  */
 @ApplicationScoped
 public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOptionsPersistenceSupport {
@@ -41,7 +38,7 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
      * a logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /**
      * Actions to perform at startup.
      */
@@ -49,7 +46,7 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
     public void onClass() {
         LOG.info("Using a non-operational NumberedOptionsPersistenceSupport. Please reconfigure an alternative.");
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.options.api.AdditionalOptionsPersistenceSupport#findOptionByIdentifier(ds2.oss
@@ -60,7 +57,7 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
         LOG.info("Using a non-operational method. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.options.api.AdditionalOptionsPersistenceSupport#setOptionStage(ds2.oss.core.
@@ -71,7 +68,7 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
         LOG.info("Using a non-operational method. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#persist(ds2.oss.core.api.Persistable)
@@ -80,7 +77,12 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
     public void persist(OptionDto<Long, ?> t) {
         LOG.info("Using a non-operational method. Returning dummy value!");
     }
-    
+
+    @Override
+    public void deleteById(Long id) {
+        LOG.info("Using a non-operational method.");
+    }
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.PersistenceSupport#getById(java.lang.Object)
@@ -90,5 +92,5 @@ public class NoopNumberedOptionsPersistenceSupportImpl implements NumberedOption
         LOG.info("Using a non-operational method. Returning dummy value!");
         return null;
     }
-    
+
 }

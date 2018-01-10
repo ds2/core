@@ -15,27 +15,23 @@
  */
 package ds2.oss.core.options.it;
 
-import javax.annotation.Resource;
-import javax.ejb.EJBContext;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-import javax.enterprise.inject.Alternative;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.impl.ejb.AbstractOptionsPersistenceSupportBean;
+import ds2.oss.core.options.impl.entities.OptionEntity;
+
+import javax.annotation.Resource;
+import javax.ejb.*;
+import javax.enterprise.inject.Alternative;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author dstrauss
- *         
  */
 @Stateless(name = "persistenceBean")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -43,8 +39,8 @@ import ds2.oss.core.options.impl.ejb.AbstractOptionsPersistenceSupportBean;
 @Transactional
 @Alternative
 public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportBean
-    implements
-    NumberedOptionsPersistenceSupport {
+        implements
+        NumberedOptionsPersistenceSupport {
     /**
      * The entity manager.
      */
@@ -55,23 +51,28 @@ public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportB
      */
     @Resource
     private EJBContext ctx;
-    
+
     @Override
     public <V> OptionDto<Long, V> findOptionByIdentifier(final OptionIdentifier<V> ident) {
         return findOptionByIdentifier(em, ident);
     }
-    
+
     @Override
     public void persist(final OptionDto<Long, ?> t) {
         t.setModifierName(ctx.getCallerPrincipal().getName());
         performPersist(em, t);
     }
-    
+
+    @Override
+    public void deleteById(Long id) {
+        em.remove(em.find(OptionEntity.class, id));
+    }
+
     @Override
     public <V> OptionDto<Long, V> setOptionStage(final OptionIdentifier<V> ident, final OptionStage newStage) {
         return setOptionStage(em, ident, newStage);
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.dbtools.AbstractPersistenceSupportImpl#getEntityClass()
@@ -81,5 +82,5 @@ public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportB
         // TODO Auto-generated method stub
         return null;
     }
-    
+
 }

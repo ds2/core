@@ -28,6 +28,8 @@ import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
 import ds2.oss.core.elasticsearch.impl.AbstractTypeCodec;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * The country codec.
  * 
@@ -35,6 +37,7 @@ import ds2.oss.core.elasticsearch.test.dto.CountryDto;
  * @version 0.2
  */
 @EsCodec(CountryDto.class)
+@ApplicationScoped
 public class CountryCodec extends AbstractTypeCodec<CountryDto> implements TypeCodec<CountryDto> {
     /**
      * A logger.

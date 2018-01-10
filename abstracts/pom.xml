@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>ds2.oss.core</groupId>
-            <artifactId>ds2-oss-core-api</artifactId>
+            <artifactId>ds2-oss-core-statics</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
