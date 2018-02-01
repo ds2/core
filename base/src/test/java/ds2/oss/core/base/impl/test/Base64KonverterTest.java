@@ -51,7 +51,6 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
 
     @BeforeClass
     public void onInit() {
-        Base64Konverter c = null;
         to = getInstance(Base64Codec.class);
         cs = Charset.forName("utf-8");
     }
