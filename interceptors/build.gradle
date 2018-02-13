@@ -15,4 +15,28 @@ dependencies {
        Please review and delete this closure when resolved. */
     }
 }
+
+task copyMainStuffToResources(type: Copy){
+    from "${buildDir}/classes/java/main"
+    into "${buildDir}/resources/main"
+}
+task copyTestStuffToResources(type: Copy){
+    from "${buildDir}/classes/java/test"
+    into "${buildDir}/resources/test"
+}
+
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${buildDir}/classes/java/main"
+}
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/java/test"
+}
+
+processResources.dependsOn copyResources
+processTestResources.dependsOn copyTestResources, copyResources
+
+test.dependsOn copyTestStuffToResources
+
 test.useTestNG()

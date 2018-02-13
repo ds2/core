@@ -21,7 +21,7 @@ public class MdcServerRequestFilter implements ContainerRequestFilter {
     private String mdcFieldName = "SoaRequestId";
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         String value = requestContext.getHeaderString(requestHeaderFieldName);
         if (Methods.isBlank(value)) {
             value = UUID.randomUUID().toString();

@@ -57,7 +57,7 @@ public class SimpleLogTest {
     public final void onClass() throws NamingException {
         ejbC = EJBContainer.createEJBContainer();
         final Context ic = ejbC.getContext();
-        sb = (SimpleBean) ic.lookup("java:global/interceptors/SimpleBean");
+        sb = (SimpleBean) ic.lookup("java:global/test/SimpleBean");
     }
     
     /**

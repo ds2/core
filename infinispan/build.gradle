@@ -1,8 +1,8 @@
 description = 'DS/2 OSS Core Infinispan'
 dependencies {
-    compile project(':ds2-oss-core-api')
-    compile group: 'org.infinispan', name: 'infinispan-core', version: '6.0.2.Final'
-    compile group: 'org.jboss.weld.se', name: 'weld-se', version: '2.2.4.Final'
+    compile project(':ds2-oss-core-statics')
+    compile group: 'org.infinispan', name: 'infinispan-core', version: '9.+'
+    compile group: 'org.jboss.weld.se', name: 'weld-se', version: '2.+'
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
     testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
     testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
@@ -23,4 +23,28 @@ dependencies {
         Please review and delete this closure when resolved. */
     }
 }
+
+task copyMainStuffToResources(type: Copy){
+    from "${buildDir}/classes/java/main"
+    into "${buildDir}/resources/main"
+}
+task copyTestStuffToResources(type: Copy){
+    from "${buildDir}/classes/java/test"
+    into "${buildDir}/resources/test"
+}
+
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${buildDir}/classes/java/main"
+}
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/java/test"
+}
+
+processResources.dependsOn copyResources
+processTestResources.dependsOn copyTestResources, copyResources
+
+test.dependsOn copyTestStuffToResources
+
 test.useTestNG()

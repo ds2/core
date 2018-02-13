@@ -1,4 +1,4 @@
-rootProject.name = 'core'
+rootProject.name = 'ds2-oss-core-project'
 include ':ds2-oss-core-api'
 include ':ds2-oss-core-base'
 include ':ds2-oss-core-interceptors'
