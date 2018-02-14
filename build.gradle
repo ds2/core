@@ -11,8 +11,9 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    def javaVersion = JavaVersion.VERSION_1_8
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 
 
     repositories {
@@ -26,5 +27,23 @@ subprojects {
 
     configurations.all {
     }
+    task checkJavaVersion {
+        doLast {
+            if (JavaVersion.current() != javaVersion) {
+                String message = "ERROR: Java" + javaVersion + " required but " +
+                        JavaVersion.current() +
+                        " found. Change your JAVA_HOME environment variable."
+                throw new IllegalStateException(message)
+            }
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+        options.encoding = 'UTF-8'
+        compileJava.dependsOn(checkJavaVersion)
+    }
+
 
 }

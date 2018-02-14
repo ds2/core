@@ -26,6 +26,8 @@ include ':ds2-oss-core-jee'
 include ':ds2-oss-core-statics'
 include ':ds2-oss-core-math'
 include ':ds2-oss-core-abstracts'
+include ':ds2-oss-core-grid-hazelcast'
+include ':ds2-oss-core-codec-genson'
 
 project(':ds2-oss-core-api').projectDir = "$rootDir/api" as File
 project(':ds2-oss-core-base').projectDir = "$rootDir/base" as File
@@ -54,3 +56,5 @@ project(':ds2-oss-core-jee').projectDir = "$rootDir/jee" as File
 project(':ds2-oss-core-statics').projectDir = "$rootDir/statics" as File
 project(':ds2-oss-core-math').projectDir = "$rootDir/math" as File
 project(':ds2-oss-core-abstracts').projectDir = "$rootDir/abstracts" as File
+project(':ds2-oss-core-grid-hazelcast').projectDir = "$rootDir/hazelcast" as File
+project(':ds2-oss-core-codec-genson').projectDir = "$rootDir/codec-genson" as File
