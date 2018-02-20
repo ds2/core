@@ -1,0 +1,18 @@
+
+description = 'DS/2 OSS Core Apache Shiro CDI JEE'
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.16.+'
+    compileOnly 'javax:javaee-web-api:7.+'
+    compile project(':ds2-oss-core-api')
+    compile 'org.apache.shiro:shiro-core:1.+'
+    compile 'org.apache.shiro:shiro-jaxrs:1.+'
+    runtime project(':ds2-oss-core-base')
+    testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
+    testCompile 'org.testng:testng:6.+'
+    testCompile 'org.slf4j:slf4j-api'
+    testCompile group: 'org.jboss.weld.se', name: 'weld-se', version:'2.4.+'
+    testCompile 'org.projectlombok:lombok:1.16.+'
+    testRuntime 'ch.qos.logback:logback-classic:1.+'
+}
+
+test.useTestNG()
