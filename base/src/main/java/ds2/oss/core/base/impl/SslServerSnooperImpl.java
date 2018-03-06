@@ -102,7 +102,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
      * @param cert the certificate
      * @return the cert data
      */
-    private static String printCert(final X509Certificate cert) {
+    public static String printCert(final X509Certificate cert) {
         final StringBuilder sb = new StringBuilder();
         sb.append("Subject: ").append(cert.getSubjectDN());
         sb.append("\n").append("Issuer: ").append(cert.getIssuerDN());
@@ -208,7 +208,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final IOException e) {
             LOG.error("Error when reading the SSL sockets.", e);
         }
-
+        LOG.debug("Certificates so far: {}", rc);
         return rc;
     }
 }

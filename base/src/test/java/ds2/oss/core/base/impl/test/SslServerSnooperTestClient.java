@@ -15,39 +15,45 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import java.security.cert.X509Certificate;
-
 import ds2.oss.core.api.SslServerSnooper;
+import ds2.oss.core.base.impl.SslServerSnooperImpl;
 import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+
+import java.security.cert.X509Certificate;
 
 /**
  * A small test client.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 public class SslServerSnooperTestClient extends AbstractInjectionEnvironment {
-    
+
     /**
      * Dummy constructor.
      */
     private SslServerSnooperTestClient() {
         // TODO Auto-generated constructor stub
     }
-    
+
     /**
      * Performs a query to a given server.
-     * 
-     * @param args
-     *            the server hostname
+     *
+     * @param args the server hostname
      */
     public static void main(final String[] args) {
-        SslServerSnooperTestClient instance=new SslServerSnooperTestClient();
+        SslServerSnooperTestClient instance = new SslServerSnooperTestClient();
         instance.onSuiteStart();
         final SslServerSnooper to = instance.getInstance(SslServerSnooper.class);
-        final String hostname = args.length > 0 ? args[0] : "foundation.qot.io";
+        final String hostname = args.length > 0 ? args[0] : "tignum.com";
         final X509Certificate[] certs = to.getServerCertificates(hostname, 443);
         System.out.println("Certs: " + certs);
+        if (certs != null) {
+            for (X509Certificate cert : certs) {
+                System.out.println("Certificate: " + SslServerSnooperImpl.printCert(cert));
+            }
+        }
+
         instance.onSuiteEnd();
     }
 }
