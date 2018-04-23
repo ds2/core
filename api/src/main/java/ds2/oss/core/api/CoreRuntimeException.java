@@ -25,8 +25,6 @@ public class CoreRuntimeException extends RuntimeException {
      *
      * @param d
      *            the error data
-     * @param t
-     *            the cause
      */
     public CoreRuntimeException(final IErrorData d, String s) {
         super(s);

@@ -15,16 +15,11 @@
  */
 package ds2.oss.core.dbtools.modules;
 
-import java.util.Date;
+import ds2.oss.core.api.EditableCreatedModifiedAware;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import ds2.oss.core.api.CreatedModifiedAware;
-import ds2.oss.core.api.EditableCreatedAware;
-import ds2.oss.core.api.EditableCreatedModifiedAware;
+import java.time.LocalDateTime;
 
 /**
  * Embeddable module for the createdModified system.
@@ -34,7 +29,7 @@ import ds2.oss.core.api.EditableCreatedModifiedAware;
  */
 @Embeddable
 public class CreatedModifiedAwareModule extends CreatedAwareModule implements EditableCreatedModifiedAware {
-    
+
     /**
      * The svuid.
      */
@@ -43,31 +38,29 @@ public class CreatedModifiedAwareModule extends CreatedAwareModule implements Ed
      * The modification date.
      */
     @Column(name = "modified", nullable = false, updatable = true)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
-    
+    private LocalDateTime modified;
+
     /**
      * Inits the module.
      */
     public CreatedModifiedAwareModule() {
-        modified = new Date();
+        modified = LocalDateTime.now();
     }
-    
+
     @Override
-    public Date getModified() {
+    public LocalDateTime getModified() {
         return modified;
     }
-    
+
     /**
      * Sets the modification date.
      *
-     * @param m
-     *            the modified to set
+     * @param m the modified to set
      */
-    public void setModified(final Date m) {
+    public void setModified(final LocalDateTime m) {
         modified = m;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -82,12 +75,12 @@ public class CreatedModifiedAwareModule extends CreatedAwareModule implements Ed
         builder.append(")");
         return builder.toString();
     }
-    
+
     /**
      * Updates the modified date.
      */
     public final void touchModified() {
-        modified = new Date();
+        modified = LocalDateTime.now();
     }
-    
+
 }

@@ -16,7 +16,7 @@
 package ds2.oss.core.api;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * A life cycle aware component contract.
@@ -30,12 +30,12 @@ public interface LifeCycleAware extends Serializable {
      *
      * @return the start date
      */
-    Date getValidFrom();
+    LocalDateTime getValidFrom();
 
     /**
      * Returns the stop date from this item.
      *
      * @return the stop date
      */
-    Date getValidTo();
+    LocalDateTime getValidTo();
 }

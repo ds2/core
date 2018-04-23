@@ -27,10 +27,8 @@ public interface SslServerSnooper {
     /**
      * Gets all known certificates sent by the given SSL server.
      *
-     * @param hostname
-     *            the hostname
-     * @param port
-     *            the port
+     * @param hostname the hostname
+     * @param port     the port
      * @return the found certificates
      */
     X509Certificate[] getServerCertificates(String hostname, int port);

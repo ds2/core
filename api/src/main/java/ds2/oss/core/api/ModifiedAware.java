@@ -16,11 +16,10 @@
 package ds2.oss.core.api;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author dstrauss
- *         
  */
 public interface ModifiedAware extends Serializable {
     /**
@@ -28,5 +27,5 @@ public interface ModifiedAware extends Serializable {
      *
      * @return the modification date
      */
-    Date getModified();
+    LocalDateTime getModified();
 }

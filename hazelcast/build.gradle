@@ -1,0 +1,7 @@
+description='The hazelcast module to use this grid'
+
+dependencies {
+    compile project(':ds2-oss-core-api')
+    compile 'com.hazelcast:hazelcast:3.9.1'
+    compileOnly 'javax:javaee-web-api:7.0'
+}

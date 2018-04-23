@@ -1,4 +1,4 @@
-rootProject.name = 'core'
+rootProject.name = 'ds2-oss-core-project'
 include ':ds2-oss-core-api'
 include ':ds2-oss-core-base'
 include ':ds2-oss-core-interceptors'
@@ -21,11 +21,15 @@ include ':ds2-oss-core-testutils'
 include ':ds2-oss-core-dbtools'
 include ':ds2-oss-core-crypto-bouncycastle'
 include ':ds2-oss-core-dbtools-it'
-include ':ds2-oss-core-jee:ds2-oss-core-jee-rest'
-include ':ds2-oss-core-jee'
+include ':ds2-oss-core-jee-rest'
 include ':ds2-oss-core-statics'
 include ':ds2-oss-core-math'
 include ':ds2-oss-core-abstracts'
+include ':ds2-oss-core-grid-hazelcast'
+include ':ds2-oss-core-codec-genson'
+include ':ds2-oss-core-owb-test'
+include ':ds2-oss-core-shiro-jee'
+include ':ds2-oss-core-finance'
 
 project(':ds2-oss-core-api').projectDir = "$rootDir/api" as File
 project(':ds2-oss-core-base').projectDir = "$rootDir/base" as File
@@ -49,8 +53,12 @@ project(':ds2-oss-core-testutils').projectDir = "$rootDir/testutils" as File
 project(':ds2-oss-core-dbtools').projectDir = "$rootDir/dbtools" as File
 project(':ds2-oss-core-crypto-bouncycastle').projectDir = "$rootDir/crypto-bc" as File
 project(':ds2-oss-core-dbtools-it').projectDir = "$rootDir/dbtools-it" as File
-project(':ds2-oss-core-jee:ds2-oss-core-jee-rest').projectDir = "$rootDir/jee/rest" as File
-project(':ds2-oss-core-jee').projectDir = "$rootDir/jee" as File
+project(':ds2-oss-core-jee-rest').projectDir = "$rootDir/jee/rest" as File
 project(':ds2-oss-core-statics').projectDir = "$rootDir/statics" as File
 project(':ds2-oss-core-math').projectDir = "$rootDir/math" as File
 project(':ds2-oss-core-abstracts').projectDir = "$rootDir/abstracts" as File
+project(':ds2-oss-core-grid-hazelcast').projectDir = "$rootDir/hazelcast" as File
+project(':ds2-oss-core-codec-genson').projectDir = "$rootDir/codec-genson" as File
+project(':ds2-oss-core-owb-test').projectDir = "$rootDir/owbtest" as File
+project(':ds2-oss-core-shiro-jee').projectDir="$rootDir/shiro-jee" as File
+project(':ds2-oss-core-finance').projectDir="$rootDir/finance" as File

@@ -15,15 +15,13 @@
  */
 package ds2.oss.core.dbtools;
 
-import java.util.Date;
-
-import javax.persistence.Embedded;
-import javax.persistence.MappedSuperclass;
-
-import ds2.oss.core.api.CreatedModifiedAware;
 import ds2.oss.core.api.EditableCreatedModifiedAware;
 import ds2.oss.core.dbtools.modules.CreatedAwareModule;
 import ds2.oss.core.dbtools.modules.ModifiedAwareModule;
+
+import javax.persistence.Embedded;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 
 /**
  * Created by dstrauss on 18.06.15.
@@ -41,53 +39,51 @@ public abstract class AbstractCreatedModifiedEntity extends AbstractCreatedEntit
     private CreatedAwareModule cam = new CreatedAwareModule();
     @Embedded
     private ModifiedAwareModule mam = new ModifiedAwareModule();
-    
+
     @Override
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return getCam().getCreated();
     }
-    
+
     /**
      * Sets the creation date.
-     * 
-     * @param date
-     *            the creation date.
+     *
+     * @param date the creation date.
      */
     @Override
-    public void setCreated(Date date) {
+    public void setCreated(LocalDateTime date) {
         getCam().setCreated(date);
     }
-    
+
     @Override
-    public Date getModified() {
+    public LocalDateTime getModified() {
         return getMam().getModified();
     }
-    
+
     /**
      * Sets the modified date. Usually you want to use {@link #touchModified()} instead.
-     * 
-     * @param d
-     *            the modification date
+     *
+     * @param d the modification date
      */
     @Override
-    public void setModified(Date d) {
+    public void setModified(LocalDateTime d) {
         getMam().setModified(d);
     }
-    
+
     private ModifiedAwareModule getMam() {
         if (mam == null) {
             mam = new ModifiedAwareModule();
         }
         return mam;
     }
-    
+
     private CreatedAwareModule getCam() {
         if (cam == null) {
             cam = new CreatedAwareModule();
         }
         return cam;
     }
-    
+
     public void touchModified() {
         getMam().touchModified();
     }

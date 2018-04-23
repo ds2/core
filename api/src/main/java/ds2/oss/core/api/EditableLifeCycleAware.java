@@ -1,11 +1,12 @@
 package ds2.oss.core.api;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by dstrauss on 20.06.16.
  */
 public interface EditableLifeCycleAware extends LifeCycleAware {
-    void setValidFrom(Date d);
-    void setValidTo(Date d);
+    void setValidFrom(LocalDateTime d);
+
+    void setValidTo(LocalDateTime d);
 }

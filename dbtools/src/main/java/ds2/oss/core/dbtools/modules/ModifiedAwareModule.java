@@ -15,19 +15,17 @@
  */
 package ds2.oss.core.dbtools.modules;
 
-import java.util.Date;
+import ds2.oss.core.api.EditableModifiedAware;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import ds2.oss.core.api.EditableModifiedAware;
-import ds2.oss.core.api.ModifiedAware;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author dstrauss
- *         
  */
 @Embeddable
 public class ModifiedAwareModule implements EditableModifiedAware {
@@ -40,36 +38,36 @@ public class ModifiedAwareModule implements EditableModifiedAware {
      */
     @Column(name = "modified", nullable = false, updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
-    
+    private LocalDateTime modified;
+
     /**
      * Inits this object.
      */
     public ModifiedAwareModule() {
-        modified = new Date();
+        modified = LocalDateTime.now();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.ModifiedAware#getModified()
      */
     @Override
-    public Date getModified() {
+    public LocalDateTime getModified() {
         return modified;
     }
-    
+
     /**
      * Updates the modified date.
      */
     public final void touchModified() {
-        modified = new Date();
+        modified = LocalDateTime.now();
     }
-    
+
     /**
      * @param d
      */
     @Override
-    public void setModified(Date d) {
+    public void setModified(LocalDateTime d) {
         if (d != null) {
             modified = d;
         }

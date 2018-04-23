@@ -1,30 +1,83 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath 'ds2.gradle.plugins.base:ds2-gradle-base-plugin:0.0.4-SNAPSHOT'
+    }
+}
+
 plugins {
     id 'net.researchgate.release' version '2.4.1'
+    id "nebula.dependency-lock" version "5.0.4"
+    //id 'nebula.release' version '6.0.0'
+    id "nebula.resolution-rules" version "5.1.1"
+    //id 'nebula.nebula-bintray' version '3.5.2'
+    id "nebula.metrics" version "6.0.0"
+    id "nebula.source-jar" version "7.0.0"
+    id "nebula.javadoc-jar" version "7.0.0"
+    id "nebula.project" version "3.4.1"
+
 }
+
+apply plugin: 'ds2.base'
+apply plugin: 'nebula.dependency-lock'
+//apply plugin: 'nebula-aggregate-javadocs'
+
+base {
+    javaVersion = JavaVersion.VERSION_1_8
+}
+
 
 allprojects {
     apply plugin: 'maven'
+    //apply plugin: 'nebula.javadoc-jar'
+    //apply plugin: 'nebula.source-jar'
+    //apply plugin: 'nebula.release'
+    //apply plugin: 'nebula.bintray'
+    //apply plugin: 'nebula.project-plugin'
+    apply plugin: 'nebula.maven-publish'
 
     group = 'ds2.oss.core'
     version = project.version
-}
-
-subprojects {
-    apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
 
     repositories {
         mavenLocal()
         jcenter()
+        //maven { url "https://dl.bintray.com/dstrauss/ds2-oss" }
+        maven { url "https://maven.java.net/content/groups/promoted" }
+        //maven { url "https://commondatastorage.googleapis.com/ds2/mvn/oss/releases" }
         mavenCentral()
 
-        maven { url "https://commondatastorage.googleapis.com/ds2/mvn/oss/releases" }
-        maven { url "https://maven.java.net/content/groups/promoted" }
     }
+}
+
+subprojects {
+    apply plugin: 'java'
+//    def javaVersion = JavaVersion.VERSION_1_8
+//    sourceCompatibility = javaVersion
+//    targetCompatibility = javaVersion
 
     configurations.all {
     }
+//    task checkJavaVersion {
+//        doLast {
+//            if (JavaVersion.current() != javaVersion) {
+//                String message = "ERROR: Java" + javaVersion + " required but " +
+//                        JavaVersion.current() +
+//                        " found. Change your JAVA_HOME environment variable."
+//                throw new IllegalStateException(message)
+//            }
+//        }
+//    }
+//
+//    tasks.withType(JavaCompile) {
+//        sourceCompatibility = javaVersion
+//        targetCompatibility = javaVersion
+//        options.encoding = 'UTF-8'
+//        compileJava.dependsOn(checkJavaVersion)
+//    }
+
 
 }
