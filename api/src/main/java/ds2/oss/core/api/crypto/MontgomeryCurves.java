@@ -8,7 +8,6 @@ import java.math.BigInteger;
 public enum MontgomeryCurves implements ECMontgomeryCurveCryptoData{
     /**
      * The montgomery 221 curve.
-     *  p=2^221 − 3
      */
     M221(new BigInteger("117050"),new BigInteger("1"),new BigInteger("2").pow(221).subtract(new BigInteger("3")),
             new BigInteger("421249166674228746791672110734682167926895081980396304944335052891"),

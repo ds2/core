@@ -29,6 +29,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -111,6 +112,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     public <V> OptionValue<Long, V> createOptionValue(final OptionIdentifier<V> optionIdent,
                                                       final OptionValueContext ctx, final Date scheduleDate, final V value) throws CreateOptionValueException {
         final OptionValueDto<Long, V> optionValue = optionValFac.createOptionValueDto(optionIdent, null, ctx, value);
+        optionValue.setCreatedBy("test");
         if (optionIdent.isEncrypted()) {
             final OptionValueEncrypter<V> ove = encProvider.getForValueType(optionIdent.getValueType());
             if (ove == null) {
@@ -174,6 +176,7 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
             newVal = null;
         }
         final OptionDto<Long, V> option = optionFac.createOptionDto(ident, null, newVal);
+        option.setCreatedBy("test");
         if (ident.isEncrypted()) {
             final OptionValueEncrypter<V> ove = encProvider.getForValueType(ident.getValueType());
             if (ove == null) {
@@ -218,12 +221,12 @@ public class NumberedOptionStorageServiceImpl extends AbstractOptionStorageServi
     public void approveOptionValue(Long id) {
         OptionValueStage newStage = OptionValueStage.Approved;
         OptionValueDto<Long, ?> foundOptionVal = numOptionValDb.getById(id);
-        Date now = new Date();
-        if (foundOptionVal.getValidFrom().before(now)) {
+        LocalDateTime now = LocalDateTime.now();
+        if (foundOptionVal.getValidFrom().isBefore(now)) {
             newStage = OptionValueStage.Live;
         }
         if (foundOptionVal.getValidTo() != null) {
-            if (now.after(foundOptionVal.getValidTo())) {
+            if (now.isAfter(foundOptionVal.getValidTo())) {
                 newStage = OptionValueStage.Expired;
             }
         }

@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.base.itest;
 
-import java.util.Date;
-
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import ds2.oss.core.api.*;
+import ds2.oss.core.api.EditableCreatedModifiedAware;
+import ds2.oss.core.api.EditableStateAware;
+import ds2.oss.core.api.EntryStates;
+import ds2.oss.core.api.Persistable;
 import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
 import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
 /**
  * Dummy entity.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -59,7 +57,7 @@ public class DummyEntity implements Persistable<Long>, EditableStateAware<EntryS
      */
     @Embedded
     private final CreatedModifiedAwareModule times;
-    
+
     /**
      * Inits the entity.
      */
@@ -67,27 +65,27 @@ public class DummyEntity implements Persistable<Long>, EditableStateAware<EntryS
         state = new EntryStatesAwareModule();
         times = new CreatedModifiedAwareModule();
     }
-    
+
     @Override
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return times.getCreated();
     }
-    
+
     @Override
     public EntryStates getEntryState() {
         return state.getEntryState();
     }
-    
+
     @Override
     public Long getId() {
         return id;
     }
-    
+
     @Override
-    public Date getModified() {
+    public LocalDateTime getModified() {
         return times.getModified();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -111,12 +109,12 @@ public class DummyEntity implements Persistable<Long>, EditableStateAware<EntryS
     }
 
     @Override
-    public void setCreated(Date d) {
+    public void setCreated(LocalDateTime d) {
         times.setCreated(d);
     }
 
     @Override
-    public void setModified(Date d) {
+    public void setModified(LocalDateTime d) {
         times.setModified(d);
     }
 }

@@ -15,22 +15,19 @@
  */
 package ds2.oss.core.dbtools;
 
-import java.util.Date;
-
-import javax.persistence.Embedded;
-import javax.persistence.MappedSuperclass;
-
-import ds2.oss.core.api.CreatedAware;
 import ds2.oss.core.api.EditableCreatedAware;
 import ds2.oss.core.dbtools.modules.CreatedAwareModule;
 
+import javax.persistence.Embedded;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
+
 /**
  * @author dstrauss
- *         
  */
 @MappedSuperclass
 public abstract class AbstractCreatedEntity implements EditableCreatedAware {
-    
+
     /**
      * The svuid.
      */
@@ -40,7 +37,7 @@ public abstract class AbstractCreatedEntity implements EditableCreatedAware {
      */
     @Embedded
     private CreatedAwareModule cam = new CreatedAwareModule();
-    
+
     /**
      * Inits this object.
      */
@@ -49,31 +46,30 @@ public abstract class AbstractCreatedEntity implements EditableCreatedAware {
             cam = new CreatedAwareModule();
         }
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.CreatedAware#getCreated()
      */
     @Override
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         if (cam == null) {
             cam = new CreatedAwareModule();
         }
         return cam.getCreated();
     }
-    
+
     /**
      * Sets the creation date.
-     * 
-     * @param date
-     *            the creation date.
+     *
+     * @param date the creation date.
      */
     @Override
-    public void setCreated(Date date) {
+    public void setCreated(LocalDateTime date) {
         if (cam == null) {
             cam = new CreatedAwareModule();
         }
         cam.setCreated(date);
     }
-    
+
 }

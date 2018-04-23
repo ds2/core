@@ -59,7 +59,7 @@ public class DbPersistenceSupportBean extends AbstractOptionsPersistenceSupportB
 
     @Override
     public void persist(final OptionDto<Long, ?> t) {
-        t.setModifierName(ctx.getCallerPrincipal().getName());
+        t.setModifiedBy(ctx.getCallerPrincipal().getName());
         performPersist(em, t);
     }
 

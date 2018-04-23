@@ -30,6 +30,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.validation.Validator;
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -79,7 +80,10 @@ public abstract class AbstractOptionsPersistenceSupportBean
         ent.setApplicationName(t.getApplicationName());
         ent.setDefaultValue(parser.toString(t.getValueType(), t.getDefaultValue()));
         ent.setEncrypted(t.isEncrypted());
-        ent.setModifierName(t.getModifierName());
+        ent.setModified(LocalDateTime.now());
+        ent.setModifiedBy(t.getModifiedBy());
+        ent.setCreated(t.getCreated());
+        ent.setCreatedBy(t.getCreatedBy());
         ent.setOptionName(t.getOptionName());
         ent.setValueType(t.getValueType());
         ent.setStage(t.getStage());
@@ -91,7 +95,7 @@ public abstract class AbstractOptionsPersistenceSupportBean
         t.setId(ent.getId());
         t.setCreated(ent.getCreated());
         t.setModified(ent.getModified());
-        t.setModifierName(ent.getModifierName());
+        t.setModifiedBy(ent.getModifiedBy());
     }
 
     /**

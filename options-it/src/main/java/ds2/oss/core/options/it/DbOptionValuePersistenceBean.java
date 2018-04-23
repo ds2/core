@@ -33,6 +33,7 @@ import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -83,7 +84,7 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
     public void setStage(Long id, OptionValueStage newStage) {
         OptionValueEntity entity = getSecureFindById(em, OptionValueEntity.class, id);
         entity.setStage(newStage);
-        entity.setModified(new Date());
+        entity.setModified(LocalDateTime.now());
         entity.setApproverName(ctx.getCallerPrincipal().getName());
     }
 

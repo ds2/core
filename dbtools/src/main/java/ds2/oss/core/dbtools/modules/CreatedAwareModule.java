@@ -15,19 +15,16 @@
  */
 package ds2.oss.core.dbtools.modules;
 
-import java.util.Date;
+import ds2.oss.core.api.EditableCreatedAware;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import ds2.oss.core.api.CreatedAware;
-import ds2.oss.core.api.EditableCreatedAware;
+import java.time.LocalDateTime;
 
 /**
  * @author dstrauss
- *         
  */
 @Embeddable
 public class CreatedAwareModule implements EditableCreatedAware {
@@ -39,30 +36,29 @@ public class CreatedAwareModule implements EditableCreatedAware {
      * The creation date.
      */
     @Column(name = "created", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created = new Date();
-    
+    private LocalDateTime created = LocalDateTime.now();
+
     /**
      * Inits this object.
      */
     public CreatedAwareModule() {
-        created = new Date();
+        created = LocalDateTime.now();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.CreatedAware#getCreated()
      */
     @Override
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
     @Override
-    public void setCreated(Date d) {
+    public void setCreated(LocalDateTime d) {
         created = d;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -78,5 +74,5 @@ public class CreatedAwareModule implements EditableCreatedAware {
         builder.append(")");
         return builder.toString();
     }
-    
+
 }

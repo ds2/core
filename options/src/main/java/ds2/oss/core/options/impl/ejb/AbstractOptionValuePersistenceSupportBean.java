@@ -16,6 +16,7 @@
 package ds2.oss.core.options.impl.ejb;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -159,11 +160,11 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     private static Predicate getLcaPredicate(CriteriaBuilder cb, Path<LifeCycleAwareModule> p, String value) {
         Predicate rc = null;
         Predicate lessThan =
-            cb.lessThanOrEqualTo(p.get(LifeCycleAwareModule_.validFrom), cb.parameter(Date.class, value));
+            cb.lessThanOrEqualTo(p.get(LifeCycleAwareModule_.validFrom), cb.parameter(LocalDateTime.class, value));
         // and
         Predicate isNull = cb.isNull(p.get(LifeCycleAwareModule_.validTo));
         Predicate greaterThan =
-            cb.greaterThanOrEqualTo(p.get(LifeCycleAwareModule_.validTo), cb.parameter(Date.class, value));
+            cb.greaterThanOrEqualTo(p.get(LifeCycleAwareModule_.validTo), cb.parameter(LocalDateTime.class, value));
         Predicate endDate = cb.or(isNull, greaterThan);
         rc = cb.and(lessThan, endDate);
         // lessThan and (isNull or greaterThan)
@@ -263,7 +264,6 @@ public abstract class AbstractOptionValuePersistenceSupportBean
          */
         restrictions.add(cb.equal(optionValueRoot.get(OptionValueEntity_.refOption), optionQuery));
         restrictions.add(cb.equal(optionValueRoot.get("stage"), OptionValueStage.Live));
-        Date now = new Date();
         restrictions.add(getLcaPredicate(cb, optionValueRoot.get(OptionValueEntity_.lca), "date"));
         getContextPredicate(restrictions, cb, optionValueRoot.get(OptionValueEntity_.ctx), ctx);
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
@@ -281,7 +281,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         // query.setParameter("optionId", optionId);
         query.setParameter("applicationName", ident.getApplicationName());
         query.setParameter("optionName", ident.getOptionName());
-        query.setParameter("date", now);
+        query.setParameter("date", LocalDateTime.now());
         if (ctx.getCluster() != null) {
             query.setParameter(CLUSTER, ctx.getCluster());
         }
@@ -353,11 +353,10 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         final OptionValueEntity e = new OptionValueEntity();
         e.setApproverName(t.getApproverName());
         e.setAuthorName(t.getAuthorName());
+        e.setCreatedBy(t.getCreatedBy());
         e.setStage(t.getStage());
         e.setCluster(t.getCluster());
         e.setConfiguration(t.getConfiguration());
-        e.setCreated(new Date());
-        e.setModified(e.getCreated());
         e.setEncoded(t.getEncoded());
         e.setInitVector(t.getInitVector());
         e.setRefOption(findOptionById(em, t.getOptionReference()));

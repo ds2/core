@@ -27,7 +27,7 @@ public class ClientRequestLogger implements ClientRequestFilter, WriterIntercept
     private final static String PROPKEY = "ds2.oss.core.rest.output.logger";
 
     @Override
-    public void filter(ClientRequestContext requestContext) throws IOException {
+    public void filter(ClientRequestContext requestContext) {
         if (LOG.isDebugEnabled()) {
             LoggingOutputStream<OutputStream> los = new LoggingOutputStream<>(requestContext.getEntityStream());
             los.setMaxLength(maxEntitySize);

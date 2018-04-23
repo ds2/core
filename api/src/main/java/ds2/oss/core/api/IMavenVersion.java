@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.api;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Specialization of a version: a Maven version.
@@ -29,7 +29,7 @@ public interface IMavenVersion extends Version {
      *
      * @return the snapshot date
      */
-    Date getSnapshotDate();
+    LocalDateTime getSnapshotDate();
 
     /**
      * Checks if this version is a snapshot version.

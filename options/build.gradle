@@ -46,6 +46,7 @@ exclude(module: 'tools')
        This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
        Please review and delete this closure when resolved. */
     }
+  compileOnly 'org.projectlombok:lombok:1.16.+'
 }
 
 task copyMainStuffToResources(type: Copy){
