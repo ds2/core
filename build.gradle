@@ -54,7 +54,7 @@ release {
 
 bintray {
     user = 'dstrauss'
-    key = System.getenv('BINTRAY_API_KEY')
+    key = "${bintrayApiKey}"
     pkg {
         repo = 'ds2-oss'
         name = 'Core'
