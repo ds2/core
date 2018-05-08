@@ -74,3 +74,9 @@ You need to run it now via
 
     -Ddd.my.props.file=/home/test/bla/myFile.properties
 
+# Perform a release (developer only)
+
+To perform a release, run
+
+    ./gradlew :clean :release
+

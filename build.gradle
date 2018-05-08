@@ -27,7 +27,7 @@ allprojects {
             licenses = ['Apache-2.0']
             vcsUrl = 'https://bitbucket.org/lexxy23/ds2-oss-core.git'
         }
-        publications = ['myJavaArtifacts']
+        publications = ['mavenJava']
     }
     release {
         git {
