@@ -17,24 +17,6 @@ allprojects {
         maven { url "https://maven.java.net/content/groups/promoted" }
         mavenCentral()
     }
-
-    bintray {
-        user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-        key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-        pkg {
-            repo = 'ds2-oss'
-            name = 'Core'
-            licenses = ['Apache-2.0']
-            vcsUrl = 'https://bitbucket.org/lexxy23/ds2-oss-core.git'
-        }
-        publications = ['mavenJava']
-    }
-    release {
-        git {
-            requireBranch = 'release/0.1'
-        }
-    }
-    afterReleaseBuild.dependsOn bintrayUpload
 }
 
 subprojects {
@@ -45,6 +27,27 @@ subprojects {
 }
 
 defaultTasks 'clean', 'build'
+
+// release stuff
+
+release {
+        git {
+            requireBranch = 'release/0.1'
+        }
+}
+
+bintray {
+        user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+        key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+        pkg {
+            repo = 'ds2-oss'
+            name = 'Core'
+            licenses = ['Apache-2.0']
+            vcsUrl = 'https://bitbucket.org/lexxy23/ds2-oss-core.git'
+        }
+        publications = ['mavenJava']
+}
+afterReleaseBuild.dependsOn bintrayUpload
 
 bintray {
     publications = []
