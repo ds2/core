@@ -42,25 +42,9 @@ subprojects {
     apply plugin: 'maven'
     apply plugin: 'net.researchgate.release'
 
-    publishing {
-        repositories {
-            maven {
-                url "$buildDir/repo"
-            }
-        }
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                artifact sourceJar {
-                    classifier "sources"
-                }
-            }
-        }
-    }
-
 }
 
-defaultTasks 'clean', 'build', 'publishToMavenLocal'
+defaultTasks 'clean', 'build'
 
 bintray {
     publications = []
