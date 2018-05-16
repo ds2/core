@@ -40,7 +40,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
-    apply plugin: 'net.researchgate.release'
+    //apply plugin: 'net.researchgate.release'
 
 }
 
