@@ -51,7 +51,7 @@ bintray {
     configurations = []
 }
 
-task build {}
+//task build {}
 
 beforeReleaseBuild.dependsOn subprojects.install
 //afterReleaseBuild.dependsOn subprojects.uploadArchive
