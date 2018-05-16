@@ -39,7 +39,7 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven-publish'
+    apply plugin: 'maven'
     apply plugin: 'net.researchgate.release'
 
     publishing {
