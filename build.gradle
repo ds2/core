@@ -42,9 +42,9 @@ defaultTasks 'clean', 'build', 'install'
 // release stuff
 
 release {
-        git {
-            requireBranch = 'release/0.1'
-        }
+    git {
+        requireBranch = 'release/0.1'
+    }
 }
 
 afterReleaseBuild.dependsOn bintrayUpload
