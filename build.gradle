@@ -10,7 +10,7 @@ base {
 
 
 allprojects {
-
+    apply plugin: 'maven'
     repositories {
         mavenLocal()
         jcenter()
@@ -21,12 +21,12 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'maven'
+    //apply plugin: 'maven'
     //apply plugin: 'net.researchgate.release'
 
 }
 
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'build', 'install'
 
 // release stuff
 
