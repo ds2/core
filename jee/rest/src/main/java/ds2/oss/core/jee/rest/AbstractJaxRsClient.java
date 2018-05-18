@@ -180,10 +180,10 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
     }
 
     /**
-     * This method should return an error when the client tried to perform a request to a resource
+     * <p>This method should return an error when the client tried to perform a request to a resource
      * but failed. Possibly due to a socket timeout etc. May return null in case no exception should
      * be thrown and the client implementation should deal with a null response.
-     * </P>
+     * </p>
      * Be aware that THIS method is not to deal with HTTP 400 errors etc. This method is only for
      * socket/technical errors.
      *
@@ -196,7 +196,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * Checks the response if it contains an error code.
      *
      * @param response
-     * @throws JaxRsClientException
+     * @throws E if an error occurred
      */
     public void parseResponseForErrors(Response response) throws E {
         if (response == null) {
