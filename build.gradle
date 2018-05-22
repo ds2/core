@@ -2,7 +2,7 @@ plugins {
     id "com.jfrog.bintray" version '1.8.0'
     id 'net.researchgate.release' version '2.7.0'
     id 'ds2.base' version '0.0.6'
-    id 'org.shipkit.java' version '2.0.23'
+    //id 'org.shipkit.java' version '2.0.23'
 }
 
 base {
@@ -43,10 +43,10 @@ subprojects {
         publications {
             coreArtifacts(MavenPublication) {
                 from components.java
-                artifact sourcesJar {
+                artifact createSourceJar {
                     classifier "sources"
                 }
-                artifact javadocJar {
+                artifact createJavadocJar {
                     classifier "javadoc"
                 }
             }
