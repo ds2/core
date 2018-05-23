@@ -11,7 +11,7 @@ base {
 
 
 allprojects {
-    apply plugin: 'maven'
+    apply plugin: 'maven'    
     repositories {
         mavenLocal()
         jcenter()
@@ -37,7 +37,7 @@ subprojects {
     apply plugin: 'maven-publish'
     //apply plugin: "org.shipkit.java"
     //apply plugin: 'maven'
-    apply plugin: 'net.researchgate.release'
+    //apply plugin: 'net.researchgate.release'
 
     publishing {
         publications {
@@ -60,6 +60,8 @@ defaultTasks 'clean', 'build', 'install'
 // release stuff
 
 release {
+    failOnPublishNeeded=false
+    failOnUpdateNeeded=false
     git {
         requireBranch = 'release/0.1'
     }
