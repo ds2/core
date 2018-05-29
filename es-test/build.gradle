@@ -10,3 +10,8 @@ dependencies {
   compileOnly project(':ds2-oss-core-elasticsearch-annotationprocessing')
 }
 test.useTestNG()
+
+bintray {
+    publications = []
+    configurations = []
+}
