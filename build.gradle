@@ -1,17 +1,18 @@
 plugins {
     id "com.jfrog.bintray" version '1.8.0'
-    id 'net.researchgate.release' version '2.7.0'
-    id 'ds2.base' version '0.0.6'
-    //id 'org.shipkit.java' version '2.0.23'
-}
-
-base {
-    javaVersion = JavaVersion.VERSION_1_8
+    id 'net.researchgate.release' version '2.6.0'
+    id 'ds2.base' version '0.0.7'
 }
 
 
 allprojects {
-    apply plugin: 'maven'    
+    apply plugin: 'maven'
+    apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'ds2.base'
+
+    base {
+        javaVersion = JavaVersion.VERSION_1_8
+    }
     repositories {
         mavenLocal()
         jcenter()
@@ -30,6 +31,12 @@ allprojects {
         }
         publications = ['coreArtifacts']
     }
+    release {
+        failOnPublishNeeded = false
+        git {
+            requireBranch = 'release/0.1'
+        }
+    }
 }
 
 subprojects {
@@ -40,6 +47,11 @@ subprojects {
     //apply plugin: 'net.researchgate.release'
 
     publishing {
+        repositories {
+            maven {
+                url "$buildDir/repo"
+            }
+        }
         publications {
             coreArtifacts(MavenPublication) {
                 from components.java
@@ -60,8 +72,8 @@ defaultTasks 'clean', 'build', 'install'
 // release stuff
 
 release {
-    failOnPublishNeeded=false
-    failOnUpdateNeeded=false
+    failOnPublishNeeded = false
+    failOnUpdateNeeded = false
     git {
         requireBranch = 'release/0.1'
     }
@@ -73,8 +85,6 @@ bintray {
     publications = []
     configurations = []
 }
-
-//task build {}
 
 beforeReleaseBuild.dependsOn subprojects.install
 //afterReleaseBuild.dependsOn subprojects.uploadArchive
