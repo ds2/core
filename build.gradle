@@ -6,7 +6,7 @@ plugins {
 
 
 allprojects {
-    apply plugin: 'maven'
+    //apply plugin: 'maven'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'ds2.base'
 
@@ -29,7 +29,7 @@ allprojects {
             licenses = ['Apache-2.0']
             vcsUrl = 'https://bitbucket.org/lexxy23/ds2-oss-core.git'
         }
-        publications = ['coreArtifacts']
+        publications = ['core']
     }
     release {
         failOnPublishNeeded = false
@@ -53,7 +53,7 @@ subprojects {
             }
         }
         publications {
-            coreArtifacts(MavenPublication) {
+            core(MavenPublication) {
                 from components.java
                 artifact createSourceJar {
                     classifier "sources"
@@ -67,7 +67,7 @@ subprojects {
 
 }
 
-defaultTasks 'clean', 'build', 'install'
+defaultTasks 'clean', 'build', 'publishToMavenLocal'
 
 // release stuff
 
