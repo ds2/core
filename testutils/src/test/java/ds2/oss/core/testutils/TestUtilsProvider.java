@@ -14,15 +14,16 @@ import java.util.Random;
  * Created by deindesign on 12.04.16.
  */
 @Dependent
-@Priority(0)
 @Alternative
+@Priority(100)
 public class TestUtilsProvider {
-    private static final Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Dependent
     @Produces
-    public Random createRandomizer(){
+    public Random createRandomizer() {
         LOG.info("Using test randomizer :)");
-        Random rc=new Random(System.currentTimeMillis());
+        Random rc = new Random(System.currentTimeMillis());
         return rc;
     }
 }
