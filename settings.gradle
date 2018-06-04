@@ -62,3 +62,5 @@ project(':ds2-oss-core-codec-genson').projectDir = "$rootDir/codec-genson" as Fi
 project(':ds2-oss-core-owb-test').projectDir = "$rootDir/owbtest" as File
 project(':ds2-oss-core-shiro-jee').projectDir="$rootDir/shiro-jee" as File
 project(':ds2-oss-core-finance').projectDir="$rootDir/finance" as File
+
+enableFeaturePreview('STABLE_PUBLISHING')
