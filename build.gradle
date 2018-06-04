@@ -34,7 +34,6 @@ allprojects {
         publications = ['core']
     }
     release {
-        failOnPublishNeeded = false
         git {
             requireBranch = 'release/0.1'
         }
