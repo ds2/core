@@ -10,6 +10,8 @@ allprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'ds2.base'
 
+    group = 'ds2.oss.core'
+
     base {
         javaVersion = JavaVersion.VERSION_1_8
     }
