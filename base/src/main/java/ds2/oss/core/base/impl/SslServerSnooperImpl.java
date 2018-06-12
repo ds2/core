@@ -208,7 +208,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final IOException e) {
             LOG.error("Error when reading the SSL sockets.", e);
         }
-        LOG.debug("Certificates so far: {}", rc);
+        LOG.debug("Certificates so far: {}", (Object[])rc);
         return rc;
     }
 }

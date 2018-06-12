@@ -31,7 +31,7 @@ import ds2.oss.core.api.NumericEnumValue;
  * @param <E>
  *            The enum
  * @version 0.1
- * @Deprecated Better use the JPA tools. See {@link javax.persistence.Converter}.
+ * @deprecated Better use the JPA tools. See {@link javax.persistence.Converter}.
  */
 @Deprecated
 public class NumericalEnumConverter<E extends Enum<E>> {

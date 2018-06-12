@@ -24,3 +24,8 @@ exclude(module: 'tools-jar')
     }
 }
 test.useTestNG()
+
+bintray {
+    publications = []
+    configurations = []
+}

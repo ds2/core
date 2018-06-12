@@ -38,51 +38,14 @@ import java.util.Set;
  * @author dstrauss
  * @version 0.3
  */
-//@Dependent
-@Priority(2)
-@Alternative
 @Dependent
+@Alternative
+@Priority(50)
 public class RandomProvider {
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    /**
-     * Creates a secure randomizer.
-     *
-     * @param p the injection point
-     * @return a secure randomizer. Or null if an error occurred.
-     */
-    @Produces
-    @SecureRandomizer
-    @Alternative
-    public SecureRandom createSecureRandom(final InjectionPoint p) {
-        final Set<Annotation> qualifiers = p.getQualifiers();
-        SecureRandom rc = null;
-        for (Annotation a : qualifiers) {
-            if (a instanceof SecureRandomizer) {
-                final SecureRandomizer secureRandomizer = (SecureRandomizer) a;
-                try {
-                    if (secureRandomizer.providerName().length() <= 0) {
-                        rc = SecureRandom.getInstance(secureRandomizer.algorithm());
-                    } else {
-                        rc = SecureRandom.getInstance(secureRandomizer.algorithm(), secureRandomizer.providerName());
-                    }
-                    rc.setSeed(System.currentTimeMillis());
-                } catch (final NoSuchAlgorithmException e) {
-                    LOG.error("Unknown algorithm!", e);
-                } catch (final NoSuchProviderException e) {
-                    LOG.error("Unknown provider!", e);
-                }
-
-            }
-        }
-        if (rc == null) {
-            LOG.error("No secure random annotation found!");
-        }
-        return rc;
-    }
 
     /**
      * Creates a simple randomizer.
