@@ -18,6 +18,7 @@ package ds2.oss.core.base.impl;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import ds2.oss.core.api.crypto.HashedResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +63,11 @@ public class HashGeneratorImpl implements HashGenerator {
             }
         }
         return rc;
+    }
+
+    @Override
+    public HashedResult encode(HashAlgorithm algorithm, byte[] salt, int rounds, byte[] valueToEncode) {
+        return null;
     }
 
 }

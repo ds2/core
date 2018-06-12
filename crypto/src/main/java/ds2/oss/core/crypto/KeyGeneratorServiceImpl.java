@@ -15,10 +15,10 @@
  */
 package ds2.oss.core.crypto;
 
-import java.io.UnsupportedEncodingException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import ds2.oss.core.api.annotations.SecureRandomizer;
+import ds2.oss.core.api.crypto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -27,21 +27,16 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.SecurityBaseData;
-import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.crypto.JavaRuntimeData;
-import ds2.oss.core.api.crypto.KeyGeneratorNames;
-import ds2.oss.core.api.crypto.KeyGeneratorService;
+import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 
 /**
  * The AES key generator service.
  *
- * @version 0.3
  * @author dstrauss
+ * @version 0.3
  */
 @Dependent
 public class KeyGeneratorServiceImpl implements KeyGeneratorService {
@@ -53,8 +48,6 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     /**
      * The security base data.
      */
-    @Inject
-    private SecurityBaseData baseData;
     /**
      * A randomizer.
      */
@@ -71,9 +64,11 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
      */
     @Inject
     private SecurityInstanceProvider secProv;
+    @Inject
+    private BytesProvider bytesProvider;
 
     @Override
-    public SecretKey generate(final int length, final KeyGeneratorNames name) {
+    public SecretKey generate(final int length, final AlgorithmNamed name) {
         SecretKey rc;
         final KeyGenerator kgInstance = secProv.createKeyGenerator(name);
         kgInstance.init(length, random);
@@ -82,11 +77,11 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     }
 
     @Override
-    public SecretKey generate(final String pw, final KeyGeneratorNames name) {
+    public SecretKey generate(final String pw, final AlgorithmNamed name) {
         SecretKey rc = null;
         try {
             final byte[] pwBytes = pw.getBytes("utf-8");
-            rc = new SecretKeySpec(pwBytes, name.name());
+            rc = new SecretKeySpec(pwBytes, name.getAlgorithmName());
         } catch (final UnsupportedEncodingException e) {
             LOG.error("Unknown encoding!", e);
         }
@@ -118,7 +113,7 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
         try {
             final SecretKeyFactory factory = secProv.createSecretKeyFactoryInstance("PBKDF2WithHmacSHA1");
             final KeySpec keySpec =
-                new PBEKeySpec(pw.toCharArray(), baseData.getSalt(), baseData.getMinIteration(), keyLength);
+                    new PBEKeySpec(pw.toCharArray(), bytesProvider.createRandomByteArray(16), 65534, keyLength);
             final SecretKey sk1 = factory.generateSecret(keySpec);
             rc = new SecretKeySpec(sk1.getEncoded(), "AES");
         } catch (final InvalidKeySpecException e) {

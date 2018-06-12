@@ -15,21 +15,19 @@
  */
 package ds2.oss.core.api.options;
 
-import ds2.oss.core.api.CreatedModifiedAware;
-import ds2.oss.core.api.Persistable;
+import ds2.oss.core.api.CreatedByModifiedByAware;
+import ds2.oss.core.api.IdAware;
 import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
  * The definition of a single option.
  *
+ * @param <E> the persistable type
+ * @param <V> the value type of the option
  * @author dstrauss
  * @version 0.3
- * @param <E>
- *            the persistable type
- * @param <V>
- *            the value type of the option
  */
-public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, CreatedModifiedAware, IvEncodedContent {
+public interface Option<E, V> extends IdAware<E>, OptionIdentifier<V>, CreatedByModifiedByAware, IvEncodedContent {
     /**
      * Returns the decrypted value of the option if this option is encrypted. It is required that
      * implementations of this method must not ship this field value except the internal
@@ -47,13 +45,6 @@ public interface Option<E, V> extends Persistable<E>, OptionIdentifier<V>, Creat
      * @return the default value
      */
     V getDefaultValue();
-
-    /**
-     * Returns the name or identifier of the option.
-     *
-     * @return the identifier of the author/modifier
-     */
-    String getModifierName();
 
     /**
      * Returns the stage of the option.

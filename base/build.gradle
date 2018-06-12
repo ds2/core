@@ -1,0 +1,63 @@
+apply plugin: 'java'
+
+description = 'DS/2 OSS Core Base'
+
+ext.libraryVersions = [
+        junit   : '4.8.1', arquillian: '1.1.1.Final', jbossJavaeeSpec: '1.0.0.Final', weld: '1.1.1.Final',
+        slf4j   : '1.5.10', log4j: '1.2.14', jbossAS6: '6.0.0.Final', glassfish: '4.0-b72', cdi: '1.0-SP4',
+        hamcrest: '1.2', jbossAS7: '7.1.1.Final', shrinkwrapDesc: '2.0.0-alpha-3'
+]
+
+configurations {
+    //compileOnly
+    weldEmbeddedTestRuntime { extendsFrom testRuntime }
+    jbossAS6RemoteTestRuntime { extendsFrom testRuntime, compileOnly }
+    jbossAS7ManagedTestRuntime { extendsFrom testRuntime, compileOnly }
+    jbossAS7RemoteTestRuntime { extendsFrom testRuntime, compileOnly }
+    glassfishEmbeddedTestRuntime { extendsFrom testRuntime }
+}
+
+dependencies {
+    compileOnly(group: 'javax', name: 'javaee-api', version: '7.0')
+    compile project(':ds2-oss-core-api')
+    compile project(':ds2-oss-core-statics')
+    testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.+'
+    testCompile group: 'org.testng', name: 'testng', version: '6.+'
+    testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+    testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
+    compileOnly(group: 'org.slf4j', name: 'slf4j-api', version: '1.+')
+    testRuntime(group: 'org.jboss', name: 'jandex', version: '1.2.+')
+
+    weldEmbeddedTestRuntime group: 'org.jboss.arquillian.container', name: 'arquillian-weld-ee-embedded-1.1', version: '1.0.0.CR7'
+    weldEmbeddedTestRuntime group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: libraryVersions.jbossJavaeeSpec
+    weldEmbeddedTestRuntime group: 'org.jboss.weld', name: 'weld-core', version: libraryVersions.weld
+    weldEmbeddedTestRuntime group: 'org.slf4j', name: 'slf4j-log4j12', version: libraryVersions.slf4j
+    weldEmbeddedTestRuntime group: 'log4j', name: 'log4j', version: libraryVersions.log4j
+}
+
+task weldEmbeddedTest(type: Test)
+
+task copyMainStuffToResources(type: Copy){
+    from "${buildDir}/classes/java/main"
+    into "${buildDir}/resources/main"
+}
+task copyTestStuffToResources(type: Copy){
+    from "${buildDir}/classes/java/test"
+    into "${buildDir}/resources/test"
+}
+
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${buildDir}/classes/java/main"
+}
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/java/test"
+}
+
+processResources.dependsOn copyResources
+processTestResources.dependsOn copyTestResources, copyResources
+
+test.dependsOn copyTestStuffToResources
+
+test.useTestNG()

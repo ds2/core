@@ -15,32 +15,22 @@
  */
 package ds2.oss.core.base.impl;
 
+import ds2.oss.core.api.SslServerSnooper;
+import ds2.oss.core.api.annotations.SecureRandomizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.net.ssl.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.SslServerSnooper;
-import ds2.oss.core.api.annotations.SecureRandomizer;
 
 /**
  * The impl.
@@ -59,7 +49,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
      * The path separator char to use to setup the file path.
      */
     private static final char PATHSEP = File.separatorChar;
-    
+
     /**
      * Returns an empty keystore, or the platform keystore (aka trust store).
      *
@@ -89,12 +79,9 @@ public class SslServerSnooperImpl implements SslServerSnooper {
     /**
      * Loads keystore data.
      *
-     * @param rc
-     *            the keystore to fill
-     * @param ksPw
-     *            the keystore password
-     * @param javaHomeKs
-     *            the keystore file to read data from
+     * @param rc         the keystore to fill
+     * @param ksPw       the keystore password
+     * @param javaHomeKs the keystore file to read data from
      */
     private static void loadLocalKeystore(final KeyStore rc, final char[] ksPw, final File javaHomeKs) {
         LOG.debug("Loading data from {}", javaHomeKs);
@@ -112,26 +99,39 @@ public class SslServerSnooperImpl implements SslServerSnooper {
     /**
      * Prints some data about the given certificate.
      *
-     * @param cert
-     *            the certificate
+     * @param cert the certificate
      * @return the cert data
      */
-    private static String printCert(final X509Certificate cert) {
+    public static String printCert(final X509Certificate cert) {
         final StringBuilder sb = new StringBuilder();
         sb.append("Subject: ").append(cert.getSubjectDN());
         sb.append("\n").append("Issuer: ").append(cert.getIssuerDN());
+        sb.append("\nSerial: ").append(cert.getSerialNumber());
+        sb.append("\nFrom: ").append(cert.getNotBefore());
+        sb.append("\nUntil: ").append(cert.getNotAfter());
+        try {
+            sb.append("\nFingerprint: ");
+            for (byte b : MessageDigest.getInstance("SHA1").digest(cert.getEncoded())) {
+                sb.append(String.format(":%02X", b));
+            }
+            sb.append("\nFingerprint SHA256: ");
+            for (byte b : MessageDigest.getInstance("SHA-256").digest(cert.getEncoded())) {
+                sb.append(String.format(":%02X", b));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            LOG.warn("Unknown message digest!", e);
+        } catch (CertificateEncodingException e) {
+            LOG.warn("Error when encoding the certificate!", e);
+        }
         return sb.toString();
     }
 
     /**
      * Writes the received server certificates into a temporary file.
      *
-     * @param aliasHeader
-     *            the alias header
-     * @param certs
-     *            the certs to store
-     * @param pw
-     *            the password to use to encrypt the certificates
+     * @param aliasHeader the alias header
+     * @param certs       the certs to store
+     * @param pw          the password to use to encrypt the certificates
      */
     private static void writeTempKeystore(final String aliasHeader, final X509Certificate[] certs, final char[] pw) {
         if (certs == null || certs.length <= 0) {
@@ -187,7 +187,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
             tmf.init(platformKeystore);
             final X509TrustManager defTm = (X509TrustManager) tmf.getTrustManagers()[0];
             final TrustManagerWrapper tmw = new TrustManagerWrapper(defTm);
-            sslCtx.init(null, new TrustManager[] { tmw }, secRandom);
+            sslCtx.init(null, new TrustManager[]{tmw}, secRandom);
             final SSLSocketFactory sslsf = sslCtx.getSocketFactory();
             // connect
             try (SSLSocket socket = (SSLSocket) sslsf.createSocket(hostname, port)) {
@@ -208,7 +208,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final IOException e) {
             LOG.error("Error when reading the SSL sockets.", e);
         }
-
+        LOG.debug("Certificates so far: {}", (Object[])rc);
         return rc;
     }
 }

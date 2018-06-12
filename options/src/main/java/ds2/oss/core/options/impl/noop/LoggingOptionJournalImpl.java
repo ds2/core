@@ -89,7 +89,7 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
             
             @Override
             public void run() {
-                LOG.info("{} created new option {}", new Object[] { option.getModifierName(), option });
+                LOG.info("{} created new option {}", new Object[] { option.getModifiedBy(), option });
             }
         });
     }

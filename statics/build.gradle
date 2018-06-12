@@ -1,0 +1,9 @@
+
+description = 'DS/2 OSS Core SCAI'
+dependencies {
+  compile project(':ds2-oss-core-api')
+    testCompile group: 'org.testng', name: 'testng', version:'6.+'
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version:'1.+'
+    compile(group: 'org.slf4j', name: 'slf4j-api', version:'1.+')
+}
+test.useTestNG()

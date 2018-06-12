@@ -29,20 +29,30 @@ public interface SecurityBaseData {
      * return 16.
      *
      * @return the init vector bytes
+     * @see ds2.oss.core.api.crypto.BytesProvider
+     * @deprecated Please use the byte provider for this
      */
+    @Deprecated
     byte[] getInitVector();
 
     /**
      * Returns the minimum number of iterations to use to create a hash value.
      *
      * @return the iteration count
+     * @deprecated This value relies on the hash being used. We cannot say which hash you are using. So, deprecated.
      */
+    @Deprecated
     int getMinIteration();
 
     /**
      * Returns the salt to use.
      *
      * @return the salt value
+     * @see ds2.oss.core.api.crypto.BytesProvider
+     * @deprecated Salts should be used only once. Use the ByteProvider instead!
      */
+    @Deprecated
     byte[] getSalt();
+
+    int getCpuCount();
 }

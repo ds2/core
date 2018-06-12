@@ -1,0 +1,40 @@
+{
+  "compile": {
+    "com.google.guava:guava": {
+      "locked": "23.0",
+      "requested": "23.+"
+    }
+  },
+  "default": {
+    "com.google.guava:guava": {
+      "locked": "23.0",
+      "requested": "23.+"
+    }
+  },
+  "runtime": {
+    "com.google.guava:guava": {
+      "locked": "23.0",
+      "requested": "23.+"
+    }
+  },
+  "testCompile": {
+    "junit:junit": {
+      "locked": "4.12",
+      "requested": "4.+"
+    },
+    "com.google.guava:guava": {
+      "locked": "23.0",
+      "requested": "23.+"
+    }
+  },
+  "testRuntime": {
+    "junit:junit": {
+      "locked": "4.12",
+      "requested": "4.+"
+    },
+    "com.google.guava:guava": {
+      "locked": "23.0",
+      "requested": "23.+"
+    }
+  }
+}

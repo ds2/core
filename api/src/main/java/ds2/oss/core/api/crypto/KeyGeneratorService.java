@@ -34,7 +34,7 @@ public interface KeyGeneratorService {
      *            the algorithm to use
      * @return the key, or null if an error occurred
      */
-    SecretKey generate(int length, KeyGeneratorNames name);
+    SecretKey generate(int length, AlgorithmNamed name);
     
     /**
      * Generates a very plain secret key.
@@ -46,7 +46,7 @@ public interface KeyGeneratorService {
      *
      * @return the key, or null
      */
-    SecretKey generate(String pw, KeyGeneratorNames name);
+    SecretKey generate(String pw, AlgorithmNamed name);
     
     /**
      * Generates an AES Secret key from a serialized version of a key.

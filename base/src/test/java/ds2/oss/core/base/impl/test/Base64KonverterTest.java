@@ -15,18 +15,23 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import java.nio.charset.Charset;
-
+import ds2.oss.core.api.Base64Codec;
+import ds2.oss.core.base.impl.Base64Konverter;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.Base64Codec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 /**
  * The base64 test.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -43,18 +48,18 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
      * The message to convert.
      */
     private static final String CS = "h\u00e4llo";
-    
+
     @BeforeClass
     public void onInit() {
         to = getInstance(Base64Codec.class);
         cs = Charset.forName("utf-8");
     }
-    
+
     @Test
     public void decodeNull() {
         Assert.assertNull(to.decode(null));
     }
-    
+
     @Test
     public void decode1() {
         String s1 = "aMOkbGxv";
@@ -64,17 +69,26 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
         String s2 = new String(b, cs);
         Assert.assertEquals(s2, CS);
     }
-    
+
     @Test
     public void encode1() {
         final byte[] b = CS.getBytes(cs);
         final String t = to.encode(b);
         Assert.assertEquals(t, "aMOkbGxv");
     }
-    
+
     @Test(enabled = false)
     public void testContains1() {
         // final byte pos = to.holeAlphabetPosFuerChar('a');
         // Assert.assertEquals(pos, 26);
+    }
+
+    @Test
+    public void decodeToFile() throws IOException {
+        String b64Str = "8c2d2737";
+        byte[] data = to.decode(b64Str.toCharArray());
+        Path path = Files.write(File.createTempFile("ds2-oss-core-base-b64", ".bin").toPath(), data, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+        System.out.println("Data is written to " + path);
+        Assert.assertTrue(Files.exists(path));
     }
 }

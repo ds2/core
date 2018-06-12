@@ -22,6 +22,7 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import ds2.oss.core.api.environment.RuntimeType;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -34,7 +35,6 @@ import org.testng.annotations.Test;
 
 import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.environment.Clusters;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.options.CreateOptionException;
 import ds2.oss.core.api.options.CreateOptionValueException;
@@ -101,10 +101,10 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     @Test(dependsOnMethods = "testPersist")
     public void testContextValueCheckLevel2() throws CreateOptionValueException {
         OptionValue<Long, String> optionValue1 =
-            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging), null,
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Staging), null,
                 "myUsernameAStaging");
         OptionValue<Long, String> optionValue2 =
-            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Live), null,
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Live), null,
                 "myUsernameALive");
         Assert.assertNotNull(optionValue1);
         Assert.assertNotNull(optionValue2);
@@ -113,11 +113,11 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         to.approveOptionValue(optionValue2.getId());
         OptionValue<Long, String> ov2 =
             to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
-                RuntimeConfiguration.Staging));
+                RuntimeType.Staging));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsernameAStaging");
         ov2 =
-            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Live));
+            to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Live));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsernameALive");
     }
@@ -125,10 +125,10 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     @Test(dependsOnMethods = "testPersist")
     public void testContextValueCheckLevel3() throws CreateOptionValueException {
         OptionValue<Long, String> optionValue1 =
-            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Staging,
                 "test.domain"), null, "myUsernameAStagingTestDomain");
         OptionValue<Long, String> optionValue2 =
-            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Staging,
                 "myflower.domain"), null, "myUsernameAStagingFlowerDomain");
         Assert.assertNotNull(optionValue1);
         Assert.assertNotNull(optionValue2);
@@ -137,12 +137,12 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         to.approveOptionValue(optionValue2.getId());
         OptionValue<Long, String> ov2 =
             to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
-                RuntimeConfiguration.Staging, "test.domain"));
+                RuntimeType.Staging, "test.domain"));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsernameAStagingTestDomain");
         ov2 =
             to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
-                RuntimeConfiguration.Staging, "myflower.domain"));
+                RuntimeType.Staging, "myflower.domain"));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsernameAStagingFlowerDomain");
     }
@@ -156,10 +156,10 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
     @Test(dependsOnMethods = "testPersist")
     public void testContextValueCheckLevel4() throws CreateOptionValueException {
         OptionValue<Long, String> optionValue1 =
-            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Staging,
                 "test.domain", new ServerIdentifierDto("localhost")), null, "myUsernameAStagingTestDomainLocalhost");
         OptionValue<Long, String> optionValue2 =
-            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeConfiguration.Staging,
+            to.createOptionValue(USERNAME, new OptionValueContextDto(Clusters.A, RuntimeType.Staging,
                 "test.domain", new ServerIdentifierDto("staging.ds2")), null, "myUsernameAStagingTestDomainStaging");
         Assert.assertNotNull(optionValue1);
         Assert.assertNotNull(optionValue2);
@@ -168,12 +168,12 @@ public class OptionStorageIT extends Arquillian implements MyOptions {
         to.approveOptionValue(optionValue2.getId());
         OptionValue<Long, String> ov2 =
             to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
-                RuntimeConfiguration.Staging, "test.domain", new ServerIdentifierDto("localhost")));
+                RuntimeType.Staging, "test.domain", new ServerIdentifierDto("localhost")));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsernameAStagingTestDomainLocalhost");
         ov2 =
             to.findBestOptionValueByContext(USERNAME, new OptionValueContextDto(Clusters.A,
-                RuntimeConfiguration.Staging, "test.domain", new ServerIdentifierDto("staging.ds2")));
+                RuntimeType.Staging, "test.domain", new ServerIdentifierDto("staging.ds2")));
         Assert.assertNotNull(ov2);
         Assert.assertEquals(ov2.getValue(), "myUsernameAStagingTestDomainStaging");
     }

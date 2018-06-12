@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.internal.OptionValueContextModule;
@@ -67,7 +67,7 @@ public class OptionValueContextEntity implements OptionValueContext {
      * @see ds2.oss.core.api.options.OptionValueContext#getConfiguration()
      */
     @Override
-    public RuntimeConfiguration getConfiguration() {
+    public RuntimeType getConfiguration() {
         return mod.getConfiguration();
     }
     

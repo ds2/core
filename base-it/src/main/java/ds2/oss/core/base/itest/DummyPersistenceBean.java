@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.base.itest;
 
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import ds2.oss.core.api.persistence.InvalidEntityException;
+
+import javax.ejb.*;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
-import javax.validation.constraints.NotNull;
 
 /**
  * The persistence bean.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -42,22 +40,27 @@ public class DummyPersistenceBean implements DummyPersistence {
      */
     @PersistenceContext(unitName = "corePU")
     private EntityManager em;
-    
+
     /**
      * INits the bean.
      */
     public DummyPersistenceBean() {
         // TODO Auto-generated constructor stub
     }
-    
-    @Override
-    public void persist(final DummyEntity t) {
-        em.persist(t);
-    }
-    
+
     @Override
     public DummyEntity getById(final Long e) {
         return em.find(DummyEntity.class, e);
     }
-    
+
+    @Override
+    public void persist(DummyEntity t) throws InvalidEntityException {
+        em.persist(t);
+    }
+
+    @Override
+    public void deleteById(Long id) throws EntityNotFoundException {
+        em.remove(em.find(DummyEntity.class, id));
+    }
+
 }

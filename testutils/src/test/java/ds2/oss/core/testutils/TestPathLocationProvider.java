@@ -18,7 +18,9 @@ package ds2.oss.core.testutils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 
 import ds2.oss.core.api.annotations.PathLocation;
@@ -29,7 +31,9 @@ import ds2.oss.core.api.annotations.PathLocation;
  * @author dstrauss
  * @version 0.3
  */
+@Alternative
 @Dependent
+@Priority(1000)
 public class TestPathLocationProvider {
     /**
      * Produces a path to the maven target directory.

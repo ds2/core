@@ -15,24 +15,22 @@
  */
 package ds2.oss.core.dbtools.modules;
 
-import java.util.Date;
+import ds2.oss.core.api.EditableLifeCycleAware;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import ds2.oss.core.api.LifeCycleAware;
+import java.time.LocalDateTime;
 
 /**
  * A life cycle aware db module.
  *
  * @author dstrauss
  * @version 0.3
- *
  */
 @Embeddable
-public class LifeCycleAwareModule implements LifeCycleAware {
+public class LifeCycleAwareModule implements EditableLifeCycleAware {
 
     /**
      * The svuid.
@@ -43,13 +41,13 @@ public class LifeCycleAwareModule implements LifeCycleAware {
      */
     @Column(name = "valid_from", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date validFrom;
+    private LocalDateTime validFrom;
     /**
      * Valid to.
      */
     @Column(name = "valid_to")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date validTo;
+    private LocalDateTime validTo;
 
     /**
      * Inits the module.
@@ -63,7 +61,7 @@ public class LifeCycleAwareModule implements LifeCycleAware {
      * @see ds2.oss.core.api.LifeCycleAware#getValidFrom()
      */
     @Override
-    public Date getValidFrom() {
+    public LocalDateTime getValidFrom() {
         return validFrom;
     }
 
@@ -72,15 +70,17 @@ public class LifeCycleAwareModule implements LifeCycleAware {
      * @see ds2.oss.core.api.LifeCycleAware#getValidTo()
      */
     @Override
-    public Date getValidTo() {
+    public LocalDateTime getValidTo() {
         return validTo;
     }
 
-    public void setValidFrom(final Date validFrom) {
+    @Override
+    public void setValidFrom(final LocalDateTime validFrom) {
         this.validFrom = validFrom;
     }
 
-    public void setValidTo(final Date validTo) {
+    @Override
+    public void setValidTo(final LocalDateTime validTo) {
         this.validTo = validTo;
     }
 

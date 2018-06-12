@@ -48,7 +48,7 @@ public class ServerIdentifierProviderImpl implements ServerIdentifierProvider {
      * {@inheritDoc}
      */
     @Override
-    public final ServerIdentifier getCurrentServerDetails() {
+    public ServerIdentifier getCurrentServerDetails() {
         final ServerIdentifierDto rc = new ServerIdentifierDto();
         rc.setDomain(null);
         try {

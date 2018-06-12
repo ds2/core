@@ -22,6 +22,8 @@ import ds2.oss.core.elasticsearch.impl.AbstractTypeCodec;
 import ds2.oss.core.elasticsearch.test.NewsCodec;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * A codec.
  * 
@@ -29,6 +31,7 @@ import ds2.oss.core.elasticsearch.test.dto.MyNews;
  * @version 0.2
  */
 @EsCodec(MyNews.class)
+@ApplicationScoped
 public class MyNewsCodec extends AbstractTypeCodec<MyNews> implements NewsCodec {
     /**
      * Inits the codec.

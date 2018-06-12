@@ -27,7 +27,9 @@ import java.net.UnknownHostException;
  *
  * @author dstrauss
  * @version 0.3
+ * @deprecated Better use static interfaces for this.
  */
+@Deprecated
 public final class Tools {
 
     /**

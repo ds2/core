@@ -1,3 +1,18 @@
+/*
+ * Copyright 2012-2015 Dirk Strauss
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.Validate;
@@ -26,7 +41,7 @@ import java.util.Set;
 /**
  * Created by deindesign on 13.12.15.
  */
-@Alternative
+@Dependent
 public class PropertiesLoaderProvider {
     /**
      * A logger.
@@ -75,7 +90,7 @@ public class PropertiesLoaderProvider {
         Properties rc=null;
         if(!val.isEmpty(resourcePath)){
             LOG.debug("Trying to load resource {}", resourcePath);
-            try (InputStream is=getClass().getResourceAsStream(resourcePath);){
+            try (InputStream is=getClass().getResourceAsStream(resourcePath)){
                 rc=new Properties();
                 rc.load(is);
             } catch (IOException e) {
@@ -97,6 +112,10 @@ public class PropertiesLoaderProvider {
     }
 
     private Properties readFromSysprop(PropertiesLoader pl){
+        String sysPropStr=pl.sysProp();
+        if(val.isEmpty(sysPropStr)){
+            return null;
+        }
         String sysPropVal=System.getProperty(pl.sysProp());
         if(!val.isEmpty(sysPropVal)){
             Path p=Paths.get(sysPropVal);
@@ -117,7 +136,7 @@ public class PropertiesLoaderProvider {
     private Properties readFile(Path p){
             Properties rc=null;
             if(Files.isReadable(p)){
-                try(BufferedReader reader=Files.newBufferedReader(p, Charset.forName("utf-8"));) {
+                try(BufferedReader reader=Files.newBufferedReader(p, Charset.forName("utf-8"))) {
                     rc=new Properties();
                     rc.load(reader);
                 } catch (IOException e) {

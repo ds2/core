@@ -15,21 +15,20 @@
  */
 package ds2.oss.core.testutils;
 
-import java.lang.annotation.Annotation;
-import java.lang.invoke.MethodHandles;
-import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.util.TypeLiteral;
-
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.util.TypeLiteral;
+import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandles;
+import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The injection env. Basically the same as the WeldWrapper.
@@ -50,7 +49,7 @@ public abstract class AbstractInjectionEnvironment {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /**
-     * The container.
+     * The container that manages the instances.
      */
     private static WeldContainer wc;
 
@@ -62,23 +61,30 @@ public abstract class AbstractInjectionEnvironment {
     /**
      * Returns an instance of the given class.
      *
-     * @param c the class
-     *
-     * @return the instance, if found. Otherwise null.
+     * @param c   the class
      * @param <T> the type of the bean
+     * @return the instance, if found. Otherwise null.
      */
-    public static <T> T getInstance(final Class<T> c) {
+    protected <T> T getInstance(final Class<T> c) {
         LOCK.lock();
         try {
+            if (wc == null) {
+                LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+                return null;
+            }
             return wc.instance().select(c).get();
         } finally {
             LOCK.unlock();
         }
     }
 
-    public static <T> T getInstance(final TypeLiteral<T> c) {
+    protected <T> T getInstance(final TypeLiteral<T> c) {
         LOCK.lock();
         try {
+            if (wc == null) {
+                LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+                return null;
+            }
             return wc.instance().select(c).get();
         } finally {
             LOCK.unlock();
@@ -97,17 +103,21 @@ public abstract class AbstractInjectionEnvironment {
     /**
      * Returns an instance with the given annotation data.
      *
-     * @param <T> the type to return
-     * @param c the target class to search for
+     * @param <T>         the type to return
+     * @param c           the target class to search for
      * @param annotations some annotations to find the specific CDI bean
      * @return the found bean, or null if an error occurred
      */
-    public static <T> T getInstance(final Class<T> c, final Annotation... annotations) {
+    protected <T> T getInstance(final Class<T> c, final Annotation... annotations) {
         try {
             LOCK.lock();
+            if (wc == null) {
+                LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
+                return null;
+            }
             Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
             if (beans != null && !beans.isEmpty()) {
-                beans.stream().forEach((b) -> {
+                beans.forEach((b) -> {
                     LOG.debug("Bean is {}", b);
                 });
             }
@@ -121,12 +131,16 @@ public abstract class AbstractInjectionEnvironment {
      * Actions to perform at the end of the test suite.
      */
     @AfterSuite(alwaysRun = true)
-    public static void onSuiteEnd() {
+    public void onSuiteEnd() {
         LOCK.lock();
         try {
-            LOG.debug("Shutting down Weld");
-            weld.shutdown();
-            wc = null;
+            if (wc != null) {
+                LOG.debug("Shutting down Weld");
+                weld.shutdown();
+                wc = null;
+            } else {
+                LOG.warn("Weld Container is null, ignoring shutting it down as perhaps at start it has crashed.");
+            }
         } finally {
             LOCK.unlock();
         }
@@ -136,7 +150,7 @@ public abstract class AbstractInjectionEnvironment {
      * Actions to perform at test suite start.
      */
     @BeforeSuite(alwaysRun = true)
-    public static void onSuiteStart() {
+    public void onSuiteStart() {
         LOG.debug("Entering Weld Init");
         LOCK.lock();
         try {
@@ -144,11 +158,17 @@ public abstract class AbstractInjectionEnvironment {
                 LOG.info("Nothing to do, ignoring");
                 return;
             }
+            LOG.debug("Performing some setup before starting the CDI environment..");
+            performInitialSetup();
             LOG.debug("Starting init");
             wc = weld.initialize();
         } finally {
             LOCK.unlock();
         }
         LOG.debug("Done with init");
+    }
+
+    protected void performInitialSetup() {
+        //Actually, do nothing here. If you have something to setup BEFORE starting the CDI, please put it up here
     }
 }

@@ -15,25 +15,19 @@
  */
 package ds2.oss.core.webtools;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import ds2.oss.core.webtools.io.WrappingServletOutputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
-import ds2.oss.core.webtools.io.WrappingServletOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A wrapping servlet response.
@@ -207,8 +201,8 @@ public class WrappingServletResponse implements HttpServletResponse {
             e.setContentLengthLong(contentLengthLong);
         }
         e.setCharacterEncoding(getCharacterEncoding());
-        for (String hN : headers.keySet()) {
-            e.setHeader(hN, headers.get(hN));
+        for (Map.Entry<String, String> hN : headers.entrySet()) {
+            e.setHeader(hN.getKey(), hN.getValue());
         }
         for (Cookie c : cookies) {
             e.addCookie(c);

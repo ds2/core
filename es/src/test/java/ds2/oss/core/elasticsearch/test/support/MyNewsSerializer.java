@@ -15,38 +15,41 @@
  */
 package ds2.oss.core.elasticsearch.test.support;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
 import ds2.oss.core.codec.gson.GsonTools;
 import ds2.oss.core.codec.gson.api.GsonSerializer;
 import ds2.oss.core.elasticsearch.impl.AbstractCodecBase;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.Dependent;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Type;
 
 /**
  * MyNews serializer.
- * 
+ *
  * @author dstrauss
- * 
  * @version 0.2
  */
 @GsonSerializer(MyNews.class)
 @Dependent
 public class MyNewsSerializer extends AbstractCodecBase implements JsonSerializer<MyNews> {
-    
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @Override
     public JsonElement serialize(final MyNews src, final Type typeOfSrc, final JsonSerializationContext context) {
         final JsonObject rc = new JsonObject();
+        LOG.debug("Trying to serialize dto: {}", src);
         GsonTools.addIfNotNull(rc, "title", src.getTitle());
         GsonTools.addIfNotNull(rc, "author", src.getAuthor());
         GsonTools.addIfNotNull(rc, "message", src.getMsg());
         GsonTools.addIfNotNull(rc, "postDate", fromDate(src.getPostDate()));
+        LOG.debug("Json for the dto is: {}", rc);
         return rc;
     }
 }

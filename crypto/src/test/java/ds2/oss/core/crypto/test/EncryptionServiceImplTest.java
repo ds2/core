@@ -15,24 +15,18 @@
  */
 package ds2.oss.core.crypto.test;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.crypto.SecretKey;
-
+import ds2.oss.core.api.crypto.*;
+import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.crypto.Ciphers;
-import ds2.oss.core.api.crypto.EncodedContent;
-import ds2.oss.core.api.crypto.EncryptionService;
-import ds2.oss.core.api.crypto.JavaRuntimeData;
-import ds2.oss.core.api.crypto.KeyGeneratorService;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import javax.crypto.SecretKey;
+import java.io.UnsupportedEncodingException;
 
 /**
  * The encryption service test.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -49,6 +43,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
      * The encoded bytes.
      */
     private EncodedContent encodedStuff;
+    private SecretKey aesKey;
     /**
      * The runtime data.
      */
@@ -57,7 +52,7 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
      * The message to encode.
      */
     private final String msg = "Hallo, W\u00e4lt!\nScheint zu funktionieren.\n\nTest.";
-    
+
     /**
      * Actions to perform at start.
      */
@@ -67,20 +62,19 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
         keygen = getInstance(KeyGeneratorService.class);
         runtime = getInstance(JavaRuntimeData.class);
     }
-    
+
     /**
      * Encryption test.
-     * 
-     * @throws UnsupportedEncodingException
-     *             if an error occurred
+     *
+     * @throws UnsupportedEncodingException if an error occurred
      */
     @Test
     public void testEncrypt() throws UnsupportedEncodingException {
-        final SecretKey sk = keygen.generateSecureAesKey("test", runtime.getAesMaxKeysize());
-        encodedStuff = to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
+        aesKey = keygen.generateSecureAesKey("test", runtime.getAesMaxKeysize());
+        encodedStuff = to.encode(aesKey, Ciphers.AES, msg.getBytes("utf-8"));
         Assert.assertNotNull(encodedStuff);
     }
-    
+
     @Test
     public void testEncryptWithDifferentInitVector() throws UnsupportedEncodingException {
         final SecretKey sk = keygen.generateSecureAesKey("test", runtime.getAesMaxKeysize());
@@ -88,17 +82,16 @@ public class EncryptionServiceImplTest extends AbstractInjectionEnvironment {
         EncodedContent enc2 = to.encode(sk, Ciphers.AES, msg.getBytes("utf-8"));
         Assert.assertNotEquals(enc1, enc2);
     }
-    
+
     /**
      * Decode test.
-     * 
-     * @throws UnsupportedEncodingException
-     *             if the encoding is unknown
+     *
+     * @throws UnsupportedEncodingException if the encoding is unknown
      */
     @Test(dependsOnMethods = "testEncrypt")
     public void testDecrypt() throws UnsupportedEncodingException {
-        final SecretKey sk = keygen.generateSecureAesKey("test", runtime.getAesMaxKeysize());
-        final byte[] decoded = to.decode(sk, Ciphers.AES, encodedStuff);
+        //final SecretKey sk = keygen.generateSecureAesKey("test", runtime.getAesMaxKeysize());
+        final byte[] decoded = to.decode(aesKey, Ciphers.AES, encodedStuff);
         Assert.assertNotNull(decoded);
         final String s = new String(decoded, "utf-8");
         Assert.assertEquals(s, msg);

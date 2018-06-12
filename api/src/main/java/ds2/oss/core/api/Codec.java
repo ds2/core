@@ -16,36 +16,30 @@
 package ds2.oss.core.api;
 
 /**
- * Dummy contract for any codec.
+ * Dummy contract for any codec or 2-way converter.
  *
+ * @param <A> the origin dto type
+ * @param <Z> the streaming type
  * @author dstrauss
  * @version 0.3
- * @param <A>
- *            the origin dto type
- * @param <Z>
- *            the streaming type
  */
 public interface Codec<A, Z> {
 
     /**
      * Decodes a given object.
      *
-     * @param a
-     *            the converted object
+     * @param a the converted object
      * @return the original object (more or less)
-     * @throws CodecException
-     *             if an error occurred
+     * @throws CodecException if an error occurred
      */
     A decode(Z a) throws CodecException;
 
     /**
      * Encodes a given object into another one.
      *
-     * @param z
-     *            the original object
+     * @param z the original object
      * @return the converted object
-     * @throws CodecException
-     *             if an error occurred
+     * @throws CodecException if an error occurred
      */
     Z encode(A z) throws CodecException;
 

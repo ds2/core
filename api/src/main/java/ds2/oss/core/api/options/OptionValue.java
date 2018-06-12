@@ -15,78 +15,76 @@
  */
 package ds2.oss.core.api.options;
 
-import ds2.oss.core.api.CreatedModifiedAware;
+import ds2.oss.core.api.CreatedByModifiedByAware;
+import ds2.oss.core.api.IdAware;
 import ds2.oss.core.api.LifeCycleAware;
-import ds2.oss.core.api.Persistable;
 import ds2.oss.core.api.crypto.IvEncodedContent;
 
 /**
  * A single option value.
  *
+ * @param <E> the persistence type
+ * @param <V> the value type of this value
  * @author dstrauss
  * @version 0.3
- * @param <E>
- *            the persistence type
- * @param <V>
- *            the value type of this value
  */
 public interface OptionValue<E, V>
-    extends
-    Persistable<E>,
-    CreatedModifiedAware,
-    LifeCycleAware,
-    OptionValueContext,
-    IvEncodedContent {
-    
+        extends
+        IdAware<E>,
+        CreatedByModifiedByAware,
+        LifeCycleAware,
+        OptionValueContext,
+        IvEncodedContent {
+
     /**
      * Returns the name or identifier of the approver of this option value.
      *
      * @return the identifier of the approver. May return null if not yet approved
      */
     String getApproverName();
-    
+
     /**
      * Returns the name or identifier of the author of this option value.
      *
      * @return the identifier
      */
     String getAuthorName();
-    
+
     /**
      * Returns the referenced option id.
      *
      * @return the referenced option id
      */
     E getOptionReference();
-    
+
     /**
      * Returns the current stage of this value.
      *
      * @return the stage of this value
      */
     OptionValueStage getStage();
-    
+
     /**
      * Returns the value of this option value object in case the option was encrypted.
      *
      * @return the value
      */
     V getUnencryptedValue();
-    
+
     /**
      * Returns the value of this option value object.
      *
      * @return the value
      */
     V getValue();
-    
+
     /**
      * Returns the value type being used by this option value.
      *
      * @return the value type
      */
     ValueType getValueType();
-    
+
     /**
      * A dummy method to check if this value is encoded.
      *

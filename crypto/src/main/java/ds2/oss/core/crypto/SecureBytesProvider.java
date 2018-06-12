@@ -15,15 +15,14 @@
  */
 package ds2.oss.core.crypto;
 
-import java.util.Random;
+import ds2.oss.core.api.annotations.SecureRandomizer;
+import ds2.oss.core.api.crypto.BytesProvider;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
-
-import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.crypto.BytesProvider;
+import java.util.Random;
 
 /**
  * Implementation for some random bytes.

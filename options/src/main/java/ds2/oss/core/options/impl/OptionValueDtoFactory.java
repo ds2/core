@@ -15,25 +15,24 @@
  */
 package ds2.oss.core.options.impl;
 
-import java.util.Date;
-
-import javax.enterprise.context.ApplicationScoped;
-
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.api.OptionValueFactory;
 
+import javax.enterprise.context.ApplicationScoped;
+import java.time.LocalDateTime;
+
 /**
  * The factory to generate option value DTOs.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 public class OptionValueDtoFactory implements OptionValueFactory {
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -43,7 +42,7 @@ public class OptionValueDtoFactory implements OptionValueFactory {
      */
     @Override
     public <K, V> OptionValueDto<K, V> createOptionValueDto(OptionIdentifier<V> ident, K primaryKey,
-        OptionValueContext ctx, V val) {
+                                                            OptionValueContext ctx, V val) {
         OptionValueDto<K, V> rc = new OptionValueDto<K, V>();
         rc.setId(primaryKey);
         if (ctx != null) {
@@ -52,8 +51,8 @@ public class OptionValueDtoFactory implements OptionValueFactory {
             rc.setServer(ctx.getServer());
             rc.setRequestedDomain(ctx.getRequestedDomain());
         }
-        rc.setCreated(new Date());
-        rc.setValidFrom(new Date());
+        rc.setCreated(LocalDateTime.now());
+        rc.setValidFrom(LocalDateTime.now());
         if (ident.isEncrypted()) {
             rc.setUnencryptedValue(val);
         } else {
@@ -63,5 +62,5 @@ public class OptionValueDtoFactory implements OptionValueFactory {
         rc.setStage(OptionValueStage.Prepared);
         return rc;
     }
-    
+
 }

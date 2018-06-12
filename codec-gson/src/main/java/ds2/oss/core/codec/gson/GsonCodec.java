@@ -15,25 +15,23 @@
  */
 package ds2.oss.core.codec.gson;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;
-
 import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.api.JsonCodecException;
 import ds2.oss.core.codec.gson.api.GsonDeserializer;
 import ds2.oss.core.codec.gson.api.GsonSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
 
 /**
  * The GSON implementation for a json codec.
@@ -47,7 +45,7 @@ public class GsonCodec implements JsonCodec {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(GsonCodec.class);
-    
+
     /**
      * The serializers.
      */
@@ -60,25 +58,28 @@ public class GsonCodec implements JsonCodec {
     @Inject
     @Any
     private Instance<JsonDeserializer<?>> deserializers;
-    
+
     /**
      * The gson main object.
      */
     private Gson gson;
-    
+
     @Override
     public Object decode(String a) throws CodecException {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of
-                                                                       // generated methods, choose
-                                                                       // Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public <E> E decode(String z, Class<E> c) throws JsonCodecException {
         final E rc = gson.fromJson(z, c);
         return rc;
     }
-    
+
+    @Override
+    public <E> E decodeInto(String z, E instance) throws JsonCodecException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     @Override
     public String encode(Object t) throws CodecException {
         if (t == null) {
@@ -87,7 +88,7 @@ public class GsonCodec implements JsonCodec {
         final String rc = gson.toJson(t);
         return rc;
     }
-    
+
     /**
      * Actions to perform after construction, after CDI.
      */
@@ -100,7 +101,7 @@ public class GsonCodec implements JsonCodec {
             final GsonSerializer gsa = serializer.getClass().getAnnotation(GsonSerializer.class);
             if (gsa != null) {
                 final Class<?> c = gsa.value();
-                LOG.debug("registering serializer for type {}: {}", new Object[] { c, serializer });
+                LOG.debug("registering serializer for type {}: {}", new Object[]{c, serializer});
                 gb.registerTypeAdapter(c, serializer);
             }
         }
@@ -109,7 +110,7 @@ public class GsonCodec implements JsonCodec {
             final GsonDeserializer gsa = deserializer.getClass().getAnnotation(GsonDeserializer.class);
             if (gsa != null) {
                 final Class<?> c = gsa.value();
-                LOG.debug("registering deserializer for type {}: {}", new Object[] { c, deserializer });
+                LOG.debug("registering deserializer for type {}: {}", new Object[]{c, deserializer});
                 gb.registerTypeAdapter(c, deserializer);
             }
         }

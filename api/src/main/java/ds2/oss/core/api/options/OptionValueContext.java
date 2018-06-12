@@ -18,7 +18,7 @@ package ds2.oss.core.api.options;
 import java.io.Serializable;
 
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 
 /**
@@ -41,7 +41,7 @@ public interface OptionValueContext extends Serializable {
      *
      * @return the runtime configuration
      */
-    RuntimeConfiguration getConfiguration();
+    RuntimeType getConfiguration();
 
     /**
      * Returns the domain name that is being used on the client side to access the server. This is

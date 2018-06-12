@@ -95,7 +95,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setCreated(e.getCreated());
         rc.setEncrypted(e.isEncrypted());
         rc.setModified(e.getModified());
-        rc.setModifierName(e.getModifierName());
+        rc.setModifiedBy(e.getModifiedBy());
         rc.setOptionName(e.getOptionName());
         rc.setStage(e.getStage());
         rc.setValueType(e.getValueType());

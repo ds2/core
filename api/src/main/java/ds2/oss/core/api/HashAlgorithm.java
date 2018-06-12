@@ -46,10 +46,9 @@ public enum HashAlgorithm {
     /**
      * Inits the enum value.
      *
-     * @param s
-     *            the algorithm id
+     * @param s the algorithm id
      */
-    private HashAlgorithm(final String s) {
+    HashAlgorithm(final String s) {
         alg = s;
     }
 

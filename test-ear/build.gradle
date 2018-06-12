@@ -1,0 +1,5 @@
+
+description = 'DS/2 OSS Core Test EAR'
+dependencies {
+  compile project(':ds2-oss-core-base')
+}

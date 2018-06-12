@@ -42,7 +42,32 @@ public enum CoreErrors implements IErrorData {
     /**
      * If a specific required option could not be found.
      */
-    OptionNotFound(5);
+    OptionNotFound(5),
+    /**
+     * If a specific generator could not be found.
+     */
+    NoGeneratorFound(6),
+    /**
+     * A given argument is not valid.
+     */
+    IllegalArgument(7),
+    /**
+     * If a method lock failed.
+     */
+    LockingFailed(8),
+    /**
+     * A given algorithm is unknown to the current platform.
+     */
+    AlgorithmNotFound(9),
+    /**
+     * If a given provider (security) is unknown.
+     */
+    UnknownProvider(10),
+    /**
+     * If a given transport type value could not match with an enum value.
+     */
+    UnknownEnumValue(11)
+    ;
     /**
      * The error code.
      */
@@ -54,7 +79,7 @@ public enum CoreErrors implements IErrorData {
      * @param i
      *            the numerical error code
      */
-    private CoreErrors(final int i) {
+    CoreErrors(final int i) {
         code = i;
     }
 

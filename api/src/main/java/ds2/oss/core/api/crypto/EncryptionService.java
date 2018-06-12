@@ -35,7 +35,7 @@ public interface EncryptionService {
      *            the encoded content
      * @return the decoded bytes, or null if an error occurred
      */
-    byte[] decode(SecretKey secretKey, Ciphers cipher, EncodedContent src);
+    byte[] decode(SecretKey secretKey, AlgorithmNamed cipher, EncodedContent src);
 
     /**
      * Encodes a given byte sequence.
@@ -48,5 +48,5 @@ public interface EncryptionService {
      *            the bytes to encode
      * @return the encoded object
      */
-    EncodedContent encode(SecretKey secretKey, Ciphers cipher, byte[] src);
+    EncodedContent encode(SecretKey secretKey, AlgorithmNamed cipher, byte[] src);
 }
