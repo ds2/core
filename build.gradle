@@ -1,12 +1,11 @@
 plugins {
-    id "com.jfrog.bintray" version '1.8.0'
+    id "com.jfrog.bintray" version '1.8.1'
     id 'net.researchgate.release' version '2.6.0'
     id 'ds2.base' version '0.0.7'
 }
 
 
 allprojects {
-    //apply plugin: 'maven'
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'ds2.base'
 
@@ -43,9 +42,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
-    //apply plugin: "org.shipkit.java"
-    //apply plugin: 'maven'
-    //apply plugin: 'net.researchgate.release'
 
     publishing {
         repositories {
@@ -68,22 +64,9 @@ subprojects {
 
 }
 
-// release stuff
-
-release {
-    failOnPublishNeeded = false
-    failOnUpdateNeeded = false
-    git {
-        requireBranch = 'release/0.1'
-    }
-}
-
 afterReleaseBuild.dependsOn bintrayUpload
 
 bintray {
     publications = []
     configurations = []
 }
-
-//beforeReleaseBuild.dependsOn subprojects.install
-//afterReleaseBuild.dependsOn subprojects.uploadArchive
