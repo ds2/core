@@ -2,12 +2,13 @@ plugins {
     id "com.jfrog.bintray" version '1.8.1'
     id 'net.researchgate.release' version '2.6.0'
     id 'ds2.base' version '0.0.7'
+    id "com.github.hierynomus.license" version "0.14.0"
 }
-
 
 allprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'ds2.base'
+    apply plugin: "com.github.hierynomus.license"
 
     group = 'ds2.oss.core'
 
@@ -35,6 +36,18 @@ allprojects {
     release {
         git {
             requireBranch = 'release/0.1'
+        }
+    }
+    license {
+        ext.year = Calendar.getInstance().get(Calendar.YEAR)
+        ext.name = 'DS/2'
+        ext.email = 'dstrauss@ds-2.de'
+        header rootProject.file('aslv2_header.txt')
+        strictCheck true
+        includes(["**/*.java", "**/*.properties"])
+        excludes([ "**/*Test.java"])
+        mapping {
+            java = 'SLASHSTAR_STYLE'
         }
     }
 }
