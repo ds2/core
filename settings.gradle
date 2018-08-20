@@ -31,7 +31,7 @@ include 'owbtest'
 include 'shiro-jee'
 include 'finance'
 
-project(':api').name="ds2-oss-core-api"
+project(':api').name = "ds2-oss-core-api"
 project(':base').name = "ds2-oss-core-base"
 project(':interceptors').name = "ds2-oss-core-interceptors"
 project(':base-it').name = "ds2-oss-core-base-it"
@@ -47,20 +47,21 @@ project(':codec-fastxml').name = "ds2-oss-core-codec-fastxml"
 project(':webtools').name = "ds2-oss-core-webtools"
 project(':xmpp').name = "ds2-oss-core-xmpp"
 project(':xmpp-gcm').name = "ds2-oss-core-xmpp-gcm"
-project(':test-ear').name = "ds2-oss-core-test-ear" 
+project(':test-ear').name = "ds2-oss-core-test-ear"
 project(':es-apt').name = "ds2-oss-core-elasticsearch-annotationprocessing"
-project(':testutils').name = "ds2-oss-core-testutils" 
-project(':dbtools').name = "ds2-oss-core-dbtools" 
-project(':crypto-bc').name = "ds2-oss-core-crypto-bouncycastle" 
+project(':testutils').name = "ds2-oss-core-testutils"
+project(':dbtools').name = "ds2-oss-core-dbtools"
+project(':crypto-bc').name = "ds2-oss-core-crypto-bouncycastle"
 project(':dbtools-it').name = "ds2-oss-core-dbtools-it"
 project(':jee').name = "ds2-oss-core-jee-rest"
+project(':ds2-oss-core-jee-rest').projectDir = new File("jee/rest")
 project(':statics').name = "ds2-oss-core-statics"
 project(':math').name = "ds2-oss-core-math"
 project(':abstracts').name = "ds2-oss-core-abstracts"
 project(':hazelcast').name = "ds2-oss-core-grid-hazelcast"
 project(':codec-genson').name = "ds2-oss-core-codec-genson"
 project(':owbtest').name = "ds2-oss-core-owb-test"
-project(':shiro-jee').name="ds2-oss-core-shiro-jee"
-project(':finance').name="ds2-oss-core-finance"
+project(':shiro-jee').name = "ds2-oss-core-shiro-jee"
+project(':finance').name = "ds2-oss-core-finance"
 
 enableFeaturePreview('STABLE_PUBLISHING')

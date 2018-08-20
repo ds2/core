@@ -13,13 +13,9 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package ds2.oss.core.jee.rest;
+package ds2.oss.core.api;
 
-import javax.ws.rs.core.Response;
+import java.io.Serializable;
 
-/**
- * Created by dstrauss on 24.03.17.
- */
-public interface ExceptionTransformer<E extends Exception> {
-    Response transform(E e);
+public interface SearchCriteria extends Serializable {
 }

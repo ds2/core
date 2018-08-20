@@ -1,3 +1,13 @@
+buildscript {
+        repositories {
+            mavenLocal()
+            jcenter()
+        }
+        dependencies {
+            classpath 'ds2.gradle.plugins.gitinfo:gradle-git-info-plugin:0.0.1-SNAPSHOT'
+        }
+}
+
 plugins {
     id "com.jfrog.bintray" version '1.8.2'
     id 'net.researchgate.release' version '2.6.0'
@@ -5,16 +15,26 @@ plugins {
     id "com.github.hierynomus.license" version "0.14.0"
 }
 
+ext.scmBranchName=""
+ext.revisionId=""
+
 allprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'ds2.base'
     apply plugin: "com.github.hierynomus.license"
+    //apply plugin: 'ds2.gitinfo'
 
     group = 'ds2.oss.core'
 
     base {
         javaVersion = JavaVersion.VERSION_1_8
     }
+//    gitInfo(){
+//        countCommitId=10
+//        generatePropertiesIn = ""+project.buildDir+"/hello.properties"
+//        branchPropertyName="scmBranchName"
+//        revisionPropertyName = "revisionId"
+//    }
     repositories {
         mavenLocal()
         jcenter()

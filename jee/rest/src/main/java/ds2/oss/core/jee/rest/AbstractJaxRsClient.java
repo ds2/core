@@ -1,17 +1,17 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2018 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.jee.rest;
 
@@ -75,7 +75,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @throws E an exception in case the error handler throws an exception when a socket error
      *           occurred
      */
-    public Response performGET(WebTarget wt, SocketErrorHandler<E> eh) throws E {
+    protected Response performGET(WebTarget wt, SocketErrorHandler<E> eh) throws E {
         LOG.debug("Performing GET on {}..", wt.getUri());
         Response rc = null;
         try {
@@ -101,7 +101,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @throws E an exception in case the error handler throws an exception when a socket error
      *           occurred
      */
-    public Response performPUTJson(WebTarget wt, Object ent, SocketErrorHandler<E> eh) throws E {
+    protected Response performPUTJson(WebTarget wt, Object ent, SocketErrorHandler<E> eh) throws E {
         LOG.debug("Performing PUT on {}..", wt.getUri());
         try {
             Builder rc2 =
@@ -124,15 +124,15 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
         return null;
     }
 
-    public Response performPUTJson(WebTarget wt, Object ent) throws E {
+    protected Response performPUTJson(WebTarget wt, Object ent) throws E {
         return performPUTJson(wt, ent, defaultErrorHandler);
     }
 
-    public Response performPOSTFormUrlencoded(WebTarget wt, MultivaluedMap<String, String> map) throws E {
+    protected Response performPOSTFormUrlencoded(WebTarget wt, MultivaluedMap<String, String> map) throws E {
         return performPOSTFormUrlencoded(wt, map, defaultErrorHandler);
     }
 
-    public Response performPOSTFormUrlencoded(WebTarget wt, MultivaluedMap<String, String> map, SocketErrorHandler<E> eh) throws E {
+    protected Response performPOSTFormUrlencoded(WebTarget wt, MultivaluedMap<String, String> map, SocketErrorHandler<E> eh) throws E {
         LOG.debug("Performing POST on {}..", wt.getUri());
         Response rc = null;
         try {
@@ -158,7 +158,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @return a response
      * @throws E if an error occurred
      */
-    public Response performGET(WebTarget wt) throws E {
+    protected Response performGET(WebTarget wt) throws E {
         return performGET(wt, defaultErrorHandler);
     }
 
@@ -198,7 +198,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @param response
      * @throws E if an error occurred
      */
-    public void parseResponseForErrors(Response response) throws E {
+    protected void parseResponseForErrors(Response response) throws E {
         if (response == null) {
             LOG.debug("No response given to parse!");
             return;
@@ -219,7 +219,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      *
      * @param response the response object
      */
-    public static void closeResponseFinally(Response response) {
+    protected static void closeResponseFinally(Response response) {
         LOG.debug("Closing response object");
         if (response != null) {
             try {
@@ -240,7 +240,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @return the response dto
      * @throws E if an error occurred
      */
-    public <C> C parseResponse(Response response, Class<C> c) throws E {
+    protected <C> C parseResponse(Response response, Class<C> c) throws E {
         if (response == null) {
             return null;
         }
@@ -265,7 +265,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @deprecated Due to the nature of class inspection on runtime we discourage the use of this method. Please use the other one.
      */
     @Deprecated
-    public <C> List<C> parseResponseAsList(Response response, Class<C> c) throws E {
+    protected <C> List<C> parseResponseAsList(Response response, Class<C> c) throws E {
         if (response == null) {
             return null;
         }
@@ -287,11 +287,11 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @return the list of entities
      * @throws E the entity type
      */
-    public <C, G extends GenericType<List<C>>> List<C> parseResponseAsList(Response response, G c) throws E {
+    protected <C, G extends GenericType<List<C>>> List<C> parseResponseAsList(Response response, G c) throws E {
         if (response == null) {
             return null;
         } else {
-            this.parseResponseForErrors(response);
+            parseResponseForErrors(response);
             List<C> rc = response.readEntity(c);
             if (this.closeAfterParse) {
                 closeResponseFinally(response);
@@ -322,7 +322,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      */
     protected abstract void handleError(Response response, MediaType thisType) throws E;
 
-    public Response performDELETE(WebTarget wt, SocketErrorHandler<E> eh) throws E {
+    protected Response performDELETE(WebTarget wt, SocketErrorHandler<E> eh) throws E {
         LOG.debug("Performing DELETE on {}..", wt.getUri());
         Response rc = null;
         try {
@@ -364,7 +364,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * @return the response received
      * @throws E an exception in case of a transport error
      */
-    public Response performDELETE(WebTarget wt) throws E {
+    protected Response performDELETE(WebTarget wt) throws E {
         return performDELETE(wt, defaultErrorHandler);
     }
 }
