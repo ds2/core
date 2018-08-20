@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.api.environment;
 
+import lombok.Getter;
+
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
@@ -27,42 +29,54 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(namespace = "http://www.ds2/ns/oss/core/environment")
 @XmlEnum
+@Getter
 public enum RuntimeType {
     /**
      * Alpha.
      */
     @XmlEnumValue("alpha")
-    Alpha("alp"),
+    Alpha("alp", 80),
     /**
      * Beta.
      */
     @XmlEnumValue("beta")
-    Beta("bet"),
+    Beta("bet", 85),
     /**
      * Live config.
      */
     @XmlEnumValue("live")
-    Live("liv"),
+    Live("liv", 100),
     /**
      * Local development config.
      */
     @XmlEnumValue("localDev")
-    LocalDevelopment("ldv"),
+    LocalDevelopment("ldv", 1),
     /**
      * Pre live switching configuration.
      */
     @XmlEnumValue("preLive")
-    PreLiveSwitch("plv"),
+    PreLiveSwitch("plv", 99),
     /**
      * Prerelease config.
      */
     @XmlEnumValue("preRelease")
-    PreRelease("prl"),
+    PreRelease("prl", 90),
     /**
      * Staging config.
      */
     @XmlEnumValue("staging")
-    Staging("stg");
+    Staging("stg", 50),
+    /**
+     * User acceptance tests.
+     */
+    @XmlEnumValue("uat")
+    UAT("uat", 60),
+    /**
+     * Office/department related runtime.
+     */
+    @XmlEnumValue("labx")
+    LabX("labx", 10),
+    ;
 
     /**
      * Parses the given config name to be one of the known configurations.
@@ -87,23 +101,20 @@ public enum RuntimeType {
     /**
      * A short identifier for the configuration.
      */
-    private String ident;
+    private String identifier;
+    /**
+     * A sort order value. The higher the value, the more risky it is.
+     */
+    private int sortOrder;
 
     /**
      * Inits the enum.
      *
      * @param id a short identifier string for this runtime name
      */
-    private RuntimeType(final String id) {
-        ident = id;
+    private RuntimeType(final String id, int sortOrder) {
+        identifier = id;
+        this.sortOrder = sortOrder;
     }
 
-    /**
-     * Returns the short identifier for this runtime configuration.
-     *
-     * @return a short identifier
-     */
-    public String getIdentifier() {
-        return ident;
-    }
 }
