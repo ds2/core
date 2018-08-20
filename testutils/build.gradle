@@ -25,4 +25,5 @@ task packageTests(type: Jar, dependsOn: testClasses) {
 
 artifacts {
     testOutput packageTests
+    archives packageTests
 }
