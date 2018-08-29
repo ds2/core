@@ -27,3 +27,13 @@ artifacts {
     testOutput packageTests
     archives packageTests
 }
+
+model {
+    publishing {
+        publications {
+            core {
+                artifact packageTests
+            }
+        }
+    }
+}

@@ -11,7 +11,7 @@ buildscript {
 plugins {
     id "com.jfrog.bintray" version '1.8.2'
     id 'net.researchgate.release' version '2.6.0'
-    id 'ds2.base' version '0.0.7'
+    id 'ds2.base' version '0.0.9'
     id "com.github.hierynomus.license" version "0.14.0"
 }
 
