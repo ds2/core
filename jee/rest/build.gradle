@@ -1,18 +1,19 @@
 group = 'ds2.oss.core.jee'
 description = 'DS/2 OSS Core JEE REST'
 dependencies {
-  compile project(':ds2-oss-core-webtools')
-  compile project(':ds2-oss-core-statics')
-    compile(group: 'javax', name: 'javaee-web-api', version:'7.0') {
-       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
-       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
-       Please review and delete this closure when resolved. */
+    compile project(':ds2-oss-core-webtools')
+    compile project(':ds2-oss-core-statics')
+    compile 'io.swagger.core.v3:swagger-jaxrs2:2.0.5'
+    compile(group: 'javax', name: 'javaee-web-api', version: '7.0') {
+        /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+        This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+        Please review and delete this closure when resolved. */
     }
-    compile(group: 'org.slf4j', name: 'slf4j-api', version:'1.7.7') {
-       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
-       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
-       Please review and delete this closure when resolved. */
+    compile(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25') {
+        /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+        This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+        Please review and delete this closure when resolved. */
     }
-  testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
-  testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
+    testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
+    testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
 }
