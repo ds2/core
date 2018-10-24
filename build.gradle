@@ -17,24 +17,26 @@ plugins {
 
 ext.scmBranchName=""
 ext.revisionId=""
+ext.date=""
 
 allprojects {
     apply plugin: 'com.jfrog.bintray'
     apply plugin: 'ds2.base'
     apply plugin: "com.github.hierynomus.license"
-    //apply plugin: 'ds2.gitinfo'
+    apply plugin: 'ds2.gitinfo'
 
     group = 'ds2.oss.core'
 
     base {
         javaVersion = JavaVersion.VERSION_1_8
     }
-//    gitInfo(){
-//        countCommitId=10
-//        generatePropertiesIn = ""+project.buildDir+"/hello.properties"
-//        branchPropertyName="scmBranchName"
-//        revisionPropertyName = "revisionId"
-//    }
+   gitInfo(){
+       countCommitId=10
+       generatePropertiesIn = ""+project.buildDir+"/hello.properties"
+       branchPropertyName="scmBranchName"
+       revisionPropertyName = "revisionId"
+       builddatePropertyName = 'date'
+   }
     repositories {
         mavenLocal()
         jcenter()
@@ -79,7 +81,9 @@ subprojects {
     publishing {
         repositories {
             maven {
-                url "$buildDir/repo"
+                def releasesRepoUrl = "$buildDir/repos/releases"
+                def snapshotsRepoUrl = "$buildDir/repos/snapshots"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             }
         }
         publications {
