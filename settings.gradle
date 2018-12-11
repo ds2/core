@@ -21,7 +21,7 @@ include 'testutils'
 include 'dbtools'
 include 'crypto-bc'
 include 'dbtools-it'
-include 'jee'
+include ':jee:rest'
 include 'statics'
 include 'math'
 include 'abstracts'
@@ -30,6 +30,7 @@ include 'codec-genson'
 include 'owbtest'
 include 'shiro-jee'
 include 'finance'
+include ':jee:jwt'
 
 project(':api').name = "ds2-oss-core-api"
 project(':base').name = "ds2-oss-core-base"
@@ -53,8 +54,8 @@ project(':testutils').name = "ds2-oss-core-testutils"
 project(':dbtools').name = "ds2-oss-core-dbtools"
 project(':crypto-bc').name = "ds2-oss-core-crypto-bouncycastle"
 project(':dbtools-it').name = "ds2-oss-core-dbtools-it"
-project(':jee').name = "ds2-oss-core-jee-rest"
-project(':ds2-oss-core-jee-rest').projectDir = new File("jee/rest")
+project(':jee:rest').name = "ds2-oss-core-jee-rest"
+project(':jee:jwt').name='ds2-oss-core-jee-jwt'
 project(':statics').name = "ds2-oss-core-statics"
 project(':math').name = "ds2-oss-core-math"
 project(':abstracts').name = "ds2-oss-core-abstracts"
