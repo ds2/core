@@ -107,4 +107,16 @@ public interface IoMethods {
 
         return rc;
     }
+
+    static ByteArrayOutputStream readFromInputStreamBuffered(InputStream stream) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(100);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(stream);
+        byte[] buffer = new byte[1024 * 1024];
+        int read = 0;
+        while ((read = bufferedInputStream.read(buffer, 0, buffer.length)) != -1) {
+            outputStream.write(buffer, 0, read);
+        }
+        LOG.debug("Size of output so far: {} bytes", outputStream.size());
+        return outputStream;
+    }
 }
