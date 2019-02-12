@@ -1,23 +1,25 @@
 buildscript {
-        repositories {
-            mavenLocal()
-            jcenter()
-        }
-        dependencies {
-            classpath 'ds2.gradle.plugins.gitinfo:gradle-git-info-plugin:0.0.1-SNAPSHOT'
-        }
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath 'ds2.gradle.plugins.gitinfo:gradle-git-info-plugin:0.0.1-SNAPSHOT'
+    }
 }
 
 plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.20'
     id "com.jfrog.bintray" version '1.8.2'
     id 'net.researchgate.release' version '2.6.0'
     id 'ds2.base' version '0.0.9'
     id "com.github.hierynomus.license" version "0.14.0"
+    id("com.github.spotbugs") version "1.6.9"
 }
 
-ext.scmBranchName=""
-ext.revisionId=""
-ext.date=""
+ext.scmBranchName = ""
+ext.revisionId = ""
+ext.date = ""
 
 allprojects {
     apply plugin: 'com.jfrog.bintray'
@@ -30,13 +32,13 @@ allprojects {
     base {
         javaVersion = JavaVersion.VERSION_1_8
     }
-   gitInfo(){
-       countCommitId=10
-       generatePropertiesIn = ""+project.buildDir+"/hello.properties"
-       branchPropertyName="scmBranchName"
-       revisionPropertyName = "revisionId"
-       builddatePropertyName = 'date'
-   }
+    gitInfo() {
+        countCommitId = 10
+        generatePropertiesIn = "" + project.buildDir + "/hello.properties"
+        branchPropertyName = "scmBranchName"
+        revisionPropertyName = "revisionId"
+        builddatePropertyName = 'date'
+    }
     repositories {
         mavenLocal()
         jcenter()
@@ -67,7 +69,7 @@ allprojects {
         header rootProject.file('aslv2_header.txt')
         strictCheck true
         includes(["**/*.java", "**/*.properties"])
-        excludes([ "**/*Test.java"])
+        excludes(["**/*Test.java"])
         mapping {
             java = 'SLASHSTAR_STYLE'
         }
@@ -77,7 +79,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
-    apply plugin: 'findbugs'
     apply plugin: 'checkstyle'
 
     publishing {
@@ -101,15 +102,19 @@ subprojects {
         }
     }
 
-    findbugs {
-        ignoreFailures = false
-        toolVersion = "3.0.1"
-        sourceSets=[sourceSets.main]
-        //excludeFilter = file("config/findbugs/excludeFilter.xml")
-        reportsDir = file("$project.buildDir/reports/findbugs")
+    spotbugs {
+        toolVersion = "3.1.9"
+        //sourceSets = [sourceSets.main]
+        ignoreFailures = true
+        reportsDir = file("$project.buildDir/findbugsReports")
         effort = "max"
+        showProgress = true
+        reportLevel = "low"
     }
-    tasks.withType(FindBugs) {
+    checkstyle {
+        ignoreFailures = true
+    }
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {
             xml {
                 enabled false
@@ -126,8 +131,6 @@ subprojects {
             //html.stylesheet resources.text.fromFile('config/xsl/checkstyle-custom.xsl')
         }
     }
-
-
 
 }
 
