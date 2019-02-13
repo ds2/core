@@ -16,6 +16,7 @@ plugins {
     id 'net.researchgate.release' version '2.6.0'
     id 'ds2.base' version '0.0.11'
     id "com.github.hierynomus.license" version "0.15.0"
+    id "com.github.hierynomus.license-base" version"0.15.0"
     id("com.github.spotbugs") version "1.6.9"
 }
 
@@ -69,7 +70,7 @@ allprojects {
         ext.name = 'DS/2'
         ext.email = 'dstrauss@ds-2.de'
         header rootProject.file('aslv2_header.txt')
-        ignoreFailures = true
+        ignoreFailures = false
         strictCheck true
         includes(["**/*.java", "**/*.properties"])
         excludes(["**/*Test.java"])
