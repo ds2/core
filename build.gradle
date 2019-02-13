@@ -67,6 +67,7 @@ allprojects {
         ext.name = 'DS/2'
         ext.email = 'dstrauss@ds-2.de'
         header rootProject.file('aslv2_header.txt')
+        ignoreFailures = true
         strictCheck true
         includes(["**/*.java", "**/*.properties"])
         excludes(["**/*Test.java"])
@@ -79,7 +80,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
-    apply plugin: 'checkstyle'
 
     publishing {
         repositories {
@@ -111,9 +111,9 @@ subprojects {
         showProgress = true
         reportLevel = "low"
     }
-    checkstyle {
-        ignoreFailures = true
-    }
+    // checkstyle {
+    //     ignoreFailures = true
+    // }
     tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {
             xml {
@@ -124,13 +124,13 @@ subprojects {
             //html.stylesheet resources.text.fromFile('config/xsl/findbugs-custom.xsl')
         }
     }
-    tasks.withType(Checkstyle) {
-        reports {
-            xml.enabled false
-            html.enabled true
-            //html.stylesheet resources.text.fromFile('config/xsl/checkstyle-custom.xsl')
-        }
-    }
+    // tasks.withType(Checkstyle) {
+    //     reports {
+    //         xml.enabled false
+    //         html.enabled true
+    //         //html.stylesheet resources.text.fromFile('config/xsl/checkstyle-custom.xsl')
+    //     }
+    // }
 
 }
 

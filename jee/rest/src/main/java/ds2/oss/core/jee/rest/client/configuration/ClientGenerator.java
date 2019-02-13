@@ -1,4 +1,4 @@
-package ds2.oss.core.jee.rest.configuration;
+package ds2.oss.core.jee.rest.client.configuration;
 
 import ds2.oss.core.api.JaxRsClientException;
 import ds2.oss.core.jee.rest.JaxRsClientConfiguration;
