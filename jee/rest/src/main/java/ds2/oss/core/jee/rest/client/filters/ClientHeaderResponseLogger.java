@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package ds2.oss.core.jee.rest;
+package ds2.oss.core.jee.rest.client.filters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.jee.rest.tests;
 
-import ds2.oss.core.jee.rest.AbstractJaxRsClient;
+import ds2.oss.core.jee.rest.client.AbstractJaxRsClient;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
