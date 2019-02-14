@@ -56,7 +56,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * Inits this object.
      */
     protected AbstractJaxRsClient() {
-        supportedMediaTypes = new ArrayList<>();
+        supportedMediaTypes = new ArrayList<>(2);
         supportedMediaTypes.add(MediaType.APPLICATION_JSON_TYPE);
         defaultErrorHandler = e -> {
             LOG.debug("Got this exception here:", e);
@@ -85,7 +85,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
             return rc;
         } catch (Exception e) {
             LOG.debug("We received an exception here when performing the request!", e);
-            eh.handleException(e);
+            eh.handleNetworkException(e);
         } finally {
             LOG.debug("Done with GET query on {}", wt.getUri());
         }
@@ -117,7 +117,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
             return rc;
         } catch (Exception e) {
             LOG.debug("We received an exception here when performing the request!", e);
-            eh.handleException(e);
+            eh.handleNetworkException(e);
         } finally {
             LOG.debug("Done with GET query on {}", wt.getUri());
         }
@@ -144,7 +144,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
             return rc;
         } catch (Exception e) {
             LOG.debug("We received an exception here when performing the request!", e);
-            eh.handleException(e);
+            eh.handleNetworkException(e);
         } finally {
             LOG.debug("Done with POST query on {}", wt.getUri());
         }
@@ -167,7 +167,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
      * Dummy method to print all headers of the given response.
      *
      * @param rc the response
-     * @see ClientHeaderRequestLogger
+     * @see ds2.oss.core.jee.rest.client.filters.ClientHeaderRequestLogger
      * @deprecated Better use the client filter for this.
      */
     @Deprecated
@@ -332,7 +332,7 @@ public abstract class AbstractJaxRsClient<E extends JaxRsClientException> implem
             return rc;
         } catch (Exception e) {
             LOG.debug("We received an exception here when performing the request!", e);
-            eh.handleException(e);
+            eh.handleNetworkException(e);
         } finally {
             LOG.debug("Done with GET query on {}", wt.getUri());
         }

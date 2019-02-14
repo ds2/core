@@ -15,5 +15,12 @@
  */
 package ds2.oss.core.jee.rest.client.configuration;
 
+import ds2.oss.core.api.JaxRsClientException;
+import ds2.oss.core.jee.rest.client.JaxRsClientConfiguration;
+
+import javax.ws.rs.client.ClientBuilder;
+
+@FunctionalInterface
 public interface ClientBuilderGenerator {
+    ClientBuilder generateClientBuilder(JaxRsClientConfiguration configuration) throws JaxRsClientException;
 }

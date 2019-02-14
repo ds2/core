@@ -23,5 +23,11 @@ import ds2.oss.core.api.JaxRsClientException;
  * @author dstrauss
  */
 public interface SocketErrorHandler<E extends JaxRsClientException> {
-    void handleException(Exception e) throws E;
+    /**
+     * Handles the network exception that occurred during jaxrs client call.
+     *
+     * @param e the network exception
+     * @throws E the business exception
+     */
+    void handleNetworkException(Exception e) throws E;
 }
