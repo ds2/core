@@ -23,6 +23,7 @@ import java.lang.invoke.MethodHandles;
 import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Scanner;
 
 /**
  * Created by dstrauss on 19.05.16.
@@ -78,6 +79,16 @@ public interface IoMethods {
         }
     }
 
+    static void close(Reader is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (IOException e) {
+                LOG.debug("Error when closing the given reader!", e);
+            }
+        }
+    }
+
     static String readResourceFromClasspath(String resName, Charset cs) {
         String resName2 = resName;
         if (!resName.startsWith("/")) {
@@ -118,5 +129,11 @@ public interface IoMethods {
         }
         LOG.debug("Size of output so far: {} bytes", outputStream.size());
         return outputStream;
+    }
+
+    static void close(Scanner scanner) {
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 }

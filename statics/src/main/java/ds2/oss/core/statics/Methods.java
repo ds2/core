@@ -100,6 +100,7 @@ public interface Methods {
                 }
             }
         }
+        LOG.debug("Returning possible result: {}", rc);
         return rc;
     }
 
@@ -112,21 +113,7 @@ public interface Methods {
      * @return the found enum value, or null if not found
      */
     static <E extends Enum<E>> E findEnumValueByName(Class<E> enumClass, String name) {
-        LOG.debug("Checking for enum value {} in {}", name, enumClass);
-        E rc = null;
-        try {
-            rc = Enum.valueOf(enumClass, name);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            //ok, maybe lowercase/uppercase problem
-            for (E e1 : enumClass.getEnumConstants()) {
-                if (e1.name().equalsIgnoreCase(name)) {
-                    rc = e1;
-                    break;
-                }
-            }
-        }
-        LOG.debug("Returning possible result: {}", rc);
-        return rc;
+        return findEnumValueByName(enumClass, name, null);
     }
 
     /**
