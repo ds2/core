@@ -16,6 +16,7 @@
 package ds2.oss.core.statics;
 
 import ds2.oss.core.api.IdAware;
+import ds2.oss.core.api.dto.impl.PagedResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -179,7 +180,7 @@ public interface Methods {
         if (s1 != null && s2 == null) {
             return -1;
         }
-        if (s1 == null && s2 != null) {
+        if (s1 == null) {
             return 1;
         }
         return s1.compareToIgnoreCase(s2);
@@ -270,6 +271,14 @@ public interface Methods {
             collection = new ArrayList<>(0);
         }
         return collection;
+    }
+
+    static <E> E migrateObject(PagedResult<E> currentStuff){
+        int offset=0;
+        int maxCycles=10;
+        do {
+
+        } while();
     }
 
 }

@@ -25,6 +25,10 @@ exclude(module: 'tools-jar')
 }
 test.useTestNG()
 
+tasks.withType(Test)  {
+    maxParallelForks = 1
+}
+
 bintray {
     publications = []
     configurations = []
