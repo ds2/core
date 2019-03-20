@@ -97,21 +97,25 @@ public class GsonCodec implements JsonCodec {
         LOG.debug("Starting codec init..");
         final GsonBuilder gb = new GsonBuilder();
         LOG.debug("Checking for serializers..");
-        for (JsonSerializer<?> serializer : serializers) {
-            final GsonSerializer gsa = serializer.getClass().getAnnotation(GsonSerializer.class);
-            if (gsa != null) {
-                final Class<?> c = gsa.value();
-                LOG.debug("registering serializer for type {}: {}", new Object[]{c, serializer});
-                gb.registerTypeAdapter(c, serializer);
+        if (serializers != null) {
+            for (JsonSerializer<?> serializer : serializers) {
+                final GsonSerializer gsa = serializer.getClass().getAnnotation(GsonSerializer.class);
+                if (gsa != null) {
+                    final Class<?> c = gsa.value();
+                    LOG.debug("registering serializer for type {}: {}", new Object[]{c, serializer});
+                    gb.registerTypeAdapter(c, serializer);
+                }
             }
         }
         LOG.debug("Checking for deserializers..");
-        for (JsonDeserializer<?> deserializer : deserializers) {
-            final GsonDeserializer gsa = deserializer.getClass().getAnnotation(GsonDeserializer.class);
-            if (gsa != null) {
-                final Class<?> c = gsa.value();
-                LOG.debug("registering deserializer for type {}: {}", new Object[]{c, deserializer});
-                gb.registerTypeAdapter(c, deserializer);
+        if (deserializers != null) {
+            for (JsonDeserializer<?> deserializer : deserializers) {
+                final GsonDeserializer gsa = deserializer.getClass().getAnnotation(GsonDeserializer.class);
+                if (gsa != null) {
+                    final Class<?> c = gsa.value();
+                    LOG.debug("registering deserializer for type {}: {}", new Object[]{c, deserializer});
+                    gb.registerTypeAdapter(c, deserializer);
+                }
             }
         }
         LOG.debug("done. Creating final gson builder");

@@ -273,12 +273,4 @@ public interface Methods {
         return collection;
     }
 
-    static <E> E migrateObject(PagedResult<E> currentStuff){
-        int offset=0;
-        int maxCycles=10;
-        do {
-
-        } while();
-    }
-
 }

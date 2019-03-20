@@ -18,10 +18,10 @@ package ds2.oss.core.jee.jwt;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-public class TokenDataMap extends HashMap<String,Object> implements TokenData {
+public class TokenDataMap extends HashMap<String, Object> implements TokenData {
     @Override
     public String getId() {
-        return null;
+        return (String) get(CLAIM_ID);
     }
 
     @Override
@@ -32,5 +32,10 @@ public class TokenDataMap extends HashMap<String,Object> implements TokenData {
     @Override
     public LocalDateTime getValidUntil() {
         return null;
+    }
+
+    @Override
+    public String getSubject() {
+        return (String) get(CLAIM_SUBJECT);
     }
 }
