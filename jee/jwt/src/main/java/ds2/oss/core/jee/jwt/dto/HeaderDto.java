@@ -8,4 +8,5 @@ import lombok.*;
 @Builder
 public class HeaderDto {
     private String alg;
+    private String typ;
 }

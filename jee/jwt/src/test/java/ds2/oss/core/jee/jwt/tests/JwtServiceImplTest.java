@@ -24,9 +24,24 @@ public class JwtServiceImplTest {
     }
 
     @Test
-    public void testNoAlg() throws JwtContentException {
+    public void h3_1_Example_JWT() throws JwtContentException {
+        String token = to.createHeader(Algorithm.HMAC_SHA256, "JWT");
+        assertEquals(token, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9");
+    }
+
+    @Test
+    public void h6_1_Example_Unsecured_JWT() throws JwtContentException {
+        String token = to.createHeader(Algorithm.NONE, null);
+        assertEquals(token, "eyJhbGciOiJub25lIn0");
+    }
+
+    @Test
+    public void h6_1_Example_Unsecured_JWT_Claims_Set() throws JwtContentException {
         TokenDataMap tokenData = new TokenDataMap();
-        String token = to.createToken(Algorithm.NONE, tokenData);
-        assertEquals(token, "");
+        tokenData.put("iss", "joe");
+        tokenData.put("exp", 1300819380);
+        tokenData.put("http://example.com/is_root", true);
+        String token = to.encodeBody(tokenData);
+        assertEquals(token, "eyJpc3MiOiJqb2UiLCJleHAiOjEzMDA4MTkzODAsImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ");
     }
 }

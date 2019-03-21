@@ -16,9 +16,9 @@
 package ds2.oss.core.jee.jwt;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class TokenDataMap extends HashMap<String, Object> implements TokenData {
+public class TokenDataMap extends LinkedHashMap<String, Object> implements TokenData {
     @Override
     public String getId() {
         return (String) get(CLAIM_ID);

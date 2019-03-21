@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum Algorithm {
-    NONE("none");
+    NONE("none"),
+    HMAC_SHA256("HS256");
     private String fieldValue;
 
     Algorithm(String s) {

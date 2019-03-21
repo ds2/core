@@ -22,12 +22,33 @@ public class JwtServiceImpl {
     @Inject
     private Base64Codec base64Codec;
 
-    public String createToken(Algorithm algorithm, TokenData tokenData) throws JwtContentException {
-        HeaderDto headerDto = HeaderDto.builder().alg(algorithm.getFieldValue()).build();
+    public String createHeader(Algorithm algorithm, String contentType) throws JwtContentException {
+        HeaderDto headerDto = HeaderDto.builder().alg(algorithm.getFieldValue())
+                .typ(contentType)
+                .build();
         StringBuilder stringBuilder = new StringBuilder(200);
         try {
             String headerJson = jsonCodec.encode(headerDto);
-            stringBuilder.append(base64Codec.encode(headerJson.getBytes(StandardCharsets.UTF_8)));
+            String headerBase64UrlEncoded = base64Codec.encode(headerJson.getBytes(StandardCharsets.UTF_8));
+            headerBase64UrlEncoded = headerBase64UrlEncoded.replaceAll("=", "");
+            stringBuilder.append(headerBase64UrlEncoded);
+            return stringBuilder.toString();
+        } catch (CodecException e) {
+            throw new JwtContentException(JwtErrorCodes.CODEC, "Error when encoding the object to Json!", e);
+        }
+    }
+
+    public String encodeBody(TokenData tokenData) throws JwtContentException {
+        LOG.debug("Trying to encode tokendata: {}", tokenData);
+        StringBuilder stringBuilder = new StringBuilder(200);
+        try {
+            String headerJson = jsonCodec.encode(tokenData);
+            LOG.debug("As json, we have: {}", headerJson);
+            String headerBase64UrlEncoded = base64Codec.encode(headerJson.getBytes(StandardCharsets.UTF_8));
+            headerBase64UrlEncoded = headerBase64UrlEncoded.replaceAll("\n", "");
+            headerBase64UrlEncoded = headerBase64UrlEncoded.replaceAll("=", "");
+            stringBuilder.append(headerBase64UrlEncoded);
+            LOG.debug("Result so far is: {}", stringBuilder);
             return stringBuilder.toString();
         } catch (CodecException e) {
             throw new JwtContentException(JwtErrorCodes.CODEC, "Error when encoding the object to Json!", e);
