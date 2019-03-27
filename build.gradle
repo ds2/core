@@ -71,8 +71,8 @@ allprojects {
         ext.name = 'DS/2'
         ext.email = 'dstrauss@ds-2.de'
         header rootProject.file('aslv2_header.txt')
-        ignoreFailures = false
-        strictCheck true
+        ignoreFailures = true
+        strictCheck false
         includes(["**/*.java", "**/*.properties"])
         excludes(["**/*Test.java"])
         mapping {
