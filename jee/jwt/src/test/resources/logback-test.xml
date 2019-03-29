@@ -29,10 +29,10 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-    <logger level="debug" name="ds2.oss.core"/>
-    <logger level="debug" name="org.jboss.weld"/>
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
+    <logger level="debug" name="ds2.oss.core"/>
+    <logger level="debug" name="org.jboss.weld"/>
 </configuration>

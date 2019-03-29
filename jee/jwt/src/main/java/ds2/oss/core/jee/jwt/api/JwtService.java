@@ -1,4 +1,4 @@
-package ds2.oss.core.jee.jwt;
+package ds2.oss.core.jee.jwt.api;
 
 import java.util.Map;
 

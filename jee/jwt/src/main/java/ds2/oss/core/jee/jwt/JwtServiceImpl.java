@@ -3,19 +3,16 @@ package ds2.oss.core.jee.jwt;
 import ds2.oss.core.api.Base64Codec;
 import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.jee.jwt.api.*;
 import ds2.oss.core.jee.jwt.dto.HeaderDto;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.crypto.Mac;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 
 @Dependent
 @Setter
@@ -27,6 +24,7 @@ public class JwtServiceImpl {
     private Base64Codec base64Codec;
 
     public String createHeader(Algorithm algorithm, String type, String contentType) throws JwtContentException {
+        LOG.debug("Will create a header with alg={}, type={} and contentType={}", algorithm, type, contentType);
         HeaderDto headerDto = HeaderDto.builder().alg(algorithm.getFieldValue())
                 .typ(type)
                 .cty(contentType)
@@ -37,6 +35,7 @@ public class JwtServiceImpl {
             String headerBase64UrlEncoded = base64Codec.encode(headerJson.getBytes(StandardCharsets.UTF_8));
             headerBase64UrlEncoded = base64Url(headerBase64UrlEncoded);
             stringBuilder.append(headerBase64UrlEncoded);
+            LOG.debug("Header is: {}", stringBuilder.toString());
             return stringBuilder.toString();
         } catch (CodecException e) {
             throw new JwtContentException(JwtErrorCodes.CODEC, "Error when encoding the object to Json!", e);
@@ -52,7 +51,7 @@ public class JwtServiceImpl {
             String headerBase64UrlEncoded = base64Codec.encode(headerJson.getBytes(StandardCharsets.UTF_8));
             headerBase64UrlEncoded = base64Url(headerBase64UrlEncoded);
             stringBuilder.append(headerBase64UrlEncoded);
-            LOG.debug("Result so far is: {}", stringBuilder);
+            LOG.debug("Result for body is: {}", stringBuilder);
             return stringBuilder.toString();
         } catch (CodecException e) {
             throw new JwtContentException(JwtErrorCodes.CODEC, "Error when encoding the object to Json!", e);
@@ -65,39 +64,19 @@ public class JwtServiceImpl {
         return base64String;
     }
 
-    public String createToken(Algorithm algorithm, String type, String contentType, TokenData tokenData, Key key) throws JwtContentException {
-        String header = createHeader(algorithm, type, contentType);
+    public String createToken(String type, String contentType, TokenData tokenData, TokenSigner signer) throws JwtContentException, JwtKeyException {
+        LOG.debug("Will try to create a token with alg {}, and tokenData={}", signer, tokenData);
+        String header = createHeader(signer.getAlgorithm(), type, contentType);
         String body = encodeBody(tokenData);
-        String sig = createSignatureFromBody(header, body, algorithm, key);
+        String sig = signer.getBase64UrlSignatureFrom(header + "." + body);
 
         StringBuilder sb = new StringBuilder(200);
         sb.append(header).append('.').append(body);
         if (sig != null) {
             sb.append('.').append(sig);
         }
-        return sb.toString();
-    }
-
-    private String createSignatureFromBody(String header, String encodedBody, Algorithm algorithm, Key key) throws JwtContentException {
-        String result = null;
-        try {
-            switch (algorithm) {
-                case HMAC_SHA256:
-                    Mac mac = Mac.getInstance("HmacSHA256");
-                    mac.init(key);
-                    mac.update(encodedBody.getBytes(StandardCharsets.UTF_8));
-                    byte[] resultBytes = mac.doFinal();
-                    result = base64Codec.encode(resultBytes);
-                    result = base64Url(result);
-                    break;
-            }
-        } catch (NoSuchAlgorithmException e) {
-            throw new JwtContentException(JwtErrorCodes.UNKNOWN_ALGORITHM, "No idea how to handle this algorithm: " + algorithm, e);
-        } catch (InvalidKeyException e) {
-            throw new JwtContentException(JwtErrorCodes.INVALID_KEY, "The given key is invalid to use for signing the token!", e);
-        } finally {
-
-        }
-        return result;
+        String resultToken = sb.toString();
+        LOG.debug("Token for this run is: {}", resultToken);
+        return resultToken;
     }
 }

@@ -15,6 +15,8 @@
  */
 package ds2.oss.core.jee.jwt;
 
+import ds2.oss.core.jee.jwt.api.TokenData;
+
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 
