@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core Codec GSON'
 dependencies {
     compile project(':ds2-oss-core-api')
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3'
-    testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
     testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.1') {
         exclude(module: 'tools')
     }

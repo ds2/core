@@ -3,7 +3,7 @@ dependencies {
     compile project(':ds2-oss-core-crypto')
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.51'
     testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
-    testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
     testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     testCompile group: 'org.jboss', name: 'jandex', version: '1.2.0.Beta1'

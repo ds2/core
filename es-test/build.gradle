@@ -2,7 +2,7 @@
 description = 'DS/2 OSS Core ElasticSearch Tests'
 dependencies {
   compile project(':ds2-oss-core-elasticsearch')
-    testCompile group: 'org.testng', name: 'testng', version:'6.8.8'
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
     testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version:'2.2.4.Final'
   testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
     testCompile group: 'org.slf4j', name: 'slf4j-jdk14', version:'1.7.7'

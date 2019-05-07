@@ -22,7 +22,7 @@ dependencies {
     compile project(':ds2-oss-core-api')
     compile project(':ds2-oss-core-statics')
     testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.+'
-    testCompile group: 'org.testng', name: 'testng', version: '6.+'
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
     testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
     testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
     compileOnly 'org.slf4j:slf4j-api:1.7.26'
