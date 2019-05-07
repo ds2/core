@@ -21,5 +21,5 @@ public class HeaderDto {
     /**
      * The content type. Mime media type.
      */
-    private String cty;
+    private String cty = "JWT";
 }

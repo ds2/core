@@ -71,9 +71,9 @@ public class JwtServiceImpl {
         String sig = signer.getBase64UrlSignatureFrom(header + "." + body);
 
         StringBuilder sb = new StringBuilder(200);
-        sb.append(header).append('.').append(body);
+        sb.append(header).append('.').append(body).append('.');
         if (sig != null) {
-            sb.append('.').append(sig);
+            sb.append(sig);
         }
         String resultToken = sb.toString();
         LOG.debug("Token for this run is: {}", resultToken);

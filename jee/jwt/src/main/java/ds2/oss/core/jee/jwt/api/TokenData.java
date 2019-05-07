@@ -16,6 +16,7 @@
 package ds2.oss.core.jee.jwt.api;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public interface TokenData extends Map<String, Object> {
@@ -32,9 +33,17 @@ public interface TokenData extends Map<String, Object> {
 
     String getId();
 
+    String getIssuer();
+
     LocalDateTime getCreated();
 
-    LocalDateTime getValidUntil();
+    LocalDateTime getExpirationTime();
+
+    LocalDateTime getNotBefore();
+
+    String getJwtId();
 
     String getSubject();
+
+    List<String> getAudience();
 }

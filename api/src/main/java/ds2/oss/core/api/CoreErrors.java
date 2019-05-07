@@ -66,8 +66,11 @@ public enum CoreErrors implements IErrorData {
     /**
      * If a given transport type value could not match with an enum value.
      */
-    UnknownEnumValue(11)
-    ;
+    UnknownEnumValue(11),
+    /**
+     * If a call or thread timed out or had to be canceled when executed too long.
+     */
+    TimedOut(12);
     /**
      * The error code.
      */
@@ -76,8 +79,7 @@ public enum CoreErrors implements IErrorData {
     /**
      * Inits the enum value.
      *
-     * @param i
-     *            the numerical error code
+     * @param i the numerical error code
      */
     CoreErrors(final int i) {
         code = i;

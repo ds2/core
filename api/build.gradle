@@ -7,4 +7,9 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.16.10")
     compileOnly(group: 'javax', name: 'javaee-web-api', version:'7.0')
     testCompile (group: 'javax', name: 'javaee-web-api', version:'7.0')
+    testCompile 'org.testng:testng:6.14.3'
+    testImplementation 'org.slf4j:slf4j-jdk14:1.7.25'
+    testImplementation 'ch.qos.logback:logback-classic:1.2.3'
 }
+
+test.useTestNG()
