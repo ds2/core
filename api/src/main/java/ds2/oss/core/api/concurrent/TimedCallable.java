@@ -8,7 +8,6 @@ import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Setter
 @Getter
 public class TimedCallable<V> implements Callable<V> {
     private static final Logger LOGGER = Logger.getLogger(TimedCallable.class.getName());
@@ -20,6 +19,15 @@ public class TimedCallable<V> implements Callable<V> {
         this.delegate = delegate;
         this.maxUnits = maxUnits;
         this.timeUnit = timeUnit;
+        if (maxUnits < 0) {
+            throw new IllegalArgumentException("maxUnits must not be smaller than 0!");
+        }
+        if (timeUnit == null) {
+            throw new IllegalArgumentException("A timeUnit is required!");
+        }
+        if (delegate == null) {
+            throw new IllegalArgumentException("You must give a delegate to execute!");
+        }
     }
 
     @Override
