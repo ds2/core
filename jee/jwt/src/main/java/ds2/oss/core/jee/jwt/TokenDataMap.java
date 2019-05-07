@@ -16,9 +16,13 @@
 package ds2.oss.core.jee.jwt;
 
 import ds2.oss.core.jee.jwt.api.TokenData;
+import ds2.oss.core.statics.Converts;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class TokenDataMap extends LinkedHashMap<String, Object> implements TokenData {
     @Override
@@ -27,17 +31,49 @@ public class TokenDataMap extends LinkedHashMap<String, Object> implements Token
     }
 
     @Override
-    public LocalDateTime getCreated() {
-        return null;
+    public String getIssuer() {
+        return (String) get(CLAIM_ISSUER);
     }
 
     @Override
-    public LocalDateTime getValidUntil() {
-        return null;
+    public LocalDateTime getCreated() {
+        return mapStringToLdt(get(CLAIM_ISSUED_AT));
     }
 
+    private static LocalDateTime mapStringToLdt(Object s) {
+        LocalDateTime localDateTime = null;
+        if (s != null) {
+            long numVal = Converts.toLong(s, 0);
+            if (numVal > 0) {
+                Instant epochSecondsInstant = Instant.ofEpochSecond(numVal);
+                localDateTime = epochSecondsInstant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+            }
+        }
+        return localDateTime;
+    }
+
+    @Override
+    public LocalDateTime getExpirationTime() {
+        return mapStringToLdt(get(CLAIM_EXPIRATION_TIME));
+    }
+
+    @Override
+    public LocalDateTime getNotBefore() {
+        return mapStringToLdt(get(CLAIM_NOT_BEFORE));
+    }
+
+    @Override
+    public String getJwtId() {
+        return null;
+    }
+    
     @Override
     public String getSubject() {
         return (String) get(CLAIM_SUBJECT);
+    }
+
+    @Override
+    public List<String> getAudience() {
+        return null;
     }
 }
