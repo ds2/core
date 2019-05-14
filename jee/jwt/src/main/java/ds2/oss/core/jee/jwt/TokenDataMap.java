@@ -16,6 +16,7 @@
 package ds2.oss.core.jee.jwt;
 
 import ds2.oss.core.jee.jwt.api.TokenData;
+import ds2.oss.core.jee.jwt.api.TokenDataSetter;
 import ds2.oss.core.statics.Converts;
 
 import java.time.Instant;
@@ -24,7 +25,7 @@ import java.time.ZoneId;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class TokenDataMap extends LinkedHashMap<String, Object> implements TokenData {
+public class TokenDataMap extends LinkedHashMap<String, Object> implements TokenDataSetter, TokenData {
     @Override
     public String getId() {
         return (String) get(CLAIM_ID);
@@ -52,6 +53,14 @@ public class TokenDataMap extends LinkedHashMap<String, Object> implements Token
         return localDateTime;
     }
 
+    private static Long mapLdtToEpochSeconds(LocalDateTime localDateTime) {
+        Long numVal = null;
+        if (localDateTime != null) {
+            numVal = localDateTime.atZone(ZoneId.of("UTC")).toEpochSecond();
+        }
+        return numVal;
+    }
+
     @Override
     public LocalDateTime getExpirationTime() {
         return mapStringToLdt(get(CLAIM_EXPIRATION_TIME));
@@ -64,9 +73,9 @@ public class TokenDataMap extends LinkedHashMap<String, Object> implements Token
 
     @Override
     public String getJwtId() {
-        return null;
+        return (String) get(CLAIM_JWT_ID);
     }
-    
+
     @Override
     public String getSubject() {
         return (String) get(CLAIM_SUBJECT);
@@ -75,5 +84,45 @@ public class TokenDataMap extends LinkedHashMap<String, Object> implements Token
     @Override
     public List<String> getAudience() {
         return null;
+    }
+
+    @Override
+    public void setId(String id) {
+        put(CLAIM_ID, id);
+    }
+
+    @Override
+    public void setIssuer(String issuer) {
+        put(CLAIM_ISSUER, issuer);
+    }
+
+    @Override
+    public void setCreated(LocalDateTime created) {
+        put(CLAIM_ISSUED_AT, mapLdtToEpochSeconds(created));
+    }
+
+    @Override
+    public void setExpirationTime(LocalDateTime expirationTime) {
+        put(CLAIM_EXPIRATION_TIME, mapLdtToEpochSeconds(expirationTime));
+    }
+
+    @Override
+    public void setNotBefore(LocalDateTime notBefore) {
+        put(CLAIM_NOT_BEFORE, mapLdtToEpochSeconds(notBefore));
+    }
+
+    @Override
+    public void setJwtId(String jwtId) {
+        put(CLAIM_JWT_ID, jwtId);
+    }
+
+    @Override
+    public void setSubject(String subject) {
+        put(CLAIM_SUBJECT, subject);
+    }
+
+    @Override
+    public void setAudience(List<String> audience) {
+
     }
 }

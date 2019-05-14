@@ -1,4 +1,4 @@
-description 'Any finance services implementations.'
+description 'DS/2 OSS Core Finance'
 
 dependencies {
     compile project(':ds2-oss-core-api')
