@@ -74,6 +74,6 @@ project(":owbtest").name = "ds2-oss-core-owb-test"
 project(":shiro-jee").name = "ds2-oss-core-shiro-jee"
 project(":finance").name = "ds2-oss-core-finance"
 
-enableFeaturePreview("STABLE_PUBLISHING")
+//enableFeaturePreview("STABLE_PUBLISHING")
 include("csv")
 findProject(":csv")?.name = "ds2-oss-core-csv"
