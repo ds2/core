@@ -20,4 +20,4 @@
  * @author dstrauss
  *
  */
-package ds2.oss.core.testutils;
+package ds2.core.testonly.utils;

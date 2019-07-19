@@ -1,9 +1,9 @@
 package ds2.oss.core.crypto.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.crypto.Argon2;
 import ds2.oss.core.api.crypto.CoreCryptoException;
 import ds2.oss.core.api.crypto.PasswordService;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 

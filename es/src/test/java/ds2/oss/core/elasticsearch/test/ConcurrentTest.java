@@ -15,32 +15,29 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import ds2.oss.core.elasticsearch.test.support.EsNodeGetter;
+import ds2.oss.core.elasticsearch.test.support.EsNodeSetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
-import ds2.oss.core.elasticsearch.api.annotations.TransportTypes;
-import ds2.oss.core.elasticsearch.impl.literals.TransportLiteral;
-import ds2.oss.core.elasticsearch.test.support.EsNodeGetter;
-import ds2.oss.core.elasticsearch.test.support.EsNodeSetter;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Test for the concurrency system.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @Test(groups = "concurrency", singleThreaded = true)
 public class ConcurrentTest extends AbstractInjectionEnvironment {
-    
+
     /**
      * A logger.
      */
@@ -49,12 +46,12 @@ public class ConcurrentTest extends AbstractInjectionEnvironment {
      * The ES node.
      */
     private ElasticSearchNode esNode;
-    
+
     @BeforeClass
     public void onClass() {
         esNode = getInstance(ElasticSearchNode.class);
     }
-    
+
     @Test
     public void testConcurrency() {
         ExecutorService es = Executors.newFixedThreadPool(50);

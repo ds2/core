@@ -13,36 +13,32 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package ds2.oss.core.testutils;
+package ds2.core.testonly.utils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
-
-import ds2.oss.core.api.annotations.PathLocation;
+import java.lang.invoke.MethodHandles;
+import java.util.Random;
 
 /**
- * Dummy provider for the sec path test.
- *
- * @author dstrauss
- * @version 0.3
+ * Created by deindesign on 12.04.16.
  */
-@Alternative
 @Dependent
-@Priority(1000)
-public class TestPathLocationProvider {
-    /**
-     * Produces a path to the maven target directory.
-     *
-     * @return the test path to use in test cases
-     */
+@Alternative
+@Priority(100)
+public class TestUtilsProvider {
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    @Dependent
     @Produces
-    @PathLocation
-    public Path createPath() {
-        return Paths.get("target", "dummySec");
+    public Random createRandomizer() {
+        LOG.info("Using test randomizer :)");
+        Random rc = new Random(System.currentTimeMillis());
+        return rc;
     }
 }

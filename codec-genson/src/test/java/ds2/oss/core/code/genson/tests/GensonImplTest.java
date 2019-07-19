@@ -2,10 +2,10 @@ package ds2.oss.core.code.genson.tests;
 
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.api.dto.impl.PagedResult;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

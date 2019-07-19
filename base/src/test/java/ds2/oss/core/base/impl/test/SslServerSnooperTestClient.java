@@ -15,9 +15,9 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.SslServerSnooper;
 import ds2.oss.core.base.impl.SslServerSnooperImpl;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 import java.security.cert.X509Certificate;
 

@@ -1,9 +1,9 @@
 package ds2.oss.core.crypto.bc.tests;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.crypto.EllipticCurveNames;
 import ds2.oss.core.api.crypto.KeyPairGeneratorService;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;

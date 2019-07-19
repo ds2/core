@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.elasticsearch.api.ElasticSearchException;
@@ -23,7 +24,6 @@ import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;

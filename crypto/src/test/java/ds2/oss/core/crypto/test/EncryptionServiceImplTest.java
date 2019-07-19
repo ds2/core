@@ -15,8 +15,8 @@
  */
 package ds2.oss.core.crypto.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.crypto.*;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

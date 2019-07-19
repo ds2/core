@@ -1,6 +1,6 @@
 package ds2.oss.core.base.impl.test;
 
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -12,13 +12,13 @@ public class PropertiesLoaderProviderTest extends AbstractInjectionEnvironment {
     private PropsLoaderDto to;
 
     @BeforeClass
-    public void onClass(){
-        to=getInstance(PropsLoaderDto.class);
+    public void onClass() {
+        to = getInstance(PropsLoaderDto.class);
     }
 
     @Test
-    public void testVal(){
-        Assert.assertEquals(to.getValue(),"Hello, world :D");
+    public void testVal() {
+        Assert.assertEquals(to.getValue(), "Hello, world :D");
     }
 
 }

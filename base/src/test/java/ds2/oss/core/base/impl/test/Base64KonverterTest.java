@@ -15,8 +15,8 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.Base64Codec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

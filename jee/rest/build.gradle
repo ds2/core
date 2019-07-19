@@ -15,5 +15,5 @@ dependencies {
         Please review and delete this closure when resolved. */
     }
     testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
-    testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
+    testCompile project(path: ':ds2-oss-core-testutils')
 }

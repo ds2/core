@@ -15,9 +15,9 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.elasticsearch.api.ElasticSearchService;
 import ds2.oss.core.elasticsearch.impl.UseCases;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
