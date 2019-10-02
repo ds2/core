@@ -33,3 +33,14 @@ bintray {
     publications = []
     configurations = []
 }
+
+test {
+    systemProperty "ds2.app.sec.home", "target/dummySec"
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        exceptionFormat "full"
+        showCauses true
+        showExceptions true
+        showStackTraces true
+    }
+}

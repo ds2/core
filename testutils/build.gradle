@@ -7,9 +7,10 @@ description = 'DS/2 OSS Core Test Utils'
 dependencies {
     compile project(':ds2-oss-core-api')
     compileOnly(group: 'javax', name: 'javaee-web-api', version: '7.0')
-    compile group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
-    compile group: 'org.testng', name: 'testng', version: '6.8.8'
-    compile(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26')
+    compileOnly group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
+    compileOnly group: 'org.testng', name: 'testng', version: '6.8.8'
+    compileOnly(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26')
+    testCompile(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26')
 }
 //test.useTestNG()
 

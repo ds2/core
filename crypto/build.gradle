@@ -46,3 +46,10 @@ processTestResources.dependsOn copyTestResources, copyResources
 test.dependsOn copyTestStuffToResources
 
 test.useTestNG()
+
+test {
+    systemProperty "ds2.app.sec.home", "target/dummySec"
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
