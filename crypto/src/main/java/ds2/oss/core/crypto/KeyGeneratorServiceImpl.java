@@ -28,6 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -45,9 +46,6 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(KeyGeneratorServiceImpl.class);
-    /**
-     * The security base data.
-     */
     /**
      * A randomizer.
      */
@@ -79,12 +77,8 @@ public class KeyGeneratorServiceImpl implements KeyGeneratorService {
     @Override
     public SecretKey generate(final String pw, final AlgorithmNamed name) {
         SecretKey rc = null;
-        try {
-            final byte[] pwBytes = pw.getBytes("utf-8");
-            rc = new SecretKeySpec(pwBytes, name.getAlgorithmName());
-        } catch (final UnsupportedEncodingException e) {
-            LOG.error("Unknown encoding!", e);
-        }
+        final byte[] pwBytes = pw.getBytes(StandardCharsets.UTF_8);
+        rc = new SecretKeySpec(pwBytes, name.getAlgorithmName());
         return rc;
     }
 
