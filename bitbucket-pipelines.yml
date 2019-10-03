@@ -8,5 +8,11 @@ image: gradle:4.10-jdk8
 pipelines:
   default:
     - step:
-        script: # Modify the commands below to build your repository.
-          - ./gradlew clean build
+        name: assemble all
+        script: # simply build and compile
+          - ./gradlew clean
+          - ./gradlew assemble --parallel
+    - step:
+        name: tests
+        script: # alright, test it
+          - ./gradlew test
