@@ -15,38 +15,36 @@
  */
 package ds2.oss.core.crypto.bc;
 
-import java.lang.invoke.MethodHandles;
-import java.security.*;
-import java.security.spec.AlgorithmParameterSpec;
+import ds2.oss.core.api.crypto.AlgorithmNamed;
+import ds2.oss.core.api.crypto.SecretKeyFactories;
+import ds2.oss.core.crypto.DefaultSecurityProvider;
+import ds2.oss.core.crypto.SecurityInstanceProvider;
+import ds2.oss.core.statics.Securitix;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.*;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Specializes;
-
-import ds2.oss.core.api.CoreErrors;
-import ds2.oss.core.api.CoreRuntimeException;
-import ds2.oss.core.api.crypto.*;
-import ds2.oss.core.statics.Securitix;
-import org.bouncycastle.jcajce.provider.asymmetric.ec.*;
-import org.bouncycastle.jcajce.provider.asymmetric.ec.KeyPairGeneratorSpi;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.crypto.DefaultSecurityProvider;
-import ds2.oss.core.crypto.SecurityInstanceProvider;
+import java.lang.invoke.MethodHandles;
+import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.spec.AlgorithmParameterSpec;
 
 /**
  * The bouncy castle security provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 @Specializes
 public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implements SecurityInstanceProvider {
-    
+
     /**
      * A logger.
      */
@@ -55,18 +53,18 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
      * The BC provider name.
      */
     private static final String ID = BouncyCastleProvider.PROVIDER_NAME;
-    
+
     /**
      * Actions to perform at startup.
      */
     @Override
-	@PostConstruct
+    @PostConstruct
     public void onLoad() {
         LOG.debug("Loading and promoting BC Provider");
         Securitix.installProvider(new BouncyCastleProvider(), 1);
         AlgorithmParameterSpec spec;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -80,10 +78,10 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException | NoSuchProviderException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        LOG.debug("Using {} -> {}", new Object[] { c, rc });
+        LOG.debug("Using {} -> {}", new Object[]{c, rc});
         return rc;
     }
-    
+
     @Override
     public KeyGenerator createKeyGenerator(final AlgorithmNamed name) {
         KeyGenerator rc = null;
@@ -94,7 +92,7 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
         }
         return rc;
     }
-    
+
     @Override
     public SecretKeyFactory createSecretKeyFactoryInstance(final String string) {
         SecretKeyFactory rc = null;
@@ -123,9 +121,9 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
         try {
             return KeyAgreement.getInstance(alg.getAlgorithmName(), ID);
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("Unknown algorithm: {}",alg,e);
+            LOG.error("Unknown algorithm: {}", alg, e);
         } catch (NoSuchProviderException e) {
-            LOG.error("Unknown provider: {}",ID,e);
+            LOG.error("Unknown provider: {}", ID, e);
         }
         return null;
     }
@@ -135,9 +133,9 @@ public class BouncyCastleSecurityProvider extends DefaultSecurityProvider implem
         try {
             return MessageDigest.getInstance(alg.getAlgorithmName(), ID);
         } catch (NoSuchAlgorithmException e) {
-            LOG.error("Unknown algorithm: {}",alg,e);
+            LOG.error("Unknown algorithm: {}", alg, e);
         } catch (NoSuchProviderException e) {
-            LOG.error("Unknown provider: {}",ID,e);
+            LOG.error("Unknown provider: {}", ID, e);
         }
         return null;
     }
