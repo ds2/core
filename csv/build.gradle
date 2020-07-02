@@ -9,3 +9,5 @@ dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '6.+'
     testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 }
+
+description = 'DS/2 OSS Core CSV'

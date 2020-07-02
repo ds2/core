@@ -9,6 +9,8 @@ plugins {
     id "ds2.gitinfo" version "0.0.1"
 }
 
+description="DS/2 OSS Core Project"
+
 ext.scmBranchName = ""
 ext.revisionId = ""
 ext.date = ""
