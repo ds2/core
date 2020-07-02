@@ -93,4 +93,3 @@ You need to run it now via
 To perform a release, run
 
     ./gradlew clean release
-
