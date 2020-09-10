@@ -4,12 +4,12 @@ plugins {
     id 'net.researchgate.release' version '2.8.1'
     id 'ds2.base' version '0.0.13'
     id "com.github.hierynomus.license" version "0.15.0"
-    id "com.github.hierynomus.license-base" version"0.15.0"
+    id "com.github.hierynomus.license-base" version "0.15.0"
     id("com.github.spotbugs") version "4.4.4"
     id "ds2.gitinfo" version "0.0.1"
 }
 
-description="DS/2 OSS Core Project"
+description = "DS/2 OSS Core Project"
 
 ext.scmBranchName = ""
 ext.revisionId = ""
@@ -74,6 +74,9 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     publishing {
         repositories {
