@@ -1,13 +1,15 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.31'
-    id "com.jfrog.bintray" version '1.8.2'
-    id 'net.researchgate.release' version '2.6.0'
+    id "com.jfrog.bintray" version '1.8.5'
+    id 'net.researchgate.release' version '2.8.1'
     id 'ds2.base' version '0.0.13'
     id "com.github.hierynomus.license" version "0.15.0"
-    id "com.github.hierynomus.license-base" version"0.15.0"
-    id("com.github.spotbugs") version "3.0.0"
+    id "com.github.hierynomus.license-base" version "0.15.0"
+    id("com.github.spotbugs") version "4.4.4"
     id "ds2.gitinfo" version "0.0.1"
 }
+
+description = "DS/2 OSS Core Project"
 
 ext.scmBranchName = ""
 ext.revisionId = ""
@@ -55,7 +57,7 @@ allprojects {
         }
     }
     license {
-        ext.year = '2019'
+        ext.year = '2020'
         ext.name = 'DS/2'
         ext.email = 'dstrauss@ds-2.de'
         header rootProject.file('aslv2_header.txt')
@@ -72,6 +74,9 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     publishing {
         repositories {
@@ -95,7 +100,7 @@ subprojects {
     }
 
     spotbugs {
-        toolVersion = "3.1.9"
+        //toolVersion = "3.1.9"
         //sourceSets = [sourceSets.main]
         ignoreFailures = false
         reportsDir = file("$project.buildDir/findbugsReports")
@@ -106,11 +111,11 @@ subprojects {
     // checkstyle {
     //     ignoreFailures = true
     // }
-    tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    spotbugsMain {
         reports {
             xml {
-                enabled false
-                destination "build/findbugs.xml"
+                enabled true
+//                destination "build/findbugs.xml"
             }
             html.enabled true
             //html.stylesheet resources.text.fromFile('config/xsl/findbugs-custom.xsl')
