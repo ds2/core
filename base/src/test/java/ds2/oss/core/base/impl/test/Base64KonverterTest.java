@@ -15,9 +15,8 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.Base64Codec;
-import ds2.oss.core.base.impl.Base64Konverter;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -28,6 +27,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Base64;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * The base64 test.
@@ -48,11 +50,16 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
      * The message to convert.
      */
     private static final String CS = "h\u00e4llo";
+    private Base64.Encoder jEncoder;
+    private Base64.Decoder jDecoder;
 
     @BeforeClass
     public void onInit() {
         to = getInstance(Base64Codec.class);
+        //to = new Base64Konverter();
         cs = Charset.forName("utf-8");
+        jEncoder = Base64.getEncoder();
+        jDecoder = Base64.getDecoder();
     }
 
     @Test
@@ -67,14 +74,23 @@ public class Base64KonverterTest extends AbstractInjectionEnvironment {
         byte[] b = to.decode(c);
         Assert.assertNotNull(b);
         String s2 = new String(b, cs);
-        Assert.assertEquals(s2, CS);
+        assertEquals(s2, CS);
     }
 
     @Test
     public void encode1() {
         final byte[] b = CS.getBytes(cs);
         final String t = to.encode(b);
-        Assert.assertEquals(t, "aMOkbGxv");
+        assertEquals(t, "aMOkbGxv");
+        assertEquals(jEncoder.encodeToString(b), t);
+    }
+
+    @Test
+    public void encode2() {
+        final byte[] b = "Das ist ein etwas \u00e4ngerer Text mit Umlauten usw.,".getBytes(cs);
+        final String t = to.encode(b);
+        assertEquals(t, "RGFzIGlzdCBlaW4gZXR3YXMgw6RuZ2VyZXIgVGV4dCBtaXQgVW1sYXV0ZW4gdXN3Liw=");
+        assertEquals(jEncoder.encodeToString(b), t);
     }
 
     @Test(enabled = false)

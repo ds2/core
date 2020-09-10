@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 DS/2 <dstrauss@ds-2.de>
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package ds2.oss.core.statics;
 
 import ds2.oss.core.api.IdAware;
+import ds2.oss.core.api.dto.impl.PagedResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,6 +101,7 @@ public interface Methods {
                 }
             }
         }
+        LOG.debug("Returning possible result: {}", rc);
         return rc;
     }
 
@@ -112,21 +114,7 @@ public interface Methods {
      * @return the found enum value, or null if not found
      */
     static <E extends Enum<E>> E findEnumValueByName(Class<E> enumClass, String name) {
-        LOG.debug("Checking for enum value {} in {}", name, enumClass);
-        E rc = null;
-        try {
-            rc = Enum.valueOf(enumClass, name);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            //ok, maybe lowercase/uppercase problem
-            for (E e1 : enumClass.getEnumConstants()) {
-                if (e1.name().equalsIgnoreCase(name)) {
-                    rc = e1;
-                    break;
-                }
-            }
-        }
-        LOG.debug("Returning possible result: {}", rc);
-        return rc;
+        return findEnumValueByName(enumClass, name, null);
     }
 
     /**
@@ -192,7 +180,7 @@ public interface Methods {
         if (s1 != null && s2 == null) {
             return -1;
         }
-        if (s1 == null && s2 != null) {
+        if (s1 == null) {
             return 1;
         }
         return s1.compareToIgnoreCase(s2);

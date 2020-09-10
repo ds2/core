@@ -1,7 +1,7 @@
 package ds2.oss.core.crypto.shirojee;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.crypto.shirojee.api.AuthenticationService;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.jboss.weld.context.RequestContext;
 import org.jboss.weld.context.activator.ActivateRequestContext;
 import org.jboss.weld.context.unbound.UnboundLiteral;

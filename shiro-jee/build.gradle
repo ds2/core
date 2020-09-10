@@ -2,6 +2,7 @@
 description = 'DS/2 OSS Core Apache Shiro CDI JEE'
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.16.10'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.16.10'
     compileOnly 'org.projectlombok:lombok:1.16.10'
     compileOnly 'javax:javaee-web-api:7.0'
     compile project(':ds2-oss-core-api')
@@ -9,8 +10,8 @@ dependencies {
     compile 'org.apache.shiro:shiro-jaxrs:1.4.0'
     runtime project(':ds2-oss-core-base')
     testCompile 'org.projectlombok:lombok:1.16.10'
-    testCompile project(path: ':ds2-oss-core-testutils', configuration: "testOutput")
-    testCompile 'org.testng:testng:6.14.3'
+    testCompile project(path: ':ds2-oss-core-testutils')
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
     testCompile 'org.slf4j:slf4j-api'
     testCompile group: 'org.jboss.weld.se', name: 'weld-se', version:'2.4.+'
     testRuntime 'ch.qos.logback:logback-classic:1.2.3'

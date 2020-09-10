@@ -1,4 +1,4 @@
-description='The hazelcast module to use this grid'
+description = 'DS/2 OSS Core Hazelcast'
 
 dependencies {
     compile project(':ds2-oss-core-api')

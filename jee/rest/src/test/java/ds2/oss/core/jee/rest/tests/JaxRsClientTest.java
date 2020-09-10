@@ -1,6 +1,6 @@
 package ds2.oss.core.jee.rest.tests;
 
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

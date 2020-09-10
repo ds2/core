@@ -15,36 +15,34 @@
  */
 package ds2.oss.core.codec.boon;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Date;
-
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.JsonCodec;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.api.JsonCodec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
 
 /**
- *
  * @author dstrauss
  */
 public class BoonJsonCodecTest extends AbstractInjectionEnvironment {
-    
+
     private JsonCodec to;
-    
+
     @BeforeClass
     public void onClass() {
         to = getInstance(JsonCodec.class);
     }
-    
+
     @Test
     public void testEncodeNull() throws CoreException {
         Assert.assertEquals(to.encode(null), "");
     }
-    
+
     @Test
     public void testEncode1() throws CoreException, MalformedURLException {
         Complex1 c = new Complex1();
@@ -54,7 +52,7 @@ public class BoonJsonCodecTest extends AbstractInjectionEnvironment {
         c.setNumber(23);
         c.setState(MyEnum.VAL1);
         Assert
-            .assertEquals(to.encode(c),
-                "{\"number\":23,\"msg\":\"Hello, World\",\"homepage\":\"http://www.bla.test\",\"created\":123,\"state\":\"VAL1\"}");
+                .assertEquals(to.encode(c),
+                        "{\"number\":23,\"msg\":\"Hello, World\",\"homepage\":\"http://www.bla.test\",\"created\":123,\"state\":\"VAL1\"}");
     }
 }

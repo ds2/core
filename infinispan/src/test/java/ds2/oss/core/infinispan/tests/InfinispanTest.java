@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.infinispan.tests;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 /**
  * @author dstrauss
@@ -30,24 +30,24 @@ import ds2.oss.core.testutils.AbstractInjectionEnvironment;
  */
 @Test
 public class InfinispanTest extends AbstractInjectionEnvironment {
-    
+
     private MyOptionStoreServiceImpl to;
-    
+
     @BeforeClass
     public void onLoad() {
         to = getInstance(MyOptionStoreServiceImpl.class);
     }
-    
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNull() {
         to.store(null);
     }
-    
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testOptionOhneKey() {
         to.store(new MyOption());
     }
-    
+
     @Test
     public void testOptionValid() {
         MyOption option = new MyOption();
@@ -55,7 +55,7 @@ public class InfinispanTest extends AbstractInjectionEnvironment {
         option.setVal("val");
         to.store(option);
     }
-    
+
     @Test(dependsOnMethods = "testOptionValid")
     public void testGetOption() {
         MyOption option = to.get("k1");

@@ -15,21 +15,20 @@
  */
 package ds2.oss.core.crypto.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.AppServerSecurityBaseDataService;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import ds2.oss.core.api.AppServerSecurityBaseDataService;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
-
 /**
  * Testcases for the security base data service.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -38,12 +37,12 @@ public class SecurityBaseDataServiceImplTest extends AbstractInjectionEnvironmen
      * The test object.
      */
     private AppServerSecurityBaseDataService to;
-    
+
     @BeforeClass
     public void onClass() {
         to = getInstance(AppServerSecurityBaseDataService.class);
     }
-    
+
     @Test
     public void testStoreData() {
         to.storeData(Charset.defaultCharset());

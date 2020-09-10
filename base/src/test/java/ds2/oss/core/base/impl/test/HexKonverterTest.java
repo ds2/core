@@ -15,18 +15,17 @@
  */
 package ds2.oss.core.base.impl.test;
 
-import java.io.UnsupportedEncodingException;
-
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.HexCodec;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.HexCodec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Testcase for the hex converter.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -35,12 +34,11 @@ public class HexKonverterTest extends AbstractInjectionEnvironment {
      * The contract to use.
      */
     private HexCodec to;
-    
+
     /**
      * Decoder test.
-     * 
-     * @throws UnsupportedEncodingException
-     *             if an error occurred.
+     *
+     * @throws UnsupportedEncodingException if an error occurred.
      */
     @Test
     public final void decode1() throws UnsupportedEncodingException {
@@ -60,7 +58,7 @@ public class HexKonverterTest extends AbstractInjectionEnvironment {
         //due to MSB being 1 -> negative
         Assert.assertEquals(b[1], -0x80);
     }
-    
+
     @Test
     public void decode2() throws UnsupportedEncodingException {
         final String s = "F1409DAD84000180";
@@ -68,7 +66,7 @@ public class HexKonverterTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(b);
         Assert.assertEquals(b.length, 8);
     }
-    
+
     @Test
     public void decodeWithHeader() throws UnsupportedEncodingException {
         final String s = "0xF1409DAD84000180";
@@ -76,12 +74,12 @@ public class HexKonverterTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(b);
         Assert.assertEquals(b.length, 8);
     }
-    
+
     @Test
     public void decodeNull() {
         Assert.assertNull(to.decode(null));
     }
-    
+
     @Test
     public void encode1() throws UnsupportedEncodingException {
         final String s = "t\u00e4st";
@@ -89,12 +87,12 @@ public class HexKonverterTest extends AbstractInjectionEnvironment {
         Assert.assertNotNull(erg);
         Assert.assertEquals(erg, "74c3a47374");
     }
-    
+
     @Test
     public void encodeNull() {
         Assert.assertNull(to.encode(null));
     }
-    
+
     @BeforeClass
     public void onInit() {
         to = getInstance(HexCodec.class);

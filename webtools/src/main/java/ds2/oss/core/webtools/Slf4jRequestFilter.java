@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 DS/2 <dstrauss@ds-2.de>
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,20 +15,14 @@
  */
 package ds2.oss.core.webtools;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Set;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.security.Principal;
+
 /**
- *
  * @author deindesign
  */
 public class Slf4jRequestFilter implements Filter {
@@ -42,7 +36,6 @@ public class Slf4jRequestFilter implements Filter {
     private String httpMethod = "httpMethod";
     private String queryString = "queryString";
     private String userPrincipal = "userPrincipal";
-    private Set<String> requestAttributes;
     private String authType = "authType";
     private String contextPath = "contextPath";
 

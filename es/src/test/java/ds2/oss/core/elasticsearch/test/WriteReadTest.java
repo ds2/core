@@ -15,6 +15,7 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.CodecException;
 import ds2.oss.core.elasticsearch.api.ElasticSearchException;
 import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
@@ -25,7 +26,6 @@ import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
 import ds2.oss.core.elasticsearch.test.dto.CountryDto;
 import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import ds2.oss.core.elasticsearch.test.support.CountryCodec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;

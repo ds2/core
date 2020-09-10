@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 DS/2 <dstrauss@ds-2.de>
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.jee.rest.tests;
 
-import ds2.oss.core.jee.rest.AbstractJaxRsClient;
+import ds2.oss.core.jee.rest.client.AbstractJaxRsClient;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;

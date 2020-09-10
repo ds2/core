@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 DS/2 <dstrauss@ds-2.de>
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
 import ds2.oss.core.api.SslServerSnooper;
 import ds2.oss.core.base.impl.SslServerSnooperImpl;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
 
 import java.security.cert.X509Certificate;
 

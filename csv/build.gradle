@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    compileOnly(group: 'javax', name: 'javaee-api', version: '7.0')
+    compile project(':ds2-oss-core-api')
+    compile project(':ds2-oss-core-statics')
+    testCompile group: 'org.testng', name: 'testng', version: '6.+'
+    testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+}
+
+description = 'DS/2 OSS Core CSV'

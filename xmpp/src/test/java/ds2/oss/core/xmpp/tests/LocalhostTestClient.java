@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 DS/2 <dstrauss@ds-2.de>
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,13 +20,12 @@
  */
 package ds2.oss.core.xmpp.tests;
 
-import java.lang.invoke.MethodHandles;
-
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.xmpp.IXmppSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.xmpp.IXmppSupport;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.lang.invoke.MethodHandles;
 
 /**
  * This client here tests the connection to another xmpp server on localhost, checking if it works.
@@ -35,9 +34,9 @@ import ds2.oss.core.testutils.AbstractInjectionEnvironment;
  * @version 0.3
  */
 public class LocalhostTestClient extends AbstractInjectionEnvironment {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     public static void main(String... params) {
         LocalhostTestClient t = new LocalhostTestClient();
         t.onSuiteStart();

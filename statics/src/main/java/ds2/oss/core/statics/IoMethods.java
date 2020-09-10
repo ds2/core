@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 DS/2 <dstrauss@ds-2.de>
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.lang.invoke.MethodHandles;
 import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Scanner;
 
 /**
  * Created by dstrauss on 19.05.16.
@@ -78,6 +79,16 @@ public interface IoMethods {
         }
     }
 
+    static void close(Reader is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (IOException e) {
+                LOG.debug("Error when closing the given reader!", e);
+            }
+        }
+    }
+
     static String readResourceFromClasspath(String resName, Charset cs) {
         String resName2 = resName;
         if (!resName.startsWith("/")) {
@@ -106,5 +117,23 @@ public interface IoMethods {
 
 
         return rc;
+    }
+
+    static ByteArrayOutputStream readFromInputStreamBuffered(InputStream stream) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(100);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(stream);
+        byte[] buffer = new byte[1024 * 1024];
+        int read = 0;
+        while ((read = bufferedInputStream.read(buffer, 0, buffer.length)) != -1) {
+            outputStream.write(buffer, 0, read);
+        }
+        LOG.debug("Size of output so far: {} bytes", outputStream.size());
+        return outputStream;
+    }
+
+    static void close(Scanner scanner) {
+        if (scanner != null) {
+            scanner.close();
+        }
     }
 }
