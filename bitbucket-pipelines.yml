@@ -10,9 +10,9 @@ pipelines:
     - step:
         name: assemble all
         script: # simply build and compile
-          - ./gradlew clean
-          - ./gradlew assemble --parallel
+          - gradle clean
+          - gradle assemble --parallel
     - step:
         name: tests
         script: # alright, test it
-          - ./gradlew test
+          - gradle test
