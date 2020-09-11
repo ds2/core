@@ -13,11 +13,32 @@ dependencies {
     testRuntimeOnly("org.jboss.weld.se", "weld-se-core", "2.4.8.Final")
     testRuntimeOnly("org.jboss", "jandex", "1.2.0.Beta1")
     testRuntimeOnly("ch.qos.logback:logback-classic:1.2.3")
+    testImplementation(project(":ds2-oss-core-statics"))
     //compileOnly(group: 'javax.enterprise', name: 'cdi-api', version:'1.2')
 
+}
+
+tasks.register("copyResources", Copy::class.java) {
+    from("${projectDir}/src/main/resources")
+    into("${buildDir}/classes/java/main")
+}
+tasks.register("copyTestResources", Copy::class.java) {
+    from("${projectDir}/src/test/resources")
+    into("${buildDir}/classes/java/test")
+}
+tasks.processResources {
+    dependsOn("copyResources")
+}
+tasks.processTestResources {
+    dependsOn("copyTestResources", "copyResources")
+}
+tasks.register("copyTestStuffToResources", Copy::class.java) {
+    from("${buildDir}/classes/java/test")
+    into("${buildDir}/resources/test")
 }
 
 tasks.test {
     useTestNG()
     maxParallelForks = 3
+    dependsOn("copyTestStuffToResources")
 }

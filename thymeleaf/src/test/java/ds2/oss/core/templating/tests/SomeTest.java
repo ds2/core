@@ -23,12 +23,7 @@ public class SomeTest extends AbstractInjectionEnvironment {
 
     @Test
     public void testPlainText() throws CoreException {
-        RequestContext ctx = new RequestContext() {
-            @Override
-            public Locale getLocale() {
-                return Locale.GERMANY;
-            }
-        };
+        RequestContext ctx = () -> Locale.GERMANY;
         Map<String, Object> placeHolders = new HashMap<>();
         placeHolders.put("userName", "Timothy");
         String result = templateService.formatContent("templ1", ctx, placeHolders);

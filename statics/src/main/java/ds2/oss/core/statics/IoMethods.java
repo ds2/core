@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
@@ -87,6 +88,16 @@ public interface IoMethods {
                 LOG.debug("Error when closing the given reader!", e);
             }
         }
+    }
+
+    /**
+     * Reads a resource data as utf-8.
+     *
+     * @param resName the resource to load
+     * @return the string content, or null if none
+     */
+    static String readResourceFromClasspath(String resName) {
+        return readResourceFromClasspath(resName, StandardCharsets.UTF_8);
     }
 
     static String readResourceFromClasspath(String resName, Charset cs) {
