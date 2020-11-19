@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.igniterealtime.smack</groupId>
             <artifactId>smack-tcp</artifactId>
-            <version>4.0.1</version>
+            <version>4.3.5</version>
         </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
