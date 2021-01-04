@@ -76,4 +76,6 @@ project(":finance").name = "ds2-oss-core-finance"
 
 //enableFeaturePreview("STABLE_PUBLISHING")
 include("csv")
-findProject(":csv")?.name = "ds2-oss-core-csv"
+project(":csv").name = "ds2-oss-core-csv"
+include("thymeleaf")
+project(":thymeleaf").name="ds2-oss-core-thymeleaf"
