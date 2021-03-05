@@ -1,23 +1,34 @@
-/**
- * 
+/*
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.dbtools.modules;
 
-import java.util.Date;
+import ds2.oss.core.api.EditableModifiedAware;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import ds2.oss.core.api.ModifiedAware;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author dstrauss
- *         
  */
 @Embeddable
-public class ModifiedAwareModule implements ModifiedAware {
+public class ModifiedAwareModule implements EditableModifiedAware {
     /**
      * The svuid.
      */
@@ -27,35 +38,36 @@ public class ModifiedAwareModule implements ModifiedAware {
      */
     @Column(name = "modified", nullable = false, updatable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
-    
+    private LocalDateTime modified;
+
     /**
      * Inits this object.
      */
     public ModifiedAwareModule() {
-        modified = new Date();
+        modified = LocalDateTime.now();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.ModifiedAware#getModified()
      */
     @Override
-    public Date getModified() {
+    public LocalDateTime getModified() {
         return modified;
     }
-    
+
     /**
      * Updates the modified date.
      */
     public final void touchModified() {
-        modified = new Date();
+        modified = LocalDateTime.now();
     }
-    
+
     /**
      * @param d
      */
-    public void setModified(Date d) {
+    @Override
+    public void setModified(LocalDateTime d) {
         if (d != null) {
             modified = d;
         }

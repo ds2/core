@@ -1,20 +1,21 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.api.dto.impl;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -26,13 +27,16 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import ds2.oss.core.api.EditableCreatedModifiedAware;
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.ClusterDto;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.api.options.ValueType;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The option value dto.
@@ -46,7 +50,9 @@ import ds2.oss.core.api.options.ValueType;
  */
 @XmlType(name = "optionValueType")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionValue<E, V> {
+@Setter
+@Getter
+public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionValue<E, V>, EditableCreatedModifiedAware {
 
     /**
      * The svuid.
@@ -69,11 +75,11 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     /**
      * The server runtime configuration for this value.
      */
-    private RuntimeConfiguration configuration;
+    private RuntimeType configuration;
     /**
      * The creation date.
      */
-    private Date created;
+    private LocalDateTime created;
     @XmlAttribute
     private boolean encrypted;
     /**
@@ -84,7 +90,7 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     /**
      * The modification date.
      */
-    private Date modified;
+    private LocalDateTime modified;
     /**
      * The id of the referenced option.
      */
@@ -112,11 +118,11 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
      * The start date for this value.
      */
     @NotNull
-    private Date validFrom;
+    private LocalDateTime validFrom;
     /**
      * The stop date for this value.
      */
-    private Date validTo;
+    private LocalDateTime validTo;
     /**
      * The value.
      */
@@ -127,6 +133,8 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
     @XmlElement
     @NotNull
     private ValueType valueType;
+    private String createdBy;
+    private String modifiedBy;
 
     /*
      * (non-Javadoc)
@@ -243,86 +251,6 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
         return true;
     }
 
-    @Override
-    public String getApproverName() {
-        return approverName;
-    }
-
-    @Override
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    @Override
-    public Cluster getCluster() {
-        return cluster;
-    }
-
-    @Override
-    public RuntimeConfiguration getConfiguration() {
-        return configuration;
-    }
-
-    @Override
-    public Date getCreated() {
-        return created;
-    }
-
-    @Override
-    public E getId() {
-        return id;
-    }
-
-    @Override
-    public Date getModified() {
-        return modified;
-    }
-
-    @Override
-    public E getOptionReference() {
-        return optionReference;
-    }
-
-    @Override
-    public String getRequestedDomain() {
-        return requestedDomain;
-    }
-
-    @Override
-    public ServerIdentifier getServer() {
-        return server;
-    }
-
-    @Override
-    public OptionValueStage getStage() {
-        return stage;
-    }
-
-    @Override
-    public V getUnencryptedValue() {
-        return unencryptedValue;
-    }
-
-    @Override
-    public Date getValidFrom() {
-        return validFrom;
-    }
-
-    @Override
-    public Date getValidTo() {
-        return validTo;
-    }
-
-    @Override
-    public V getValue() {
-        return value;
-    }
-
-    @Override
-    public ValueType getValueType() {
-        return valueType;
-    }
-
     /*
      * (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -348,170 +276,6 @@ public class OptionValueDto<E, V> extends IvEncodedContentDto implements OptionV
         result = prime * result + (value == null ? 0 : value.hashCode());
         result = prime * result + (valueType == null ? 0 : valueType.hashCode());
         return result;
-    }
-
-    @Override
-    public boolean isEncrypted() {
-        return encrypted;
-    }
-
-    /**
-     * Sets the approver name.
-     *
-     * @param approverName
-     *            the approverName to set
-     */
-    public void setApproverName(final String approverName) {
-        this.approverName = approverName;
-    }
-
-    /**
-     * Sets the author name.
-     *
-     * @param authorName
-     *            the authorName to set
-     */
-    public void setAuthorName(final String authorName) {
-        this.authorName = authorName;
-    }
-
-    /**
-     * Sets the cluster.
-     *
-     * @param cluster
-     *            the cluster to set
-     */
-    public void setCluster(final Cluster cluster) {
-        this.cluster = cluster;
-    }
-
-    /**
-     * Sets the runtime config.
-     *
-     * @param configuration
-     *            the configuration to set
-     */
-    public void setConfiguration(final RuntimeConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    /**
-     * Sets the creation date.
-     *
-     * @param created
-     *            the created to set
-     */
-    public void setCreated(final Date created) {
-        this.created = created;
-    }
-
-    public void setEncrypted(final boolean encrypted) {
-        this.encrypted = encrypted;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param id
-     *            the id to set
-     */
-    public void setId(final E id) {
-        this.id = id;
-    }
-
-    /**
-     * Sets the modification date.
-     *
-     * @param modified
-     *            the modified to set
-     */
-    public void setModified(final Date modified) {
-        this.modified = modified;
-    }
-
-    /**
-     * Sets the option reference id.
-     *
-     * @param optionReference
-     *            the optionReference to set
-     */
-    public void setOptionReference(final E optionReference) {
-        this.optionReference = optionReference;
-    }
-
-    /**
-     * Sets the requested domain.
-     *
-     * @param requestedDomain
-     */
-    public void setRequestedDomain(final String requestedDomain) {
-        this.requestedDomain = requestedDomain;
-    }
-
-    /**
-     * Sets the server identifier.
-     *
-     * @param server
-     *            the server to set
-     */
-    public void setServer(final ServerIdentifier server) {
-        this.server = server;
-    }
-
-    /**
-     * Sets the value stage.
-     *
-     * @param stage
-     *            the stage to set
-     */
-    public void setStage(final OptionValueStage stage) {
-        this.stage = stage;
-    }
-
-    /**
-     * Sets the unencrypted value.
-     *
-     * @param unencryptedValue
-     *            the unencrypted value
-     */
-    public void setUnencryptedValue(final V unencryptedValue) {
-        this.unencryptedValue = unencryptedValue;
-    }
-
-    /**
-     * Sets the valid from date.
-     *
-     * @param validFrom
-     *            the validFrom to set
-     */
-    public void setValidFrom(final Date validFrom) {
-        this.validFrom = validFrom;
-    }
-
-    /**
-     * Sets the validTo date.
-     *
-     * @param validTo
-     *            the validTo to set
-     */
-    public void setValidTo(final Date validTo) {
-        this.validTo = validTo;
-    }
-
-    // TODO hashcode und equals einbauen
-
-    /**
-     * Sets the value.
-     *
-     * @param value
-     *            the value to set
-     */
-    public void setValue(final V value) {
-        this.value = value;
-    }
-
-    public void setValueType(final ValueType valueType2) {
-        valueType = valueType2;
     }
 
     /*

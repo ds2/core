@@ -1,17 +1,17 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 /**
  * 
@@ -27,7 +27,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.InfinispanStore;
+import ds2.oss.core.api.IdAwareCache;
 import ds2.oss.core.api.cache.InfinispanConfig;
 
 /**
@@ -38,10 +38,8 @@ import ds2.oss.core.api.cache.InfinispanConfig;
 public class MyOptionStoreServiceImpl {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Inject
-    @InfinispanConfig(
-        cacheName = "options",
-        xmlFile = "test-infinispan.xml")
-    private InfinispanStore<String, MyOption> storage;
+    @InfinispanConfig
+    private IdAwareCache<String, MyOption> storage;
     
     @PostConstruct
     public void onInit() {

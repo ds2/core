@@ -1,28 +1,27 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.dbtools.modules;
+
+import ds2.oss.core.api.EditableStateAware;
+import ds2.oss.core.api.EntryStates;
+import ds2.oss.core.dbtools.converters.EntryStatesConverter;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embeddable;
-
-import ds2.oss.core.api.EntryState;
-import ds2.oss.core.api.EntryStates;
-import ds2.oss.core.api.StateAware;
-import ds2.oss.core.dbtools.converters.EntryStatesConverter;
 
 /**
  * Module for a state entry using the default enum {@link EntryStates}. Usually,
@@ -34,7 +33,7 @@ import ds2.oss.core.dbtools.converters.EntryStatesConverter;
  * @version 0.1
  */
 @Embeddable
-public class EntryStatesAwareModule implements StateAware {
+public class EntryStatesAwareModule implements EditableStateAware<EntryStates> {
 
     /**
      * The svuid.
@@ -43,7 +42,7 @@ public class EntryStatesAwareModule implements StateAware {
     /**
      * The state id.
      */
-    @Column(name = "state_id", nullable = false, updatable = true)
+    @Column(name = "state_id", nullable = false)
     @Convert(converter = EntryStatesConverter.class)
     private EntryStates entryState = EntryStates.PREPARED;
 
@@ -52,7 +51,7 @@ public class EntryStatesAwareModule implements StateAware {
      * @see ds2.oss.core.api.StateAware#getState()
      */
     @Override
-    public EntryState getEntryState() {
+    public EntryStates getEntryState() {
         return entryState;
     }
 

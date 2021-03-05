@@ -1,47 +1,42 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 /**
- * 
+ *
  */
 package ds2.oss.core.base.itest;
 
-import java.util.Date;
-
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import ds2.oss.core.api.CreatedModifiedAware;
-import ds2.oss.core.api.EntryState;
+import ds2.oss.core.api.EditableCreatedModifiedAware;
+import ds2.oss.core.api.EditableStateAware;
+import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.Persistable;
-import ds2.oss.core.api.StateAware;
 import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
 import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
 /**
  * Dummy entity.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @Entity
 @Table(name = "core_dummy")
-public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifiedAware {
+public class DummyEntity implements Persistable<Long>, EditableStateAware<EntryStates>, EditableCreatedModifiedAware {
     /**
      * The svuid.
      */
@@ -62,7 +57,7 @@ public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifi
      */
     @Embedded
     private final CreatedModifiedAwareModule times;
-    
+
     /**
      * Inits the entity.
      */
@@ -70,27 +65,27 @@ public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifi
         state = new EntryStatesAwareModule();
         times = new CreatedModifiedAwareModule();
     }
-    
+
     @Override
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return times.getCreated();
     }
-    
+
     @Override
-    public EntryState getEntryState() {
+    public EntryStates getEntryState() {
         return state.getEntryState();
     }
-    
+
     @Override
     public Long getId() {
         return id;
     }
-    
+
     @Override
-    public Date getModified() {
+    public LocalDateTime getModified() {
         return times.getModified();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see java.lang.Object#toString()
@@ -107,5 +102,19 @@ public class DummyEntity implements Persistable<Long>, StateAware, CreatedModifi
         builder.append(")");
         return builder.toString();
     }
-    
+
+    @Override
+    public void setEntryState(EntryStates newState) {
+        state.setEntryState(newState);
+    }
+
+    @Override
+    public void setCreated(LocalDateTime d) {
+        times.setCreated(d);
+    }
+
+    @Override
+    public void setModified(LocalDateTime d) {
+        times.setModified(d);
+    }
 }

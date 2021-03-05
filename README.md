@@ -1,9 +1,40 @@
 # DS/2 OSS Core
 
-[![Build Status](https://travis-ci.org/ds2/core.svg?branch=master)](https://travis-ci.org/ds2/core)
+[![Build Status](https://travis-ci.org/ds2/core.svg?branch=develop)](https://travis-ci.org/ds2/core)
+
+[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/ds2/core)
 
 The OSS components of the DS/2 Core Implementation. This set of artifacts provides you with a bunch of tools
 and utilities to create flexible code with only small code additions. All is meant for JEE7 in mind.
+
+## Build
+
+### Gradle Wrapper
+
+Simply run:
+
+    ./gradlew clean build
+
+### Via dedicated Docker image
+
+Via DS/2, run
+
+    docker run -it --rm -v $(pwd):/src dcr.ds-2.de/buildslave:0.1 ./gradlew clean build
+
+##Layers
+
+DS/2 OSS Core uses a kind of layer architecture and provides some sample implementations
+for each of the layers:
+
+* Frontend
+* Mediate
+* Backend
+
+The frontend deals with anything from HTTP/TCP/UDP.
+
+The mediate layer deals with incoming data objects to access the backend.
+
+The Backend layer is JPA, SQL etc.
 
 ## Usage
 
@@ -57,3 +88,8 @@ You need to run it now via
 
     -Ddd.my.props.file=/home/test/bla/myFile.properties
 
+# Perform a release (developer only)
+
+To perform a release, run
+
+    ./gradlew clean release

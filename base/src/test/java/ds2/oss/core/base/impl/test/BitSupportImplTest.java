@@ -15,16 +15,15 @@
  */
 package ds2.oss.core.base.impl.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.BitSupport;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.BitSupport;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
-
 /**
  * A testcase for the bit support.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -33,7 +32,7 @@ public class BitSupportImplTest extends AbstractInjectionEnvironment {
      * The service to test.
      */
     private BitSupport to;
-    
+
     /**
      * Actions to perform on class start.
      */
@@ -41,7 +40,7 @@ public class BitSupportImplTest extends AbstractInjectionEnvironment {
     public final void onClass() {
         to = getInstance(BitSupport.class);
     }
-    
+
     /**
      * Simple test 1.
      */
@@ -49,7 +48,7 @@ public class BitSupportImplTest extends AbstractInjectionEnvironment {
     public final void testCreateIntNull() {
         Assert.assertEquals(to.createInt(null), 0);
     }
-    
+
     /**
      * Simple test 1.
      */

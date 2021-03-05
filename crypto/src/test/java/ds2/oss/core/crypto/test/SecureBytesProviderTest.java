@@ -15,23 +15,20 @@
  */
 package ds2.oss.core.crypto.test;
 
-import java.lang.invoke.MethodHandles;
-import java.security.Security;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.HexCodec;
+import ds2.oss.core.api.crypto.BytesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.HexCodec;
-import ds2.oss.core.api.crypto.BytesProvider;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.lang.invoke.MethodHandles;
 
 /**
  * Simple test for the secure bytes provider.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -48,24 +45,23 @@ public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
      * The hex codec.
      */
     private HexCodec hex;
-    
+
     @BeforeClass
     public void onClass() {
-        Security.addProvider(new BouncyCastleProvider());
         to = getInstance(BytesProvider.class);
         hex = getInstance(HexCodec.class);
     }
-    
+
     @Test
     public void testCreateNegativeOr0() {
         Assert.assertNull(to.createRandomByteArray(-1));
     }
-    
+
     @Test
     public void testCreate0() {
         Assert.assertNull(to.createRandomByteArray(0));
     }
-    
+
     @Test
     public void testCreate1() {
         byte[] bytes = to.createRandomByteArray(16);
@@ -74,7 +70,7 @@ public class SecureBytesProviderTest extends AbstractInjectionEnvironment {
         String encodedChars = hex.encode(bytes);
         LOG.info("Hex is {}", encodedChars);
     }
-    
+
     @Test
     public void testCreate2() {
         byte[] bytes = to.createRandomByteArray(256);

@@ -15,20 +15,19 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.elasticsearch.api.ElasticSearchService;
+import ds2.oss.core.elasticsearch.impl.UseCases;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.elasticsearch.api.ElasticSearchService;
-import ds2.oss.core.elasticsearch.impl.UseCases;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
-
 /**
  * Simple usecase test.
- * 
- * @version 0.2
+ *
  * @author dstrauss
+ * @version 0.2
  */
 public class UseCasesTest extends AbstractInjectionEnvironment {
     /**
@@ -43,23 +42,23 @@ public class UseCasesTest extends AbstractInjectionEnvironment {
      * The index name.
      */
     private final String indexName = "usecasesmyindex2";
-    
+
     @BeforeClass
     public void onMethod() {
         to = getInstance(UseCases.class);
         esSvc = getInstance(ElasticSearchService.class);
     }
-    
+
     @AfterClass
     public void afterClass() {
         esSvc.deleteIndexes(indexName);
     }
-    
+
     @Test
     public void testCreateIndex() {
-        Assert.assertTrue(to.createIndex(indexName));
+        Assert.assertTrue(to.createIndex(indexName), "Index could not be created??");
     }
-    
+
     @Test(dependsOnMethods = "testCreateIndex")
     public void testDeleteAnythingOfType() {
         // add data

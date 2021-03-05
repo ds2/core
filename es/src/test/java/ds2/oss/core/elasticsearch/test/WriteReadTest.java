@@ -15,8 +15,17 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-import java.util.Date;
-
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.elasticsearch.api.ElasticSearchException;
+import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
+import ds2.oss.core.elasticsearch.api.ElasticSearchService;
+import ds2.oss.core.elasticsearch.api.TypeCodec;
+import ds2.oss.core.elasticsearch.impl.UseCases;
+import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
+import ds2.oss.core.elasticsearch.test.dto.CountryDto;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
+import ds2.oss.core.elasticsearch.test.support.CountryCodec;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -29,20 +38,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.CodecException;
-import ds2.oss.core.elasticsearch.api.ElasticSearchException;
-import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
-import ds2.oss.core.elasticsearch.api.ElasticSearchService;
-import ds2.oss.core.elasticsearch.api.TypeCodec;
-import ds2.oss.core.elasticsearch.impl.UseCases;
-import ds2.oss.core.elasticsearch.test.dto.CountryDto;
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
-import ds2.oss.core.elasticsearch.test.support.CountryCodec;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.util.Date;
 
 /**
  * Check write read behaviour.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -67,28 +67,28 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
     /**
      * The news codec.
      */
-    private NewsCodec newsCodec;
+    private TypeCodec<MyNews> newsCodec;
     /**
      * The country codec.
      */
     private TypeCodec<CountryDto> countryCodec;
-    
+
     @BeforeClass
     public void onClass() {
         esSvc = getInstance(ElasticSearchService.class);
         uc = getInstance(UseCases.class);
         uc.createIndex(INDEXNAME);
-        newsCodec = getInstance(NewsCodec.class);
-        countryCodec = getInstance(CountryCodec.class);
+        newsCodec = getInstance(NewsCodec.class, new EsCodecAnnotationLiteral(MyNews.class));
+        countryCodec = getInstance(CountryCodec.class, new EsCodecAnnotationLiteral(CountryDto.class));
         esNode = getInstance(ElasticSearchNode.class);
         uc.addMapping(INDEXNAME, newsCodec.getIndexTypeName(), newsCodec.getMapping());
     }
-    
+
     @AfterClass
     public void onEndClass() {
         esSvc.deleteIndexes(INDEXNAME);
     }
-    
+
     @Test
     public void rwTest1() throws ElasticSearchException, CodecException {
         final MyNews news1 = new MyNews();
@@ -100,15 +100,15 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         esSvc.refreshIndexes(INDEXNAME);
         Assert.assertNotNull(esSvc.get(INDEXNAME, MyNews.class, id));
         final SearchRequestBuilder searchQuery =
-            esNode.get().prepareSearch(INDEXNAME).setTypes(newsCodec.getIndexTypeName())
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
-                .setPostFilter(FilterBuilders.termFilter("author", "baumkuchen"));
+                esNode.get().prepareSearch(INDEXNAME).setTypes(newsCodec.getIndexTypeName())
+                        .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
+                        .setPostFilter(FilterBuilders.termFilter("author", "baumkuchen"));
         LOG.debug("Query will be {}", searchQuery);
         final SearchResponse resp = searchQuery.get();
         final long count = resp.getHits().totalHits();
         Assert.assertEquals(count, 1);
     }
-    
+
     @Test
     public void rwTest2() throws ElasticSearchException, CodecException {
         final CountryDto c = new CountryDto();
@@ -116,9 +116,9 @@ public class WriteReadTest extends AbstractInjectionEnvironment {
         c.setName("Germany");
         esSvc.put(INDEXNAME, c, countryCodec);
         final SearchRequestBuilder searchQuery =
-            esNode.get().prepareSearch(INDEXNAME).setTypes(countryCodec.getIndexTypeName())
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
-                .setPostFilter(FilterBuilders.termFilter("name", "germany"));
+                esNode.get().prepareSearch(INDEXNAME).setTypes(countryCodec.getIndexTypeName())
+                        .setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(QueryBuilders.matchAllQuery())
+                        .setPostFilter(FilterBuilders.termFilter("name", "germany"));
         SearchResponse resp = searchQuery.execute().actionGet();
         long count = resp.getHits().totalHits();
         // is async -> will not be available NOW

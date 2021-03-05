@@ -1,17 +1,17 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.api;
 
@@ -42,7 +42,35 @@ public enum CoreErrors implements IErrorData {
     /**
      * If a specific required option could not be found.
      */
-    OptionNotFound(5);
+    OptionNotFound(5),
+    /**
+     * If a specific generator could not be found.
+     */
+    NoGeneratorFound(6),
+    /**
+     * A given argument is not valid.
+     */
+    IllegalArgument(7),
+    /**
+     * If a method lock failed.
+     */
+    LockingFailed(8),
+    /**
+     * A given algorithm is unknown to the current platform.
+     */
+    AlgorithmNotFound(9),
+    /**
+     * If a given provider (security) is unknown.
+     */
+    UnknownProvider(10),
+    /**
+     * If a given transport type value could not match with an enum value.
+     */
+    UnknownEnumValue(11),
+    /**
+     * If a call or thread timed out or had to be canceled when executed too long.
+     */
+    TimedOut(12);
     /**
      * The error code.
      */
@@ -51,10 +79,9 @@ public enum CoreErrors implements IErrorData {
     /**
      * Inits the enum value.
      *
-     * @param i
-     *            the numerical error code
+     * @param i the numerical error code
      */
-    private CoreErrors(final int i) {
+    CoreErrors(final int i) {
         code = i;
     }
 

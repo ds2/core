@@ -1,21 +1,22 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.options.impl.ejb;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,13 +34,13 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import javax.validation.Validator;
 
+import ds2.oss.core.api.environment.RuntimeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionIdentifier;
@@ -94,7 +95,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         }
         if (ctx.getConfiguration() != null) {
             predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.configuration),
-                RuntimeConfiguration.class, RT_CONFIG));
+                RuntimeType.class, RT_CONFIG));
         } else {
             predicates.add(qb.isNull(path.get(OptionValueContextModule_.configuration)));
         }
@@ -159,11 +160,11 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     private static Predicate getLcaPredicate(CriteriaBuilder cb, Path<LifeCycleAwareModule> p, String value) {
         Predicate rc = null;
         Predicate lessThan =
-            cb.lessThanOrEqualTo(p.get(LifeCycleAwareModule_.validFrom), cb.parameter(Date.class, value));
+            cb.lessThanOrEqualTo(p.get(LifeCycleAwareModule_.validFrom), cb.parameter(LocalDateTime.class, value));
         // and
         Predicate isNull = cb.isNull(p.get(LifeCycleAwareModule_.validTo));
         Predicate greaterThan =
-            cb.greaterThanOrEqualTo(p.get(LifeCycleAwareModule_.validTo), cb.parameter(Date.class, value));
+            cb.greaterThanOrEqualTo(p.get(LifeCycleAwareModule_.validTo), cb.parameter(LocalDateTime.class, value));
         Predicate endDate = cb.or(isNull, greaterThan);
         rc = cb.and(lessThan, endDate);
         // lessThan and (isNull or greaterThan)
@@ -263,7 +264,6 @@ public abstract class AbstractOptionValuePersistenceSupportBean
          */
         restrictions.add(cb.equal(optionValueRoot.get(OptionValueEntity_.refOption), optionQuery));
         restrictions.add(cb.equal(optionValueRoot.get("stage"), OptionValueStage.Live));
-        Date now = new Date();
         restrictions.add(getLcaPredicate(cb, optionValueRoot.get(OptionValueEntity_.lca), "date"));
         getContextPredicate(restrictions, cb, optionValueRoot.get(OptionValueEntity_.ctx), ctx);
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
@@ -281,7 +281,7 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         // query.setParameter("optionId", optionId);
         query.setParameter("applicationName", ident.getApplicationName());
         query.setParameter("optionName", ident.getOptionName());
-        query.setParameter("date", now);
+        query.setParameter("date", LocalDateTime.now());
         if (ctx.getCluster() != null) {
             query.setParameter(CLUSTER, ctx.getCluster());
         }
@@ -353,11 +353,10 @@ public abstract class AbstractOptionValuePersistenceSupportBean
         final OptionValueEntity e = new OptionValueEntity();
         e.setApproverName(t.getApproverName());
         e.setAuthorName(t.getAuthorName());
+        e.setCreatedBy(t.getCreatedBy());
         e.setStage(t.getStage());
         e.setCluster(t.getCluster());
         e.setConfiguration(t.getConfiguration());
-        e.setCreated(new Date());
-        e.setModified(e.getCreated());
         e.setEncoded(t.getEncoded());
         e.setInitVector(t.getInitVector());
         e.setRefOption(findOptionById(em, t.getOptionReference()));

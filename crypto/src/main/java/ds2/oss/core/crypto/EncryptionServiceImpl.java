@@ -1,24 +1,27 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.crypto;
 
-import java.lang.invoke.MethodHandles;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.SecureRandom;
+import ds2.oss.core.api.AssertHelper;
+import ds2.oss.core.api.annotations.SecureRandomizer;
+import ds2.oss.core.api.crypto.*;
+import ds2.oss.core.api.dto.impl.EncodedContentDto;
+import ds2.oss.core.api.dto.impl.IvEncodedContentDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -27,18 +30,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.SecurityBaseData;
-import ds2.oss.core.api.annotations.SecureRandomizer;
-import ds2.oss.core.api.crypto.Ciphers;
-import ds2.oss.core.api.crypto.EncodedContent;
-import ds2.oss.core.api.crypto.EncryptionService;
-import ds2.oss.core.api.crypto.IvEncodedContent;
-import ds2.oss.core.api.dto.impl.EncodedContentDto;
-import ds2.oss.core.api.dto.impl.IvEncodedContentDto;
+import java.lang.invoke.MethodHandles;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.SecureRandom;
 
 /**
  * The encryption service.
@@ -52,11 +47,8 @@ public class EncryptionServiceImpl implements EncryptionService {
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    /**
-     * The security base data.
-     */
     @Inject
-    private SecurityBaseData baseData;
+    private BytesProvider bytesProvider;
     /**
      * A randomizer.
      */
@@ -68,16 +60,22 @@ public class EncryptionServiceImpl implements EncryptionService {
      */
     @Inject
     private SecurityInstanceProvider secProv;
+    @Inject
+    private AssertHelper assrt;
 
     @Override
-    public byte[] decode(final SecretKey secretKey, final Ciphers cipher, final EncodedContent src) {
+    public byte[] decode(final SecretKey secretKey, final AlgorithmNamed cipher, final EncodedContent src) {
         byte[] rc = null;
+        assrt.assertNotNull(secretKey, "No secretkey given to decode!");
+        assrt.assertNotNull(cipher, "No cipher given to use!");
+        assrt.assertNotNull(src, "No content given to read from!");
         try {
             final Cipher c = secProv.createCipherInstance(cipher);
-            switch (cipher) {
+            Ciphers cipherEnum = Ciphers.getByAlgorithmName(cipher.getAlgorithmName());
+            switch (cipherEnum) {
                 case AES:
                     c.init(Cipher.DECRYPT_MODE, secretKey,
-                        new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
+                            new IvParameterSpec(((IvEncodedContent) src).getInitVector()));
                     break;
                 default:
                     c.init(Cipher.DECRYPT_MODE, secretKey);
@@ -98,14 +96,18 @@ public class EncryptionServiceImpl implements EncryptionService {
     }
 
     @Override
-    public EncodedContent encode(final SecretKey secretKey, final Ciphers cipher, final byte[] src) {
+    public EncodedContent encode(final SecretKey secretKey, final AlgorithmNamed cipherAlg, final byte[] src) {
         EncodedContent rc = null;
+        assrt.assertNotNull(secretKey, "No secretkey given to decode!");
+        assrt.assertNotNull(cipherAlg, "No cipher given to use!");
+        assrt.assertNotNull(src, "No content given to read from!");
         try {
+            Ciphers cipher = Ciphers.getByAlgorithmName(cipherAlg.getAlgorithmName());
             final Cipher c = secProv.createCipherInstance(cipher);
-            LOG.debug("Cipher {}, sk={}", new Object[] { c, secretKey });
+            LOG.debug("Cipher {}, sk={}", new Object[]{c, secretKey});
             switch (cipher) {
                 case AES:
-                    c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(baseData.getInitVector()), random);
+                    c.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(bytesProvider.createRandomByteArray(16)), random);
                     break;
                 default:
                     c.init(Cipher.ENCRYPT_MODE, secretKey, random);

@@ -1,0 +1,33 @@
+description = 'DS/2 OSS Core Interceptors'
+dependencies {
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
+    testCompile group: 'org.apache.openejb', name: 'tomee-embedded', version: '1.7.0'
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
+    compileOnly 'org.slf4j:slf4j-api:1.7.26'
+    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
+}
+
+task copyMainStuffToResources(type: Copy) {
+    from "${buildDir}/classes/java/main"
+    into "${buildDir}/resources/main"
+}
+task copyTestStuffToResources(type: Copy) {
+    from "${buildDir}/classes/java/test"
+    into "${buildDir}/resources/test"
+}
+
+task copyResources(type: Copy) {
+    from "${projectDir}/src/main/resources"
+    into "${buildDir}/classes/java/main"
+}
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/java/test"
+}
+
+processResources.dependsOn copyResources
+processTestResources.dependsOn copyTestResources, copyResources
+
+test.dependsOn copyTestStuffToResources
+
+test.useTestNG()

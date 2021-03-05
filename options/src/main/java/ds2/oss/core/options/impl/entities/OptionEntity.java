@@ -1,17 +1,17 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.options.impl.entities;
 
@@ -36,6 +36,7 @@ import javax.persistence.UniqueConstraint;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
+import ds2.oss.core.dbtools.AbstractCreatedByModifiedByEntity;
 import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
 import ds2.oss.core.dbtools.modules.IvEncodedContentModule;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
@@ -63,7 +64,7 @@ import ds2.oss.core.options.internal.ValueTypeConverter;
     name = NumberedOptionsPersistenceSupport.QUERY_FINDOPTIONBYIDENTIFIER,
     query = "select o from coreOption o where o.optionName = :optionName and o.applicationName = :appName") })
 @Access(AccessType.FIELD)
-public class OptionEntity implements Option<Long, Object> {
+public class OptionEntity extends AbstractCreatedByModifiedByEntity implements Option<Long, Object> {
     
     /**
      * The svuid.
@@ -80,11 +81,6 @@ public class OptionEntity implements Option<Long, Object> {
      */
     @Column(name = "app_name", nullable = false)
     private String applicationName;
-    /**
-     * The CMA module.
-     */
-    @Embedded
-    private CreatedModifiedAwareModule cma;
     /**
      * The EC module.
      */
@@ -118,11 +114,6 @@ public class OptionEntity implements Option<Long, Object> {
     @Convert(converter = OptionStageConverter.class)
     private OptionStage stage;
     /**
-     * The modifier username.
-     */
-    @Column(name = "modified_by")
-    private String modifierName;
-    /**
      * A description of the option.
      */
     @Column(name = "description")
@@ -132,18 +123,12 @@ public class OptionEntity implements Option<Long, Object> {
      * Inits the entity.
      */
     public OptionEntity() {
-        cma = new CreatedModifiedAwareModule();
         ecm = new IvEncodedContentModule();
     }
     
     @Override
     public String getApplicationName() {
         return applicationName;
-    }
-    
-    @Override
-    public Date getCreated() {
-        return cma.getCreated();
     }
     
     @Override
@@ -181,17 +166,7 @@ public class OptionEntity implements Option<Long, Object> {
         }
         return ecm.getInitVector();
     }
-    
-    @Override
-    public Date getModified() {
-        return cma.getModified();
-    }
-    
-    @Override
-    public String getModifierName() {
-        return modifierName;
-    }
-    
+
     @Override
     public String getOptionName() {
         return optionName;
@@ -221,17 +196,7 @@ public class OptionEntity implements Option<Long, Object> {
     public void setApplicationName(final String applicationName) {
         this.applicationName = applicationName;
     }
-    
-    /**
-     * Sets another creation date.
-     * 
-     * @param created
-     *            the creation date.
-     */
-    public void setCreated(final Date created) {
-        cma.setCreated(created);
-    }
-    
+
     /**
      * Sets the default value.
      * 
@@ -281,27 +246,7 @@ public class OptionEntity implements Option<Long, Object> {
     public void setInitVector(byte[] b) {
         ecm.setInitVector(b);
     }
-    
-    /**
-     * Sets another modified date.
-     * 
-     * @param modified
-     *            the modified date
-     */
-    public void setModified(final Date modified) {
-        cma.setModified(modified);
-    }
-    
-    /**
-     * Sets the modifier.
-     * 
-     * @param modifierName
-     *            the modifierName to set
-     */
-    public void setModifierName(final String modifierName) {
-        this.modifierName = modifierName;
-    }
-    
+
     /**
      * Sets the option name.
      * 
@@ -343,8 +288,6 @@ public class OptionEntity implements Option<Long, Object> {
         builder.append(id);
         builder.append(", applicationName=");
         builder.append(applicationName);
-        builder.append(", cma=");
-        builder.append(cma);
         builder.append(", ecm=");
         builder.append(ecm);
         builder.append(", optionName=");
@@ -357,19 +300,10 @@ public class OptionEntity implements Option<Long, Object> {
         builder.append(defaultValue);
         builder.append(", stage=");
         builder.append(stage);
-        builder.append(", modifierName=");
-        builder.append(modifierName);
         builder.append(", description=");
         builder.append(description);
         builder.append(")");
         return builder.toString();
     }
-    
-    /**
-     * Updates the modified date.
-     */
-    public void touchModified() {
-        cma.touchModified();
-    }
-    
+
 }

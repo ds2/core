@@ -1,17 +1,17 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.options.internal;
 
@@ -21,7 +21,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 import ds2.oss.core.api.environment.Cluster;
-import ds2.oss.core.api.environment.RuntimeConfiguration;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.options.OptionValueContext;
@@ -72,7 +72,7 @@ public class OptionValueContextModule implements OptionValueContext {
      */
     @Column(name = "ctx_runtime_config")
     @Convert(converter = RuntimeConfigurationConverter.class)
-    private RuntimeConfiguration configuration;
+    private RuntimeType configuration;
     /**
      * The cluster.
      */
@@ -86,7 +86,7 @@ public class OptionValueContextModule implements OptionValueContext {
     }
     
     @Override
-    public RuntimeConfiguration getConfiguration() {
+    public RuntimeType getConfiguration() {
         return configuration;
     }
     
@@ -116,7 +116,7 @@ public class OptionValueContextModule implements OptionValueContext {
      * @param configuration
      *            the configuration to set
      */
-    public void setConfiguration(RuntimeConfiguration configuration) {
+    public void setConfiguration(RuntimeType configuration) {
         this.configuration = configuration;
     }
     

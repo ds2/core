@@ -1,0 +1,21 @@
+
+description = 'DS/2 OSS Core Base Integration tests'
+dependencies {
+  compile project(':ds2-oss-core-base')
+    compile group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version:'1.+'
+  compile project(':ds2-oss-core-dbtools')
+    testCompile group: 'org.testng', name: 'testng', version:'6.+'
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version:'1.+'
+    testCompile group: 'com.h2database', name: 'h2', version:'1.4.181'
+    testCompile group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version:'1.+'
+    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version:'4.+') {
+exclude(module: 'tools-jar')
+    }
+    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
+}
+test.useTestNG()
+
+bintray {
+    publications = []
+    configurations = []
+}

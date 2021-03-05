@@ -1,32 +1,26 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.elasticsearch.apt;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Set;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import ds2.oss.core.api.es.*;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -35,16 +29,11 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.FileObject;
 import javax.tools.StandardLocation;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
-import ds2.oss.core.api.es.DynamicMapping;
-import ds2.oss.core.api.es.FieldTypes;
-import ds2.oss.core.api.es.PropertyMapping;
-import ds2.oss.core.api.es.TimestampPath;
-import ds2.oss.core.api.es.TypeMapping;
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The type mapping annotation processor.
@@ -53,16 +42,14 @@ import ds2.oss.core.api.es.TypeMapping;
  * @version 0.2
  */
 @SupportedAnnotationTypes(value = "ds2.oss.core.api.es.TypeMapping")
-@SupportedSourceVersion(SourceVersion.RELEASE_7)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class CreateTypeMappingsAP extends AbstractProcessor {
 
     /**
      * Formats a given element.
      *
-     * @param index
-     *            the field type
-     * @param onNull
-     *            the null_value value
+     * @param index  the field type
+     * @param onNull the null_value value
      * @return the json element best matching the given field type
      */
     private static JsonElement formatNullValue(final FieldTypes index, final String onNull) {
@@ -92,8 +79,7 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
     /**
      * Scans a field, returns any known field data.
      *
-     * @param fieldEl
-     *            the field to scan
+     * @param fieldEl the field to scan
      * @return the JsonObject that contains any field data, or null if not
      */
     private static JsonObject scanField(final Element fieldEl) {
@@ -124,10 +110,8 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
     /**
      * Scans for properties.
      *
-     * @param log
-     *            a logger
-     * @param list
-     *            the list of child elements to scan
+     * @param log  a logger
+     * @param list the list of child elements to scan
      * @return a JsonObject having the properties, or null if not
      */
     private static JsonObject scanProperties(final Messager log, final List<? extends Element> list) {
@@ -154,12 +138,9 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
     /**
      * Adds some header data.
      *
-     * @param typeJs
-     *            the json object to write into
-     * @param tm
-     *            the type mapping data
-     * @param fields
-     *            the fields
+     * @param typeJs the json object to write into
+     * @param tm     the type mapping data
+     * @param fields the fields
      */
     private static void scanType(final JsonObject typeJs, final TypeMapping tm, final List<? extends Element> fields) {
         final JsonObject sourceEnabled = new JsonObject();
@@ -196,12 +177,9 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
     /**
      * Performs a scan of the given type.
      *
-     * @param log
-     *            the logger
-     * @param elem
-     *            the element to scan
-     * @param filer
-     *            a filer to create some mapping files
+     * @param log   the logger
+     * @param elem  the element to scan
+     * @param filer a filer to create some mapping files
      */
     private static void scanType(final Messager log, final Element elem, final Filer filer) {
         final TypeMapping tm = elem.getAnnotation(TypeMapping.class);
@@ -210,8 +188,8 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
         final String pkg = pe.getQualifiedName().toString();
         try {
             final FileObject res =
-                filer.createResource(StandardLocation.SOURCE_OUTPUT, pkg, elem.getSimpleName()
-                    + "-elasticsearch.mapping.json", elem);
+                    filer.createResource(StandardLocation.SOURCE_OUTPUT, pkg, elem.getSimpleName()
+                            + "-elasticsearch.mapping.json", elem);
             res.delete();
             try (Writer writer = res.openWriter()) {
                 final StringBuilder sb = new StringBuilder();
@@ -235,14 +213,12 @@ public class CreateTypeMappingsAP extends AbstractProcessor {
     /**
      * Searches the given annotation class on all given fields.
      *
-     * @param aClass
-     *            the annotation class to find
-     * @param fields
-     *            the fields of the class
+     * @param aClass the annotation class to find
+     * @param fields the fields of the class
      * @return the first field that contains the given annotation, otherwise and by default null.
      */
     private static Element searchFieldsFor(final Class<? extends Annotation> aClass,
-        final List<? extends Element> fields) {
+                                           final List<? extends Element> fields) {
         for (Element el : fields) {
             if (el.getAnnotation(aClass) != null) {
                 return el;

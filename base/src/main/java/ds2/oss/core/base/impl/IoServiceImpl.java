@@ -1,28 +1,32 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.base.impl;
 
-import java.io.BufferedReader;
+import ds2.oss.core.api.IoService;
+import ds2.oss.core.statics.IoMethods;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.ApplicationScoped;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,13 +36,6 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.enterprise.context.ApplicationScoped;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.IoService;
 
 /**
  * The IO service impl.
@@ -136,31 +133,7 @@ public class IoServiceImpl implements IoService {
 
     @Override
     public String loadResource(final String resName) {
-        String resName2 = resName;
-        if (!resName.startsWith("/")) {
-            resName2 = "/" + resName;
-        }
-        final InputStream is = getClass().getResourceAsStream(resName2);
-        String rc = null;
-        if (is != null) {
-            final Reader isr = new InputStreamReader(is, Charset.forName("utf-8"));
-            try (BufferedReader br = new BufferedReader(isr)) {
-                final StringBuilder sb = new StringBuilder();
-                while (true) {
-                    final String line = br.readLine();
-                    if (line == null) {
-                        break;
-                    }
-                    sb.append(line);
-                }
-                rc = sb.toString();
-            } catch (final IOException e) {
-                LOG.debug("Error occurred on reading!", e);
-            }
-        } else {
-            LOG.warn("Could not find resource {}!", resName2);
-        }
-        return rc;
+        return IoMethods.readResourceFromClasspath(resName, StandardCharsets.UTF_8);
     }
 
     @Override
@@ -176,9 +149,9 @@ public class IoServiceImpl implements IoService {
 
     @Override
     public void writeFile(final String data, final Charset cs, final Path target, final String permissionMask)
-        throws IOException {
+            throws IOException {
         try (BufferedWriter os =
-            Files.newBufferedWriter(target, cs, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+                     Files.newBufferedWriter(target, cs, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
             os.write(data);
         }
         if (permissionMask != null && !isWindows()) {
@@ -189,9 +162,9 @@ public class IoServiceImpl implements IoService {
 
     @Override
     public void writeProperties(final Properties props, final Path target, final String permissionMask)
-        throws IOException {
+            throws IOException {
         try (final BufferedWriter bw =
-            Files.newBufferedWriter(target, UTF8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+                     Files.newBufferedWriter(target, UTF8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             props.store(bw, "Written now!");
         }
         if (permissionMask != null && !isWindows()) {

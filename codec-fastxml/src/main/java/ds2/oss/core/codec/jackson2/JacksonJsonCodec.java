@@ -1,40 +1,40 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.codec.jackson2;
 
-import java.io.IOException;
-import java.lang.invoke.MethodHandles;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-
-import ds2.oss.core.api.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.api.CoreErrors;
+import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.api.JsonCodecException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 
 /**
- *
  * @author dstrauss
  */
 @ApplicationScoped
 public class JacksonJsonCodec implements JsonCodec {
-    
+
     /**
      * A logger.
      */
@@ -43,7 +43,7 @@ public class JacksonJsonCodec implements JsonCodec {
      * The object mapper.
      */
     private ObjectMapper om;
-    
+
     /**
      * Actions to perform at start.
      */
@@ -52,7 +52,7 @@ public class JacksonJsonCodec implements JsonCodec {
         LOG.debug("Starting up");
         om = new ObjectMapper();
     }
-    
+
     @Override
     public String encode(Object z) throws JsonCodecException {
         String rc = null;
@@ -67,12 +67,12 @@ public class JacksonJsonCodec implements JsonCodec {
         LOG.debug("Result is {}", rc);
         return rc;
     }
-    
+
     @Override
     public Object decode(String a) throws CodecException {
         throw new UnsupportedOperationException("Please use the other decode method for better type handling!");
     }
-    
+
     @Override
     public <E> E decode(String z, Class<E> c) throws JsonCodecException {
         E rc = null;
@@ -83,5 +83,10 @@ public class JacksonJsonCodec implements JsonCodec {
         }
         return rc;
     }
-    
+
+    @Override
+    public <E> E decodeInto(String z, E instance) throws JsonCodecException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

@@ -1,30 +1,28 @@
 /*
- * Copyright 2012-2015 Dirk Strauss
+ * Copyright 2020 DS/2 <dstrauss@ds-2.de>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
  */
 package ds2.oss.core.base.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.Vector;
-
-import javax.enterprise.context.ApplicationScoped;
-
+import ds2.oss.core.api.Base64Codec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.Base64Codec;
+import javax.enterprise.context.ApplicationScoped;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Eine Klasse, um eine Base64-Konvertierung zu machen. Siehe RFC 1521.
@@ -54,8 +52,7 @@ public class Base64Konverter implements Base64Codec {
     /**
      * Berechnet, wieviel Padding benutzt werden muss.
      *
-     * @param srclaenge
-     *            die Anzahl der Bytes, die base64 gemacht werden sollen.
+     * @param srclaenge die Anzahl der Bytes, die base64 gemacht werden sollen.
      * @return die Anzahl der Padding-Zeichen nach dem Encoding
      */
     private static byte holeAnzPadding(final int srclaenge) {
@@ -77,7 +74,9 @@ public class Base64Konverter implements Base64Codec {
      */
     private final boolean mitEnter = true;
 
-    /** Creates a new instance of Base64Konverter. */
+    /**
+     * Creates a new instance of Base64Konverter.
+     */
     public Base64Konverter() {
         super();
         alphabet = new char[ALPHABETCOUNT];
@@ -128,24 +127,24 @@ public class Base64Konverter implements Base64Codec {
                     letztesByte = (byte) (index & 0x0F);
                     letztesByte <<= 4;
                     break;
-                    case 2:
-                        // 00yyyyzz
-                        aktByte = (byte) (index & 0x3C);
-                        aktByte >>= 2;
+                case 2:
+                    // 00yyyyzz
+                    aktByte = (byte) (index & 0x3C);
+                    aktByte >>= 2;
                     aktByte |= letztesByte;
                     bytes.add(Byte.valueOf(aktByte));
                     letztesByte = (byte) (index & 0x3);
                     letztesByte <<= 6;
                     break;
-                    case 3:
-                        // 00zzzzzz
-                        aktByte = (byte) (index & 0x3F);
-                        aktByte |= letztesByte;
-                        bytes.add(Byte.valueOf(aktByte));
-                        break;
-                    default:
-                        // should not happen
-                        break;
+                case 3:
+                    // 00zzzzzz
+                    aktByte = (byte) (index & 0x3F);
+                    aktByte |= letztesByte;
+                    bytes.add(Byte.valueOf(aktByte));
+                    break;
+                default:
+                    // should not happen
+                    break;
             }
         }
         if (bytes.size() <= 0) {
@@ -179,34 +178,34 @@ public class Base64Konverter implements Base64Codec {
                     // 11111100
                     aktByte2 = aktChar & 0xFC;
                     aktByte2 >>= 2;
-        aktByte2 &= 0x3F;
-        letztesByte = aktChar & 0x3;
-        letztesByte <<= 4;
-        baos.write((byte) aktByte2);
-        break;
-        case 1:
-            // 11110000
-            aktByte2 = aktChar & 0xF0;
-            aktByte2 >>= 4;
-        aktByte2 &= 0x0F;
-        aktByte2 |= letztesByte;
-        baos.write((byte) aktByte2);
-        letztesByte = aktChar & 0x0F;
-        letztesByte <<= 2;
-        break;
-        case 2:
-            // 11000000
-            aktByte2 = aktChar & 0xC0;
-            aktByte2 >>= 6;
-        aktByte2 |= letztesByte;
-        baos.write((byte) aktByte2);
-        aktByte2 = aktChar & 0x3F;
-        baos.write((byte) aktByte2);
-        letztesByte = -1;
-        break;
-        default:
-            LOG.error("Upps, ein Algo-Fehler: aktByte=" + i + " (" + aktChar + ")");
-            break;
+                    aktByte2 &= 0x3F;
+                    letztesByte = aktChar & 0x3;
+                    letztesByte <<= 4;
+                    baos.write((byte) aktByte2);
+                    break;
+                case 1:
+                    // 11110000
+                    aktByte2 = aktChar & 0xF0;
+                    aktByte2 >>= 4;
+                    aktByte2 &= 0x0F;
+                    aktByte2 |= letztesByte;
+                    baos.write((byte) aktByte2);
+                    letztesByte = aktChar & 0x0F;
+                    letztesByte <<= 2;
+                    break;
+                case 2:
+                    // 11000000
+                    aktByte2 = aktChar & 0xC0;
+                    aktByte2 >>= 6;
+                    aktByte2 |= letztesByte;
+                    baos.write((byte) aktByte2);
+                    aktByte2 = aktChar & 0x3F;
+                    baos.write((byte) aktByte2);
+                    letztesByte = -1;
+                    break;
+                default:
+                    LOG.error("Upps, ein Algo-Fehler: aktByte=" + i + " (" + aktChar + ")");
+                    break;
             }
         }
         if (letztesByte >= 0) {
@@ -238,8 +237,7 @@ public class Base64Konverter implements Base64Codec {
     /**
      * Returns a cleaned version of the given char array.
      *
-     * @param s
-     *            the char array
+     * @param s the char array
      * @return the cleaned char array
      */
     private char[] getCleanedChars(final char[] s) {
@@ -265,11 +263,10 @@ public class Base64Konverter implements Base64Codec {
     /**
      * Liefert die Byte-Version des Base64-Chars zurueck.
      *
-     * @param c
-     *            der Base64-Char
+     * @param c der Base64-Char
      * @return seine Position im Alphabet. -1 bei einem Fehler.
      */
-    public byte holeAlphabetPosFuerChar(final char c) {
+    private byte holeAlphabetPosFuerChar(final char c) {
         byte index = 0;
         for (char aktChar : alphabet) {
             if (aktChar == c) {

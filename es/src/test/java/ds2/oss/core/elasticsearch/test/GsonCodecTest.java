@@ -15,22 +15,21 @@
  */
 package ds2.oss.core.elasticsearch.test;
 
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
+import ds2.core.testonly.utils.AbstractInjectionEnvironment;
+import ds2.oss.core.api.CoreException;
+import ds2.oss.core.api.JsonCodec;
+import ds2.oss.core.elasticsearch.test.dto.MyNews;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import ds2.oss.core.api.CoreException;
-import ds2.oss.core.api.JsonCodec;
-import ds2.oss.core.elasticsearch.test.dto.MyNews;
-import ds2.oss.core.testutils.AbstractInjectionEnvironment;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * The gson codec tests.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
@@ -39,20 +38,20 @@ public class GsonCodecTest extends AbstractInjectionEnvironment {
      * The test object.
      */
     private JsonCodec to;
-    
+
     @BeforeMethod(alwaysRun = true)
     public void onMethod() {
         to = getInstance(JsonCodec.class);
     }
-    
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void serializeNull() throws CoreException {
         to.encode(null);
     }
-    
+
     /**
      * Serializer test.
-     * 
+     *
      * @throws CoreException
      */
     @Test
@@ -72,22 +71,22 @@ public class GsonCodecTest extends AbstractInjectionEnvironment {
         n.setPostDate(cal.getTime());
         final String s = to.encode(n);
         Assert
-            .assertEquals(
-                s,
-                "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T19:26:00.000Z\"}");
+                .assertEquals(
+                        s,
+                        "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T19:26:00.000Z\"}");
     }
-    
+
     /**
      * Unserialize test.
-     * 
+     *
      * @throws CoreException
      */
     @Test
     public void testUnserialize() throws CoreException {
         final MyNews n =
-            to.decode(
-                "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T21:26:00.000+0200\"}",
-                MyNews.class);
+                to.decode(
+                        "{\"title\":\"My Title\",\"author\":\"testuser\",\"message\":\"Hello, world\",\"postDate\":\"2013-07-13T21:26:00.000+0200\"}",
+                        MyNews.class);
         Assert.assertNotNull(n);
         Assert.assertEquals(n.getAuthor(), "testuser");
         Assert.assertEquals(n.getMsg(), "Hello, world");
