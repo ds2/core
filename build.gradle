@@ -35,10 +35,13 @@ allprojects {
     }
     repositories {
         mavenLocal()
-        maven { url "https://ds2.jfrog.io/artifactory/ds2/"
-            credentials {
-                username ds2RepoUser
-                password ds2RepoPw
+        if (ds2RepoUser != null) {
+            println 'Can use DS2 Repo :)'
+            maven { url "https://ds2.jfrog.io/artifactory/ds2/"
+                credentials {
+                    username ds2RepoUser
+                    password ds2RepoPw
+                }
             }
         }
         maven { url "https://maven.java.net/content/groups/promoted/" }
