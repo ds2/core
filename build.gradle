@@ -35,9 +35,9 @@ allprojects {
     }
     repositories {
         mavenLocal()
-        if (ds2RepoUser != null) {
+        if (project.hasProperty('ds2RepoUrl')) {
             println 'Can use DS2 Repo :)'
-            maven { url "https://ds2.jfrog.io/artifactory/ds2/"
+            maven { url ds2RepoUrl
                 credentials {
                     username ds2RepoUser
                     password ds2RepoPw
