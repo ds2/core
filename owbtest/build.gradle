@@ -10,7 +10,7 @@ dependencies {
     testImplementation  'org.apache.openwebbeans:openwebbeans-impl:1.2.6'
     testImplementation  'org.slf4j:slf4j-api:1.7.26'
     testRuntimeOnly 'ch.qos.logback:logback-classic:1.+'
-    compileOnly 'javax.enterprise:cdi-api:1.+'
+    compileOnly 'javax.enterprise:cdi-api:2.+'
 }
 
 test.useTestNG()
