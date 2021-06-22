@@ -2,7 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.31'
     id "com.jfrog.bintray" version '1.8.5'
     id 'net.researchgate.release' version '2.8.1'
-    id 'ds2.base' version '0.0.14'
+    id 'ds2.base' version '0.0.15'
     id "com.github.hierynomus.license" version "0.15.0"
     id "com.github.hierynomus.license-base" version "0.15.0"
     id("com.github.spotbugs") version "4.7.1"
@@ -23,7 +23,7 @@ allprojects {
 
     group = 'ds2.oss.core'
 
-    base {
+    baseConfig {
         javaVersion = JavaVersion.VERSION_1_8
     }
     gitInfo() {
