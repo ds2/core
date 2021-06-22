@@ -15,5 +15,7 @@ jobs:
         with:
           java-version: '8'
           distribution: 'zulu'
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Assemble it
+        run: ./gradlew assemble
+      - name: Test it
+        run: ./gradlew test
