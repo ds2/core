@@ -16,7 +16,7 @@ dependencies {
     }
     testCompile project(':ds2-oss-core-crypto-bouncycastle')
     testCompile project(':ds2-oss-core-testutils')
-    compile(group: 'javax', name: 'javaee-api', version: '7.0')
+    compile(group: 'javax', name: 'javaee-api', version: '8.0.1')
 }
 test.useTestNG()
 
