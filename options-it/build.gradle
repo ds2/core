@@ -11,7 +11,7 @@ dependencies {
 //exclude(module: 'tools')
 //    }
     testCompile group: 'com.lmax', name: 'disruptor', version: '3.4.4'
-    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '4.0') {
+    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '6.2.0') {
         exclude(module: 'tools-jar')
     }
     testCompile project(':ds2-oss-core-crypto-bouncycastle')
