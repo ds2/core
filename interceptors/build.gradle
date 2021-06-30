@@ -1,7 +1,7 @@
 description = 'DS/2 OSS Core Interceptors'
 dependencies {
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
-    testCompile group: 'org.apache.openejb', name: 'tomee-embedded', version: '1.7.0'
+    testCompile group: 'org.apache.openejb', name: 'tomee-embedded', version: '1.7.5'
     testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
     compileOnly 'org.slf4j:slf4j-api:1.7.26'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
