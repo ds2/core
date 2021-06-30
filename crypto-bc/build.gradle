@@ -3,7 +3,7 @@ dependencies {
     implementation project(':ds2-oss-core-crypto')
     implementation project(':ds2-oss-core-api')
     implementation project(':ds2-oss-core-statics')
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.51'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
