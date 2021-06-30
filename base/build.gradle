@@ -29,7 +29,7 @@ dependencies {
     compileOnly 'org.slf4j:slf4j-api:1.7.26'
     testRuntimeOnly(group: 'org.jboss', name: 'jandex', version: '1.2.+')
 
-    weldEmbeddedTestRuntime group: 'org.jboss.arquillian.container', name: 'arquillian-weld-ee-embedded-1.1', version: '1.0.0.CR7'
+    weldEmbeddedTestRuntime group: 'org.jboss.arquillian.container', name: 'arquillian-weld-ee-embedded-1.1', version: '1.0.0.Final'
     weldEmbeddedTestRuntime group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: libraryVersions.jbossJavaeeSpec
     weldEmbeddedTestRuntime group: 'org.jboss.weld', name: 'weld-core', version: libraryVersions.weld
     weldEmbeddedTestRuntime group: 'org.slf4j', name: 'slf4j-log4j12', version: libraryVersions.slf4j
