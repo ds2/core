@@ -29,6 +29,6 @@ jobs:
           java -version
           gradle -version
       - name: Assemble it
-        run: ./gradlew assemble
+        run: ./gradlew compileJava compileTestJava
       - name: Test it
         run: ./gradlew test
