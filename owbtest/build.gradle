@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core OpenWebBeans Injection Test'
 
-def OWB_VERSION='2.0.11'
+def OWB_VERSION='2.0.23'
 
 dependencies {
     implementation project(':ds2-oss-core-api')
