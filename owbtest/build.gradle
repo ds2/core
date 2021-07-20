@@ -9,7 +9,7 @@ dependencies {
     implementation(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
     testImplementation  'org.apache.openwebbeans:openwebbeans-ee:2.0.11'
     testImplementation  'org.apache.openwebbeans:openwebbeans-spi:2.0.11'
-    testImplementation  'org.apache.openwebbeans:openwebbeans-impl:2.0.11'
+    testImplementation  'org.apache.openwebbeans:openwebbeans-impl:2.0.23'
     testImplementation 'org.apache.openwebbeans:openwebbeans-junit5:2.0.11'
     testImplementation  'org.slf4j:slf4j-api:1.7.26'
     testRuntimeOnly 'ch.qos.logback:logback-classic:1.+'
