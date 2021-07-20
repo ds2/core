@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - main
   pull_request:
     branches:
       - develop
@@ -23,6 +24,10 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: ${{ matrix.java }}
+      - name: show version of Java
+        run: |
+          java -version
+          gradle -version
       - name: Assemble it
         run: ./gradlew assemble
       - name: Test it
