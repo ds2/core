@@ -9,7 +9,7 @@ dependencies {
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     testImplementation group: 'org.jboss', name: 'jandex', version: '1.2.0.Beta1'
-    compileOnly 'org.slf4j:slf4j-api:1.7.26'
+    compileOnly 'org.slf4j:slf4j-api:1.7.32'
     compileOnly(group: 'javax.enterprise', name: 'cdi-api', version: '2.0') {
         /* This dependency was originally in the Maven provided scope, but the project was not of type war.
         This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.

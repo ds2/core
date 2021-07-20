@@ -3,7 +3,7 @@ description = 'DS/2 OSS Core Abstracts'
 dependencies {
   implementation project(':ds2-oss-core-statics')
   implementation project(':ds2-oss-core-api')
-  compileOnly 'org.slf4j:slf4j-api:1.7.26'
+  compileOnly 'org.slf4j:slf4j-api:1.7.32'
   testImplementation group: 'org.testng', name: 'testng', version: '6.8.8'
   testImplementation 'org.slf4j:slf4j-api:1.7.26'
   testRuntimeOnly 'ch.qos.logback:logback-classic:1.2.4'
