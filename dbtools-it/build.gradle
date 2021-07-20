@@ -13,7 +13,7 @@ dependencies {
     testCompile project(':ds2-oss-core-crypto-bouncycastle')
     testCompile project(':ds2-oss-core-testutils')
     testCompile group: 'org.eclipse.persistence', name: 'eclipselink', version: '3.0.2'
-    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '5.1.0')
+    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '6.2.0')
 //    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '4.1.2') {
 //        exclude(module: 'tools-jar')
 //    }
