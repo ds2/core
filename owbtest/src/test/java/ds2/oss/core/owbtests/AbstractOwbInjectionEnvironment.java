@@ -18,10 +18,10 @@ package ds2.oss.core.owbtests;
 import ds2.oss.core.statics.Methods;
 import org.apache.webbeans.config.WebBeansContext;
 import org.apache.webbeans.spi.ContainerLifecycle;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
@@ -34,6 +34,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by dstrauss on 18.04.17.
  */
+@Deprecated
 public class AbstractOwbInjectionEnvironment {
     /**
      * A lock.
@@ -88,8 +89,8 @@ public class AbstractOwbInjectionEnvironment {
     /**
      * Actions to perform at the end of the test suite.
      */
-    @AfterSuite(alwaysRun = true)
-    public void onSuiteEnd() {
+    @AfterAll
+    static void onSuiteEnd() {
         LOCK.lock();
         try {
             if (wc != null) {
@@ -107,8 +108,8 @@ public class AbstractOwbInjectionEnvironment {
     /**
      * Actions to perform at test suite start.
      */
-    @BeforeSuite(alwaysRun = true)
-    public void onSuiteStart() {
+    @BeforeAll
+    static void onSuiteStart() {
         LOG.debug("Entering OWB Init");
         LOCK.lock();
         try {
@@ -127,7 +128,7 @@ public class AbstractOwbInjectionEnvironment {
         LOG.debug("Done with init");
     }
 
-    protected void performInitialSetup() {
+    static void performInitialSetup() {
         //Actually, do nothing here. If you have something to setup BEFORE starting the CDI, please put it up here
     }
 }
