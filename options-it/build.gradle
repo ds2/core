@@ -11,17 +11,12 @@ dependencies {
 //exclude(module: 'tools')
 //    }
     testCompile group: 'com.lmax', name: 'disruptor', version: '3.4.4'
-    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '4.0') {
+    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '4.1.2') {
         exclude(module: 'tools-jar')
     }
     testCompile project(':ds2-oss-core-crypto-bouncycastle')
     testCompile project(':ds2-oss-core-testutils')
     compile(group: 'javax', name: 'javaee-api', version: '8.0.1')
-}
-test.useTestNG()
-
-tasks.withType(Test) {
-    maxParallelForks = 1
 }
 
 bintray {
@@ -30,6 +25,14 @@ bintray {
 }
 
 test {
+    useTestNG()
+    maxParallelForks = 1
+    maxHeapSize="1024m"
+    jvmArgs '-XX:MaxPermSize=256m'
+    testLogging.showStandardStreams = true
+    onOutput { descriptor, event ->
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+    }
     systemProperty "ds2.app.sec.home", "target/dummySec"
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"
@@ -38,5 +41,4 @@ test {
         showExceptions true
         showStackTraces true
     }
-    useTestNG()
 }

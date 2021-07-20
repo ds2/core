@@ -9,7 +9,24 @@ dependencies {
     testImplementation group: 'org.jboss', name: 'jandex', version: '1.2.0.Beta1'
     compileOnly project(':ds2-oss-core-elasticsearch-annotationprocessing')
 }
-test.useTestNG()
+test {
+    useTestNG()
+    maxParallelForks = 1
+    maxHeapSize="1024m"
+    jvmArgs '-XX:MaxPermSize=256m'
+    testLogging.showStandardStreams = true
+    onOutput { descriptor, event ->
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+    }
+    systemProperty "ds2.app.sec.home", "target/dummySec"
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+        exceptionFormat "full"
+        showCauses true
+        showExceptions true
+        showStackTraces true
+    }
+}
 
 bintray {
     publications = []

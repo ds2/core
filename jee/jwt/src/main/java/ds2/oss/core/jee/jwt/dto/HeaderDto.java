@@ -32,9 +32,11 @@ public class HeaderDto {
     /**
      * The type of the payload?
      */
+    @Builder.Default
     private String typ = "JWT";
     /**
      * The content type. Mime media type.
      */
+    @Builder.Default
     private String cty = "JWT";
 }

@@ -24,11 +24,18 @@ import java.nio.charset.StandardCharsets;
 @Builder
 @Data
 public class CsvConfiguration {
+    @Builder.Default
     private char separator = ',';
+    @Builder.Default
     private boolean ignoreQuotations = true;
+    @Builder.Default
     private char quotation = '\"';
+    @Builder.Default
     private int skipLines = 0;
+    @Builder.Default
     private int skipColumns = 0;
+    @Builder.Default
     private Charset encoding = StandardCharsets.UTF_8;
+    @Builder.Default
     private String lineSeparator = "\n";
 }
