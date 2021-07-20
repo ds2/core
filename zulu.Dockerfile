@@ -1,4 +1,4 @@
 FROM azul/zulu-openjdk:8
 WORKDIR /core
-ADD * .
+COPY . .
 RUN ./gradlew clean build --info --stacktrace
