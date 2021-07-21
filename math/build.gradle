@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core Math'
 dependencies {
     compile project(':ds2-oss-core-api')
     testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
-    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
-    compileOnly 'org.slf4j:slf4j-api:1.7.26'
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4'
+    compileOnly 'org.slf4j:slf4j-api:1.7.32'
 }
 test.useTestNG()

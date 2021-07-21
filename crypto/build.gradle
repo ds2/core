@@ -5,7 +5,7 @@ dependencies {
     implementation project(':ds2-oss-core-statics')
     implementation project(':ds2-oss-core-base')
     implementation project(':ds2-oss-core-math')
-    implementation 'de.mkammerer:argon2-jvm:2.2'
+    implementation 'de.mkammerer:argon2-jvm:2.10.1'
     testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.14.1'
     testImplementation(group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.1') {
@@ -16,7 +16,7 @@ dependencies {
     testRuntimeOnly group: 'com.lmax', name: 'disruptor', version: '3.4.4'
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.jboss', name: 'jandex', version: '1.2.0.Beta1'
-    compileOnly 'org.slf4j:slf4j-api:1.7.26'
+    compileOnly 'org.slf4j:slf4j-api:1.7.32'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
 

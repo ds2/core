@@ -13,13 +13,13 @@ dependencies {
     testImplementation  "org.apache.openwebbeans:openwebbeans-spi:${OWB_VERSION}"
     testImplementation  "org.apache.openwebbeans:openwebbeans-impl:${OWB_VERSION}"
     testImplementation "org.apache.openwebbeans:openwebbeans-junit5:${OWB_VERSION}"
-    testImplementation  'org.slf4j:slf4j-api:1.7.26'
-    testRuntimeOnly 'ch.qos.logback:logback-classic:1.+'
+    testImplementation  'org.slf4j:slf4j-api:1.7.32'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.2.4'
 }
 
 test {
-    maxHeapSize="1024m"
-    jvmArgs '-XX:MaxPermSize=256m'
+    //maxHeapSize="1024m"
+    //jvmArgs '-XX:MaxPermSize=256m'
     testLogging.showStandardStreams = true
     onOutput { descriptor, event ->
         logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
