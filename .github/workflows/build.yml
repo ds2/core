@@ -27,8 +27,8 @@ jobs:
       - name: show version of Java
         run: |
           java -version
-          gradle -version
-      - name: Assemble it
+          ./gradlew -version
+      - name: compile it
         run: ./gradlew compileJava compileTestJava
-      - name: Test it
+      - name: run tests
         run: ./gradlew test
