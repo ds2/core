@@ -3,13 +3,9 @@ dependencies {
     compile project(':ds2-oss-core-options')
     compile group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.6.0.Final'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
-    //testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version:'2.0.1'
     testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
     testCompile group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
-//    testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.0.1') {
-//exclude(module: 'tools')
-//    }
     testCompile group: 'com.lmax', name: 'disruptor', version: '3.4.4'
     testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '5.1.0')
     testCompile project(':ds2-oss-core-crypto-bouncycastle')

@@ -23,6 +23,8 @@ allprojects {
 
     group = 'ds2.oss.core'
 
+    ext.log4j2Version='2.14.1'
+
     baseConfig {
         javaVersion = JavaVersion.VERSION_1_8
     }
