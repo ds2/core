@@ -4,7 +4,7 @@ dependencies {
     compile group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.+'
     compile project(':ds2-oss-core-dbtools')
     testCompile group: 'org.testng', name: 'testng', version: '6.+'
-    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4'
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4-groovyless'
     testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
     testCompile group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.+'
     testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '5.1.0')

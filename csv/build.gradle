@@ -7,7 +7,7 @@ dependencies {
     compile project(':ds2-oss-core-api')
     compile project(':ds2-oss-core-statics')
     testCompile group: 'org.testng', name: 'testng', version: '6.+'
-    testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4'
+    testRuntime group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4-groovyless'
 }
 
 description = 'DS/2 OSS Core CSV'

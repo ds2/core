@@ -6,7 +6,7 @@ dependencies {
   compileOnly 'org.slf4j:slf4j-api:1.7.32'
   testImplementation group: 'org.testng', name: 'testng', version: '6.8.8'
   testImplementation 'org.slf4j:slf4j-api:1.7.26'
-  testRuntimeOnly 'ch.qos.logback:logback-classic:1.2.4'
+  testRuntimeOnly 'ch.qos.logback:logback-classic:1.2.4-groovyless'
 }
 
 test.useTestNG()
