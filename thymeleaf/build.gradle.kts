@@ -2,6 +2,8 @@ plugins {
     java
 }
 
+val logbackVersion: String by project
+
 dependencies {
     implementation(project(":ds2-oss-core-api"))
     implementation("org.thymeleaf:thymeleaf:3.0.11.RELEASE")
@@ -12,7 +14,7 @@ dependencies {
     testCompileOnly("jakarta.platform:jakarta.jakartaee-web-api:8.0.0")
     testRuntimeOnly("org.jboss.weld.se", "weld-se-core", "2.4.8.Final")
     testRuntimeOnly("org.jboss", "jandex", "1.2.0.Beta1")
-    testRuntimeOnly("ch.qos.logback:logback-classic:1.2.3")
+    testRuntime("ch.qos.logback", "logback-classic", logbackVersion)
     testImplementation(project(":ds2-oss-core-statics"))
     //compileOnly(group: 'javax.enterprise', name: 'cdi-api', version:'1.2')
 

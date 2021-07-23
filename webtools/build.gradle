@@ -3,6 +3,6 @@ dependencies {
     compileOnly 'org.slf4j:slf4j-api:1.7.32'
     testCompile group: 'org.testng', name: 'testng', version: '6.8.8'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
-    compile(group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.4')
+    compile(group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion)
 }
 test.useTestNG()
