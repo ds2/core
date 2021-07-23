@@ -3,7 +3,7 @@ description = 'DS/2 OSS Core API'
 dependencies {
     //compileOnly(group: 'javax.enterprise', name: 'cdi-api', version:'1.2')
     //compileOnly(group: 'javax.validation', name: 'validation-api', version:'1.1.0.Final')
-    annotationProcessor("org.projectlombok:lombok:1.18.16")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
     compileOnly("org.projectlombok:lombok:1.18.16")
     implementation("javax.xml.bind:jaxb-api:2.4.0")
     compileOnly group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0'

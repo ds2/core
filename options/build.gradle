@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core Options'
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
     annotationProcessor(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '4.3.6.Final')
     compile project(':ds2-oss-core-api')
     compile project(':ds2-oss-core-base')
