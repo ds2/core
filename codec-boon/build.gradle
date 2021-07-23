@@ -4,7 +4,7 @@ dependencies {
     compile group: 'io.fastjson', name: 'boon', version:'0.23'
     compile project(':ds2-oss-core-api')
     testCompile group: 'org.testng', name: 'testng', version:'6.8.8'
-    testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.0.1') {
+    testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.14.1') {
 exclude(module: 'tools')
     }
     testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version:'2.2.4.Final'
