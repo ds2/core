@@ -3,7 +3,7 @@ description = 'DS/2 OSS Core Codec Boon'
 dependencies {
     compile group: 'io.fastjson', name: 'boon', version:'0.23'
     compile project(':ds2-oss-core-api')
-    testCompile group: 'org.testng', name: 'testng', version:'6.8.8'
+    testCompile group: 'org.testng', name: 'testng', version:'7.4.0'
     testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
 exclude(module: 'tools')
     }
