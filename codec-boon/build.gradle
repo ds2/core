@@ -7,7 +7,7 @@ dependencies {
     testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
 exclude(module: 'tools')
     }
-    testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version:'2.2.4.Final'
+    testCompile group: 'org.jboss.weld.se', name: 'weld-se-core', version:'4.0.2.Final'
     testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: project.ext.log4j2Version
     testCompile project(path: ':ds2-oss-core-testutils')
     testCompile group: 'org.jboss', name: 'jandex', version:'2.3.0.Final'
