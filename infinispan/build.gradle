@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core Infinispan'
 dependencies {
     implementation project(':ds2-oss-core-statics')
     implementation project(':ds2-oss-core-api')
-    implementation group: 'org.infinispan', name: 'infinispan-core', version: '9.+'
+    implementation group: 'org.infinispan', name: 'infinispan-core', version: '13.+'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se', version: '2.+'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
