@@ -1,8 +1,8 @@
 group = 'ds2.oss.core.jee'
 description = 'DS/2 OSS Core JEE JWT'
 dependencies {
-    annotationProcessor("org.projectlombok:lombok:1.18.20")
-    compileOnly("org.projectlombok:lombok:1.18.16")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
+    compileOnly("org.projectlombok:lombok:1.18.22")
     //compile project(':ds2-oss-core-webtools')
     implementation project(':ds2-oss-core-statics')
     implementation project(':ds2-oss-core-api')

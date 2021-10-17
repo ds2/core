@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core Options'
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
     annotationProcessor(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.5.5.Final')
     compile project(':ds2-oss-core-api')
     compile project(':ds2-oss-core-base')
@@ -39,7 +39,7 @@ dependencies {
     }
     compileOnly(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.5.5.Final')
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
-    compileOnly 'org.projectlombok:lombok:1.18.16'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
 }
 
 task copyMainStuffToResources(type: Copy) {
