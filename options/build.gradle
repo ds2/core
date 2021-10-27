@@ -1,7 +1,7 @@
 description = 'DS/2 OSS Core Options'
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    annotationProcessor(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.6.0.Final')
+    annotationProcessor(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.6.1.Final')
     compile project(':ds2-oss-core-api')
     compile project(':ds2-oss-core-base')
     compile project(':ds2-oss-core-crypto')
@@ -37,7 +37,7 @@ dependencies {
         This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
         Please review and delete this closure when resolved. */
     }
-    compileOnly(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.5.5.Final')
+    compileOnly(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.6.1.Final')
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
     compileOnly 'org.projectlombok:lombok:1.18.22'
 }
