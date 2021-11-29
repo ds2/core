@@ -6,7 +6,7 @@ dependencies {
     implementation project(':ds2-oss-core-api')
     runtimeOnly project(':ds2-oss-core-base')
     testImplementation  project(':ds2-oss-core-statics')
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
     testImplementation  "org.apache.openwebbeans:openwebbeans-ee:${OWB_VERSION}"
