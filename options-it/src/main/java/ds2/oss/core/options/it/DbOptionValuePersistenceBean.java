@@ -13,9 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-/**
- *
- */
 package ds2.oss.core.options.it;
 
 import ds2.oss.core.api.dto.impl.OptionValueContextDto;
@@ -34,7 +31,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author dstrauss
@@ -82,7 +78,7 @@ public class DbOptionValuePersistenceBean extends AbstractOptionValuePersistence
 
     @Override
     public void setStage(Long id, OptionValueStage newStage) {
-        OptionValueEntity entity = getSecureFindById(em, OptionValueEntity.class, id);
+        OptionValueEntity entity = getSecureFindByIdInternal(em, OptionValueEntity.class, id);
         entity.setStage(newStage);
         entity.setModified(LocalDateTime.now());
         entity.setApproverName(ctx.getCallerPrincipal().getName());

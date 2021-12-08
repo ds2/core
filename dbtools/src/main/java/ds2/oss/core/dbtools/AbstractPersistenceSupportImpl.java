@@ -156,7 +156,7 @@ public abstract class AbstractPersistenceSupportImpl<E extends IdAware<PRIMKEY>,
      * @param id the id of the entity
      * @return the entity, or null if not found
      */
-    protected <T extends IdAware<PRIMKEY>> T getSecureFindById(final EntityManager em, final Class<T> c,
+    protected <T extends IdAware<PRIMKEY>> T getSecureFindByIdInternal(final EntityManager em, final Class<T> c,
                                                                final PRIMKEY id) {
         if (id == null) {
             LOG.warn("No primary key given to search for. Ignoring request!");
@@ -179,7 +179,7 @@ public abstract class AbstractPersistenceSupportImpl<E extends IdAware<PRIMKEY>,
      * @return the found entity, or null if not found
      */
     public E getSecureFindById(final EntityManager em, final PRIMKEY id) {
-        return getSecureFindById(em, getEntityClass(), id);
+        return getSecureFindByIdInternal(em, getEntityClass(), id);
     }
 
     @Override
