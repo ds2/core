@@ -1,5 +1,5 @@
 
 description = 'DS/2 OSS Core Elasticsearch APT'
 dependencies {
-  compile project(':ds2-oss-core-codec-gson')
+  implementation project(':ds2-oss-core-codec-gson')
 }

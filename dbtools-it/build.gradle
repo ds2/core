@@ -1,21 +1,21 @@
 description = 'DS/2 OSS Core Database Tools Integrationtest'
 dependencies {
-    compile project(':ds2-oss-core-dbtools')
-    compile group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.6.0.Final'
-    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: project.ext.log4j2Version
-    testCompile group: 'org.testng', name: 'testng', version: '7.4.0'
-    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
-    testCompile group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
-    testCompile(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
+    implementation project(':ds2-oss-core-dbtools')
+    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.6.0.Final'
+    testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: project.ext.log4j2Version
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+    testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
+    testImplementation(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
         exclude(module: 'tools')
     }
-    testCompile group: 'com.lmax', name: 'disruptor', version: '3.4.4'
-    testCompile project(':ds2-oss-core-crypto-bouncycastle')
-    testCompile project(':ds2-oss-core-testutils')
-    testCompile group: 'org.eclipse.persistence', name: 'eclipselink', version: '3.0.2'
-    testCompile(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '5.1.0')
+    testImplementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
+    testImplementation project(':ds2-oss-core-crypto-bouncycastle')
+    testImplementation project(':ds2-oss-core-testutils')
+    testImplementation group: 'org.eclipse.persistence', name: 'eclipselink', version: '3.0.2'
+    testImplementation(group: 'org.glassfish.main.extras', name: 'glassfish-embedded-all', version: '5.1.0')
     compileOnly 'org.slf4j:slf4j-api:1.7.32'
-    compile(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
+    implementation(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
 
 bintray {
