@@ -81,6 +81,9 @@ allprojects {
             java = 'SLASHSTAR_STYLE'
         }
     }
+    tasks.withType(org.gradle.jvm.tasks.Jar) {
+        it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
 }
 
 subprojects {

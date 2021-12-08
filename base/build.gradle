@@ -78,11 +78,3 @@ test {
         showStackTraces true
     }
 }
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.INHERIT
-}
-
-copy {
-    duplicatesStrategy = DuplicatesStrategy.INHERIT
-}
