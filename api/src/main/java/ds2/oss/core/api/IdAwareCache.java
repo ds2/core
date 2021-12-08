@@ -23,7 +23,7 @@ package ds2.oss.core.api;
  * @author dstrauss
  * @version 0.3
  */
-public interface IdAwareCache<K, V extends IdAware<K>> {
+public interface IdAwareCache<K, V extends ds2.core.api.IdAware<K>> {
     /**
      * Returns the value with the given key.
      *

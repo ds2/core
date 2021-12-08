@@ -1,5 +1,6 @@
 plugins {
     java
+    kotlin("jvm")
 }
 
 description = "DS/2 OSS Core API"
