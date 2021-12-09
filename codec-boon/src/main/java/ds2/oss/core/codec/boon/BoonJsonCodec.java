@@ -25,6 +25,7 @@ import org.boon.json.implementation.ObjectMapperImpl;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import java.util.logging.Logger;
 
 /**
  * A json codec, using the boon json parser.
@@ -34,6 +35,7 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class BoonJsonCodec implements JsonCodec {
+    private static final Logger LOG = Logger.getLogger(BoonJsonCodec.class.getName());
 
     private ObjectMapper om;
 
@@ -44,8 +46,7 @@ public class BoonJsonCodec implements JsonCodec {
 
     @Override
     public <E> E decode(String z, Class<E> c) throws JsonCodecException {
-        E rc = om.readValue(z, c);
-        return rc;
+        return om.readValue(z, c);
     }
 
     @Override
@@ -55,16 +56,20 @@ public class BoonJsonCodec implements JsonCodec {
 
     @Override
     public String encode(Object z) throws CodecException {
-        String rc = om.writeValueAsString(z);
-        return rc;
+        LOG.entering(BoonJsonCodec.class.getName(), "encode", z);
+        String jsonString = z == null ? null : om.writeValueAsString(z);
+        LOG.exiting(BoonJsonCodec.class.getName(), "encode", jsonString);
+        return jsonString;
     }
 
     @PostConstruct
     public void onLoad() {
+        LOG.fine("Loading boon codec..");
         JsonParserFactory parser = new JsonParserFactory();
         JsonSerializerFactory serializer = new JsonSerializerFactory();
         serializer.useFieldsOnly();
         om = new ObjectMapperImpl(parser, serializer);
+        LOG.fine("Done loading boon codec");
     }
 
 }

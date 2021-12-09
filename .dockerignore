@@ -1,4 +1,9 @@
-target
-build
-bin
-.*
+*
+!*.java
+!*.kt
+!build.gradle
+!build.gradle.kts
+!settings.gradle.kts
+!*.xml
+!gradlew
+!gradle

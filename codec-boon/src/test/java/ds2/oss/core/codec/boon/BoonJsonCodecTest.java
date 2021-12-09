@@ -40,7 +40,7 @@ public class BoonJsonCodecTest extends AbstractInjectionEnvironment {
 
     @Test
     public void testEncodeNull() throws CoreException {
-        Assert.assertEquals(to.encode(null), "");
+        Assert.assertNull(to.encode(null));
     }
 
     @Test
