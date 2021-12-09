@@ -1,19 +1,20 @@
 description = 'DS/2 OSS Core OpenWebBeans Injection Test'
 
-def OWB_VERSION='2.0.24'
+def OWB_VERSION = '2.0.24'
+def JUNIT5_VERSION = '5.8.2'
 
 dependencies {
     implementation project(':ds2-oss-core-api')
     runtimeOnly project(':ds2-oss-core-base')
-    testImplementation  project(':ds2-oss-core-statics')
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation project(':ds2-oss-core-statics')
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${JUNIT5_VERSION}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${JUNIT5_VERSION}"
     implementation(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
-    testImplementation  "org.apache.openwebbeans:openwebbeans-ee:${OWB_VERSION}"
-    testImplementation  "org.apache.openwebbeans:openwebbeans-spi:${OWB_VERSION}"
-    testImplementation  "org.apache.openwebbeans:openwebbeans-impl:${OWB_VERSION}"
+    testImplementation "org.apache.openwebbeans:openwebbeans-ee:${OWB_VERSION}"
+    testImplementation "org.apache.openwebbeans:openwebbeans-spi:${OWB_VERSION}"
+    testImplementation "org.apache.openwebbeans:openwebbeans-impl:${OWB_VERSION}"
     testImplementation "org.apache.openwebbeans:openwebbeans-junit5:${OWB_VERSION}"
-    testImplementation  'org.slf4j:slf4j-api:1.7.32'
+    testImplementation 'org.slf4j:slf4j-api:1.7.32'
     testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
 }
 
@@ -22,7 +23,7 @@ test {
     //jvmArgs '-XX:MaxPermSize=256m'
     testLogging.showStandardStreams = true
     onOutput { descriptor, event ->
-        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+        logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)
     }
     systemProperty "ds2.app.sec.home", "target/dummySec"
     testLogging {
