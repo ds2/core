@@ -17,9 +17,13 @@ Simply run:
 
 ### Via dedicated Docker image
 
-Via DS/2, run
+Run
 
     docker run -it --rm -v $(pwd):/src dcr.ds-2.de/buildslave:0.1 ./gradlew clean build
+
+or
+
+    docker build -f zulu.Dockerfile .
 
 ##Layers
 

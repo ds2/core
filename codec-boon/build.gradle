@@ -1,8 +1,9 @@
 
 description = 'DS/2 OSS Core Codec Boon'
 dependencies {
-    implementation group: 'io.fastjson', name: 'boon', version:'0.23'
+    implementation group: 'io.fastjson', name: 'boon', version:'0.34'
     implementation project(':ds2-oss-core-api')
+    implementation (group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2')
     testImplementation group: 'org.testng', name: 'testng', version:'7.4.0'
     testImplementation(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
 exclude(module: 'tools')
