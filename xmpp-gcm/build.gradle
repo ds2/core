@@ -1,7 +1,7 @@
 description = 'DS/2 OSS Core XMPP GCM'
 dependencies {
     implementation project(':ds2-oss-core-codec-fastxml')
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.1'
     implementation project(':ds2-oss-core-api')
     implementation group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.0.1'
     compileOnly 'org.slf4j:slf4j-api:1.7.32'
