@@ -15,22 +15,21 @@
  */
 package ds2.oss.core.options.impl;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.options.api.OptionFactory;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * The factory to create some option dtos.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
 @ApplicationScoped
 public class OptionDtoFactoryImpl implements OptionFactory {
-    
+
     @Override
     public <K, V> OptionDto<K, V> createOptionDto(final OptionIdentifier<V> ident, final K primKey, final V defaultVal) {
         final OptionDto<K, V> rc = new OptionDto<>(primKey);
@@ -42,5 +41,5 @@ public class OptionDtoFactoryImpl implements OptionFactory {
         rc.setStage(OptionStage.Online);
         return rc;
     }
-    
+
 }

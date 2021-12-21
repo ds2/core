@@ -15,14 +15,14 @@
  */
 package ds2.oss.core.api.environment;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Simple dto.
@@ -41,12 +41,11 @@ public class ClusterDto implements Cluster {
      * The svuid.
      */
     private static final long serialVersionUID = -1435290906373276784L;
-    
+
     /**
      * Parses the given string for containing a cluster name.
      *
-     * @param s
-     *            the possible name of the cluster
+     * @param s the possible name of the cluster
      * @return the cluster character name
      */
     private static char parseFromString(final String s) {
@@ -80,8 +79,7 @@ public class ClusterDto implements Cluster {
     /**
      * Inits the dto from the given values.
      *
-     * @param cluster
-     *            the cluster to copy
+     * @param cluster the cluster to copy
      */
     public ClusterDto(final Cluster cluster) {
         this();
@@ -91,8 +89,7 @@ public class ClusterDto implements Cluster {
     /**
      * Constructs the cluster name from the given string.
      *
-     * @param clusterEnvStr
-     *            the string to analyse. The first letter is taken to be the cluster config name.
+     * @param clusterEnvStr the string to analyse. The first letter is taken to be the cluster config name.
      */
     public ClusterDto(final String clusterEnvStr) {
         this();
@@ -144,8 +141,7 @@ public class ClusterDto implements Cluster {
     /**
      * Sets the cluster name.
      *
-     * @param cc
-     *            the clusterName to set
+     * @param cc the clusterName to set
      */
     public final synchronized void setClusterName(final char cc) {
         clusterName = cc;

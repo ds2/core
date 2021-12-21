@@ -17,10 +17,10 @@ package ds2.oss.core.dbtools;
 
 import ds2.oss.core.api.IdAware;
 import ds2.oss.core.api.PersistenceSupport;
+import jakarta.persistence.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public abstract class AbstractPersistenceSupportImpl<E extends IdAware<PRIMKEY>,
      * @param entityClass the entity class
      * @param <E>         the entity type
      * @return the found results, or null if nothing was found
-     * @deprecated Better use the {@link #getSecureList(javax.persistence.TypedQuery)} method
+     * @deprecated Better use the {@link #getSecureList(jakarta.persistence.TypedQuery)} method
      * instead.
      */
     @SuppressWarnings("unchecked")
@@ -157,7 +157,7 @@ public abstract class AbstractPersistenceSupportImpl<E extends IdAware<PRIMKEY>,
      * @return the entity, or null if not found
      */
     protected <T extends IdAware<PRIMKEY>> T getSecureFindByIdInternal(final EntityManager em, final Class<T> c,
-                                                               final PRIMKEY id) {
+                                                                       final PRIMKEY id) {
         if (id == null) {
             LOG.warn("No primary key given to search for. Ignoring request!");
             return null;

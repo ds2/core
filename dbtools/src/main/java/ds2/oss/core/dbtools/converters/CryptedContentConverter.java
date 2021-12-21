@@ -19,11 +19,11 @@ import ds2.oss.core.api.crypto.HashedResult;
 import ds2.oss.core.api.dto.impl.HashedResultDto;
 import ds2.oss.core.statics.Converts;
 import ds2.oss.core.statics.Methods;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

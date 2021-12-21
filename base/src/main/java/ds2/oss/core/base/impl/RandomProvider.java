@@ -15,22 +15,16 @@
  */
 package ds2.oss.core.base.impl;
 
-import ds2.oss.core.api.annotations.SecureRandomizer;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Produces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * Simple provider for Random instances.

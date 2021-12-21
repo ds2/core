@@ -15,13 +15,13 @@
  */
 package ds2.oss.core.api.annotations;
 
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
 
 /**
  * Qualifier for a secure randomizer. Put this on fields to have a SecureRandom object being
@@ -31,7 +31,7 @@ import javax.inject.Qualifier;
  * @version 0.3
  */
 @Qualifier
-@Target({ ElementType.FIELD, ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER })
+@Target({ElementType.FIELD, ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SecureRandomizer {
     /**

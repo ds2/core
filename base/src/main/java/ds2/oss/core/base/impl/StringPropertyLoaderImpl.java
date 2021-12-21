@@ -18,12 +18,12 @@ package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.annotations.StringLoader;
 import ds2.oss.core.statics.Methods;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.util.Set;

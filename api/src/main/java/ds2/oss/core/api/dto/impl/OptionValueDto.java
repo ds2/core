@@ -15,18 +15,6 @@
  */
 package ds2.oss.core.api.dto.impl;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-
 import ds2.oss.core.api.EditableCreatedModifiedAware;
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.ClusterDto;
@@ -35,18 +23,21 @@ import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.api.options.ValueType;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.xml.bind.annotation.*;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * The option value dto.
  *
+ * @param <E> the id type
+ * @param <V> the value type
  * @author dstrauss
  * @version 0.3
- * @param <E>
- *            the id type
- * @param <V>
- *            the value type
  */
 @XmlType(name = "optionValueType")
 @XmlAccessorType(XmlAccessType.FIELD)

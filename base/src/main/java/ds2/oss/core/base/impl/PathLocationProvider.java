@@ -15,23 +15,20 @@
  */
 package ds2.oss.core.base.impl;
 
+import ds2.oss.core.api.annotations.PathLocation;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
-
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.annotations.PathLocation;
 
 /**
  * The path location provider.
@@ -51,8 +48,7 @@ public class PathLocationProvider {
     /**
      * Produces the path object.
      *
-     * @param p
-     *            the injection point
+     * @param p the injection point
      * @return the path, or null if not found
      */
     @Produces

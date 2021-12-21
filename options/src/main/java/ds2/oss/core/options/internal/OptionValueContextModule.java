@@ -15,11 +15,6 @@
  */
 package ds2.oss.core.options.internal;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
@@ -27,17 +22,26 @@ import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.dbtools.converters.ClusterConverter;
 import ds2.oss.core.dbtools.converters.RuntimeConfigurationConverter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Transient;
 
 /**
  * A module to support the context of an option value.
- * 
+ *
  * @author dstrauss
  * @version 0.3
- *
  */
 @Embeddable
 public class OptionValueContextModule implements OptionValueContext {
-    
+    public static final String COL_REQDOMAIN = "ctx_req_domain";
+    public static final String COL_SERVERHOSTNAME = "ctx_server_hostname";
+    public static final String COL_SERVERDOMAIN = "ctx_server_domain";
+    public static final String COL_SERVERADDR = "ctx_server_address";
+    public static final String COL_RTCONFIG = "ctx_runtime_config";
+    public static final String COL_CLUSTER = "ctx_cluster";
+
     /**
      * The svuid.
      */
@@ -45,7 +49,7 @@ public class OptionValueContextModule implements OptionValueContext {
     /**
      * The requested domain.
      */
-    @Column(name = "ctx_req_domain")
+    @Column(name = COL_REQDOMAIN)
     private String requestedDomain;
     /**
      * The server identifier.
@@ -55,86 +59,82 @@ public class OptionValueContextModule implements OptionValueContext {
     /**
      * the server hostname.
      */
-    @Column(name = "ctx_server_hostname")
+    @Column(name = COL_SERVERHOSTNAME)
     private String serverHostname;
     /**
      * The server domain.
      */
-    @Column(name = "ctx_server_domain")
+    @Column(name = COL_SERVERDOMAIN)
     private String serverDomain;
     /**
      * The server domain.
      */
-    @Column(name = "ctx_server_address")
+    @Column(name = COL_SERVERADDR)
     private String serverIp;
     /**
      * The runtime config.
      */
-    @Column(name = "ctx_runtime_config")
+    @Column(name = COL_RTCONFIG)
     @Convert(converter = RuntimeConfigurationConverter.class)
     private RuntimeType configuration;
     /**
      * The cluster.
      */
-    @Column(name = "ctx_cluster")
+    @Column(name = COL_CLUSTER)
     @Convert(converter = ClusterConverter.class)
     private Cluster cluster;
-    
+
     @Override
     public Cluster getCluster() {
         return cluster;
     }
-    
+
     @Override
     public RuntimeType getConfiguration() {
         return configuration;
     }
-    
+
     @Override
     public String getRequestedDomain() {
         return requestedDomain;
     }
-    
+
     @Override
     public ServerIdentifier getServer() {
         return toServerIdentifier();
     }
-    
+
     /**
      * Sets the cluster.
-     * 
-     * @param cluster
-     *            the cluster to set
+     *
+     * @param cluster the cluster to set
      */
     public void setCluster(Cluster cluster) {
         this.cluster = cluster;
     }
-    
+
     /**
      * Sets the runtime config.
-     * 
-     * @param configuration
-     *            the configuration to set
+     *
+     * @param configuration the configuration to set
      */
     public void setConfiguration(RuntimeType configuration) {
         this.configuration = configuration;
     }
-    
+
     /**
      * Sets the requested domain.
-     * 
-     * @param requestedDomain
-     *            the requestedDomain to set
+     *
+     * @param requestedDomain the requestedDomain to set
      */
     public void setRequestedDomain(String requestedDomain) {
         this.requestedDomain = requestedDomain;
     }
-    
+
     /**
      * Sets the server identifier.
-     * 
-     * @param server
-     *            the server to set
+     *
+     * @param server the server to set
      */
     public void setServer(ServerIdentifier server) {
         this.server = server;
@@ -144,10 +144,10 @@ public class OptionValueContextModule implements OptionValueContext {
             serverIp = server.getIpAddress();
         }
     }
-    
+
     /**
      * Returns the server identifier based on this given context.
-     * 
+     *
      * @return the server identifier
      */
     private ServerIdentifier toServerIdentifier() {
@@ -158,7 +158,7 @@ public class OptionValueContextModule implements OptionValueContext {
         if (rc.isEmpty()) {
             return null;
         }
-        return null;
+        return rc;
     }
-    
+
 }

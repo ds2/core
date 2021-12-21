@@ -15,13 +15,12 @@
  */
 package ds2.oss.core.dbtools.modules;
 
-import java.util.Arrays;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Lob;
-
 import ds2.oss.core.api.crypto.IvEncodedContent;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Lob;
+
+import java.util.Arrays;
 
 /**
  * A db module for iv encoded content.
@@ -70,8 +69,7 @@ public class IvEncodedContentModule implements IvEncodedContent {
     /**
      * Sets the encoded data.
      *
-     * @param encoded
-     *            the encoded to set
+     * @param encoded the encoded to set
      */
     public void setEncoded(final byte[] encoded) {
         this.encoded = encoded;
@@ -80,8 +78,7 @@ public class IvEncodedContentModule implements IvEncodedContent {
     /**
      * Sets the init vector data.
      *
-     * @param initVector
-     *            the initVector to set
+     * @param initVector the initVector to set
      */
     public void setInitVector(final byte[] initVector) {
         this.initVector = initVector;
@@ -94,7 +91,7 @@ public class IvEncodedContentModule implements IvEncodedContent {
     @Override
     public String toString() {
         return "IvEncodedContentModule [initVector=" + Arrays.toString(initVector) + ", encoded="
-            + Arrays.toString(encoded) + "]";
+                + Arrays.toString(encoded) + "]";
     }
 
 }

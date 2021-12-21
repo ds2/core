@@ -15,14 +15,10 @@
  */
 package ds2.oss.core.interceptors;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.interceptor.InterceptorBinding;
 
-import javax.enterprise.util.Nonbinding;
-import javax.interceptor.InterceptorBinding;
+import java.lang.annotation.*;
 
 /**
  * The interceptor binding annotation to log any calls to this method or bean.
@@ -32,7 +28,7 @@ import javax.interceptor.InterceptorBinding;
  */
 @Inherited
 @InterceptorBinding
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LogCallings {
     /**

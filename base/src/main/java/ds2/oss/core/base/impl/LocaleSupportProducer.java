@@ -15,14 +15,13 @@
  */
 package ds2.oss.core.base.impl;
 
-import java.lang.annotation.Annotation;
-
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
-
 import ds2.oss.core.api.LocaleSupport;
 import ds2.oss.core.api.annotations.LocaleData;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.spi.InjectionPoint;
+
+import java.lang.annotation.Annotation;
 
 /**
  * A producer for LocaleSupport instances.
@@ -34,8 +33,7 @@ public class LocaleSupportProducer {
     /**
      * Produces a locale support instance.
      *
-     * @param p
-     *            the injection point
+     * @param p the injection point
      * @return the locale support.
      */
     @Produces

@@ -18,12 +18,11 @@ package ds2.oss.core.dbtools.it.impl;
 import ds2.oss.core.api.EntryState;
 import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
 import ds2.oss.core.dbtools.it.entities.StateEntity;
-
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionManagement;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.ejb.Stateless;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionManagement;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * @author dstrauss

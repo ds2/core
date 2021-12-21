@@ -18,10 +18,10 @@ package ds2.oss.core.base.impl;
 import ds2.oss.core.api.annotations.StringLoader;
 import ds2.oss.core.api.environment.*;
 import ds2.oss.core.statics.Methods;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 @ApplicationScoped
 public class RuntimeEnvironmentImpl implements RuntimeEnvironment {

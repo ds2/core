@@ -15,17 +15,17 @@
  */
 package ds2.oss.core.base.itest;
 
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 import ds2.oss.core.api.PersistenceSupport;
 
 /**
  * Dummy persistence contract.
- * 
+ *
  * @author dstrauss
  * @version 0.2
  */
 @Local
 public interface DummyPersistence extends PersistenceSupport<DummyEntity, Long> {
-    
+
 }

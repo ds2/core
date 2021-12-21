@@ -17,13 +17,13 @@ package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.SymmetricKeyNames;
 import ds2.oss.core.api.SymmetricKeyService;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.enterprise.context.ApplicationScoped;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;

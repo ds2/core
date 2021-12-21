@@ -15,10 +15,9 @@
  */
 package ds2.oss.core.base.impl;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
-
 import ds2.oss.core.api.crypto.JavaRuntimeData;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
 
 /**
  * Strong java runtime data.

@@ -15,14 +15,14 @@
  */
 package ds2.oss.core.webtools.io;
 
-import java.io.IOException;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
+import java.io.IOException;
 
 /**
  * A logging servlet input stream.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -31,62 +31,61 @@ public class LoggingServletInputStream extends ServletInputStream {
      * The lIS.
      */
     private LoggingInputStream<ServletInputStream> lis;
-    
+
     /**
      * inits the LSIS.
-     * 
-     * @param orig
-     *            the SIS
+     *
+     * @param orig the SIS
      */
     public LoggingServletInputStream(final ServletInputStream orig) {
         lis = new LoggingInputStream<>(orig);
     }
-    
+
     @Override
     public final int available() throws IOException {
         return lis.available();
     }
-    
+
     @Override
     public final void close() throws IOException {
         lis.close();
     }
-    
+
     /**
      * Returns the currently logged bytes.
-     * 
+     *
      * @return the logged bytes.
      */
     public final byte[] getBufferedBytes() {
         return lis.getLoggedBytes();
     }
-    
+
     @Override
     public final synchronized void mark(final int readlimit) {
         lis.mark(readlimit);
     }
-    
+
     @Override
     public final boolean markSupported() {
         return lis.markSupported();
     }
-    
+
     @Override
     public final int read() throws IOException {
         final int rc = lis.read();
         return rc;
     }
-    
+
     @Override
     public final int read(final byte[] b) throws IOException {
         return lis.read(b);
     }
-    
+
     @Override
     public final int read(final byte[] b, final int off, final int len) throws IOException {
         return lis.read(b, off, len);
     }
-    
+
     @Override
     public final int readLine(final byte[] arg0, final int arg1, final int arg2) throws IOException {
         final int rc = lis.getOriginal().readLine(arg0, arg1, arg2);
@@ -95,30 +94,30 @@ public class LoggingServletInputStream extends ServletInputStream {
         }
         return rc;
     }
-    
+
     @Override
     public final synchronized void reset() throws IOException {
         lis.reset();
     }
-    
+
     @Override
     public final long skip(final long n) throws IOException {
         return lis.skip(n);
     }
-    
+
     @Override
     public boolean isFinished() {
         return lis.getOriginal().isFinished();
     }
-    
+
     @Override
     public boolean isReady() {
         return lis.getOriginal().isReady();
     }
-    
+
     @Override
     public void setReadListener(final ReadListener readListener) {
         lis.getOriginal().setReadListener(readListener);
     }
-    
+
 }

@@ -16,8 +16,7 @@
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.Validate;
-
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Created by deindesign on 14.12.15.

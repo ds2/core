@@ -15,16 +15,15 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
+import com.google.common.reflect.ClassPath.ResourceInfo;
+import ds2.oss.core.api.CodecException;
+import ds2.oss.core.api.IoService;
+import ds2.oss.core.api.JsonCodecException;
+import ds2.oss.core.elasticsearch.api.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.WriteConsistencyLevel;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
@@ -52,19 +51,12 @@ import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.reflect.ClassPath;
-import com.google.common.reflect.ClassPath.ResourceInfo;
-
-import ds2.oss.core.api.CodecException;
-import ds2.oss.core.api.IoService;
-import ds2.oss.core.api.JsonCodecException;
-import ds2.oss.core.elasticsearch.api.CodecProvider;
-import ds2.oss.core.elasticsearch.api.ElasticSearchErrors;
-import ds2.oss.core.elasticsearch.api.ElasticSearchException;
-import ds2.oss.core.elasticsearch.api.ElasticSearchNode;
-import ds2.oss.core.elasticsearch.api.ElasticSearchService;
-import ds2.oss.core.elasticsearch.api.TypeCodec;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The implementation for the ES service.
@@ -78,18 +70,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(ElasticSearchServiceImpl.class);
-    
+
     /**
      * Filters some resources.
      *
-     * @param name
-     *            the start of the resource name
-     * @param resources
-     *            the resources to scan for
+     * @param name      the start of the resource name
+     * @param resources the resources to scan for
      * @return the found resources that being with the name
      */
     private static List<ClassPath.ResourceInfo> filterResources(final String name,
-        final List<ClassPath.ResourceInfo> resources) {
+                                                                final List<ClassPath.ResourceInfo> resources) {
         LOG.debug("Trying to find resources in {}", name);
         final List<ClassPath.ResourceInfo> rc = new ArrayList<>();
         for (ClassPath.ResourceInfo ri : resources) {
@@ -100,13 +90,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     /**
      * This method tries to find the id of the json document. Usually, this is the first sequence
      * before the .json ending.
      *
-     * @param resourceName
-     *            the json resource name
+     * @param resourceName the json resource name
      * @return the id, or null if no id has been found
      */
     private static String findIdFromResource(final String resourceName) {
@@ -119,50 +108,50 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if (cutIndex > 0) {
                 rc = foundPattern.substring(1, cutIndex);
             }
-            
+
         }
         return rc;
     }
-    
+
     /**
      * Any known codecs.
      */
     @Inject
     private CodecProvider codecProvider;
-    
+
     /**
      * The ES client to use.
      */
     @Inject
     private ElasticSearchNode esNode;
-    
+
     /**
      * The io service.
      */
     @Inject
     private IoService io;
-    
+
     @Override
     public void deleteIndexes(final String... indexes) {
-        LOG.debug("Prepare to delete indices {}", new Object[] { indexes });
+        LOG.debug("Prepare to delete indices {}", new Object[]{indexes});
         try {
             final DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-                esNode.get().admin().indices().prepareDelete(indexes);
+                    esNode.get().admin().indices().prepareDelete(indexes);
             final DeleteIndexResponse resp = deleteIndexRequestBuilder.get();
             if (!resp.isAcknowledged()) {
                 LOG.warn("Delete is not acknowledged!");
             } else {
-                LOG.debug("Deleting indexes {} done.", new Object[] { indexes });
+                LOG.debug("Deleting indexes {} done.", new Object[]{indexes});
             }
         } catch (IndexMissingException e) {
             LOG.debug("Given index did not exist!", e);
-            LOG.info("The index(es) {} were not existing! Ignoring delete request.", new Object[] { indexes });
+            LOG.info("The index(es) {} were not existing! Ignoring delete request.", new Object[]{indexes});
         }
     }
-    
+
     @Override
     public <T> T get(final String index, final Class<T> c, final String id) {
-        LOG.debug("Entering get request for index {}, type {} and id {}", new Object[] { index, c, id });
+        LOG.debug("Entering get request for index {}, type {} and id {}", new Object[]{index, c, id});
         final TypeCodec<T> codec = codecProvider.findFor(c);
         if (codec == null) {
             LOG.warn("No codec found for type {}! Cannot convert back into a dto therefore.", c);
@@ -184,18 +173,18 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                     rc = codec.toDto(result.getSource());
                 }
             } else {
-                LOG.debug("Could not find document with id {} in {}", new Object[] { id, index });
+                LOG.debug("Could not find document with id {} in {}", new Object[]{id, index});
             }
         } catch (ElasticsearchException e) {
             LOG.warn("Error when performing the query!", e);
         } catch (JsonCodecException e) {
             LOG.warn("Error when decoding the result source!", e);
         }
-        
+
         LOG.debug("Result is {}", rc);
         return rc;
     }
-    
+
     @Override
     public <T> List<T> getDefaultData(final Class<T> c) throws JsonCodecException {
         if (c == null) {
@@ -213,9 +202,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         final List<T> rc = new ArrayList<>();
         try {
             final ImmutableSet<ClassPath.ResourceInfo> resources =
-                ClassPath.from(getClass().getClassLoader()).getResources();
+                    ClassPath.from(getClass().getClassLoader()).getResources();
             final List<ClassPath.ResourceInfo> foundInserts =
-                filterResources(packageNameFilter.toString(), resources.asList());
+                    filterResources(packageNameFilter.toString(), resources.asList());
             if (!foundInserts.isEmpty()) {
                 for (ClassPath.ResourceInfo ri : foundInserts) {
                     final String res = ri.getResourceName();
@@ -233,7 +222,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public <T> boolean insertDefaultData(final String index, final Class<T> c) {
         // load all JSON files and its content
@@ -254,7 +243,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         try {
             resources = ClassPath.from(getClass().getClassLoader()).getResources();
             final List<ClassPath.ResourceInfo> foundInserts =
-                filterResources(packageNameFilter.toString(), resources.asList());
+                    filterResources(packageNameFilter.toString(), resources.asList());
             final BulkRequestBuilder brb = esNode.get().prepareBulk();
             for (ResourceInfo ri : foundInserts) {
                 final String resourceName = ri.getResourceName();
@@ -272,7 +261,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 brb.add(irb);
             }
             final BulkResponse bulkResult = brb.get();
-            LOG.debug("Results: {}", new Object[] { bulkResult.getItems() });
+            LOG.debug("Results: {}", new Object[]{bulkResult.getItems()});
             if (bulkResult.hasFailures()) {
                 LOG.warn("Some errors occurred on insert!");
                 rc = false;
@@ -284,12 +273,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public boolean installOrUpdateIndex(final String indexName, final Class<?>... dtoClasses) {
         final boolean rc = true;
         final boolean indexExists =
-            esNode.get().admin().indices().prepareExists(indexName).execute().actionGet().isExists();
+                esNode.get().admin().indices().prepareExists(indexName).execute().actionGet().isExists();
         if (!indexExists) {
             esNode.get().admin().indices().prepareCreate(indexName).execute().actionGet();
             esNode.waitForClusterYellowState();
@@ -298,9 +287,9 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         LOG.info("Checking mappings");
         final ClusterStateResponse resp =
-            esNode.get().admin().cluster().prepareState().setIndices(indexName).execute().actionGet();
+                esNode.get().admin().cluster().prepareState().setIndices(indexName).execute().actionGet();
         final ImmutableOpenMap<String, MappingMetaData> mappings =
-            resp.getState().getMetaData().index(indexName).mappings();
+                resp.getState().getMetaData().index(indexName).mappings();
         for (Class<?> dtoClass : dtoClasses) {
             final TypeCodec<?> codec = codecProvider.findFor(dtoClass);
             if (codec == null) {
@@ -311,16 +300,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             if (mappings.containsKey(indexType)) {
                 LOG.debug("Deleting mapping for type {}", indexType);
                 final DeleteMappingRequestBuilder prepDelMapping =
-                    esNode.get().admin().indices().prepareDeleteMapping(indexName);
+                        esNode.get().admin().indices().prepareDeleteMapping(indexName);
                 prepDelMapping.setType(indexType);
                 prepDelMapping.execute().actionGet();
             }
             final PutMappingResponse result =
-                esNode.get().admin().indices().preparePutMapping(indexName).setType(indexType)
-                    .setSource(codec.getMapping()).get();
+                    esNode.get().admin().indices().preparePutMapping(indexName).setType(indexType)
+                            .setSource(codec.getMapping()).get();
             if (!result.isAcknowledged()) {
-                LOG.warn("Mapping for type {} on index {} has not been acknowlegded. Expect problems!", new Object[] {
-                    indexType, indexName, });
+                LOG.warn("Mapping for type {} on index {} has not been acknowlegded. Expect problems!", new Object[]{
+                        indexType, indexName,});
             } else {
                 LOG.debug("Installing mapping for type {} seems to be ok", indexType);
             }
@@ -329,14 +318,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         esNode.waitForClusterYellowState();
         return rc;
     }
-    
+
     /**
      * Prepares an index operation.
      *
-     * @param index
-     *            the index to use
-     * @param typeCodec
-     *            the type codec to use
+     * @param index     the index to use
+     * @param typeCodec the type codec to use
      * @return the index request builder
      */
     private IndexRequestBuilder prepareIndexing(final String index, final TypeCodec<?> typeCodec) {
@@ -349,10 +336,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public <T> String put(final String index, final T t, final TypeCodec<T> codec) throws CodecException,
-        ElasticSearchException {
+            ElasticSearchException {
         if (t == null) {
             throw new IllegalArgumentException("You must give a dto to put into the index!");
         }
@@ -376,16 +363,16 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             } else {
                 LOG.debug("No creation done!");
             }
-            LOG.debug("Response is {}, id will be {}", new Object[] { response, id });
+            LOG.debug("Response is {}, id will be {}", new Object[]{response, id});
         } catch (ElasticsearchException e) {
             throw new ElasticSearchException(ElasticSearchErrors.PutFailed, e);
         }
         return id;
     }
-    
+
     @Override
     public boolean refreshIndexes(final String... indexes) {
-        LOG.debug("Performing refresh on indexes {}", new Object[] { indexes });
+        LOG.debug("Performing refresh on indexes {}", new Object[]{indexes});
         boolean rc = false;
         final RefreshRequestBuilder cmd = esNode.get().admin().indices().prepareRefresh(indexes);
         final RefreshResponse result = cmd.get();
@@ -397,7 +384,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         return rc;
     }
-    
+
     @Override
     public <T> List<T> searchAny(final String indexname, final Class<T> dtoClass) {
         final TypeCodec<T> codec = codecProvider.findFor(dtoClass);

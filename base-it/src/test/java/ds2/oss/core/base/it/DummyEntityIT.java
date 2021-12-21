@@ -17,6 +17,7 @@ package ds2.oss.core.base.it;
 
 import ds2.oss.core.base.itest.DummyEntity;
 import ds2.oss.core.base.itest.DummyPersistence;
+import jakarta.ejb.EJB;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -28,8 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.ejb.EJB;
 
 /**
  * A dummy persistence test.

@@ -17,9 +17,9 @@ package ds2.oss.core.dbtools.converters;
 
 import ds2.oss.core.statics.Converts;
 import ds2.oss.core.statics.Methods;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 import java.util.Locale;
 
 /**

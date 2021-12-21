@@ -15,27 +15,21 @@
  */
 package ds2.oss.core.options.impl.entities;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.options.internal.OptionValueContextModule;
+import jakarta.persistence.*;
 
 /**
  * A table with all known option value contexts.
- * 
+ *
  * @author dstrauss
  * @version 0.3
- *
  */
-@Table(name = "core_ctx", uniqueConstraints = { @UniqueConstraint(columnNames = { "ctx_cluster", "ctx_runtime_config",
-    "ctx_req_domain", "ctx_server_hostname" }) })
+@Table(name = "core_ctx", uniqueConstraints = {@UniqueConstraint(columnNames = {"ctx_cluster", "ctx_runtime_config",
+        "ctx_req_domain", "ctx_server_hostname"})})
 @Entity(name = "coreOptionValueContext")
 public class OptionValueContextEntity implements OptionValueContext {
     /**
@@ -52,7 +46,7 @@ public class OptionValueContextEntity implements OptionValueContext {
      */
     @Embedded
     private OptionValueContextModule mod = new OptionValueContextModule();
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionValueContext#getCluster()
@@ -61,7 +55,7 @@ public class OptionValueContextEntity implements OptionValueContext {
     public Cluster getCluster() {
         return mod.getCluster();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionValueContext#getConfiguration()
@@ -70,7 +64,7 @@ public class OptionValueContextEntity implements OptionValueContext {
     public RuntimeType getConfiguration() {
         return mod.getConfiguration();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionValueContext#getServer()
@@ -79,7 +73,7 @@ public class OptionValueContextEntity implements OptionValueContext {
     public ServerIdentifier getServer() {
         return mod.getServer();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionValueContext#getRequestedDomain()
@@ -88,5 +82,5 @@ public class OptionValueContextEntity implements OptionValueContext {
     public String getRequestedDomain() {
         return mod.getRequestedDomain();
     }
-    
+
 }

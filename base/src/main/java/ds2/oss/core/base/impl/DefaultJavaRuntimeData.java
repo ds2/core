@@ -15,9 +15,8 @@
  */
 package ds2.oss.core.base.impl;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import ds2.oss.core.api.crypto.JavaRuntimeData;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * The default java runtime data.

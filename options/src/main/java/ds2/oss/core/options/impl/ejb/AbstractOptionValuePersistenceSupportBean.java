@@ -15,39 +15,12 @@
  */
 package ds2.oss.core.options.impl.ejb;
 
-import java.lang.invoke.MethodHandles;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
-import javax.validation.Validator;
-
-import ds2.oss.core.api.environment.RuntimeType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.api.dto.impl.OptionValueContextDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.environment.Cluster;
+import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
-import ds2.oss.core.api.options.Option;
-import ds2.oss.core.api.options.OptionIdentifier;
-import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.api.options.OptionValue;
-import ds2.oss.core.api.options.OptionValueContext;
-import ds2.oss.core.api.options.OptionValueStage;
+import ds2.oss.core.api.options.*;
 import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
 import ds2.oss.core.dbtools.modules.LifeCycleAwareModule;
 import ds2.oss.core.dbtools.modules.LifeCycleAwareModule_;
@@ -59,6 +32,19 @@ import ds2.oss.core.options.impl.entities.OptionValueEntity;
 import ds2.oss.core.options.impl.entities.OptionValueEntity_;
 import ds2.oss.core.options.internal.OptionValueContextModule;
 import ds2.oss.core.options.internal.OptionValueContextModule_;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
+import jakarta.validation.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A base class to support some common operations for dealing with option value persistence.
@@ -84,41 +70,41 @@ public abstract class AbstractOptionValuePersistenceSupportBean
             ctx = new OptionValueContextDto();
         }
         if (ctx.getCluster() != null) {
-            predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.cluster), Cluster.class, CLUSTER));
+            predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule.COL_CLUSTER), Cluster.class, CLUSTER));
         } else {
-            predicates.add(qb.isNull(path.get(OptionValueContextModule_.cluster)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule.COL_CLUSTER)));
         }
         if (ctx.getConfiguration() != null) {
-            predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.configuration),
+            predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule.COL_RTCONFIG),
                     RuntimeType.class, RT_CONFIG));
         } else {
-            predicates.add(qb.isNull(path.get(OptionValueContextModule_.configuration)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule.COL_RTCONFIG)));
         }
         if (ctx.getRequestedDomain() != null) {
             predicates.add(
-                    getIsNullOrValue(qb, path.get(OptionValueContextModule_.requestedDomain), String.class, REQ_DOMAIN));
+                    getIsNullOrValue(qb, path.get(OptionValueContextModule.COL_REQDOMAIN), String.class, REQ_DOMAIN));
         } else {
-            predicates.add(qb.isNull(path.get(OptionValueContextModule_.requestedDomain)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule.COL_REQDOMAIN)));
         }
         if (ctx.getServer() != null) {
             ServerIdentifier si = ctx.getServer();
             if (si.getDomain() != null) {
-                predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.serverDomain), String.class,
+                predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule.COL_SERVERDOMAIN), String.class,
                         SERVER_DOMAIN));
             }
             if (si.getHostName() != null) {
-                predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.serverHostname), String.class,
+                predicates.add(getIsNullOrValue(qb, path.get(OptionValueContextModule.COL_SERVERHOSTNAME), String.class,
                         SERVER_HOSTNAME));
             }
             if (si.getIpAddress() != null) {
                 predicates
-                        .add(getIsNullOrValue(qb, path.get(OptionValueContextModule_.serverIp), String.class, SERVER_IP));
+                        .add(getIsNullOrValue(qb, path.get(OptionValueContextModule.COL_SERVERADDR), String.class, SERVER_IP));
             }
 
         } else {
-            predicates.add(qb.isNull(path.get(OptionValueContextModule_.serverDomain)));
-            predicates.add(qb.isNull(path.get(OptionValueContextModule_.serverHostname)));
-            predicates.add(qb.isNull(path.get(OptionValueContextModule_.serverIp)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule.COL_SERVERDOMAIN)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule.COL_SERVERHOSTNAME)));
+            predicates.add(qb.isNull(path.get(OptionValueContextModule.COL_SERVERADDR)));
         }
     }
 
@@ -148,11 +134,11 @@ public abstract class AbstractOptionValuePersistenceSupportBean
     private static Predicate getLcaPredicate(CriteriaBuilder cb, Path<LifeCycleAwareModule> p, String value) {
         Predicate rc = null;
         Predicate lessThan =
-                cb.lessThanOrEqualTo(p.get(LifeCycleAwareModule_.validFrom), cb.parameter(LocalDateTime.class, value));
+                cb.lessThanOrEqualTo(p.get(LifeCycleAwareModule.COL_VALIDFROM), cb.parameter(LocalDateTime.class, value));
         // and
-        Predicate isNull = cb.isNull(p.get(LifeCycleAwareModule_.validTo));
+        Predicate isNull = cb.isNull(p.get(LifeCycleAwareModule.COL_VALIDTO));
         Predicate greaterThan =
-                cb.greaterThanOrEqualTo(p.get(LifeCycleAwareModule_.validTo), cb.parameter(LocalDateTime.class, value));
+                cb.greaterThanOrEqualTo(p.get(LifeCycleAwareModule.COL_VALIDTO), cb.parameter(LocalDateTime.class, value));
         Predicate endDate = cb.or(isNull, greaterThan);
         rc = cb.and(lessThan, endDate);
         // lessThan and (isNull or greaterThan)
@@ -234,10 +220,10 @@ public abstract class AbstractOptionValuePersistenceSupportBean
 
         List<Predicate> optionPredicates = new ArrayList<Predicate>();
         optionPredicates.add(
-                cb.equal(optionRoot.get(OptionEntity_.applicationName), cb.parameter(String.class, "applicationName")));
+                cb.equal(optionRoot.get(OptionEntity.APP_NAME), cb.parameter(String.class, "applicationName")));
         optionPredicates
-                .add(cb.equal(optionRoot.get(OptionEntity_.optionName), cb.parameter(String.class, "optionName")));
-        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity_.stage), OptionStage.Online));
+                .add(cb.equal(optionRoot.get(OptionEntity.NAME), cb.parameter(String.class, "optionName")));
+        optionPredicates.add(cb.equal(optionRoot.get(OptionEntity.STAGE), OptionStage.Online));
         optionQuery.where(optionPredicates.toArray(new Predicate[optionPredicates.size()]));
         /*
          * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get(
@@ -247,19 +233,19 @@ public abstract class AbstractOptionValuePersistenceSupportBean
          * restrictions.add(qb.equal(optionValueRoot.get(OptionValueEntity_.refOption).get("id"),
          * qb.parameter(Long.class, "optionId")));
          */
-        restrictions.add(cb.equal(optionValueRoot.get(OptionValueEntity_.refOption), optionQuery));
-        restrictions.add(cb.equal(optionValueRoot.get("stage"), OptionValueStage.Live));
+        restrictions.add(cb.equal(optionValueRoot.get(OptionValueEntity.REF_OPTION), optionQuery));
+        restrictions.add(cb.equal(optionValueRoot.get(OptionValueEntity.STAGE), OptionValueStage.Live));
         restrictions.add(getLcaPredicate(cb, optionValueRoot.get(OptionValueEntity_.lca), "date"));
         getContextPredicate(restrictions, cb, optionValueRoot.get(OptionValueEntity_.ctx), ctx);
         cq.where(restrictions.toArray(new Predicate[restrictions.size()]));
         List<Order> orderByList = new ArrayList<Order>(4);
-        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.cluster)));
+        orderByList.add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule.COL_CLUSTER)));
         orderByList
-                .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.configuration)));
+                .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule.COL_RTCONFIG)));
         orderByList
-                .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.requestedDomain)));
+                .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule.COL_REQDOMAIN)));
         orderByList
-                .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule_.serverHostname)));
+                .add(cb.desc(optionValueRoot.get(OptionValueEntity_.ctx).get(OptionValueContextModule.COL_SERVERHOSTNAME)));
         cq.orderBy(orderByList.toArray(new Order[orderByList.size()]));
         // perform query to database
         TypedQuery<OptionValueEntity> query = em.createQuery(cq);

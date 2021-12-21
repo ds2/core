@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.api.persistence;
 
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 
 public class InvalidEntityException extends PersistenceException {
     public InvalidEntityException(String message) {

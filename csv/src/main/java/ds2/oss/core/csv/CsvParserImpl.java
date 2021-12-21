@@ -20,8 +20,8 @@ import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.CsvParser;
 import ds2.oss.core.api.dto.impl.CsvConfiguration;
 import ds2.oss.core.statics.IoMethods;
+import jakarta.enterprise.context.Dependent;
 
-import javax.enterprise.context.Dependent;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ public class CsvParserImpl implements CsvParser {
             throw new CoreException(CoreErrors.IllegalArgument, "The following path was not found: " + pathToCsvFromClasspath);
         }
         InputStreamReader inputStreamReader = null;
-        Scanner lineScanner=null;
-        List<List<String>> csvData=new ArrayList<>(10);
+        Scanner lineScanner = null;
+        List<List<String>> csvData = new ArrayList<>(10);
         try {
             inputStreamReader = new InputStreamReader(thisInputStream, configuration.getEncoding());
-            lineScanner=new Scanner(inputStreamReader);
+            lineScanner = new Scanner(inputStreamReader);
             lineScanner.useDelimiter(configuration.getLineSeparator());
         } finally {
             IoMethods.close(thisInputStream);

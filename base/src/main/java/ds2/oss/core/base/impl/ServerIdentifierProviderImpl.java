@@ -15,21 +15,15 @@
  */
 package ds2.oss.core.base.impl;
 
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.Enumeration;
-
-import javax.enterprise.context.ApplicationScoped;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.environment.ServerIdentifierDto;
 import ds2.oss.core.api.environment.ServerIdentifierProvider;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.*;
+import java.util.Enumeration;
 
 /**
  * A server snooper.

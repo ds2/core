@@ -16,10 +16,10 @@
 package ds2.oss.core.dbtools.support;
 
 import ds2.oss.core.api.DatabaseType;
+import jakarta.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Persistence;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;

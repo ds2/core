@@ -16,11 +16,14 @@
 package ds2.oss.core.dbtools.modules;
 
 import ds2.oss.core.api.EditableLifeCycleAware;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.time.LocalDateTime;
 
 /**
@@ -30,7 +33,12 @@ import java.time.LocalDateTime;
  * @version 0.3
  */
 @Embeddable
+@NoArgsConstructor
+@Getter
+@Setter
 public class LifeCycleAwareModule implements EditableLifeCycleAware {
+    public static final String COL_VALIDFROM = "valid_from";
+    public static final String COL_VALIDTO = "valid_to";
 
     /**
      * The svuid.
@@ -39,49 +47,14 @@ public class LifeCycleAwareModule implements EditableLifeCycleAware {
     /**
      * Valid from.
      */
-    @Column(name = "valid_from", nullable = false, updatable = false)
+    @Column(name = COL_VALIDFROM, nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime validFrom;
     /**
      * Valid to.
      */
-    @Column(name = "valid_to")
+    @Column(name = COL_VALIDTO)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime validTo;
-
-    /**
-     * Inits the module.
-     */
-    public LifeCycleAwareModule() {
-        // TODO Auto-generated constructor stub
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.LifeCycleAware#getValidFrom()
-     */
-    @Override
-    public LocalDateTime getValidFrom() {
-        return validFrom;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.LifeCycleAware#getValidTo()
-     */
-    @Override
-    public LocalDateTime getValidTo() {
-        return validTo;
-    }
-
-    @Override
-    public void setValidFrom(final LocalDateTime validFrom) {
-        this.validFrom = validFrom;
-    }
-
-    @Override
-    public void setValidTo(final LocalDateTime validTo) {
-        this.validTo = validTo;
-    }
 
 }

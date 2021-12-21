@@ -17,10 +17,10 @@ package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.SslServerSnooper;
 import ds2.oss.core.api.annotations.SecureRandomizer;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.net.ssl.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -208,7 +208,7 @@ public class SslServerSnooperImpl implements SslServerSnooper {
         } catch (final IOException e) {
             LOG.error("Error when reading the SSL sockets.", e);
         }
-        LOG.debug("Certificates so far: {}", (Object[])rc);
+        LOG.debug("Certificates so far: {}", (Object[]) rc);
         return rc;
     }
 }

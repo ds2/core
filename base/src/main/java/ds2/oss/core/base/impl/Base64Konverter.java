@@ -16,10 +16,10 @@
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.Base64Codec;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Vector;

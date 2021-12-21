@@ -15,31 +15,21 @@
  */
 package ds2.oss.core.options.impl.noop;
 
+import ds2.oss.core.api.options.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
 import java.lang.invoke.MethodHandles;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.options.NumberedOptionStorageService;
-import ds2.oss.core.api.options.Option;
-import ds2.oss.core.api.options.OptionException;
-import ds2.oss.core.api.options.OptionIdentifier;
-import ds2.oss.core.api.options.OptionStage;
-import ds2.oss.core.api.options.OptionValue;
-import ds2.oss.core.api.options.OptionValueContext;
-import ds2.oss.core.api.options.OptionValueStage;
-
 /**
  * A default noop storage service.
- * 
+ *
  * @author dstrauss
  * @version 0.3
- *
  */
 @ApplicationScoped
 public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStorageService {
@@ -47,7 +37,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    
+
     /**
      * Actions to perform at startup.
      */
@@ -55,7 +45,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
     public void onClass() {
         LOG.info("Using the non-operational NumberedOptionStorageService! Please choose an alternative.");
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#getOptionByIdentifier(ds2.oss.core.api.options
@@ -66,7 +56,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#createOptionValue(ds2.oss.core.api.options. OptionIdentifier,
@@ -74,11 +64,11 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
      */
     @Override
     public <V> OptionValue<Long, V> createOptionValue(OptionIdentifier<V> optionIdent, OptionValueContext ctx,
-        Date scheduleDate, V value) {
+                                                      Date scheduleDate, V value) {
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#createOption(ds2.oss.core.api.options. OptionIdentifier,
@@ -89,7 +79,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#findBestOptionValueByContext(ds2.oss.core.api
@@ -100,7 +90,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#getAllOptions(java.lang.String)
@@ -110,7 +100,7 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionStorageService#setOptionStage(ds2.oss.core.api.options. OptionIdentifier,
@@ -121,23 +111,23 @@ public class NoopNumberedOptionStorageServiceImpl implements NumberedOptionStora
         LOG.info("Using noop operation. Returning dummy value!");
         return null;
     }
-    
+
     @Override
     public <V> OptionValue<Long, V> getOptionValueById(Long id) throws OptionException {
         throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-                                                                       // Tools | Templates.
+        // Tools | Templates.
     }
-    
+
     @Override
     public void setOptionValueStage(Long id, OptionValueStage newStage) {
         throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-                                                                       // Tools | Templates.
+        // Tools | Templates.
     }
-    
+
     @Override
     public void approveOptionValue(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-                                                                       // Tools | Templates.
+        // Tools | Templates.
     }
-    
+
 }

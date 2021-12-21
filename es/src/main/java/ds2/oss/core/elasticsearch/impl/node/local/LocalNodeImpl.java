@@ -15,12 +15,11 @@
  */
 package ds2.oss.core.elasticsearch.impl.node.local;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
-import javax.interceptor.Interceptor;
-
+import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.interceptor.Interceptor;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
@@ -29,7 +28,7 @@ import org.elasticsearch.node.NodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
+import javax.annotation.PostConstruct;
 
 /**
  * A local node generator.
@@ -45,7 +44,7 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(LocalNodeImpl.class);
-    
+
     /**
      * Actions to perform at start.
      */
@@ -61,11 +60,11 @@ public class LocalNodeImpl extends AbstractNodeImpl<Client> {
             client = n.client();
             client.admin().cluster().prepareHealth().setWaitForYellowStatus().get();
             LOG.debug("Local index node is up");
-        } catch(RuntimeException e){
-            LOG.error("Error when starting the local nodes..",e);
+        } catch (RuntimeException e) {
+            LOG.error("Error when starting the local nodes..", e);
             throw e;
         }
 
     }
-    
+
 }

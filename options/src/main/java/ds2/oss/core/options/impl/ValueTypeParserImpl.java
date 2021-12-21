@@ -15,17 +15,6 @@
  */
 package ds2.oss.core.options.impl;
 
-import java.lang.annotation.Annotation;
-import java.lang.invoke.MethodHandles;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.OptionIdentifier;
@@ -36,10 +25,19 @@ import ds2.oss.core.options.api.ValueCodec;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
 import ds2.oss.core.options.impl.entities.OptionValueEntity;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Any;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandles;
 
 /**
  * The value type parser impl.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -60,7 +58,7 @@ public class ValueTypeParserImpl implements ValueTypeParser {
      */
     @Inject
     private OptionValueEncrypterProvider encProvider;
-    
+
     @Override
     public <V> V parseValue(final ValueType t, final Object thisVal, final V onNull) {
         if (thisVal == null) {
@@ -68,22 +66,20 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         }
         V rc = null;
         final Annotation a = new ValueCodecMarkerLiteral(t);
-        @SuppressWarnings("unchecked")
-        final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
+        @SuppressWarnings("unchecked") final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
         rc = codec.toValue((String) thisVal);
         return rc;
     }
-    
+
     @Override
     public String toString(final ValueType valueType, final Object val) {
         String rc = null;
         final Annotation a = new ValueCodecMarkerLiteral(valueType);
-        @SuppressWarnings("unchecked")
-        final ValueCodec<Object> codec = (ValueCodec<Object>) codecs.select(a).get();
+        @SuppressWarnings("unchecked") final ValueCodec<Object> codec = (ValueCodec<Object>) codecs.select(a).get();
         rc = codec.toString(val);
         return rc;
     }
-    
+
     @Override
     public <V> OptionDto<Long, V> toDto(final OptionEntity e, final OptionIdentifier<V> ident) {
         if (e == null) {
@@ -103,12 +99,11 @@ public class ValueTypeParserImpl implements ValueTypeParser {
         rc.setEncoded(e.getEncoded());
         rc.setInitVector(e.getInitVector());
         final Annotation a = new ValueCodecMarkerLiteral(ident.getValueType());
-        @SuppressWarnings("unchecked")
-        final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
+        @SuppressWarnings("unchecked") final ValueCodec<V> codec = (ValueCodec<V>) codecs.select(a).get();
         rc.setDefaultValue(codec.toValue((String) e.getDefaultValue()));
         return rc;
     }
-    
+
     @Override
     public <V> OptionValueDto<Long, V> toDto(final OptionValueEntity e) {
         if (e == null) {

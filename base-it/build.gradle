@@ -7,8 +7,8 @@ dependencies {
     testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     testImplementation group: 'com.h2database', name: 'h2', version: '2.0.202'
-    testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
-    testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '5.2021.10')
+    testImplementation group: 'fish.payara.arquillian', name: 'arquillian-payara-server-embedded', version: '2.4.5'
+    testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '6.2021.1.Alpha1')
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0')
 }
 test {

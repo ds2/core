@@ -15,18 +15,16 @@
  */
 package ds2.oss.core.options.impl.identifiers;
 
-import javax.validation.constraints.NotNull;
-
 import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.ValueType;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * An abstract option identifier.
- * 
+ *
+ * @param <V> the type of the option
  * @author dstrauss
  * @version 0.3
- * @param <V>
- *            the type of the option
  */
 public abstract class AbstractOptionIdentifier<V> implements OptionIdentifier<V> {
     /**
@@ -52,85 +50,76 @@ public abstract class AbstractOptionIdentifier<V> implements OptionIdentifier<V>
      * A description of the option.
      */
     private String description;
-    
+
     /**
      * Inits the option identifier.
-     * 
-     * @param appName
-     *            the application name
-     * 
-     * @param optName
-     *            the option name
-     * @param typeClass
-     *            the class type
-     * 
+     *
+     * @param appName   the application name
+     * @param optName   the option name
+     * @param typeClass the class type
      */
     public AbstractOptionIdentifier(final String appName, final String optName, final ValueType typeClass) {
         applicationName = appName;
         optionName = optName;
         valueType = typeClass;
     }
-    
+
     /**
      * Sets the option name.
-     * 
-     * @param optionName
-     *            the optionName to set
+     *
+     * @param optionName the optionName to set
      */
     public void setOptionName(String optionName) {
         this.optionName = optionName;
     }
-    
+
     /**
      * Sets the application name.
-     * 
-     * @param applicationName
-     *            the applicationName to set
+     *
+     * @param applicationName the applicationName to set
      */
     public void setApplicationName(String applicationName) {
         this.applicationName = applicationName;
     }
-    
+
     /**
      * Sets the value type.
-     * 
-     * @param valueType
-     *            the valueType to set
+     *
+     * @param valueType the valueType to set
      */
     public void setValueType(ValueType valueType) {
         this.valueType = valueType;
     }
-    
+
     /**
      * Sets a description for this option identifier.
-     * 
-     * @param description
-     *            the description to set
+     *
+     * @param description the description to set
      */
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     @Override
     public String getApplicationName() {
         return applicationName;
     }
-    
+
     @Override
     public String getOptionName() {
         return optionName;
     }
-    
+
     @Override
     public ValueType getValueType() {
         return valueType;
     }
-    
+
     @Override
     public boolean isEncrypted() {
         return false;
     }
-    
+
     @Override
     public String getDescription() {
         return description;

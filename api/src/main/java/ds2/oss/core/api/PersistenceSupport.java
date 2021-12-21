@@ -17,7 +17,7 @@ package ds2.oss.core.api;
 
 import ds2.oss.core.api.persistence.InvalidEntityException;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * A persistence support contract. This can be a database, or a cache instance. Or ElasticSearch.

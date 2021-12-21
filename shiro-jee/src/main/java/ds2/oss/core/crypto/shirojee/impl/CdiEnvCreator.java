@@ -21,8 +21,8 @@ import org.apache.shiro.web.env.WebEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import java.lang.invoke.MethodHandles;
 
 public class CdiEnvCreator extends EnvironmentLoaderListener {

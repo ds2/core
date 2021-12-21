@@ -18,10 +18,9 @@ package ds2.oss.core.base.impl;
 import ds2.oss.core.api.AssertHelper;
 import ds2.oss.core.api.CoreErrors;
 import ds2.oss.core.api.CoreRuntimeException;
-
-import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
 
 /**
  * Created by deindesign on 17.03.16.

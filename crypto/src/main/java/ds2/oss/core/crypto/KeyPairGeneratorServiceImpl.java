@@ -21,12 +21,11 @@ import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.Validate;
 import ds2.oss.core.api.annotations.SecureRandomizer;
 import ds2.oss.core.api.crypto.*;
-import ds2.oss.core.api.maths.WeierstrassCurveData;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.math.BigInteger;
 import java.security.*;
@@ -42,12 +41,12 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @ApplicationScoped
 public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
-    private static final Logger LOG= LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     /**
      * The map containing the generators.
      */
-    private Map<String, KeyPairGenerator> gens=new HashMap<>();
-    private static final Lock LOCK=new ReentrantLock();
+    private Map<String, KeyPairGenerator> gens = new HashMap<>();
+    private static final Lock LOCK = new ReentrantLock();
     @Inject
     private Validate val;
     @Inject
@@ -72,30 +71,30 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
 
     @Override
     public KeyPair generateEcKey(int bitSize, String curveName) throws CoreException {
-        ECGenParameterSpec params=new ECGenParameterSpec(curveName);
+        ECGenParameterSpec params = new ECGenParameterSpec(curveName);
         return generateKeyPairCommon(bitSize, params, KeyPairGenAlgorithm.EC);
     }
 
     @Override
     public KeyPair generateEcKey(int bitSize, EllipticCurveCryptoData data) throws CoreException {
-        ECField field=new ECFieldFp(data.getPrime());
-        BigInteger a=data.getA();
-        BigInteger b=data.getB();
-        EllipticCurve curve=new EllipticCurve(field, a, b);
-        ECPoint pointOnCurve=new ECPoint(data.getGx(), data.getGy());
-        ECParameterSpec spec=new ECParameterSpec(curve,pointOnCurve, data.getQ(), 1);
+        ECField field = new ECFieldFp(data.getPrime());
+        BigInteger a = data.getA();
+        BigInteger b = data.getB();
+        EllipticCurve curve = new EllipticCurve(field, a, b);
+        ECPoint pointOnCurve = new ECPoint(data.getGx(), data.getGy());
+        ECParameterSpec spec = new ECParameterSpec(curve, pointOnCurve, data.getQ(), 1);
         return generateKeyPairCommon(bitSize, spec, KeyPairGenAlgorithm.EC);
     }
 
     @Override
     public KeyPair generateEcKey(int bitSize, WeierstrassBasedCryptoData wscd) throws CoreException {
-        ECParameterSpec param=ecSupport.createFromData(wscd);
+        ECParameterSpec param = ecSupport.createFromData(wscd);
         return generateKeyPairCommon(bitSize, param, KeyPairGenAlgorithm.EC);
     }
 
     @Override
     public KeyPair generateEcKey(int bitSize, ECMontgomeryCurveCryptoData wscd) throws CoreException {
-        ECParameterSpec param=ecSupport.createFromData(wscd);
+        ECParameterSpec param = ecSupport.createFromData(wscd);
         return generateKeyPairCommon(bitSize, param, KeyPairGenAlgorithm.EC);
     }
 
@@ -107,7 +106,7 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
 
     private KeyPair generateKeyPairCommon(int bitSize, AlgorithmParameterSpec params, AlgorithmNamed alg) throws CoreException {
         try {
-            if(LOCK.tryLock(config.getMethodLockTimeout(), TimeUnit.SECONDS)) {
+            if (LOCK.tryLock(config.getMethodLockTimeout(), TimeUnit.SECONDS)) {
                 LOG.debug("Preparing keygen with bitSize={}", new Object[]{bitSize});
                 KeyPair rc = null;
                 KeyPairGenerator gen = gens.get(alg.getAlgorithmName());
@@ -127,8 +126,8 @@ public class KeyPairGeneratorServiceImpl implements KeyPairGeneratorService {
                 rc = gen.generateKeyPair();
                 return rc;
             }
-        } catch(InvalidParameterException e){
-            throw new CoreException(CoreErrors.IllegalArgument, "The bit size "+bitSize+" is wrong!", e);
+        } catch (InvalidParameterException e) {
+            throw new CoreException(CoreErrors.IllegalArgument, "The bit size " + bitSize + " is wrong!", e);
         } catch (InterruptedException e) {
             throw new CoreException(CoreErrors.LockingFailed, "We could not lock the keygen in time.", e);
         } catch (InvalidAlgorithmParameterException e) {

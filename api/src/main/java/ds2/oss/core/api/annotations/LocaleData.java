@@ -15,12 +15,13 @@
  */
 package ds2.oss.core.api.annotations;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.util.Nonbinding;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import javax.enterprise.util.Nonbinding;
 
 /**
  * Marks a field to contain some i18n data.
@@ -29,8 +30,8 @@ import javax.enterprise.util.Nonbinding;
  * @version 0.3
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
-@javax.enterprise.context.ApplicationScoped
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+@ApplicationScoped
 public @interface LocaleData {
     /**
      * The base name to the properties file.

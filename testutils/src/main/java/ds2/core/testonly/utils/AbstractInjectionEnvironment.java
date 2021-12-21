@@ -15,6 +15,7 @@
  */
 package ds2.core.testonly.utils;
 
+import jakarta.enterprise.util.TypeLiteral;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.slf4j.Logger;
@@ -22,11 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.util.TypeLiteral;
 import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
-import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -72,7 +70,7 @@ public abstract class AbstractInjectionEnvironment {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
-            return wc.instance().select(c).get();
+            return wc.select(c).get();
         } finally {
             LOCK.unlock();
         }
@@ -85,7 +83,7 @@ public abstract class AbstractInjectionEnvironment {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
-            return wc.instance().select(c).get();
+            return wc.select(c).get();
         } finally {
             LOCK.unlock();
         }
@@ -115,13 +113,7 @@ public abstract class AbstractInjectionEnvironment {
                 LOG.warn("As the weld container is null, no CDI lookup will be done, and I will return null here for {}.", c);
                 return null;
             }
-            Set<Bean<?>> beans = wc.getBeanManager().getBeans(c, annotations);
-            if (beans != null && !beans.isEmpty()) {
-                beans.forEach((b) -> {
-                    LOG.debug("Bean is {}", b);
-                });
-            }
-            return wc.instance().select(c, annotations).get();
+            return wc.select(c, annotations).get();
         } finally {
             LOCK.unlock();
         }
