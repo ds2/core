@@ -14,7 +14,7 @@ dependencies {
         This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
         Please review and delete this closure when resolved. */
     }
-    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
+    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0')
 }
 
 task copyMainStuffToResources(type: Copy) {

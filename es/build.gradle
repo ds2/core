@@ -16,7 +16,7 @@ dependencies {
     testRuntimeOnly group: 'org.jboss', name: 'jandex', version: '2.4.1.Final'
     testImplementation project(':ds2-oss-core-codec-gson')
     compileOnly 'org.slf4j:slf4j-api:1.7.32'
-    compileOnly group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0'
+    compileOnly group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0'
 }
 
 task copyMainStuffToResources(type: Copy) {

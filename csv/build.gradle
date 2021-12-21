@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
+    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '9.1.0')
     implementation project(':ds2-oss-core-api')
     implementation project(':ds2-oss-core-statics')
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
