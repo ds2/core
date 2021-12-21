@@ -28,8 +28,8 @@ import ds2.oss.core.dbtools.modules.LifeCycleAwareModule;
 import ds2.oss.core.options.internal.OptionValueContextModule;
 import ds2.oss.core.options.internal.OptionValueStageConverter;
 import ds2.oss.core.options.internal.ValueTypeConverter;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -57,6 +57,8 @@ public class OptionValueEntity extends AbstractCreatedByModifiedByEntity impleme
      * The svuid.
      */
     private static final long serialVersionUID = 8443176889297017343L;
+    public static final String REF_OPTION = "ref_option";
+    public static final String STAGE = "stage";
 
     /**
      * The approver.
@@ -98,13 +100,13 @@ public class OptionValueEntity extends AbstractCreatedByModifiedByEntity impleme
     /**
      * The ref option.
      */
-    @JoinColumn(name = "ref_option", nullable = false)
+    @JoinColumn(name = REF_OPTION, nullable = false)
     @ManyToOne(targetEntity = OptionEntity.class)
     private Option<Long, ?> refOption;
     /**
      * The option value stage.
      */
-    @Column(name = "stage", nullable = false)
+    @Column(name = STAGE, nullable = false)
     @Convert(converter = OptionValueStageConverter.class)
     private OptionValueStage stage;
     /**

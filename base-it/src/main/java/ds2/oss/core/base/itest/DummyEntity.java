@@ -24,8 +24,8 @@ import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.api.Persistable;
 import ds2.oss.core.dbtools.modules.CreatedModifiedAwareModule;
 import ds2.oss.core.dbtools.modules.EntryStatesAwareModule;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**

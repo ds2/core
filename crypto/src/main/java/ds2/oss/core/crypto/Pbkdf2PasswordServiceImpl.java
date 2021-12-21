@@ -24,14 +24,14 @@ import ds2.oss.core.api.crypto.PasswordService;
 import ds2.oss.core.api.crypto.Pbkdf2;
 import ds2.oss.core.statics.Converts;
 import ds2.oss.core.statics.Methods;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.util.Base64;
 

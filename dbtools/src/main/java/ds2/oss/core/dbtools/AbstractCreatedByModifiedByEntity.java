@@ -16,9 +16,8 @@
 package ds2.oss.core.dbtools;
 
 import ds2.oss.core.api.EditableCreatedByModifiedByAware;
-
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * @author dstrauss

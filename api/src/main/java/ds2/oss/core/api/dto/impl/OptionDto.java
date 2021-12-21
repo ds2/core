@@ -19,15 +19,15 @@ import ds2.oss.core.api.EditableCreatedModifiedAware;
 import ds2.oss.core.api.options.Option;
 import ds2.oss.core.api.options.OptionStage;
 import ds2.oss.core.api.options.ValueType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 

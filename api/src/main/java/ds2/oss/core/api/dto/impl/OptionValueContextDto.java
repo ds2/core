@@ -15,16 +15,16 @@
  */
 package ds2.oss.core.api.dto.impl;
 
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-
 import ds2.oss.core.api.environment.Cluster;
 import ds2.oss.core.api.environment.RuntimeType;
 import ds2.oss.core.api.environment.ServerIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
+import jakarta.validation.constraints.NotNull;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * A simple option value context dto.
@@ -71,8 +71,7 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * Inits the dto with empty values.
      *
-     * @param c
-     *            the target cluster
+     * @param c the target cluster
      */
     public OptionValueContextDto(@NotNull final Cluster c) {
         this();
@@ -82,10 +81,8 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * Inits the dto.
      *
-     * @param c
-     *            the cluster
-     * @param config
-     *            the runtime configuration
+     * @param c      the cluster
+     * @param config the runtime configuration
      */
     public OptionValueContextDto(final Cluster c, final RuntimeType config) {
         this(c);
@@ -95,12 +92,9 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * Inits the dto.
      *
-     * @param c
-     *            the cluster
-     * @param config
-     *            the runtime configuration
-     * @param reqDomain
-     *            the requested domain
+     * @param c         the cluster
+     * @param config    the runtime configuration
+     * @param reqDomain the requested domain
      */
     public OptionValueContextDto(final Cluster c, final RuntimeType config, final String reqDomain) {
         this(c, config);
@@ -108,17 +102,12 @@ public class OptionValueContextDto implements OptionValueContext {
     }
 
     /**
-     *
      * Inits the dto.
      *
-     * @param c
-     *            the cluster
-     * @param config
-     *            the runtime configuration
-     * @param reqDomain
-     *            the requested domain
-     * @param serverIdentifier
-     *            the server identifier
+     * @param c                the cluster
+     * @param config           the runtime configuration
+     * @param reqDomain        the requested domain
+     * @param serverIdentifier the server identifier
      */
     public OptionValueContextDto(final Cluster c, final RuntimeType config, final String reqDomain,
                                  final ServerIdentifier serverIdentifier) {
@@ -223,8 +212,7 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * Sets the cluster.
      *
-     * @param cluster
-     *            the cluster to set
+     * @param cluster the cluster to set
      */
     public void setCluster(final Cluster cluster) {
         this.cluster = cluster;
@@ -233,8 +221,7 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * The runtime config.
      *
-     * @param configuration
-     *            the configuration to set
+     * @param configuration the configuration to set
      */
     public void setConfiguration(final RuntimeType configuration) {
         this.configuration = configuration;
@@ -243,8 +230,7 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * Sets the requested domain.
      *
-     * @param requestedDomain
-     *            the requestedDomain to set
+     * @param requestedDomain the requestedDomain to set
      */
     public void setRequestedDomain(final String requestedDomain) {
         this.requestedDomain = requestedDomain;
@@ -253,8 +239,7 @@ public class OptionValueContextDto implements OptionValueContext {
     /**
      * Sets the server id.
      *
-     * @param server
-     *            the server to set
+     * @param server the server to set
      */
     public void setServer(final ServerIdentifier server) {
         this.server = server;

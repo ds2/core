@@ -15,15 +15,14 @@
  */
 package ds2.oss.core.interceptors;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.Interceptor;
-import javax.interceptor.InvocationContext;
-
+import jakarta.interceptor.AroundInvoke;
+import jakarta.interceptor.Interceptor;
+import jakarta.interceptor.InvocationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An interceptor for any info logging.
@@ -47,10 +46,8 @@ public class InfoLogInterceptor {
     /**
      * Creates an exit message.
      *
-     * @param ic
-     *            the invocation context
-     * @param rc
-     *            the result object
+     * @param ic the invocation context
+     * @param rc the result object
      * @return an exit message
      */
     private static String createExitHeader(final InvocationContext ic, final Object rc) {
@@ -67,8 +64,7 @@ public class InfoLogInterceptor {
     /**
      * Returns the header string containing the ic target, method name and parameter values.
      *
-     * @param ic
-     *            the invocation context
+     * @param ic the invocation context
      * @return a header string
      */
     private static String createMethodHeader(final InvocationContext ic) {
@@ -105,8 +101,7 @@ public class InfoLogInterceptor {
     /**
      * Returns the logger for the given target class.
      *
-     * @param ic
-     *            the invocation contex to get the target from
+     * @param ic the invocation contex to get the target from
      * @return a logger.
      */
     private static Logger getLoggerForTarget(final InvocationContext ic) {
@@ -125,11 +120,9 @@ public class InfoLogInterceptor {
     /**
      * Logs a given call to/from a method.
      *
-     * @param ic
-     *            the invocation context.
+     * @param ic the invocation context.
      * @return the result of the invocation context.
-     * @throws Exception
-     *             the exception that is possibly thrown by the invocation context.
+     * @throws Exception the exception that is possibly thrown by the invocation context.
      */
     @SuppressWarnings("static-method")
     @AroundInvoke

@@ -16,13 +16,12 @@
 package ds2.oss.core.dbtools.modules;
 
 import ds2.oss.core.api.EditableModifiedAware;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author dstrauss

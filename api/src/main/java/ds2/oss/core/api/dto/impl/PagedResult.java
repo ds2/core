@@ -15,10 +15,10 @@
  */
 package ds2.oss.core.api.dto.impl;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 

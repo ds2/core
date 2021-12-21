@@ -15,7 +15,7 @@
  */
 package ds2.oss.core.api.annotations;
 
-import javax.enterprise.util.Nonbinding;
+import jakarta.enterprise.util.Nonbinding;
 
 /**
  * To load string values from a property, an environment.

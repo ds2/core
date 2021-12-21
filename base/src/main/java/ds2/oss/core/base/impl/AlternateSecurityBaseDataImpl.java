@@ -16,13 +16,13 @@
 package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.SecurityBaseData;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+import jakarta.interceptor.Interceptor;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
-import javax.interceptor.Interceptor;
 import java.util.Random;
 
 /**

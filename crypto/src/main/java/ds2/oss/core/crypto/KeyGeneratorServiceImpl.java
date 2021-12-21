@@ -17,6 +17,8 @@ package ds2.oss.core.crypto;
 
 import ds2.oss.core.api.annotations.SecureRandomizer;
 import ds2.oss.core.api.crypto.*;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +27,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;

@@ -19,11 +19,10 @@
 package ds2.oss.core.base.itest;
 
 import ds2.oss.core.api.persistence.InvalidEntityException;
-
-import javax.ejb.*;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
+import jakarta.ejb.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * The persistence bean.

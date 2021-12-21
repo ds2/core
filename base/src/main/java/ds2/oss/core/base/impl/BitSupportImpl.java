@@ -15,9 +15,8 @@
  */
 package ds2.oss.core.base.impl;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import ds2.oss.core.api.BitSupport;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * The impl for the bit support contract.

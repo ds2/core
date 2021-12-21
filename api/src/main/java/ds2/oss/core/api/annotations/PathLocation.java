@@ -15,13 +15,13 @@
  */
 package ds2.oss.core.api.annotations;
 
+import jakarta.enterprise.util.Nonbinding;
+import jakarta.inject.Qualifier;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
 
 /**
  * Used to dynamically inject a path.
@@ -31,7 +31,7 @@ import javax.inject.Qualifier;
  */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE })
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE})
 public @interface PathLocation {
     /**
      * The environment variable to use to insert its value via injection.

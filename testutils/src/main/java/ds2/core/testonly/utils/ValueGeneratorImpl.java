@@ -16,11 +16,11 @@
 package ds2.core.testonly.utils;
 
 import ds2.oss.core.api.ValueGenerator;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.util.Random;
 

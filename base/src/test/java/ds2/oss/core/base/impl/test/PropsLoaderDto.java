@@ -16,9 +16,9 @@
 package ds2.oss.core.base.impl.test;
 
 import ds2.oss.core.api.annotations.PropertiesLoader;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.Properties;
 
 /**
@@ -30,7 +30,7 @@ public class PropsLoaderDto {
     @PropertiesLoader(resource = "/ds2/oss/core/base/impl/test/propsLoader.properties")
     private Properties props;
 
-    public String getValue(){
+    public String getValue() {
         return props.getProperty("val");
     }
 }

@@ -15,23 +15,20 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
-import javax.inject.Inject;
-
 import ds2.oss.core.api.CodecException;
 import ds2.oss.core.api.IoService;
 import ds2.oss.core.api.JsonCodec;
 import ds2.oss.core.api.JsonCodecException;
 import ds2.oss.core.api.es.TypeMapping;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
+import jakarta.inject.Inject;
 
 /**
  * An abstract class defining some common methods for type codecs.
  *
+ * @param <T> the type of the dto
  * @author dstrauss
  * @version 0.2
- * @param <T>
- *            the type of the dto
- *
  */
 public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements TypeCodec<T> {
     /**
@@ -59,8 +56,7 @@ public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements 
     /**
      * Inits the codec with a given dto base class.
      *
-     * @param base
-     *            the dto base class to use.
+     * @param base the dto base class to use.
      */
     protected AbstractTypeCodec(final Class<T> base) {
         this();
@@ -91,8 +87,7 @@ public abstract class AbstractTypeCodec<T> extends AbstractCodecBase implements 
     /**
      * Performs a load operation for the given type to return the known mapping.
      *
-     * @param c
-     *            the class of the type
+     * @param c the class of the type
      * @return the mapping, usually as json, or null if an error occurred
      */
     protected String loadMappingFromJson(final Class<T> c) {

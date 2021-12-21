@@ -18,10 +18,9 @@
  */
 package ds2.oss.core.elasticsearch.impl.literals;
 
-import javax.enterprise.util.AnnotationLiteral;
-
 import ds2.oss.core.elasticsearch.api.annotations.TransportTypes;
 import ds2.oss.core.elasticsearch.api.annotations.UsingTransport;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  * @author dstrauss

@@ -20,8 +20,8 @@ import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.api.options.OptionValueStage;
 import ds2.oss.core.options.api.OptionValueFactory;
+import jakarta.enterprise.context.ApplicationScoped;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.time.LocalDateTime;
 
 /**

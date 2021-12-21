@@ -16,14 +16,14 @@
 package ds2.oss.core.api.persistence;
 
 import ds2.oss.core.api.IdAware;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import jakarta.validation.constraints.NotNull;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.validation.constraints.NotNull;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.logging.Level;

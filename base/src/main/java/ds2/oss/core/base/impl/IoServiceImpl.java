@@ -17,10 +17,10 @@ package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.IoService;
 import ds2.oss.core.statics.IoMethods;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;

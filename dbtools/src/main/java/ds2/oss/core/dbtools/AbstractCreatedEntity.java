@@ -17,9 +17,9 @@ package ds2.oss.core.dbtools;
 
 import ds2.oss.core.api.EditableCreatedAware;
 import ds2.oss.core.dbtools.modules.CreatedAwareModule;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.MappedSuperclass;
 
-import javax.persistence.Embedded;
-import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 /**

@@ -16,26 +16,31 @@
 package ds2.oss.core.dbtools.modules;
 
 import ds2.oss.core.api.EditableCreatedAware;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.time.LocalDateTime;
 
 /**
  * @author dstrauss
  */
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class CreatedAwareModule implements EditableCreatedAware {
     /**
      * The svuid.
      */
     private static final long serialVersionUID = -6249059771176243495L;
+    public static final String CREATED = "created";
     /**
      * The creation date.
      */
-    @Column(name = "created", nullable = false, updatable = false)
+    @Column(name = CREATED, nullable = false, updatable = false)
     private LocalDateTime created = LocalDateTime.now();
 
     /**
@@ -43,36 +48,6 @@ public class CreatedAwareModule implements EditableCreatedAware {
      */
     public CreatedAwareModule() {
         created = LocalDateTime.now();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see ds2.oss.core.api.CreatedAware#getCreated()
-     */
-    @Override
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    @Override
-    public void setCreated(LocalDateTime d) {
-        created = d;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("(");
-        if (created != null) {
-            builder.append("created=");
-            builder.append(created);
-        }
-        builder.append(")");
-        return builder.toString();
     }
 
 }

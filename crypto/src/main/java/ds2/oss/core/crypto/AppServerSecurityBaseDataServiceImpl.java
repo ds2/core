@@ -15,6 +15,23 @@
  */
 package ds2.oss.core.crypto;
 
+import ds2.oss.core.api.AppServerSecurityBaseDataService;
+import ds2.oss.core.api.ConverterTool;
+import ds2.oss.core.api.HexCodec;
+import ds2.oss.core.api.IoService;
+import ds2.oss.core.api.annotations.PathLocation;
+import ds2.oss.core.api.crypto.BytesProvider;
+import ds2.oss.core.api.crypto.KeyGeneratorService;
+import ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Specializes;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.charset.Charset;
@@ -28,25 +45,6 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.crypto.SecretKey;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Specializes;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.AppServerSecurityBaseDataService;
-import ds2.oss.core.api.ConverterTool;
-import ds2.oss.core.api.HexCodec;
-import ds2.oss.core.api.IoService;
-import ds2.oss.core.api.annotations.PathLocation;
-import ds2.oss.core.api.crypto.BytesProvider;
-import ds2.oss.core.api.crypto.KeyGeneratorService;
-import ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl;
-
 /**
  * The impl for application servers.
  *
@@ -56,8 +54,8 @@ import ds2.oss.core.base.impl.AlternateSecurityBaseDataImpl;
 @ApplicationScoped
 @Specializes
 public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseDataImpl
-    implements
-    AppServerSecurityBaseDataService {
+        implements
+        AppServerSecurityBaseDataService {
 
     /**
      * A simple lock.
@@ -186,7 +184,7 @@ public class AppServerSecurityBaseDataServiceImpl extends AlternateSecurityBaseD
         LOG.debug("Location to use is {}", storageLocation);
         final String skContent = io.loadFile(storageLocation.resolve(SK_FILENAME), Charset.defaultCharset());
         final Properties props = io.loadProperties(storageLocation.resolve(PROPS_FILENAME));
-        LOG.debug("Props is {}", new Object[] { props });
+        LOG.debug("Props is {}", new Object[]{props});
         if (props != null) {
             minIteration = conv.toInt(props.getProperty("iterations"), minIteration);
             if (minIteration <= 1000) {

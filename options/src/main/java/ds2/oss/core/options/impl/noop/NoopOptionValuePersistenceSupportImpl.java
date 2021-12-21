@@ -20,12 +20,11 @@ import ds2.oss.core.api.options.OptionIdentifier;
 import ds2.oss.core.api.options.OptionValue;
 import ds2.oss.core.api.options.OptionValueContext;
 import ds2.oss.core.api.options.OptionValueStage;
-import ds2.oss.core.api.persistence.OperationalContext;
 import ds2.oss.core.options.api.NumberedOptionValuePersistenceSupport;
+import jakarta.enterprise.context.ApplicationScoped;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.lang.invoke.MethodHandles;
 
 /**

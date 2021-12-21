@@ -18,12 +18,11 @@ package ds2.oss.core.api.rest;
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.SearchCriteria;
 import ds2.oss.core.api.dto.impl.PagedResult;
-
-import javax.validation.constraints.Min;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.SecurityContext;
+import jakarta.validation.constraints.Min;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.SecurityContext;
 
 /**
  * Sample contract for a rest entity resource. Saying, to reflect database records.

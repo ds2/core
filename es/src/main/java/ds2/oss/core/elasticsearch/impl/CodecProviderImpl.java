@@ -15,20 +15,18 @@
  */
 package ds2.oss.core.elasticsearch.impl;
 
-import java.lang.annotation.Annotation;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ds2.oss.core.elasticsearch.api.CodecProvider;
 import ds2.oss.core.elasticsearch.api.TypeCodec;
 import ds2.oss.core.elasticsearch.impl.literals.EsCodecAnnotationLiteral;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Any;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import java.lang.annotation.Annotation;
 
 /**
  * A provider for any found ES codec.

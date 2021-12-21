@@ -17,8 +17,8 @@ package ds2.oss.core.api.persistence;
 
 import ds2.oss.core.api.CoreException;
 import ds2.oss.core.api.IdAware;
+import jakarta.persistence.EntityNotFoundException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

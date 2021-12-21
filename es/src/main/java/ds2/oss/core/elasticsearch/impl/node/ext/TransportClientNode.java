@@ -15,25 +15,23 @@
  */
 package ds2.oss.core.elasticsearch.impl.node.ext;
 
-import java.net.InetSocketAddress;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
-import javax.interceptor.Interceptor;
-
+import ds2.oss.core.elasticsearch.api.EsConfig;
+import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
+import jakarta.interceptor.Interceptor;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 
-import ds2.oss.core.elasticsearch.api.EsConfig;
-import ds2.oss.core.elasticsearch.impl.AbstractNodeImpl;
+import javax.annotation.PostConstruct;
+import java.net.InetSocketAddress;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A transport client impl.
@@ -50,7 +48,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
      */
     @Inject
     private EsConfig config;
-    
+
     @Override
     public void addTransport(final InetSocketAddress... isa) {
         needsLock = true;
@@ -65,7 +63,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             needsLock = false;
         }
     }
-    
+
     /**
      * Actions to perform on init.
      */
@@ -75,7 +73,7 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
         lock.lock();
         try {
             final ImmutableSettings.Builder sb =
-                ImmutableSettings.settingsBuilder().loadFromClasspath("/transportClientNode.yml");
+                    ImmutableSettings.settingsBuilder().loadFromClasspath("/transportClientNode.yml");
             sb.put("cluster.name", config.getClusterName());
             sb.put("client", true);
             if (config.getProperties() != null) {
@@ -90,13 +88,13 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
                 serverAddresses.add(new InetSocketTransportAddress("localhost", 9300));
             }
             client =
-                new TransportClient(setts).addTransportAddresses(serverAddresses
-                    .toArray(new TransportAddress[serverAddresses.size()]));
+                    new TransportClient(setts).addTransportAddresses(serverAddresses
+                            .toArray(new TransportAddress[serverAddresses.size()]));
         } finally {
             lock.unlock();
         }
     }
-    
+
     @Override
     public void removeTransport(final InetSocketAddress... isa) {
         lock.lock();
@@ -109,5 +107,5 @@ public class TransportClientNode extends AbstractNodeImpl<TransportClient> {
             lock.unlock();
         }
     }
-    
+
 }

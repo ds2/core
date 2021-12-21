@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
+import jakarta.enterprise.context.Dependent;
 import java.lang.invoke.MethodHandles;
 
 @Dependent

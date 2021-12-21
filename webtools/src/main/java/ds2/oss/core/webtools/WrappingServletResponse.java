@@ -16,11 +16,11 @@
 package ds2.oss.core.webtools;
 
 import ds2.oss.core.webtools.io.WrappingServletOutputStream;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 /**
  * A wrapping servlet response.
- * 
+ *
  * @author dstrauss
  * @version 0.4
  */
@@ -96,7 +96,7 @@ public class WrappingServletResponse implements HttpServletResponse {
      * The content length, as long.
      */
     private long contentLengthLong;
-    
+
     /**
      * Inits the wrapper.
      */
@@ -105,40 +105,38 @@ public class WrappingServletResponse implements HttpServletResponse {
         internalOutputStream = new ByteArrayOutputStream(bufferSize);
         headers = new HashMap<>();
     }
-    
+
     /**
      * Inits the response wrapper.
-     * 
-     * @param response
-     *            the httpServletResponse to copy values from
+     *
+     * @param response the httpServletResponse to copy values from
      */
     public WrappingServletResponse(final HttpServletResponse response) {
         this();
         fill(response);
     }
-    
+
     /**
      * Inits the response wrapper.
-     * 
-     * @param response
-     *            the servletResponse to copy values from
+     *
+     * @param response the servletResponse to copy values from
      */
     public WrappingServletResponse(final ServletResponse response) {
         this();
         fill(response);
     }
-    
+
     @Override
     public final void addCookie(final Cookie cookie) {
         cookies.add(cookie);
     }
-    
+
     @Override
     public void addDateHeader(final String name, final long date) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     @Override
     public final void addHeader(final String name, final String value) {
         if (headers.get(name) == null) {
@@ -147,36 +145,31 @@ public class WrappingServletResponse implements HttpServletResponse {
             // comma list
         }
     }
-    
+
     @Override
     public void addIntHeader(final String name, final int value) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     @Override
     public final boolean containsHeader(final String name) {
         return headers.get(name) != null;
     }
-    
+
     /**
      * Copies all known content types, headers etc. to the given servlet response. Be aware that no
      * content will be sent (no body).
-     * 
-     * @param e
-     *            the target response to copy this object data into
-     * @param allowSendError
-     *            flag to indicate that sendError can be performed
-     * @param allowSendRedirect
-     *            flag to indicate that sendRedirect can be performed
+     *
+     * @param e                 the target response to copy this object data into
+     * @param allowSendError    flag to indicate that sendError can be performed
+     * @param allowSendRedirect flag to indicate that sendRedirect can be performed
      * @return TRUE if content can be sent, otherwise FALSE if the current state is an error or
-     *         redirect state.
-     * 
-     * @throws IOException
-     *             if an error occurred.
+     * redirect state.
+     * @throws IOException if an error occurred.
      */
     public final boolean copyHeadersInto(final HttpServletResponse e, final boolean allowSendError,
-        final boolean allowSendRedirect) throws IOException {
+                                         final boolean allowSendRedirect) throws IOException {
         if (e.isCommitted()) {
             LOG.warning("Response already sent, cannot add new values.");
             return false;
@@ -209,10 +202,10 @@ public class WrappingServletResponse implements HttpServletResponse {
         }
         return true;
     }
-    
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * @deprecated deprecated
      */
     @SuppressWarnings("deprecation")
@@ -221,15 +214,15 @@ public class WrappingServletResponse implements HttpServletResponse {
     public final String encodeRedirectUrl(final String url) {
         return url;
     }
-    
+
     @Override
     public final String encodeRedirectURL(final String url) {
         return url;
     }
-    
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * @deprecated deprecated
      */
     @SuppressWarnings("deprecation")
@@ -238,17 +231,16 @@ public class WrappingServletResponse implements HttpServletResponse {
     public final String encodeUrl(final String url) {
         return url;
     }
-    
+
     @Override
     public final String encodeURL(final String url) {
         return url;
     }
-    
+
     /**
      * Fills this object with some data from the origin servlet response.
-     * 
-     * @param origin
-     *            the origin response
+     *
+     * @param origin the origin response
      */
     private final void fill(final HttpServletResponse origin) {
         fill((ServletResponse) origin);
@@ -259,12 +251,11 @@ public class WrappingServletResponse implements HttpServletResponse {
             }
         }
     }
-    
+
     /**
      * Fills this object with some data.
-     * 
-     * @param origin
-     *            the origin
+     *
+     * @param origin the origin
      */
     private void fill(final ServletResponse origin) {
         setBufferSize(origin.getBufferSize());
@@ -272,7 +263,7 @@ public class WrappingServletResponse implements HttpServletResponse {
         setContentType(origin.getContentType());
         setCharacterEncoding(origin.getCharacterEncoding());
     }
-    
+
     /**
      * Finishes the servlet response. Usually called on end of the filter chain.
      */
@@ -287,9 +278,9 @@ public class WrappingServletResponse implements HttpServletResponse {
         } catch (final IOException e) {
             LOG.log(Level.WARNING, "Error when finishing.", e);
         }
-        
+
     }
-    
+
     @Override
     public final void flushBuffer() throws IOException {
         LOG.finer("Flushing stream...");
@@ -299,12 +290,12 @@ public class WrappingServletResponse implements HttpServletResponse {
             internalOutputStream.flush();
         }
     }
-    
+
     @Override
     public final int getBufferSize() {
         return bufferSize;
     }
-    
+
     @Override
     public final String getCharacterEncoding() {
         if (characterEncoding == null) {
@@ -312,66 +303,66 @@ public class WrappingServletResponse implements HttpServletResponse {
         }
         return characterEncoding;
     }
-    
+
     /**
      * Returns the content length, set by the calling entity.
-     * 
+     *
      * @return the contentLength
      */
     public final synchronized int getContentLength() {
         return contentLength;
     }
-    
+
     @Override
     public final String getContentType() {
         return contentType;
     }
-    
+
     /**
      * Returns all known cookies.
-     * 
+     *
      * @return the cookies
      */
     public final synchronized Set<Cookie> getCookies() {
         return cookies;
     }
-    
+
     /**
      * Returns the error message.
-     * 
+     *
      * @return the errorMsg
      */
     public final synchronized String getErrorMsg() {
         return errorMsg;
     }
-    
+
     @Override
     public final String getHeader(final String arg0) {
         return headers.get(arg0);
     }
-    
+
     @Override
     public final Collection<String> getHeaderNames() {
         return headers.keySet();
     }
-    
+
     /**
      * Returns the current headers.
-     * 
+     *
      * @return the headers
      */
     public final synchronized Map<String, String> getHeaders() {
         return headers;
     }
-    
+
     @Override
     public final Collection<String> getHeaders(final String arg0) {
         return null;
     }
-    
+
     /**
      * Returns the bytes.
-     * 
+     *
      * @return the written bytes
      */
     public final byte[] getInternalOutputBytes() {
@@ -384,21 +375,21 @@ public class WrappingServletResponse implements HttpServletResponse {
         }
         return null;
     }
-    
+
     /**
      * Returns the internal output stream.
-     * 
+     *
      * @return the internalOutputStream
      */
     public final synchronized ByteArrayOutputStream getInternalOutputStream() {
         return internalOutputStream;
     }
-    
+
     @Override
     public final Locale getLocale() {
         return locale;
     }
-    
+
     @Override
     public final ServletOutputStream getOutputStream() throws IOException {
         if (writer != null) {
@@ -409,21 +400,21 @@ public class WrappingServletResponse implements HttpServletResponse {
         }
         return outputStream;
     }
-    
+
     /**
      * Returns the sendRedirect location.
-     * 
+     *
      * @return the redirectTo location
      */
     public final synchronized String getRedirectTo() {
         return redirectTo;
     }
-    
+
     @Override
     public final int getStatus() {
         return status;
     }
-    
+
     @Override
     public final PrintWriter getWriter() throws IOException {
         if (outputStream != null) {
@@ -435,40 +426,40 @@ public class WrappingServletResponse implements HttpServletResponse {
         }
         return writer;
     }
-    
+
     @Override
     public final boolean isCommitted() {
         return false;
     }
-    
+
     @Override
     public final void reset() {
         resetBuffer();
         headers.clear();
         cookies.clear();
     }
-    
+
     @Override
     public final void resetBuffer() {
         internalOutputStream.reset();
     }
-    
+
     @Override
     public final void sendError(final int sc) throws IOException {
         status = sc;
     }
-    
+
     @Override
     public final void sendError(final int sc, final String msg) throws IOException {
         status = sc;
         errorMsg = msg;
     }
-    
+
     @Override
     public final void sendRedirect(final String location) throws IOException {
         redirectTo = location;
     }
-    
+
     @Override
     public final void setBufferSize(final int size) {
         if ((writer != null) || (outputStream != null)) {
@@ -480,7 +471,7 @@ public class WrappingServletResponse implements HttpServletResponse {
         bufferSize = size;
         internalOutputStream = new ByteArrayOutputStream(bufferSize);
     }
-    
+
     @Override
     public final void setCharacterEncoding(final String charset) {
         if ((writer != null) || (charset == null)) {
@@ -491,47 +482,47 @@ public class WrappingServletResponse implements HttpServletResponse {
             // add ;charset= sequence
         }
     }
-    
+
     @Override
     public final void setContentLength(final int len) {
         contentLength = len;
     }
-    
+
     @Override
     public final void setContentType(final String type) {
         contentType = type;
     }
-    
+
     @Override
     public void setDateHeader(final String name, final long date) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     @Override
     public final void setHeader(final String name, final String value) {
         headers.put(name, value);
     }
-    
+
     @Override
     public final void setIntHeader(final String name, final int value) {
         headers.put(name, "" + value);
     }
-    
+
     @Override
     public final void setLocale(final Locale loc) {
         locale = loc;
         // get charset from locale
     }
-    
+
     @Override
     public final void setStatus(final int sc) {
         status = sc;
     }
-    
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * @deprecated deprecated
      */
     @SuppressWarnings("deprecation")
@@ -541,7 +532,7 @@ public class WrappingServletResponse implements HttpServletResponse {
         status = sc;
         errorMsg = sm;
     }
-    
+
     @Override
     public final String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -571,14 +562,12 @@ public class WrappingServletResponse implements HttpServletResponse {
         builder.append("status=").append(status).append(")");
         return builder.toString();
     }
-    
+
     /**
      * Writes the current state of this response object into a given response object.
-     * 
-     * @param response
-     *            the response to copy values to
-     * @throws IOException
-     *             if an error occurred
+     *
+     * @param response the response to copy values to
+     * @throws IOException if an error occurred
      */
     public final void writeResponse(final HttpServletResponse response) throws IOException {
         copyHeadersInto(response, true, true);
@@ -587,7 +576,7 @@ public class WrappingServletResponse implements HttpServletResponse {
             response.getOutputStream().write(bytes);
         }
     }
-    
+
     @Override
     public void setContentLengthLong(final long len) {
         contentLengthLong = len;

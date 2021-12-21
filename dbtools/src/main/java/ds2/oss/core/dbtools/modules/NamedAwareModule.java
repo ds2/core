@@ -16,12 +16,10 @@
 package ds2.oss.core.dbtools.modules;
 
 import ds2.oss.core.api.EditableNamedAware;
-import ds2.oss.core.api.settable.NamedAware;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 /**
- *
  * @author deindesign
  */
 @Embeddable

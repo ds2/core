@@ -15,13 +15,13 @@
  */
 package ds2.oss.core.api.options;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Qualifier;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Qualifier;
 
 /**
  * Marker annotation for any implementations and field injections to address a specific value type
@@ -32,7 +32,7 @@ import javax.inject.Qualifier;
  */
 @Qualifier
 @ApplicationScoped
-@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ForValueType {
     /**

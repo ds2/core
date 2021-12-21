@@ -17,8 +17,7 @@ package ds2.oss.core.dbtools;
 
 import ds2.oss.core.api.EditableStateAware;
 import ds2.oss.core.api.EntryState;
-
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * An entity that maps the states to the dto {@link EntryState}.

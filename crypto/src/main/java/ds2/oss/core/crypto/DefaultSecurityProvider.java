@@ -15,22 +15,17 @@
  */
 package ds2.oss.core.crypto;
 
-import java.lang.invoke.MethodHandles;
-import java.security.*;
-
-import javax.annotation.PostConstruct;
-import javax.crypto.*;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import ds2.oss.core.api.AssertHelper;
 import ds2.oss.core.api.crypto.AlgorithmNamed;
-import ds2.oss.core.api.crypto.KeyPairGenAlgorithm;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ds2.oss.core.api.crypto.Ciphers;
-import ds2.oss.core.api.crypto.KeyGeneratorNames;
+import javax.annotation.PostConstruct;
+import javax.crypto.*;
+import java.lang.invoke.MethodHandles;
+import java.security.*;
 
 /**
  * The JVM default security provider.
@@ -40,14 +35,14 @@ import ds2.oss.core.api.crypto.KeyGeneratorNames;
  */
 @ApplicationScoped
 public class DefaultSecurityProvider implements SecurityInstanceProvider {
-    
+
     /**
      * A logger.
      */
     private static final transient Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Inject
     private AssertHelper assrt;
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -57,18 +52,18 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
     @Override
     public Cipher createCipherInstance(final AlgorithmNamed c) {
         assrt.assertNotNull(c, "No algorithm object given!");
-        assrt.assertNotEmpty(c.getAlgorithmName(),"No algorithm name given!");
+        assrt.assertNotEmpty(c.getAlgorithmName(), "No algorithm name given!");
         LOG.debug("Getting cipher for alg {}", c);
         Cipher rc = null;
         try {
-            rc=Cipher.getInstance(c.getAlgorithmName());
+            rc = Cipher.getInstance(c.getAlgorithmName());
         } catch (final NoSuchPaddingException | NoSuchAlgorithmException e) {
             LOG.error("Error when creating the cipher instance!", e);
         }
-        LOG.debug("Returning cipher {} for {}", new Object[] { rc, c });
+        LOG.debug("Returning cipher {} for {}", new Object[]{rc, c});
         return rc;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.crypto.SecurityInstanceProvider#createKeyGenerator(ds2.oss.core.api.crypto.
@@ -77,7 +72,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
     @Override
     public KeyGenerator createKeyGenerator(final AlgorithmNamed name) {
         assrt.assertNotNull(name, "No algorithm object given!");
-        assrt.assertNotEmpty(name.getAlgorithmName(),"No algorithm name given!");
+        assrt.assertNotEmpty(name.getAlgorithmName(), "No algorithm name given!");
         try {
             return KeyGenerator.getInstance(name.getAlgorithmName());
         } catch (final NoSuchAlgorithmException e) {
@@ -89,7 +84,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
     @Override
     public KeyPairGenerator createKeyPairGenerator(AlgorithmNamed alg) {
         assrt.assertNotNull(alg, "No algorithm object given!");
-        assrt.assertNotEmpty(alg.getAlgorithmName(),"No algorithm name given!");
+        assrt.assertNotEmpty(alg.getAlgorithmName(), "No algorithm name given!");
         try {
             return KeyPairGenerator.getInstance(alg.getAlgorithmName());
         } catch (NoSuchAlgorithmException e) {
@@ -105,7 +100,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
      */
     @Override
     public SecretKeyFactory createSecretKeyFactoryInstance(final String string) {
-        assrt.assertNotEmpty(string,"No algorithm name given!");
+        assrt.assertNotEmpty(string, "No algorithm name given!");
         try {
             return SecretKeyFactory.getInstance(string);
         } catch (final NoSuchAlgorithmException e) {
@@ -117,7 +112,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
     @Override
     public KeyAgreement createKeyAgreement(AlgorithmNamed alg) {
         assrt.assertNotNull(alg, "No algorithm object given!");
-        assrt.assertNotEmpty(alg.getAlgorithmName(),"No algorithm name given!");
+        assrt.assertNotEmpty(alg.getAlgorithmName(), "No algorithm name given!");
         try {
             KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
             return keyAgreement;
@@ -130,7 +125,7 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
     @Override
     public SecureRandom createSecureRandom(AlgorithmNamed alg) {
         assrt.assertNotNull(alg, "No algorithm object given!");
-        assrt.assertNotEmpty(alg.getAlgorithmName(),"No algorithm name given!");
+        assrt.assertNotEmpty(alg.getAlgorithmName(), "No algorithm name given!");
         try {
             return SecureRandom.getInstance(alg.getAlgorithmName());
         } catch (NoSuchAlgorithmException e) {
@@ -163,5 +158,5 @@ public class DefaultSecurityProvider implements SecurityInstanceProvider {
     public void onLoad() {
         LOG.debug("Using JCE default provider.");
     }
-    
+
 }

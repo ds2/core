@@ -16,9 +16,7 @@
 package ds2.oss.core.dbtools.converters;
 
 import ds2.oss.core.api.EntryState;
-import ds2.oss.core.api.EntryStates;
-
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 /**
  * Created by dstrauss on 19.06.15.

@@ -17,7 +17,8 @@ package ds2.oss.core.base.impl;
 
 import ds2.oss.core.api.SystemPropertyService;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Properties;
 
 /**

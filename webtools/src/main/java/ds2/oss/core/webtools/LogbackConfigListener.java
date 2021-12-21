@@ -18,8 +18,8 @@ package ds2.oss.core.webtools;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ import ch.qos.logback.core.util.StatusPrinter;
 
 /**
  * A listener for logback configs.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -40,7 +40,7 @@ public class LogbackConfigListener implements ServletContextListener {
      * A logger.
      */
     private static final Logger LOG = LoggerFactory.getLogger(LogbackConfigListener.class);
-    
+
     /*
      * (non-Javadoc)
      * @see
@@ -64,7 +64,7 @@ public class LogbackConfigListener implements ServletContextListener {
             StatusPrinter.printInCaseOfErrorsOrWarnings(ctx);
         }
     }
-    
+
     /*
      * (non-Javadoc)
      * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
@@ -73,5 +73,5 @@ public class LogbackConfigListener implements ServletContextListener {
     public void contextDestroyed(final ServletContextEvent sce) {
         // ignored
     }
-    
+
 }

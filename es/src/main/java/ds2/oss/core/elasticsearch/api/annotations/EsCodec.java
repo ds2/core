@@ -15,17 +15,11 @@
  */
 package ds2.oss.core.elasticsearch.api.annotations;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Qualifier;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Stereotype;
-import javax.enterprise.util.Nonbinding;
-import javax.inject.Qualifier;
+import java.lang.annotation.*;
 
 /**
  * Marks a codec. Any implementation having this annotation will be {@link ApplicationScoped}, and
@@ -35,7 +29,7 @@ import javax.inject.Qualifier;
  * @version 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 @Dependent
 @Documented
 @Qualifier

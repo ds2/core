@@ -22,13 +22,13 @@ import ds2.oss.core.dbtools.AbstractPersistenceSupportImpl;
 import ds2.oss.core.options.api.NumberedOptionsPersistenceSupport;
 import ds2.oss.core.options.api.ValueTypeParser;
 import ds2.oss.core.options.impl.entities.OptionEntity;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.validation.Validator;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.Set;

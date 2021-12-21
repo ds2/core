@@ -15,10 +15,10 @@
  */
 package ds2.oss.core.webtools;
 
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 

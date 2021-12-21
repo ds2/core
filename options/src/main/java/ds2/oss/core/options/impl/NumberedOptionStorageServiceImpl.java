@@ -22,12 +22,12 @@ import ds2.oss.core.api.dto.impl.OptionDto;
 import ds2.oss.core.api.dto.impl.OptionValueDto;
 import ds2.oss.core.api.options.*;
 import ds2.oss.core.options.api.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Alternative;
-import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDateTime;
 import java.util.Date;

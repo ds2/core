@@ -15,15 +15,14 @@
  */
 package ds2.oss.core.elasticsearch.impl.literals;
 
-import javax.enterprise.util.AnnotationLiteral;
-
 import ds2.oss.core.elasticsearch.api.annotations.EsCodec;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  * The ES Codec literal.
  *
- * @version 0.2
  * @author dstrauss
+ * @version 0.2
  */
 public class EsCodecAnnotationLiteral extends AnnotationLiteral<EsCodec> implements EsCodec {
     /**
@@ -38,8 +37,7 @@ public class EsCodecAnnotationLiteral extends AnnotationLiteral<EsCodec> impleme
     /**
      * Inits the literal.
      *
-     * @param c
-     *            the class to wrap. Usually a dto.
+     * @param c the class to wrap. Usually a dto.
      */
     public EsCodecAnnotationLiteral(final Class<?> c) {
         this.c = c;

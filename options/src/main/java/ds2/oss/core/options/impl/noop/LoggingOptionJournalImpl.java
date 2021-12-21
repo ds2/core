@@ -15,24 +15,22 @@
  */
 package ds2.oss.core.options.impl.noop;
 
+import ds2.oss.core.api.options.JournalAction;
+import ds2.oss.core.api.options.Option;
+import ds2.oss.core.api.options.OptionServiceJournal;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.lang.invoke.MethodHandles;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ds2.oss.core.api.options.JournalAction;
-import ds2.oss.core.api.options.Option;
-import ds2.oss.core.api.options.OptionServiceJournal;
-
 /**
  * A simple logging journal service.
- * 
+ *
  * @author dstrauss
  * @version 0.3
  */
@@ -46,7 +44,7 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
      * The scheduler.
      */
     private ScheduledExecutorService scheduler;
-    
+
     /**
      * Actions to perform at start.
      */
@@ -55,7 +53,7 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
         LOG.debug("Creating new scheduler");
         scheduler = Executors.newScheduledThreadPool(10);
     }
-    
+
     /**
      * Actions to perform before end.
      */
@@ -64,7 +62,7 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
         LOG.debug("Shutting down scheduler");
         scheduler.shutdown();
     }
-    
+
     /*
      * (non-Javadoc)
      * @see ds2.oss.core.api.options.OptionServiceJournal#addEntry(java.lang.String,
@@ -72,26 +70,26 @@ public class LoggingOptionJournalImpl implements OptionServiceJournal {
      */
     @Override
     public <D, K> void addEntry(final String invoker, final JournalAction action, final K affectedId,
-        final D oldVal, final D newVal) {
+                                final D oldVal, final D newVal) {
         scheduler.execute(new Runnable() {
-            
+
             @Override
             public void run() {
-                LOG.info("{} has taken action {} on id {}, changing {} to {}", new Object[] { invoker, action,
-                    affectedId, oldVal, newVal });
+                LOG.info("{} has taken action {} on id {}, changing {} to {}", new Object[]{invoker, action,
+                        affectedId, oldVal, newVal});
             }
         });
     }
-    
+
     @Override
     public void createdOption(final Option<?, ?> option) {
         scheduler.execute(new Runnable() {
-            
+
             @Override
             public void run() {
-                LOG.info("{} created new option {}", new Object[] { option.getModifiedBy(), option });
+                LOG.info("{} created new option {}", new Object[]{option.getModifiedBy(), option});
             }
         });
     }
-    
+
 }

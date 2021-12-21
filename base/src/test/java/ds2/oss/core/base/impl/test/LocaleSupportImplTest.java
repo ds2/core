@@ -72,7 +72,7 @@ public class LocaleSupportImplTest extends AbstractInjectionEnvironment {
 
     @Test
     public void testCurrencyConvert1() {
-        Assert.assertEquals(to.formatCurrency(Locale.GERMANY, 1234.56), "1.234,56 \u20ac");
+        Assert.assertEquals(to.formatCurrency(Locale.GERMANY, 1234.56), "1.234,56 €");
     }
 
     @Test

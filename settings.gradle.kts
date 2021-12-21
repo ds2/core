@@ -14,9 +14,9 @@ include("interceptors")
 include("base-it")
 include("es")
 include("es-test")
-include("options")
+//include("options")
 include("infinispan")
-include("options-it")
+//include("options-it")
 include("crypto")
 include("codec-boon")
 include("codec-gson")
@@ -37,7 +37,7 @@ include("abstracts")
 include("hazelcast")
 include("codec-genson")
 include("owbtest")
-include("shiro-jee")
+//include("shiro-jee")
 include("finance")
 include(":jee:jwt")
 
@@ -47,9 +47,9 @@ project(":interceptors").name = "ds2-oss-core-interceptors"
 project(":base-it").name = "ds2-oss-core-base-it"
 project(":es").name = "ds2-oss-core-elasticsearch"
 project(":es-test").name = "ds2-oss-core-elasticsearch-test"
-project(":options").name = "ds2-oss-core-options"
+//project(":options").name = "ds2-oss-core-options"
 project(":infinispan").name = "ds2-oss-core-infinispan"
-project(":options-it").name = "ds2-oss-core-options-it"
+//project(":options-it").name = "ds2-oss-core-options-it"
 project(":crypto").name = "ds2-oss-core-crypto"
 project(":codec-boon").name = "ds2-oss-core-codec-boon"
 project(":codec-gson").name = "ds2-oss-core-codec-gson"
@@ -71,7 +71,7 @@ project(":abstracts").name = "ds2-oss-core-abstracts"
 project(":hazelcast").name = "ds2-oss-core-grid-hazelcast"
 project(":codec-genson").name = "ds2-oss-core-codec-genson"
 project(":owbtest").name = "ds2-oss-core-owb-test"
-project(":shiro-jee").name = "ds2-oss-core-shiro-jee"
+//project(":shiro-jee").name = "ds2-oss-core-shiro-jee"
 project(":finance").name = "ds2-oss-core-finance"
 
 //enableFeaturePreview("STABLE_PUBLISHING")

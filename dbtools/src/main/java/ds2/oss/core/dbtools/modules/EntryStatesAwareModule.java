@@ -18,10 +18,9 @@ package ds2.oss.core.dbtools.modules;
 import ds2.oss.core.api.EditableStateAware;
 import ds2.oss.core.api.EntryStates;
 import ds2.oss.core.dbtools.converters.EntryStatesConverter;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Embeddable;
 
 /**
  * Module for a state entry using the default enum {@link EntryStates}. Usually,

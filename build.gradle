@@ -23,9 +23,9 @@ allprojects {
 
     group = 'ds2.oss.core'
 
-    ext.log4j2Version='2.14.1'
-    ext.logbackVersion='1.2.4'
-    ext.jacksonVersion='2.13.1'
+    ext.log4j2Version = '2.14.1'
+    ext.logbackVersion = '1.2.4'
+    ext.jacksonVersion = '2.13.1'
 
     baseConfig {
         javaVersion = JavaVersion.VERSION_1_8
@@ -41,7 +41,8 @@ allprojects {
         mavenLocal()
         if (project.hasProperty('ds2RepoUrl')) {
             println 'Can use DS2 Repo :)'
-            maven { url ds2RepoUrl
+            maven {
+                url ds2RepoUrl
                 credentials {
                     username ds2RepoUser
                     password ds2RepoPw
@@ -91,8 +92,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+//    sourceCompatibility = JavaVersion.VERSION_1_8
+//    targetCompatibility = JavaVersion.VERSION_1_8
 
     publishing {
         repositories {

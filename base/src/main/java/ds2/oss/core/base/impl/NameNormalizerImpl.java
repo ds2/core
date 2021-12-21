@@ -15,17 +15,15 @@
  */
 package ds2.oss.core.base.impl;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import ds2.oss.core.api.NameNormalizer;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * @author dstrauss
- *         
  */
 @ApplicationScoped
 public class NameNormalizerImpl implements NameNormalizer {
-    
+
     @Override
     public String normalize(String s) {
         if (s == null) {
@@ -49,5 +47,5 @@ public class NameNormalizerImpl implements NameNormalizer {
         StringBuilder sb = new StringBuilder(s);
         return sb.toString();
     }
-    
+
 }
