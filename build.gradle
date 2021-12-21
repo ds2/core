@@ -25,6 +25,7 @@ allprojects {
 
     ext.log4j2Version='2.14.1'
     ext.logbackVersion='1.2.4'
+    ext.jacksonVersion='2.13.1'
 
     baseConfig {
         javaVersion = JavaVersion.VERSION_1_8
