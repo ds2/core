@@ -6,7 +6,7 @@ dependencies {
     implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.6.0.Final'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
     testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
-    testImplementation group: 'com.h2database', name: 'h2', version: '2.0.202'
+    testImplementation group: 'com.h2database', name: 'h2', version: '2.0.204'
     testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
     testImplementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
     testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '5.2021.10')
