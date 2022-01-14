@@ -15,7 +15,7 @@ dependencies {
         This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
         Please review and delete this closure when resolved. */
     }
-    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+    compileOnly 'org.slf4j:slf4j-api:1.7.33'
 }
 
 task copyMainStuffToResources(type: Copy) {
