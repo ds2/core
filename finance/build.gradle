@@ -2,6 +2,6 @@ description 'DS/2 OSS Core Finance'
 
 dependencies {
     implementation project(':ds2-oss-core-api')
-    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+    compileOnly 'org.slf4j:slf4j-api:1.7.35'
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
 }

@@ -3,7 +3,7 @@ dependencies {
     testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     testImplementation group: 'org.apache.openejb', name: 'tomee-embedded', version: '1.7.5'
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
-    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+    compileOnly 'org.slf4j:slf4j-api:1.7.35'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
 
