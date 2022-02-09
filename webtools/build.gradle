@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core WebTools'
 dependencies {
-    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+    compileOnly 'org.slf4j:slf4j-api:1.7.36'
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
     implementation(group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion)
