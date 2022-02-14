@@ -37,7 +37,6 @@ dependencies {
         This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
         Please review and delete this closure when resolved. */
     }
-    compileOnly(group: 'org.hibernate', name: 'hibernate-jpamodelgen', version: '5.6.3.Final')
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
     compileOnly 'org.projectlombok:lombok:1.18.22'
 }
