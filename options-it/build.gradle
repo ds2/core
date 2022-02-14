@@ -5,7 +5,7 @@ dependencies {
     implementation project(':ds2-oss-core-api')
     implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.6.0.Final'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
+    testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.1.210'
     testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
     testImplementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'

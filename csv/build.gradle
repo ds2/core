@@ -6,7 +6,7 @@ dependencies {
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
     implementation project(':ds2-oss-core-api')
     implementation project(':ds2-oss-core-statics')
-    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
 }
 

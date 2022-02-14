@@ -1,7 +1,7 @@
 description = 'DS/2 OSS Core SCAI'
 dependencies {
     implementation project(':ds2-oss-core-api')
-    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     compileOnly 'org.slf4j:slf4j-api:1.7.36'
 }
