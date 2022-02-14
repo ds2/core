@@ -14,7 +14,7 @@ dependencies {
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.jboss', name: 'jandex', version: '2.4.1.Final'
     compileOnly(group: 'javax.enterprise', name: 'cdi-api', version: '2.0')
-    compileOnly 'org.slf4j:slf4j-api:1.7.32'
+    compileOnly 'org.slf4j:slf4j-api:1.7.36'
 }
 
 task copyMainStuffToResources(type: Copy) {
