@@ -5,7 +5,7 @@ dependencies {
     implementation project(':ds2-oss-core-api')
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     //testImplementation group: 'ch.qos.logback', name: 'logback-core', version: project.ext.logback
-    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     testImplementation project(':ds2-oss-core-xmpp-gcm')
     testImplementation project(path: ':ds2-oss-core-testutils')
