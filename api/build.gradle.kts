@@ -24,3 +24,9 @@ dependencies {
 tasks.test {
     useTestNG()
 }
+
+kotlin {
+    jvmToolchain {
+        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of("8")) // "8"
+    }
+}

@@ -29,7 +29,7 @@ allprojects {
 
     baseConfig {
         javaVersion = JavaVersion.VERSION_1_8
-        useToolchain = false
+        //useToolchain = false
     }
     gitInfo() {
         countCommitId = 10
@@ -92,9 +92,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
-
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
 
     publishing {
         repositories {
