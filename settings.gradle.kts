@@ -4,6 +4,9 @@ pluginManagement {
         mavenLocal()
         gradlePluginPortal()
         mavenCentral()
+        maven {
+            url=uri("https://ds2.jfrog.io/artifactory/oss-releases")
+        }
     }
 }
 
