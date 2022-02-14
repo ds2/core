@@ -28,8 +28,3 @@ test {
         showStackTraces true
     }
 }
-
-bintray {
-    publications = []
-    configurations = []
-}

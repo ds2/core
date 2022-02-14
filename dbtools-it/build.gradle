@@ -19,11 +19,6 @@ dependencies {
     implementation(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
 
-bintray {
-    publications = []
-    configurations = []
-}
-
 test {
     useTestNG()
     maxParallelForks = 1

@@ -15,11 +15,6 @@ dependencies {
     implementation(group: 'javax', name: 'javaee-api', version: '8.0.1')
 }
 
-bintray {
-    publications = []
-    configurations = []
-}
-
 test {
     useTestNG()
     maxParallelForks = 1
