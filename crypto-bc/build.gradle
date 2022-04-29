@@ -7,7 +7,7 @@ dependencies {
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
-    testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
+    testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '5.0.0.Final'
     testImplementation group: 'org.jboss', name: 'jandex', version: '2.4.2.Final'
     compileOnly 'org.slf4j:slf4j-api:1.7.36'
     compileOnly(group: 'javax.enterprise', name: 'cdi-api', version: '2.0') {
