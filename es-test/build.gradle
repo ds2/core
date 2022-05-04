@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core ElasticSearch Tests'
 dependencies {
     implementation project(':ds2-oss-core-elasticsearch')
     implementation project(':ds2-oss-core-api')
-    implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '1.3.2'
+    implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '8.2.0'
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     testImplementation project(path: ':ds2-oss-core-testutils')
