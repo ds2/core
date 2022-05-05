@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core Codec Genson'
 dependencies {
     implementation project(':ds2-oss-core-api')
     implementation 'com.owlike:genson:1.6'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.5'
     testImplementation(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
         exclude(module: 'tools')
     }
