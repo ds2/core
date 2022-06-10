@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core OpenWebBeans Injection Test'
 
-def OWB_VERSION = '2.0.26'
+def OWB_VERSION = '2.0.27'
 def JUNIT5_VERSION = '5.8.2'
 
 dependencies {
