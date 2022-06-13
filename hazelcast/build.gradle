@@ -2,6 +2,6 @@ description = 'DS/2 OSS Core Hazelcast'
 
 dependencies {
     implementation project(':ds2-oss-core-api')
-    implementation 'com.hazelcast:hazelcast:5.1.1'
+    implementation 'com.hazelcast:hazelcast:5.1.2'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
