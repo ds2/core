@@ -22,7 +22,7 @@ dependencies {
     implementation project(':ds2-oss-core-api')
     implementation project(':ds2-oss-core-statics')
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.+'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
     testImplementation(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36')
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     testImplementation project(path: ':ds2-oss-core-testutils')

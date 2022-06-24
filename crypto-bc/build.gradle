@@ -5,7 +5,7 @@ dependencies {
     implementation project(':ds2-oss-core-statics')
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
     testImplementation project(path: ':ds2-oss-core-testutils')
-    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     testImplementation group: 'org.jboss', name: 'jandex', version: '2.4.2.Final'
