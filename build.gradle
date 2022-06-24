@@ -49,6 +49,7 @@ allprojects {
             }
         }
         maven { url "https://maven.java.net/content/groups/promoted/" }
+        maven { url "https://ds2mavenrepos.blob.core.windows.net/releases/" }
         maven { url "https://ds2.jfrog.io/artifactory/oss-releases/" }
         mavenCentral()
     }
