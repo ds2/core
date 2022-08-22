@@ -10,7 +10,7 @@ dependencies {
     compileOnly group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     compileOnly group: 'org.testng', name: 'testng', version: '7.4.0'
     compileOnly(group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0')
-    testImplementation(group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36')
+    testImplementation(group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0')
 }
 //test.useTestNG()
 
