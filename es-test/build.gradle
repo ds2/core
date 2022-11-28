@@ -6,7 +6,7 @@ dependencies {
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.2.4.Final'
     testImplementation project(path: ':ds2-oss-core-testutils')
-    testImplementation group: 'org.slf4j', name: 'slf4j-jdk14', version: '2.0.4'
+    testImplementation group: 'org.slf4j', name: 'slf4j-jdk14', version: '2.0.5'
     testImplementation group: 'org.jboss', name: 'jandex', version: '3.0.3'
     compileOnly project(':ds2-oss-core-elasticsearch-annotationprocessing')
 }
