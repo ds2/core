@@ -4,6 +4,6 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
     implementation project(':ds2-oss-core-api')
     implementation group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.0.1'
-    compileOnly 'org.slf4j:slf4j-api:2.0.4'
+    compileOnly 'org.slf4j:slf4j-api:2.0.5'
     compileOnly(group: 'javax.enterprise', name: 'cdi-api', version: '2.0')
 }
