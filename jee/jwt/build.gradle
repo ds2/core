@@ -6,7 +6,7 @@ dependencies {
     //compile project(':ds2-oss-core-webtools')
     implementation project(':ds2-oss-core-statics')
     implementation project(':ds2-oss-core-api')
-    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-web-api', version: '8.0.0')
+    compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-web-api', version: '10.0.0')
     compileOnly 'org.slf4j:slf4j-api:2.0.6'
     runtimeOnly project(':ds2-oss-core-base')
     testImplementation project(':ds2-oss-core-base')
