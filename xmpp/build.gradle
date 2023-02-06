@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core XMPP'
 dependencies {
-    implementation group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.0.1'
+    implementation group: 'org.igniterealtime.smack', name: 'smack-tcp', version: '4.1.9'
     implementation project(':ds2-oss-core-base')
     implementation project(':ds2-oss-core-api')
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
