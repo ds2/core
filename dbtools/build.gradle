@@ -1,6 +1,6 @@
 description = 'DS/2 OSS Core Database Tools'
 dependencies {
-    annotationProcessor("org.hibernate:hibernate-jpamodelgen:5.6.7.Final")
+    annotationProcessor("org.hibernate:hibernate-jpamodelgen:6.1.7.Final")
     implementation project(':ds2-oss-core-api')
     implementation project(':ds2-oss-core-statics')
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
