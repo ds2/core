@@ -3,7 +3,7 @@ description = 'DS/2 OSS Core Apache Shiro CDI JEE'
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
     //compileOnly 'javax:javaee-web-api:7.0'
     compileOnly group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0'
     implementation project(':ds2-oss-core-api')
