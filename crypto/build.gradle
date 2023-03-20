@@ -16,7 +16,7 @@ dependencies {
     testRuntimeOnly group: 'com.lmax', name: 'disruptor', version: '3.4.4'
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.jboss', name: 'jandex', version: '3.0.5'
-    compileOnly 'org.slf4j:slf4j-api:2.0.6'
+    compileOnly 'org.slf4j:slf4j-api:2.0.7'
     compileOnly(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
 
