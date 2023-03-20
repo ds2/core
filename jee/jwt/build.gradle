@@ -11,7 +11,7 @@ dependencies {
     runtimeOnly project(':ds2-oss-core-base')
     testImplementation project(':ds2-oss-core-base')
     testImplementation project(':ds2-oss-core-codec-gson')
-    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.7.1'
     testImplementation project(path: ':ds2-oss-core-testutils')
     testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
 }
