@@ -4,7 +4,7 @@ plugins {
     id 'ds2.base' version '1.0.1'
     id "com.github.hierynomus.license" version "0.16.1"
     id "com.github.hierynomus.license-base" version "0.16.1"
-    id("com.github.spotbugs") version "5.0.13"
+    id("com.github.spotbugs") version "5.0.14"
     id "ds2.gitinfo" version "0.0.1"
 }
 
