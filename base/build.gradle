@@ -27,7 +27,7 @@ dependencies {
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion
     testImplementation project(path: ':ds2-oss-core-testutils')
     compileOnly 'org.slf4j:slf4j-api:2.0.7'
-    testRuntimeOnly(group: 'org.jboss', name: 'jandex', version: '3.0.+')
+    testRuntimeOnly(group: 'org.jboss', name: 'jandex', version: '3.1.+')
 
     weldEmbeddedTestRuntime group: 'org.jboss.arquillian.container', name: 'arquillian-weld-ee-embedded-1.1', version: '1.0.0.Final'
     weldEmbeddedTestRuntime group: 'org.jboss.spec', name: 'jboss-javaee-6.0', version: libraryVersions.jbossJavaeeSpec
