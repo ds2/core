@@ -9,7 +9,7 @@ dependencies {
     testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
     testImplementation group: 'org.jboss.arquillian.container', name: 'arquillian-glassfish-embedded-3.1', version: '1.0.2'
     testImplementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
-    testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '5.2022.3')
+    testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '6.2023.5')
     testImplementation project(':ds2-oss-core-crypto-bouncycastle')
     testImplementation project(':ds2-oss-core-testutils')
     implementation(group: 'javax', name: 'javaee-api', version: '8.0.1')
