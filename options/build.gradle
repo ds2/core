@@ -10,7 +10,7 @@ dependencies {
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se', version: '2.+'
     testImplementation group: 'org.apache.openejb', name: 'openejb-core', version: '4.7.5'
-    testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+    testImplementation group: 'com.h2database', name: 'h2', version: '2.2.220'
     testImplementation(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
         exclude(module: 'tools')
     }
