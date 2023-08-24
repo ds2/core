@@ -14,7 +14,7 @@ dependencies {
     testImplementation project(':ds2-oss-core-crypto-bouncycastle')
     testImplementation project(':ds2-oss-core-testutils')
     testImplementation group: 'org.eclipse.persistence', name: 'eclipselink', version: '4.0.2'
-    testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '5.2022.3')
+    testImplementation(group: 'fish.payara.extras', name: 'payara-embedded-all', version: '5.2022.5')
     compileOnly 'org.slf4j:slf4j-api:2.0.7'
     implementation(group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
 }
