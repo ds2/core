@@ -13,7 +13,7 @@ dependencies {
     testImplementation(project(":ds2-oss-core-testutils"))
     testCompileOnly("jakarta.platform:jakarta.jakartaee-web-api:8.0.0")
     testRuntimeOnly("org.jboss.weld.se", "weld-se-core", "2.4.8.Final")
-    testRuntimeOnly("org.jboss", "jandex", "1.2.0.Beta1")
+    testRuntimeOnly("org.jboss", "jandex", "1.2.4.Final")
     testRuntimeOnly("ch.qos.logback", "logback-classic", logbackVersion)
     testImplementation(project(":ds2-oss-core-statics"))
     //compileOnly(group: 'javax.enterprise', name: 'cdi-api', version:'1.2')
