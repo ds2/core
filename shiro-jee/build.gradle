@@ -1,16 +1,16 @@
 
 description = 'DS/2 OSS Core Apache Shiro CDI JEE'
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
-    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
     //compileOnly 'javax:javaee-web-api:7.0'
     compileOnly group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0'
     implementation project(':ds2-oss-core-api')
     implementation 'org.apache.shiro:shiro-core:1.12.0'
     implementation 'org.apache.shiro:shiro-jaxrs:1.12.0'
     runtimeOnly project(':ds2-oss-core-base')
-    testImplementation 'org.projectlombok:lombok:1.18.28'
+    testImplementation 'org.projectlombok:lombok:1.18.30'
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation 'org.slf4j:slf4j-api'
