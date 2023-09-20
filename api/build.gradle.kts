@@ -10,9 +10,9 @@ val logbackVersion: String by project
 dependencies {
     //compileOnly(group: 'javax.enterprise', name: 'cdi-api', version:'1.2')
     //compileOnly(group: 'javax.validation', name: 'validation-api', version:'1.1.0.Final')
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.0")
-    compileOnly("org.projectlombok:lombok:1.18.22")
+    compileOnly("org.projectlombok:lombok:1.18.30")
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     compileOnly("jakarta.platform", "jakarta.jakartaee-api", "8.0.0")
     testImplementation("jakarta.platform", "jakarta.jakartaee-api", "8.0.0")
