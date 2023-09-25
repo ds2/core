@@ -13,7 +13,7 @@ dependencies {
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: project.ext.log4j2Version
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
-    testRuntimeOnly group: 'org.jboss', name: 'jandex', version: '3.1.2'
+    testRuntimeOnly group: 'org.jboss', name: 'jandex', version: '3.1.5'
     testImplementation project(':ds2-oss-core-codec-gson')
     compileOnly 'org.slf4j:slf4j-api:2.0.9'
     compileOnly group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0'
