@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core Base Integration tests'
 dependencies {
     implementation project(':ds2-oss-core-api')
     implementation project(':ds2-oss-core-base')
-    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.7.1.Final'
+    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.7.2.Final'
     implementation project(':ds2-oss-core-dbtools')
     testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: project.ext.logbackVersion

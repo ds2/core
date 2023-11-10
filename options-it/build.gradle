@@ -3,7 +3,7 @@ dependencies {
     implementation project(':ds2-oss-core-options')
     implementation project(':ds2-oss-core-dbtools')
     implementation project(':ds2-oss-core-api')
-    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.7.1.Final'
+    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.7.2.Final'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
     testImplementation group: 'org.testng', name: 'testng', version: '6.14.3'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.224'
