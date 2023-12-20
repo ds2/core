@@ -17,7 +17,7 @@ dependencies {
     compileOnly("jakarta.platform", "jakarta.jakartaee-api", "8.0.0")
     testImplementation("jakarta.platform", "jakarta.jakartaee-api", "8.0.0")
     testImplementation("org.testng:testng:7.4.0")
-    testImplementation("org.slf4j:jul-to-slf4j:1.7.32")
+    testImplementation("org.slf4j:jul-to-slf4j:1.7.36")
     testRuntimeOnly("ch.qos.logback", "logback-classic", logbackVersion)
 }
 
