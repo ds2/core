@@ -1,5 +1,0 @@
-
-description = 'DS/2 OSS Core Test EAR'
-dependencies {
-  implementation project(':ds2-oss-core-base')
-}
