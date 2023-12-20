@@ -24,10 +24,9 @@ jobs:
     env:
       JVM_OPTS: "-Xmx3200m"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
-      CI: true
     strategy:
       matrix:
-        java: [ '8', '17' ]
+        java: [ '17' ]
     name: Java ${{ matrix.Java }} sample
     steps:
       - uses: actions/checkout@v4.1.1
