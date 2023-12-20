@@ -10,6 +10,14 @@ on:
       - develop
   workflow_dispatch:
 
+env:
+  CI: "1"
+  CARGO_TERM_COLOR: always
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-cargo
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +27,7 @@ jobs:
       CI: true
     strategy:
       matrix:
-        java: [ '8', '17' ]
+        java: [ '8', '17', '21' ]
     name: Java ${{ matrix.Java }} sample
     steps:
       - uses: actions/checkout@v4.1.0
