@@ -16,6 +16,7 @@ jobs:
     env:
       JVM_OPTS: "-Xmx3200m"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+      CI: true
     strategy:
       matrix:
         java: [ '8', '17' ]
@@ -35,3 +36,11 @@ jobs:
         run: ./gradlew compileJava compileTestJava
       - name: run tests
         run: ./gradlew test
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            build/test-results/**/*.xml
+            build/test-results/**/*.trx
+            build/test-results/**/*.json
