@@ -10,7 +10,7 @@ dependencies {
     testImplementation(group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j2Version) {
         exclude(module: 'tools')
     }
-    testImplementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
+    testImplementation group: 'com.lmax', name: 'disruptor', version: '4.0.0'
     testImplementation project(':ds2-oss-core-crypto-bouncycastle')
     testImplementation project(':ds2-oss-core-testutils')
     testImplementation group: 'org.eclipse.persistence', name: 'eclipselink', version: '4.0.2'
