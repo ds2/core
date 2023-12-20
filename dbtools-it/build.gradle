@@ -2,7 +2,7 @@ description = 'DS/2 OSS Core Database Tools Integrationtest'
 dependencies {
     implementation project(':ds2-oss-core-dbtools')
     implementation project(':ds2-oss-core-api')
-    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.7.1.Final'
+    implementation group: 'org.jboss.arquillian.testng', name: 'arquillian-testng-container', version: '1.8.0.Final'
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: project.ext.log4j2Version
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.2.224'
