@@ -4,7 +4,7 @@ description = 'DS/2 OSS Core Base'
 
 ext.libraryVersions = [
         junit   : '4.8.1', arquillian: '1.1.1.Final', jbossJavaeeSpec: '1.0.0.Final', weld: '1.1.34.Final',
-        slf4j   : '1.5.10', log4j: '1.2.17', jbossAS6: '6.0.0.Final', glassfish: '4.0-b72', cdi: '1.0-SP4',
+        slf4j   : '1.7.36', log4j: '1.2.17', jbossAS6: '6.0.0.Final', glassfish: '4.0-b72', cdi: '1.0-SP4',
         hamcrest: '1.2', jbossAS7: '7.1.1.Final', shrinkwrapDesc: '2.0.0-alpha-3'
 ]
 
