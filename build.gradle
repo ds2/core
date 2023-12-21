@@ -21,7 +21,7 @@ allprojects {
 
     group = 'ds2.oss.core'
 
-    ext.log4j2Version = '2.14.1'
+    ext.log4j2Version = '2.22.0'
     ext.logbackVersion = '1.2.4'
     ext.jacksonVersion = '2.16.0'
 
