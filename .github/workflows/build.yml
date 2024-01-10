@@ -51,3 +51,20 @@ jobs:
             **/build/test-results/test/*.xml
             **/build/test-results/**/*.trx
             **/build/test-results/**/*.json
+
+
+  build-via-buildah:
+    name: Build in container
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - name: Buildah Action
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: my-new-image
+          tags: v1 ${{ github.sha }}
+          containerfiles: |
+            ./zulu.Dockerfile
+#          build-args: |
+#            some_arg=some_value
