@@ -36,6 +36,8 @@ task copyTestResources(type: Copy) {
 processResources.dependsOn copyResources
 processTestResources.dependsOn copyTestResources, copyResources
 
-test.dependsOn copyTestStuffToResources
-
-test.useTestNG()
+test {
+    useTestNG()
+    jvmArgs '--add-opens=java.base/java.lang=ALL-UNNAMED'
+    dependsOn(copyTestStuffToResources)
+}

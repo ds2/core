@@ -26,7 +26,7 @@ allprojects {
     ext.jacksonVersion = '2.16.0'
 
     baseConfig {
-        javaVersion = JavaVersion.VERSION_1_8
+        javaVersion = JavaVersion.VERSION_17
         //useToolchain = false
     }
     gitInfo() {
