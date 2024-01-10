@@ -40,7 +40,7 @@ jobs:
           java -version
           ./gradlew -version
       - name: compile it
-        run: ./gradlew compileJava compileTestJava
+        run: ./gradlew clean assemble
       - name: run tests
         run: ./gradlew test
       - name: Publish Test Results
