@@ -64,7 +64,7 @@ test {
     useTestNG()
     maxParallelForks = 1
     //maxHeapSize="1024m"
-    //jvmArgs '-XX:MaxPermSize=256m'
+    jvmArgs '--add-opens=java.base/java.lang=ALL-UNNAMED'
     testLogging.showStandardStreams = true
     onOutput { descriptor, event ->
         logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message)

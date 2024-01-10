@@ -13,7 +13,6 @@ include("base")
 include("interceptors")
 include("options")
 include("crypto")
-include("codec-boon")
 include("codec-gson")
 include("codec-fastxml")
 include("webtools")
@@ -34,7 +33,6 @@ project(":base").name = "ds2-oss-core-base"
 project(":interceptors").name = "ds2-oss-core-interceptors"
 project(":options").name = "ds2-oss-core-options"
 project(":crypto").name = "ds2-oss-core-crypto"
-project(":codec-boon").name = "ds2-oss-core-codec-boon"
 project(":codec-gson").name = "ds2-oss-core-codec-gson"
 project(":codec-fastxml").name = "ds2-oss-core-codec-fastxml"
 project(":webtools").name = "ds2-oss-core-webtools"
