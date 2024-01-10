@@ -17,15 +17,10 @@ Simply run:
 
 ### Via dedicated Docker image
 
-Run
 
-    docker run -it --rm -v $(pwd):/src dcr.ds-2.de/buildslave:0.1 ./gradlew clean build
+    podman build -f zulu.Dockerfile .
 
-or
-
-    docker build -f zulu.Dockerfile .
-
-##Layers
+## Layers
 
 DS/2 OSS Core uses a kind of layer architecture and provides some sample implementations
 for each of the layers:
