@@ -13,7 +13,7 @@ dependencies {
     }
     testImplementation group: 'com.googlecode.komarro', name: 'komarro', version: '1.0'
     testImplementation group: 'org.jboss.weld.se', name: 'weld-se-core', version: '2.4.8.Final'
-    testRuntimeOnly group: 'com.lmax', name: 'disruptor', version: '3.4.4'
+    testRuntimeOnly group: 'com.lmax', name: 'disruptor', version: '4.0.0'
     testImplementation project(path: ':ds2-oss-core-testutils')
     testImplementation group: 'org.jboss', name: 'jandex', version: '3.1.5'
     compileOnly 'org.slf4j:slf4j-api:2.0.9'
