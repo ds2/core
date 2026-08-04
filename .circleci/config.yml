@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: cimg/openjdk:21.0.12
     working_directory: ~/repo
 
     environment:
